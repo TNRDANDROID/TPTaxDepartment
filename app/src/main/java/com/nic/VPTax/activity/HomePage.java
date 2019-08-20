@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.android.volley.VolleyError;
+import com.jakewharton.rxbinding.widget.RxTextView;
 import com.nic.VPTax.Api.Api;
 import com.nic.VPTax.Api.ApiService;
 import com.nic.VPTax.Api.ServerResponse;
@@ -31,6 +32,8 @@ import com.nic.VPTax.dataBase.DBHelper;
 import com.nic.VPTax.dataBase.dbData;
 import com.nic.VPTax.databinding.HomeScreenBinding;
 import com.nic.VPTax.dialog.MyDialog;
+import com.nic.VPTax.helper.APIHelper;
+import com.nic.VPTax.model.TranslatedText;
 import com.nic.VPTax.model.VPtaxModel;
 import com.nic.VPTax.session.PrefManager;
 import com.nic.VPTax.utils.UrlGenerator;
@@ -43,6 +46,15 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import rx.functions.Action1;
 
 public class HomePage extends AppCompatActivity implements Api.ServerResponseListener, View.OnClickListener, MyDialog.myOnClickListener {
     private HomeScreenBinding homeScreenBinding;
@@ -72,21 +84,71 @@ public class HomePage extends AppCompatActivity implements Api.ServerResponseLis
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Bundle bundle = this.getIntent().getExtras();
-        if (bundle != null) {
-            isHome = bundle.getString("Home");
-        }
-        if (Utils.isOnline() && !isHome.equalsIgnoreCase("Home")) {
-         //   getTankPondList();
-        }
-        syncButtonVisibility();
+//        Bundle bundle = this.getIntent().getExtras();
+//        if (bundle != null) {
+//            isHome = bundle.getString("Home");
+//        }
+//        if (Utils.isOnline() && !isHome.equalsIgnoreCase("Home")) {
+//          getTankPondList();
+//        }
+        textChangedListener();
     }
 
-    public void toUpload() {
-        if(Utils.isOnline()) {
-        }
-        else {
-            Utils.showAlert(this,"Please Turn on Your Mobile Data to Upload");
+    public void textChangedListener() {
+
+        // Translate the text after 500 milliseconds when user ends to typing
+        RxTextView.textChanges(homeScreenBinding.textToTranslate).
+                filter(charSequence -> charSequence.length() > 0).
+                debounce(100, TimeUnit.MILLISECONDS).
+                subscribe(new Action1<CharSequence>() {
+                    @Override
+                    public void call(CharSequence charSequence) {
+                        translate(charSequence.toString().trim());
+                    }
+                });
+
+    }
+
+    private void translate(String text){
+//        if(noTranslate){
+//            noTranslate = false;
+//            return;
+//        }
+        Log.d("text",text);
+
+        String APIKey = "trnsl.1.1.20190816T092901Z.b376b2c2157b2289.99f31a236c7d1846542a4400d1bc575a16f77378";
+
+        Retrofit query = new Retrofit.Builder().baseUrl("https://translate.yandex.net/").
+                addConverterFactory(GsonConverterFactory.create()).build();
+        APIHelper apiHelper = query.create(APIHelper.class);
+        Call<TranslatedText> call = apiHelper.getTranslation(APIKey, text,
+                "en" + "-" + "ta");
+
+        call.enqueue(new Callback<TranslatedText>() {
+            @Override
+            public void onResponse(Call<TranslatedText> call, Response<TranslatedText> response) {
+                if(response.isSuccessful()){
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            homeScreenBinding.translatedText.setText(response.body().getText().get(0));
+                            Log.d("response",response.body().getText().get(0));
+                            emptyTranslatedText();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onFailure(Call<TranslatedText> call, Throwable t) {}
+        });
+    }
+
+    public void emptyTranslatedText(){
+        String text = String.valueOf(homeScreenBinding.textToTranslate.getText());
+
+        if(text.equals("")){
+            homeScreenBinding.translatedText.setText("");
         }
 
     }
