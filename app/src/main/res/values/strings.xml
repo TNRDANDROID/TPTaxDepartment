@@ -9,7 +9,13 @@
 <string name="font_circular_book">circular-book.ttf</string>
 <string name="font_circular_black">circular-black.ttf</string>
 <string name="font_normal">din_pro_light.otf</string>
+<string name="font_poppins_regular">Poppins-Regular.ttf</string>
+<string name="font_poppins_semibold">Poppins-SemiBold.ttf</string>
+<string name="font_poppins_medium">Poppins-Medium.ttf</string>
+<string name="font_poppins_light">Poppins-Light.ttf</string>
+<string name="font_poppins_bold">Poppins-Bold.ttf</string>
 <string name="no_internet">Your internet seems to be offline!</string>
+<string name="APIKey">trnsl.1.1.20190816T092901Z.b376b2c2157b2289.99f31a236c7d1846542a4400d1bc575a16f77378</string>
 <string name="view_image">View Inspected Image</string>
 <string name="take_action">Take Action</string>
 <string name="view_action">View Action</string>

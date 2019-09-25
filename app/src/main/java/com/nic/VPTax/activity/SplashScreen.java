@@ -2,13 +2,16 @@ package com.nic.VPTax.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.nic.VPTax.BuildConfig;
 import com.nic.VPTax.R;
 import com.nic.VPTax.databinding.SplashScreenBinding;
 import com.nic.VPTax.helper.AppVersionHelper;
@@ -23,6 +26,8 @@ public class SplashScreen extends AppCompatActivity implements
     private static int SPLASH_TIME_OUT = 2000;
     private PrefManager prefManager;
     public SplashScreenBinding splashScreenBinding;
+    Animation smalltobig, fleft, fhelper;
+
 
 
     @Override
@@ -31,28 +36,48 @@ public class SplashScreen extends AppCompatActivity implements
         splashScreenBinding = DataBindingUtil.setContentView(this, R.layout.splash_screen);
         splashScreenBinding.setActivity(this);
         prefManager = new PrefManager(this);
-        showSignInScreen();
-//        if (Utils.isOnline()) {
-//           checkAppVersion();
-//        } else {
+        if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("production")) {
+            if (Utils.isOnline()) {
+                checkAppVersion();
+            } else {
+//                showSignInScreen();
+
+            }
+        } else {
 //            showSignInScreen();
-//
-//        }
+        }
+
+        smalltobig = AnimationUtils.loadAnimation(this, R.anim.smalltobig);
+        fleft = AnimationUtils.loadAnimation(this, R.anim.fleft);
+        fhelper = AnimationUtils.loadAnimation(this, R.anim.fhelper);
+        splashScreenBinding.ivSplash.startAnimation(smalltobig);
+
+        splashScreenBinding.ivLogo.setTranslationX(400);
+        splashScreenBinding.ivSubtitle.setTranslationX(400);
+        splashScreenBinding.ivBtn.setTranslationX(400);
+
+        splashScreenBinding.ivLogo.setAlpha(0);
+        splashScreenBinding.ivSubtitle.setAlpha(0);
+        splashScreenBinding.ivBtn.setAlpha(0);
+
+        splashScreenBinding.ivLogo.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        splashScreenBinding.ivSubtitle.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
+        splashScreenBinding.ivBtn.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
+
+        splashScreenBinding.ivBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showSignInScreen();
+            }
+        });
     }
 
 
     private void showSignInScreen() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-
-                Intent i = new Intent(SplashScreen.this, LoginScreen.class);
-
-                startActivity(i);
-                finish();
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            }
-        }, SPLASH_TIME_OUT);
+        Intent i = new Intent(SplashScreen.this, LoginScreen.class);
+        startActivity(i);
+        finish();
+        overridePendingTransition(R.anim.fleft, R.anim.fhelper);
     }
 
     private void checkAppVersion() {

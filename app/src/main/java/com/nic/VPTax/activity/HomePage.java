@@ -91,11 +91,24 @@ public class HomePage extends AppCompatActivity implements Api.ServerResponseLis
 //        if (Utils.isOnline() && !isHome.equalsIgnoreCase("Home")) {
 //          getTankPondList();
 //        }
+        homeScreenBinding.translateTitle.setTranslationX(800);
+        homeScreenBinding.beforeTranslateLayout.setTranslationX(800);
+        homeScreenBinding.afterTranslate.setTranslationX(800);
+        homeScreenBinding.afterTranslateLayout.setTranslationX(800);
+
+        homeScreenBinding.translateTitle.setAlpha(0);
+        homeScreenBinding.beforeTranslateLayout.setAlpha(0);
+        homeScreenBinding.afterTranslate.setAlpha(0);
+        homeScreenBinding.afterTranslateLayout.setAlpha(0);
+
+        homeScreenBinding.translateTitle.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(400).start();
+        homeScreenBinding.beforeTranslateLayout.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(600).start();
+        homeScreenBinding.afterTranslate.animate().translationX(0).alpha(1).setDuration(1200).setStartDelay(800).start();
+        homeScreenBinding.afterTranslateLayout.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(1000).start();
         textChangedListener();
     }
 
     public void textChangedListener() {
-
         // Translate the text after 500 milliseconds when user ends to typing
         RxTextView.textChanges(homeScreenBinding.textToTranslate).
                 filter(charSequence -> charSequence.length() > 0).
@@ -106,22 +119,28 @@ public class HomePage extends AppCompatActivity implements Api.ServerResponseLis
                         translate(charSequence.toString().trim());
                     }
                 });
-
+        RxTextView.textChanges(homeScreenBinding.textToTranslate).
+                filter(charSequence -> charSequence.length() == 0).
+                subscribe(new Action1<CharSequence>() {
+                    @Override
+                    public void call(CharSequence charSequence) {
+                       runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                emptyTranslatedText();
+                            }
+                        });
+                    }
+                });
     }
 
     private void translate(String text){
-//        if(noTranslate){
-//            noTranslate = false;
-//            return;
-//        }
         Log.d("text",text);
-
-        String APIKey = "trnsl.1.1.20190816T092901Z.b376b2c2157b2289.99f31a236c7d1846542a4400d1bc575a16f77378";
 
         Retrofit query = new Retrofit.Builder().baseUrl("https://translate.yandex.net/").
                 addConverterFactory(GsonConverterFactory.create()).build();
         APIHelper apiHelper = query.create(APIHelper.class);
-        Call<TranslatedText> call = apiHelper.getTranslation(APIKey, text,
+        Call<TranslatedText> call = apiHelper.getTranslation(getResources().getString(R.string.APIKey), text,
                 "en" + "-" + "ta");
 
         call.enqueue(new Callback<TranslatedText>() {
@@ -145,12 +164,22 @@ public class HomePage extends AppCompatActivity implements Api.ServerResponseLis
     }
 
     public void emptyTranslatedText(){
+        if(homeScreenBinding.textToTranslate.getText().toString().equals("")){
+            homeScreenBinding.close.setVisibility(View.GONE);
+        }else{
+            homeScreenBinding.close.setVisibility(View.VISIBLE);
+        }
         String text = String.valueOf(homeScreenBinding.textToTranslate.getText());
 
         if(text.equals("")){
             homeScreenBinding.translatedText.setText("");
         }
 
+    }
+
+    public void empty(){
+        homeScreenBinding.textToTranslate.setText("");
+        homeScreenBinding.translatedText.setText("");
     }
 
 
@@ -170,20 +199,19 @@ public class HomePage extends AppCompatActivity implements Api.ServerResponseLis
     }
 
     public void logout() {
-//        dbData.open();
-//        ArrayList<MITank> TankImageCount = dbData.getSavedData(prefManager.getDistrictCode(),prefManager.getBlockCode());
-//        ArrayList<MITank> trackCount = dbData.getSavedTrack();
-//
-//
-//        if (!Utils.isOnline()) {
-//            Utils.showAlert(this, "Logging out while offline may leads to loss of data!");
-//        } else {
-//            if (!(TankImageCount.size() > 0 || trackCount.size() > 0)) {
-//                closeApplication();
-//            } else {
-//                Utils.showAlert(this, "Sync all the data before logout!");
-//            }
-//        }
+        RxTextView.textChanges(homeScreenBinding.textToTranslate).
+                filter(charSequence -> charSequence.length() == 0).
+                subscribe(new Action1<CharSequence>() {
+                    @Override
+                    public void call(CharSequence charSequence) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                emptyTranslatedText();
+                            }
+                        });
+                    }
+                });
     }
 
     @Override

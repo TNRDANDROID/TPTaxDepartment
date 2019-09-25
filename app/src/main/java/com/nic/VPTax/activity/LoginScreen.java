@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -15,6 +14,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
@@ -30,16 +31,15 @@ import com.nic.VPTax.Support.ProgressHUD;
 import com.nic.VPTax.constant.AppConstant;
 import com.nic.VPTax.dataBase.DBHelper;
 import com.nic.VPTax.dataBase.dbData;
+import com.nic.VPTax.databinding.AnimLoginBinding;
 import com.nic.VPTax.databinding.LoginScreenBinding;
 import com.nic.VPTax.session.PrefManager;
 import com.nic.VPTax.utils.UrlGenerator;
 import com.nic.VPTax.utils.Utils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,16 +60,16 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private ProgressHUD progressHUD;
     private int setPType;
 
-    public LoginScreenBinding loginScreenBinding;
+    public AnimLoginBinding loginScreenBinding;
     public dbData dbData = new dbData(this);
-
+    Animation  stb2;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.login_screen);
+        loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.anim_login);
         loginScreenBinding.setActivity(this);
         intializeUI();
 
@@ -78,7 +78,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     public void intializeUI() {
         prefManager = new PrefManager(this);
-
+        stb2 = AnimationUtils.loadAnimation(this, R.anim.stb2);
         loginScreenBinding.password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 
@@ -92,17 +92,47 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 return false;
             }
         });
-        loginScreenBinding.password.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Avenir-Roman.ttf"));
+
+        loginScreenBinding.password.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Poppins-SemiBold.ttf"));
+        loginScreenBinding.textView2.setTranslationY(400);
+        loginScreenBinding.tvVersionNumber.setTranslationY(400);
+        loginScreenBinding.nicName.setTranslationY(400);
+        loginScreenBinding.btnBuy.setTranslationY(400);
+
+        loginScreenBinding.ivItemOne.setTranslationX(800);
+        loginScreenBinding.ivItemTwo.setTranslationX(800);
+
+
+        loginScreenBinding.btnBuy.setAlpha(0);
+
+        loginScreenBinding.textView2.setAlpha(0);
+        loginScreenBinding.tvVersionNumber.setAlpha(0);
+        loginScreenBinding.nicName.setAlpha(0);
+
+        loginScreenBinding.ivItemOne.setAlpha(0);
+        loginScreenBinding.ivItemTwo.setAlpha(0);
+
+
+        loginScreenBinding.btnBuy.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+
+        loginScreenBinding.textView2.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        loginScreenBinding.tvVersionNumber.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(300).start();
+        loginScreenBinding.nicName.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(100).start();
+
+        loginScreenBinding.ivItemOne.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(200).start();
+        loginScreenBinding.ivItemTwo.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(400).start();
+
+        loginScreenBinding.ivIlls.startAnimation(stb2);
         randString = Utils.randomChar();
 
 
-        try {
-            String versionName = getPackageManager()
-                    .getPackageInfo(getPackageName(), 0).versionName;
-            loginScreenBinding.tvVersion.setText("Version" + " " + versionName);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String versionName = getPackageManager()
+//                    .getPackageInfo(getPackageName(), 0).versionName;
+//            loginScreenBinding.tvVersionNumber.setText("Version" + " " + versionName);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
         setPType = 1;
     }
 
@@ -136,7 +166,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     public boolean validate() {
         boolean valid = true;
-        String username = loginScreenBinding.userName.getText().toString().trim();
+        String username = loginScreenBinding.username.getText().toString().trim();
         prefManager.setUserName(username);
         String password = loginScreenBinding.password.getText().toString().trim();
 
@@ -152,7 +182,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     }
 
     public void checkLoginScreen() {
-        final String username = loginScreenBinding.userName.getText().toString().trim();
+        final String username = loginScreenBinding.username.getText().toString().trim();
         final String password = loginScreenBinding.password.getText().toString().trim();
         prefManager.setUserPassword(password);
 
@@ -201,7 +231,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         Log.d("randchar", "" + random);
 
         params.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
-        Log.d("user", "" + loginScreenBinding.userName.getText().toString().trim());
+        Log.d("user", "" + loginScreenBinding.username.getText().toString().trim());
 
         String encryptUserPass = Utils.md5(loginScreenBinding.password.getText().toString().trim());
         prefManager.setEncryptPass(encryptUserPass);
@@ -215,7 +245,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         params.put(AppConstant.KEY_USER_PASSWORD, sha256);
 
 
-        Log.d("user", "" + loginScreenBinding.userName.getText().toString().trim());
+        Log.d("user", "" + loginScreenBinding.username.getText().toString().trim());
 
         Log.d("params", "" + params);
         return params;

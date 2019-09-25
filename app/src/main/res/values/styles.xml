@@ -23,6 +23,30 @@
     <item name="android:textStyle">bold</item>
 </style>
 
+    <style name="font_poppins_semibold">
+        <item name="android:fontFamily">@string/font_poppins_semibold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="font_poppins_regular">
+        <item name="android:fontFamily">@string/font_poppins_regular</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="font_poppins_medium">
+        <item name="android:fontFamily">@string/font_poppins_medium</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="font_poppins_light">
+        <item name="android:fontFamily">@string/font_poppins_light</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="font_poppins_bold">
+        <item name="android:fontFamily">@string/font_poppins_bold</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 <style name="font_circular_book">
     <item name="android:fontFamily">@string/font_circular_book</item>
     <item name="android:textStyle">normal</item>
@@ -103,6 +127,18 @@
     <item name="colorButtonNormal">@color/yellow</item>
     <item name="colorControlHighlight">@color/colorPrimary</item>
 </style>
+    <style name="StyledTextInputEditTextTheme">
+        <item name="android:imeOptions">actionNext</item>
+        <item name="android:singleLine">true</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/colorAccent</item>
 
+    </style>
+
+    <style name="StyledTextInputEditText">
+        <item name="android:theme">@style/StyledTextInputEditTextTheme</item>
+        <item name="android:paddingTop">4dp</item>
+    </style>
 </resources>
 
