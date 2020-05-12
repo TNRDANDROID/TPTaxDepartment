@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
-import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,18 +27,21 @@ import com.nic.VPTax.Api.ApiService;
 import com.nic.VPTax.Api.ServerResponse;
 import com.nic.VPTax.R;
 import com.nic.VPTax.Support.ProgressHUD;
+import com.nic.VPTax.activity.HomePage;
 import com.nic.VPTax.constant.AppConstant;
 import com.nic.VPTax.dataBase.DBHelper;
 import com.nic.VPTax.dataBase.dbData;
-import com.nic.VPTax.databinding.AnimLoginBinding;
 import com.nic.VPTax.databinding.LoginScreenBinding;
 import com.nic.VPTax.session.PrefManager;
 import com.nic.VPTax.utils.UrlGenerator;
 import com.nic.VPTax.utils.Utils;
 
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,17 +62,21 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private ProgressHUD progressHUD;
     private int setPType;
 
-    public AnimLoginBinding loginScreenBinding;
-    public dbData dbData = new dbData(this);
-    Animation  stb2;
+    public LoginScreenBinding loginScreenBinding;
+    public com.nic.VPTax.dataBase.dbData dbData = new dbData(this);
+    Animation stb2;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.anim_login);
+        loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.login_screen);
         loginScreenBinding.setActivity(this);
+        loginScreenBinding.scrollView.setVerticalScrollBarEnabled(false);
+        loginScreenBinding.scrollView.isSmoothScrollingEnabled();
+//        WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
+//        windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         intializeUI();
 
 
@@ -82,8 +88,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
 
-
-
         loginScreenBinding.password.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
@@ -93,8 +97,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-        loginScreenBinding.password.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Poppins-SemiBold.ttf"));
-        loginScreenBinding.textView2.setTranslationY(400);
+        loginScreenBinding.password.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Poppins-Regular.ttf"));
+        loginScreenBinding.rd.setTranslationY(400);
+        loginScreenBinding.and.setTranslationY(400);
+        loginScreenBinding.dpt.setTranslationY(400);
         loginScreenBinding.tvVersionNumber.setTranslationY(400);
         loginScreenBinding.nicName.setTranslationY(400);
         loginScreenBinding.btnBuy.setTranslationY(400);
@@ -105,7 +111,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         loginScreenBinding.btnBuy.setAlpha(0);
 
-        loginScreenBinding.textView2.setAlpha(0);
+        loginScreenBinding.rd.setAlpha(0);
+        loginScreenBinding.and.setAlpha(0);
+        loginScreenBinding.dpt.setAlpha(0);
         loginScreenBinding.tvVersionNumber.setAlpha(0);
         loginScreenBinding.nicName.setAlpha(0);
 
@@ -115,7 +123,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         loginScreenBinding.btnBuy.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
 
-        loginScreenBinding.textView2.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        loginScreenBinding.rd.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        loginScreenBinding.and.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
+        loginScreenBinding.dpt.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
         loginScreenBinding.tvVersionNumber.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(300).start();
         loginScreenBinding.nicName.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(100).start();
 
@@ -126,31 +136,12 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         randString = Utils.randomChar();
 
 
-//        try {
-//            String versionName = getPackageManager()
-//                    .getPackageInfo(getPackageName(), 0).versionName;
-//            loginScreenBinding.tvVersionNumber.setText("Version" + " " + versionName);
-//        } catch (PackageManager.NameNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        setPType = 1;
-    }
-
-    public void showPassword() {
-        if (setPType == 1) {
-            setPType = 0;
-            loginScreenBinding.password.setTransformationMethod(null);
-            if (loginScreenBinding.password.getText().length() > 0) {
-                loginScreenBinding.password.setSelection(loginScreenBinding.password.getText().length());
-                loginScreenBinding.redEye.setBackgroundResource(R.drawable.ic_baseline_visibility_off_24px);
-            }
-        } else {
-            setPType = 1;
-            loginScreenBinding.password.setTransformationMethod(new PasswordTransformationMethod());
-            if (loginScreenBinding.password.getText().length() > 0) {
-                loginScreenBinding.password.setSelection(loginScreenBinding.password.getText().length());
-                loginScreenBinding.redEye.setBackgroundResource(R.drawable.ic_baseline_visibility_24px);
-            }
+        try {
+            String versionName = getPackageManager()
+                    .getPackageInfo(getPackageName(), 0).versionName;
+            loginScreenBinding.tvVersionNumber.setText("Version" + " " + versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
 
     }
@@ -254,21 +245,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     //The method for opening the registration page and another processes or checks for registering
 
 
-//    public void getVillageList() {
-//        try {
-//            new ApiService(this).makeJSONObjectRequest("VillageList", Api.Method.POST, UrlGenerator.getServicesListUrl(), villageListJsonParams(), "not cache", this);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void getHabList() {
-//        try {
-//            new ApiService(this).makeJSONObjectRequest("HabitationList", Api.Method.POST, UrlGenerator.getServicesListUrl(), habitationListJsonParams(), "not cache", this);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
@@ -297,8 +273,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         prefManager.setName(String.valueOf(jsonObject.get(AppConstant.DESIG_NAME)));
                         Log.d("userdata", "" + prefManager.getDistrictCode() + prefManager.getBlockCode() + prefManager.getPvCode() + prefManager.getDistrictName() + prefManager.getBlockName() + prefManager.getName());
                         prefManager.setUserPassKey(decryptedKey);
-//                        getVillageList();
-//                        getHabList();
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {

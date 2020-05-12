@@ -17,6 +17,7 @@ import com.nic.VPTax.databinding.SplashScreenBinding;
 import com.nic.VPTax.helper.AppVersionHelper;
 import com.nic.VPTax.session.PrefManager;
 import com.nic.VPTax.utils.Utils;
+import com.nic.VPTax.windowpreferences.WindowPreferencesManager;
 
 
 public class SplashScreen extends AppCompatActivity implements
@@ -35,6 +36,8 @@ public class SplashScreen extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         splashScreenBinding = DataBindingUtil.setContentView(this, R.layout.splash_screen);
         splashScreenBinding.setActivity(this);
+        WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
+        windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
         if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("production")) {
             if (Utils.isOnline()) {
