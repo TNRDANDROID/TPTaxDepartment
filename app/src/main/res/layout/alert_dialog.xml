@@ -17,8 +17,8 @@
             android:orientation="horizontal">
             <ImageView
                 android:id="@+id/ivIlls"
-                android:layout_width="@dimen/_38sdp"
-                android:layout_height="@dimen/_38sdp"
+                android:layout_width="@dimen/_35sdp"
+                android:layout_height="@dimen/_35sdp"
                 android:layout_centerHorizontal="true"
 
                 android:layout_gravity="center"
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:text="CANCEL"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/menu_title_size"
                 android:visibility="gone" />
 
@@ -88,7 +88,7 @@
                 android:background="@drawable/background_gradient"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:text="OK"
-                android:textColor="@color/black"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/menu_title_size" />
         </LinearLayout>
 

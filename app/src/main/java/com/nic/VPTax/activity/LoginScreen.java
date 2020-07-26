@@ -326,8 +326,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 //        showHomeScreen();
 //    }
 
-    private void showHomeScreen() {
-        Intent intent = new Intent(LoginScreen.this, HomePage.class);
+    public void showHomeScreen() {
+        Intent intent = new Intent(LoginScreen.this, MainActivity.class);
         intent.putExtra("Home", "Login");
         startActivity(intent);
         finish();

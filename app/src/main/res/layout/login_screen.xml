@@ -217,7 +217,7 @@
                     android:layout_marginTop="@dimen/_70sdp"
                     android:background="@drawable/button_background"
 
-                    android:onClick="@{()-> activity.checkLoginScreen()}"
+                    android:onClick="@{()-> activity.showHomeScreen()}"
                     android:text="Login"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white" />
