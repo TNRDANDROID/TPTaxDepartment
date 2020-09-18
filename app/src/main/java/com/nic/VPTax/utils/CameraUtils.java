@@ -10,12 +10,15 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.Settings;
+
 import android.util.Log;
+
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import com.nic.VPTax.BuildConfig;
+import com.nic.VPTax.activity.RegisterScreen;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -98,7 +101,7 @@ public class CameraUtils {
      */
     public static File getOutputMediaFile(int type) {
 
-        File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.nic.RuralInspection/files");
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Android/data/com.nic.VPTax/files");
 
         // External sdcard location
 //        File mediaStorageDir = new File(
@@ -123,9 +126,9 @@ public class CameraUtils {
         if (type ==  MEDIA_TYPE_IMAGE) {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                     + "IMG_" + timeStamp + "." +  IMAGE_EXTENSION);
-        } else if (type ==  MEDIA_TYPE_VIDEO) {
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "VID_" + timeStamp + "." +  VIDEO_EXTENSION);
+//        } else if (type ==  MEDIA_TYPE_VIDEO) {
+//            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+//                    + "VID_" + timeStamp + "." +  VIDEO_EXTENSION);
         } else {
             return null;
         }

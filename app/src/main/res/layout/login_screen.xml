@@ -214,15 +214,65 @@
                     android:id="@+id/btnBuy"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:layout_marginTop="@dimen/_70sdp"
+                    android:layout_marginTop="@dimen/_40sdp"
                     android:background="@drawable/button_background"
 
                     android:onClick="@{()-> activity.showHomeScreen()}"
                     android:text="Login"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white" />
+                <LinearLayout
+                    android:id="@+id/sign_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:onClick="@{()-> activity.RegisterScreen()}"
 
-                <RelativeLayout
+                    android:orientation="horizontal">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_13sdp"
+                        android:text="New User ?"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-26dp"
+                        android:layout_gravity="center"
+                        android:padding="@dimen/_13sdp"
+                        android:text="Register !"
+                        android:textAllCaps="true"
+                        android:textAlignment="center"
+                        android:textColor="#E00201"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+                    <!--<Button
+                        android:id="@+id/btn_sign_up"
+                        android:layout_width="120dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/margin"
+                        android:layout_marginRight="@dimen/margin"
+                        android:background="@drawable/add_button_new"
+                        android:text="Sign up"
+                        android:clickable="true"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/menu_title_size" />-->
+                </LinearLayout>
+
+
+
+            <RelativeLayout
                     android:id="@+id/tv_version_nic_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -236,7 +286,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:padding="@dimen/_13sdp"
-                        android:text="adaadadadad"
+                        android:text=""
                         android:layout_above="@+id/nic_name"
 
 

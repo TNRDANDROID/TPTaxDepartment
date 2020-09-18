@@ -58,6 +58,8 @@ public class HomeFragment extends Fragment {
     String pref_Block, pref_district, pref_Village;
     boolean isPanchayatUnion, isMunicipality, isTownPanchayat, isCorporation;
     private ProgressHUD progressHUD;
+    private HomeFragment context;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -117,6 +119,7 @@ public class HomeFragment extends Fragment {
 
         prefManager = new PrefManager(getActivity());
 dashboardBinding.setFragment(this);
+context = this;
         dashboardBinding.districtUserLayout.setTranslationX(800);
         dashboardBinding.blockUserLayout.setTranslationX(800);
         dashboardBinding.voteprogresscard.setTranslationX(800);
@@ -224,6 +227,6 @@ dashboardBinding.setFragment(this);
     public void Testeee(){
         Intent intent = new Intent(getActivity(), test.class);
         startActivity(intent);
-//        getActivity().overridePendingTransition(R.anim.fleft, R.anim.fhelper);
+
     }
 }

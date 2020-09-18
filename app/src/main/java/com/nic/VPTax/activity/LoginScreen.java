@@ -35,6 +35,7 @@ import com.nic.VPTax.databinding.LoginScreenBinding;
 import com.nic.VPTax.session.PrefManager;
 import com.nic.VPTax.utils.UrlGenerator;
 import com.nic.VPTax.utils.Utils;
+import com.nic.VPTax.windowpreferences.WindowPreferencesManager;
 
 
 import org.json.JSONArray;
@@ -73,10 +74,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.login_screen);
         loginScreenBinding.setActivity(this);
+
+        WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
+        windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         loginScreenBinding.scrollView.setVerticalScrollBarEnabled(false);
         loginScreenBinding.scrollView.isSmoothScrollingEnabled();
-//        WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
-//        windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         intializeUI();
 
 
@@ -103,12 +105,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.dpt.setTranslationY(400);
         loginScreenBinding.tvVersionNumber.setTranslationY(400);
         loginScreenBinding.nicName.setTranslationY(400);
+        loginScreenBinding.signUp.setTranslationY(400);
         loginScreenBinding.btnBuy.setTranslationY(400);
 
         loginScreenBinding.ivItemOne.setTranslationX(800);
         loginScreenBinding.ivItemTwo.setTranslationX(800);
 
 
+        loginScreenBinding.signUp.setAlpha(0);
         loginScreenBinding.btnBuy.setAlpha(0);
 
         loginScreenBinding.rd.setAlpha(0);
@@ -120,6 +124,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.ivItemOne.setAlpha(0);
         loginScreenBinding.ivItemTwo.setAlpha(0);
 
+        loginScreenBinding.signUp.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(350).start();
 
         loginScreenBinding.btnBuy.animate().translationY(0).alpha(1).setDuration(800).setStartDelay(500).start();
 
@@ -331,6 +336,12 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         intent.putExtra("Home", "Login");
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    public void RegisterScreen() {
+        Intent intent = new Intent(LoginScreen.this, RegisterScreen.class);
+        startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 

@@ -36,53 +36,13 @@ public class AppConstant {
     public static String BLOCK_NAME = "bname";
     public static String PV_NAME = "pvname";
     public static String DESIG_NAME = "desig_name";
-    public static String KEY_POINT_SERIAL_NO = "point_sl_no";
-    public static String KEY_TANK_TRACK_SAVE = "mi_tank_track_save";
-
-
-
-    public static String KEY_VILLAGE_LIST_DISTRICT_BLOCK_WISE = "village_list_district_block_wise";
-    public static String KEY_HABITATION_LIST_DISTRICT_BLOCK_WISE = "habitation_list_district_block_wise";
-
-    public static String HABITATION_NAME = "habitation_name";
-
-    public static String KEY_LATITUDE = "latitude";
-    public static String KEY_LONGITUDE = "longitude";
-    public static String KEY_IMAGE = "image";
-
-    public static String KEY_TRACK_DATA = "track_data";
-    public static String PMAY_ID = "pmay_id";
-
-
-    /********** MI TANK STRUCTURE TABLE ***********/
-
-    public static String MI_TANK_STRUCTURE_ID = "mi_tank_structure_id";
-    public static String MI_TANK_STRUCTURE_NAME = "mi_tank_structure_name";
-
-    /********** MI TANK DATA TABLE ***********/
-
-    public static String MI_TANK_SURVEY_ID = "mi_tank_survey_id";
-    public static String MINOR_IRRIGATION_TYPE = "minor_irrigation_type";
-    public static String NAME_OF_THE_MI_TANK = "name_of_the_mi_tank";
-    public static String LOCAL_NAME = "local_name";
-    public static String AREA = "area";
-
-    /********** STRUCTURES ***********/
-
-    public static String STRUCTURES = "structures";
-    public static String MI_TANK_STRUCTURE_DETAIL_ID = "mi_tank_structure_detail_id";
-    public static String MI_TANK_STRUCTURE_SERIAL_ID = "mi_tank_structure_serial_id";
-    public static String MI_TANK_CONDITION_ID = "mi_tank_condition_id";
-    public static String MI_TANK_CONDITION_NAME = "mi_tank_condition_name";
-    public static String MI_TANK_SKILL_LEVEL = "mi_tank_sill_level";
-
-    public static String CHECK_BOX_CLICKED = "checkboxvalue";
-    public static String IMAGE_AVAILABLE = "image_available";
-    public static String MI_TANK_DATA_IMAGE = "mi_tank_data_image";
-
-    /*********** Track Data***********/
-
-    public static String KEY_POINT_TYPE = "point_type";
+    public static String NAME = "user_name";
+    public static String FATHER_HUSBAND_NAME = "father_husband_name";
+    public static String GENDER = "gender";
+    public static String MOBILE = "mobile";
+    public static String E_MAIL = "email";
+    public static String ADDRESS = "address";
+    public static String DISTRICT = "address";
 
 
 }

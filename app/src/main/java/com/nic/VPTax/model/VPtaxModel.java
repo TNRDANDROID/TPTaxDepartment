@@ -19,7 +19,7 @@ public class VPtaxModel {
     private String HabCode;
     private String Description;
     private String Latitude;
-    private String BeneficiaryName;
+    private String Gender;
     private String HabitationName;
     private String pmayId;
     private String fatherName;
@@ -156,12 +156,12 @@ public class VPtaxModel {
     }
 
 
-    public String getBeneficiaryName() {
-        return BeneficiaryName;
+    public String getGender() {
+        return Gender;
     }
 
-    public void setBeneficiaryName(String beneficiaryName) {
-        BeneficiaryName = beneficiaryName;
+    public void setGender(String gender) {
+        Gender = gender;
     }
 
     public String getHabitationName() {

@@ -12,16 +12,17 @@ import com.google.android.material.shape.CutCornerTreatment;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.android.material.shape.ShapeAppearanceModel;
 import com.nic.VPTax.R;
+import com.nic.VPTax.databinding.ActivityLoginBinding;
 import com.nic.VPTax.databinding.CatBottomappbarFragmentBinding;
 
 public class test extends AppCompatActivity {
     private BottomAppBar bar;
-    private CatBottomappbarFragmentBinding catBottomappbarFragmentBinding;
+    private ActivityLoginBinding  activityLoginBinding;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        catBottomappbarFragmentBinding = DataBindingUtil.setContentView(this,R.layout.cat_bottomappbar_fragment);
-        catBottomappbarFragmentBinding.setActivity(this);
+        activityLoginBinding = DataBindingUtil.setContentView(this,R.layout.activity_login);
+        activityLoginBinding.setActivity(this);
 
     }
 
