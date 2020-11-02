@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="36dp"
             android:layout_marginTop="100dp"
-            android:text="VPTAX"
+            android:text="TPTAX"
             android:textColor="#FFF"
             android:textSize="44sp"
               />
