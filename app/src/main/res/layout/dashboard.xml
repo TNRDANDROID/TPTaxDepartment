@@ -1,509 +1,487 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools">
-
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ll"
-        android:layout_width="match_parent"
-
-        android:layout_height="match_parent"
-
-
-
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/home_img"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background" />
-
-        <!--<com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_gradient"
-            android:fitsSystemWindows="true">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/refresh"
-                        android:layout_width="@dimen/_23sdp"
-                        android:layout_height="@dimen/_23sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerInParent="true"
-                        android:layout_gravity="start"
-                        android:background="@drawable/ic_autorenew_white_24dp"
-                        android:backgroundTint="@android:color/white" />
-
-
-                    <TextView
-                        android:id="@+id/title_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:text="VPTAX"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15sdp"
-                        android:textStyle="bold" />
-
-                   &lt;!&ndash; <ImageView
-                        android:id="@+id/log_out"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:adjustViewBounds="true"
-                        android:onClick="@{()-> activity.logout()}"
-                        android:background="@drawable/ic_exit_to_app_black_24dp"
-                        android:backgroundTint="@android:color/white"
-                        android:scaleType="centerInside" />&ndash;&gt;
-
-                </RelativeLayout>
-
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.AppBarLayout>
--->
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-
-                android:gravity="center">
-
-                <LinearLayout
-                    android:id="@+id/district_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_12sdp"
-
-                    android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:id="@+id/district_user_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/white_background_two_corners"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_5sdp">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:text="District:"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:id="@+id/district_tv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:text="Kanchipuram"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="normal" />
-
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/block_user_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="0dp"
-                        android:layout_marginTop="@dimen/_15sdp"
-                        android:layout_weight="1"
-                        android:background="@drawable/white_background_two_corners"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_5sdp">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:text="Block:"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="normal" />
-
-                        <TextView
-                            android:id="@+id/block_tv"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:text="Kanchipuram"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="normal" />
-
-
-                    </LinearLayout>
-
-
-                </LinearLayout>
-
-                <RelativeLayout
-                    android:id="@+id/road_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:layout_below="@+id/district_card"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:gravity="center">
-
-                    <LinearLayout
-                        android:id="@+id/top"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipToPadding="true"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/voteprogresscard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:clickable="true"
-                            android:onClick="@{()->fragment.Testeee()}"
-
-                            android:foreground="?android:attr/selectableItemBackground"
-
-
-                            card_view:cardCornerRadius="5dp"
-                            card_view:cardElevation="3dp"
-                            >
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_voting_progress"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundpurple"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_vote" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Property Tax"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@color/lightgray" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Property Tax"
-
-                                    android:textColor="@android:color/black" />
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/attendanecard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:clickable="true"
-
-
-                            android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="5dp"
-                            card_view:cardElevation="3dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_attendance"
-                                    android:layout_width="64dp"
-
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundpink"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_crew" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Water Tax"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@color/lightgray" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Water Tax"
-                                    android:textColor="@android:color/black" />
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/top"
-                        android:clipToPadding="false"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/cameracard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:clickable="true"
-
-
-                            android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="5dp"
-                            card_view:cardElevation="3dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_camera"
-                                    android:layout_width="64dp"
-
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-
-                                    android:background="@drawable/cerclebackgroundgreen"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_camera_black_24dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Professional Tax"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@color/lightgray" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Professional Tax"
-                                    android:textColor="@android:color/black" />
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-                        <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/votecountcard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:clickable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="5dp"
-                            card_view:cardElevation="3dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_voting_count"
-                                    android:layout_width="64dp"
-
-
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundyello"
-                                    android:padding="14dp"
-                                    android:src="@drawable/ic_counting" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="None"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@color/lightgray" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="None"
-                                    android:textColor="@android:color/black" />
-
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_below="@+id/bottom"
-                        android:clipToPadding="false"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        >
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/view_polling_station_image"
-                            android:clickable="true"
-                            android:layout_width="303dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="10dp"
-                            android:foreground="?android:attr/selectableItemBackground"
-
-
-                            card_view:cardCornerRadius="8dp"
-                            card_view:cardElevation="3dp"
-                            android:focusable="true">
-                            <LinearLayout
-
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:gravity="center">
-                                <ImageView
-                                    android:id="@+id/polling_station_image"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:background="@drawable/cerclebackgroundpurple"
-                                    android:padding="10dp"
-                                    android:contentDescription="TODO" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textStyle="bold"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Add"/>
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:background="@color/lightgray"
-                                    android:layout_margin="10dp"/>
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Capture the polling station image"
-                                    android:textColor="@android:color/black" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-
-                    </LinearLayout>
-
-                </RelativeLayout>
-
-
-            </RelativeLayout>
-
-        </androidx.core.widget.NestedScrollView>
-        <TextView
-            android:id="@+id/save"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:layout_gravity="bottom"
-            android:padding="15dp"
-            android:text="Sofware Designed &amp; Developed by NIC"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/_15sdp"
-            android:textStyle="italic"
-            android:visibility="gone"
-            style="@string/font_circular_medium" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <data>
 
         <variable
-            name="fragment"
-            type="com.nic.VPTax.fragment.HomeFragment" />
+            name="activity"
+            type="com.nic.TPTaxDepartment.activity.Dashboard" />
     </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways|snap">
+
+            <RelativeLayout
+                android:id="@+id/header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@drawable/header_login">
+
+
+                <ImageView
+                    android:id="@+id/refresh"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/back"
+                    android:backgroundTint="@android:color/white"
+                    android:onClick="@{()-> activity.onBackPressed()}" />
+
+
+                <TextView
+                    android:id="@+id/title_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:text="Dashboard"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/log_out"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/logout_variant"
+                    android:backgroundTint="@android:color/white"
+                    android:onClick="@{()-> activity.closeApplication()}"
+                    android:scaleType="centerInside" />
+
+
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/horizontal_line"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/header_layout"
+                android:background="#FFF" />
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/circle1"
+                android:layout_width="134dp"
+                android:layout_height="134dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_125sdp"
+                android:layout_marginRight="-100dp"
+                android:src="@drawable/circletransparant" />
+
+            <ImageView
+                android:id="@+id/circle2"
+                android:layout_width="134dp"
+                android:layout_height="134dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="-100dp"
+                android:layout_marginBottom="50dp"
+                android:src="@drawable/circletransparant" />
+
+            <ImageView
+                android:id="@+id/circle3"
+                android:layout_width="162dp"
+                android:layout_height="162dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="-80dp"
+                android:layout_marginBottom="-30dp"
+                android:src="@drawable/circle" />
+
+            <ImageView
+                android:id="@+id/circle4"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="-50dp"
+                android:layout_marginBottom="-50dp"
+                android:layout_toLeftOf="@+id/circle3"
+                android:src="@drawable/circletransparant" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            android:layout_centerInParent="true"
+
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:id="@+id/road_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/district_card"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:id="@+id/top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="true"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/voteprogresscard"
+                        android:layout_width="140dp"
+                        android:layout_height="170dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/click_here"
+                        android:clickable="true"
+
+                        android:foreground="?android:attr/selectableItemBackground"
+
+
+                        android:onClick="@{()-> activity.tradeSilenceScreen()}">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/image_voting_progress"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/cerclebackgroundpurple"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_vote"
+                                android:visibility="gone" />
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+                            <TextView
+                                android:id="@+id/trade_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Trade Licence"
+
+                                android:textColor="@android:color/black" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/attendanecard"
+                        android:layout_width="140dp"
+                        android:layout_height="170dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/click_here"
+                        android:onClick="@{()-> activity.fieldVisitScreen()}"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        card_view:cardCornerRadius="5dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/image_attendance"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/cerclebackgroundpink"
+                                android:padding="10dp"
+                                android:src="@drawable/ic_crew"
+                                android:visibility="gone" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+                            <TextView
+                                android:id="@+id/field_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Field Visit"
+
+                                android:textColor="@android:color/black" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/top"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/cameracard"
+                        android:layout_width="140dp"
+                        android:layout_height="170dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/click_here"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{()-> activity.assessmentStatusScreen()}"
+                        app:cardCornerRadius="5dp"
+                        app:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/image_camera"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/cerclebackgroundgreen"
+
+                                android:padding="10dp"
+                                android:src="@drawable/ic_camera_black_24dp"
+                                android:visibility="gone" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+                            <TextView
+                                android:id="@+id/assess_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Assessment Status"
+
+                                android:textColor="@android:color/black" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/votecountcard"
+                        android:layout_width="140dp"
+                        android:layout_height="170dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/click_here"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:onClick="@{()-> activity.dailyCollectionScreen()}"
+                        card_view:cardCornerRadius="5dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/image_voting_count"
+                                android:layout_width="64dp"
+
+                                android:layout_height="64dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/cerclebackgroundyello"
+                                android:padding="14dp"
+                                android:src="@drawable/ic_counting"
+                                android:visibility="gone" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+                            <TextView
+                                android:id="@+id/dailcoll_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Daily Collection"
+
+                                android:textColor="@android:color/black" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/bottom"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/view_polling_station_image"
+                        android:layout_width="303dp"
+                        android:layout_height="150dp"
+                        android:layout_margin="10dp"
+                        android:clickable="true"
+                        android:focusable="true"
+
+
+                        android:foreground="?android:attr/selectableItemBackground"
+                        card_view:cardCornerRadius="8dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:id="@+id/polling_station_image"
+                                android:layout_width="64dp"
+                                android:layout_height="64dp"
+                                android:background="@drawable/cerclebackgroundpurple"
+                                android:contentDescription="TODO"
+                                android:padding="10dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_5sdp"
+                                android:text="Add"
+                                android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/background" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Capture the polling station image"
+                                android:textColor="@android:color/black" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 </layout>

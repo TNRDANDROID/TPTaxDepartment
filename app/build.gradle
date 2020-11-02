@@ -5,12 +5,12 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     compileSdkVersion 29
     defaultConfig {
-        applicationId "com.nic.VPTax"
+        applicationId "com.nic.TPTaxDepartment"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.Dashboard.runner.AndroidJUnitRunner"
     }
     signingConfigs {
         release {
@@ -27,7 +27,7 @@ android {
             def version = variant.versionName
             def date = new Date()
             def formattedDate = date.format('ddMMyy')
-            outputFileName = "VPTax${variant.buildType.name}_v${version}_${formattedDate}.apk"
+            outputFileName = "TPTaxDepartment${variant.buildType.name}_v${version}_${formattedDate}.apk"
         }
     }
     buildTypes {
