@@ -387,7 +387,7 @@
                             android:orientation="vertical"
                             android:visibility="visible">
 
-                            <TextView
+                            <Spinner
                                 android:id="@+id/current_status"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -463,6 +463,7 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="@dimen/fab_margin"
                         app:backgroundTint="@color/colorPrimary"
+                        android:onClick="@{()-> activity.openCameraScreen()"
                         app:srcCompat="@drawable/camera_icon" />
 
                     <androidx.appcompat.widget.AppCompatButton

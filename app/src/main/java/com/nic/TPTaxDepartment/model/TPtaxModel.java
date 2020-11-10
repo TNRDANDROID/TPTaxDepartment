@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
  * Created by AchanthiSundar on 01-11-2017.
  */
 
-public class VPtaxModel {
+public class TPtaxModel {
 
     private String distictCode;
     private String districtName;

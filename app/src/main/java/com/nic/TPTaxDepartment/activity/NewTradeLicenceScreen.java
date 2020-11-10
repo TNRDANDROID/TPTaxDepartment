@@ -34,15 +34,17 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nic.TPTaxDepartment.Api.Api;
+import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 
 import com.nic.TPTaxDepartment.databinding.NewTradeLicenceScreenBinding;
 
-import com.nic.TPTaxDepartment.model.VPtaxModel;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
+import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
@@ -57,7 +59,7 @@ import java.util.List;
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding; 
     private List<String> GenderList = new ArrayList<>();
-    private List<VPtaxModel> District = new ArrayList<>();
+    private List<TPtaxModel> District = new ArrayList<>();
     public static final String GALLERY_DIRECTORY_NAME = "Hello Camera";
     public static final int MEDIA_TYPE_IMAGE = 1;
     public static final int MEDIA_TYPE_VIDEO = 2;
@@ -141,13 +143,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
-//    public void signUP() {
-//        try {
-//            new ApiService(this).makeJSONObjectRequest("Register", Api.Method.POST, UrlGenerator.getMotivatorCategory(), dataTobeSavedJsonParams(), "not cache", this);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void signUP() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("SaveLicenseTraders", Api.Method.POST, UrlGenerator.saveTradersUrl(), dataTobeSavedJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public JSONObject dataTobeSavedJsonParams() throws JSONException {
@@ -157,15 +159,28 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
 
         JSONObject dataSet = new JSONObject();
-//        dataSet.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_REGISTER_SIGNUP);
-        dataSet.put(AppConstant.NAME, newTradeLicenceScreenBinding.username.getText().toString());
-        dataSet.put(AppConstant.FATHER_HUSBAND_NAME, newTradeLicenceScreenBinding.fatherHusName.getText().toString());
+       dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
+       dataSet.put(AppConstant.MODE, "NEW");
+        dataSet.put(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradersCode.getText().toString());
+        dataSet.put(AppConstant.DATE, newTradeLicenceScreenBinding.date.getText().toString());
+        dataSet.put(AppConstant.LICENCE_TYPE, newTradeLicenceScreenBinding.licenceType.getSelectedItemPosition());
+        dataSet.put(AppConstant.TRADE_DESCRIPTION, newTradeLicenceScreenBinding.tradeDescription.getText().toString());
+        dataSet.put(AppConstant.APPLICANT_NAME, newTradeLicenceScreenBinding.applicantName.getText().toString());
         dataSet.put(AppConstant.GENDER, newTradeLicenceScreenBinding.gender.getSelectedItemPosition());
+        dataSet.put(AppConstant.AGE, newTradeLicenceScreenBinding.age.getText().toString());
+        dataSet.put(AppConstant.FATHER_HUSBAND_NAME, newTradeLicenceScreenBinding.fatherHusName.getText().toString());
         dataSet.put(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
         dataSet.put(AppConstant.E_MAIL, newTradeLicenceScreenBinding.emailId.getText().toString());
-        dataSet.put(AppConstant.ADDRESS, newTradeLicenceScreenBinding.address.getText().toString());
+        dataSet.put(AppConstant.ESTABLISHMENT_NAME, newTradeLicenceScreenBinding.establishName.getText().toString());
+        dataSet.put(AppConstant.WARD_ID, newTradeLicenceScreenBinding.wardNo.getSelectedItemPosition());
+        dataSet.put(AppConstant.STREET_ID, newTradeLicenceScreenBinding.streetName.getText().toString());
+        dataSet.put(AppConstant.DOOR_NO, newTradeLicenceScreenBinding.doorNo.getText().toString());
+        dataSet.put(AppConstant.LICENCE_VALIDITY, newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition());
+        dataSet.put(AppConstant.LATITUDE, "");
+        dataSet.put(AppConstant.LONGITUDE, "");
+        dataSet.put(AppConstant.TRADE_IMAGE, "");
 
-        dataSet.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
+      //  dataSet.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
 
         Log.d("RegisterDataSet", "" + dataSet);
         String authKey = dataSet.toString();
@@ -219,45 +234,74 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void validateUserDetails() {
 
-            if (!newTradeLicenceScreenBinding.username.getText().toString().isEmpty()) {
-                if (!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()) {
-                    if (!"Select Gender".equalsIgnoreCase(GenderList.get(newTradeLicenceScreenBinding.gender.getSelectedItemPosition()))) {
-                        if (!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()) {
-                            if (Utils.isValidMobile(newTradeLicenceScreenBinding.mobileNo.getText().toString())) {
-                                if (!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()) {
-                                    if (Utils.isEmailValid(newTradeLicenceScreenBinding.emailId.getText().toString())) {
-                                        if (!newTradeLicenceScreenBinding.address.getText().toString().isEmpty()) {
-//                                            if (!"Select District".equalsIgnoreCase(District.get(newTradeLicenceScreenBinding.district.getSelectedItemPosition()).getDistrictName())) {
-                                                Utils.showAlert(this, " "+GenderList.get(newTradeLicenceScreenBinding.gender.getSelectedItemPosition()));
-//                                            } else {
-//                                                Utils.showAlert(this, "உங்கள் மாவட்டத்தைத் தேர்ந்தெடுக்கவும்!");
-//                                            }
+        if (!newTradeLicenceScreenBinding.tradersCode.getText().toString().isEmpty()) {
+            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
+                if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty()) {
+                    if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
+                        if (!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()) {
+                            if (!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()) {
+                                if (!"Select Gender".equalsIgnoreCase(GenderList.get(newTradeLicenceScreenBinding.gender.getSelectedItemPosition()))) {
+                                    if (!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()) {
+                                        if (!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()) {
+                                            if (Utils.isValidMobile(newTradeLicenceScreenBinding.mobileNo.getText().toString())) {
+                                                if (!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()) {
+                                                    if (Utils.isEmailValid(newTradeLicenceScreenBinding.emailId.getText().toString())) {
+                                                        if (!newTradeLicenceScreenBinding.establishName.getText().toString().isEmpty()) {
+                                                            if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty()) {
+                                                                if (!newTradeLicenceScreenBinding.streetName.getText().toString().isEmpty()) {
+                                                                    if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
+                                                                        if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty()) {
+                                                                        }
+                                                                    } else {
+                                                                        Utils.showAlert(this, "Enter License validity!");
+                                                                    }
+                                                                } else {
+                                                                    Utils.showAlert(this, "Enter Door no!");
+                                                                }
+                                                            } else {
+                                                                Utils.showAlert(this, "Enter Street name!");
+                                                            }
+                                                        } else {
+                                                            Utils.showAlert(this, "Enter Ward no name!");
+                                                        }
+                                                    } else {
+                                                        Utils.showAlert(this, "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                                    }
+                                                } else {
+                                                    Utils.showAlert(this, "உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                                }
+                                            } else {
+                                                Utils.showAlert(this, "சரியான கைபேசி எண்ணை உள்ளிடவும்!");
+                                            }
                                         } else {
-                                            Utils.showAlert(this, "உங்கள் முகவரியை உள்ளிடவும்!");
+                                            Utils.showAlert(this, "உங்கள் கைபேசி எண்ணை உள்ளிடவும்!");
                                         }
                                     } else {
-                                        Utils.showAlert(this, "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                        Utils.showAlert(this, "உங்கள் age தேர்ந்தெடுக்கவும்!");
                                     }
                                 } else {
-                                    Utils.showAlert(this, "உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                    Utils.showAlert(this, "உங்கள் பாலினத்தைத் தேர்ந்தெடுக்கவும்!");
                                 }
                             } else {
-                                Utils.showAlert(this, "சரியான கைபேசி எண்ணை உள்ளிடவும்!");
+                                Utils.showAlert(this, "உங்கள் தந்தை / கணவர் பெயரை உள்ளிடவும்!");
                             }
                         } else {
-                            Utils.showAlert(this, "உங்கள் கைபேசி எண்ணை உள்ளிடவும்!");
+                            Utils.showAlert(this, "உங்கள் பெயரை உள்ளிடவும்!");
                         }
                     } else {
-                        Utils.showAlert(this, "உங்கள் பாலினத்தைத் தேர்ந்தெடுக்கவும்!");
+                        Utils.showAlert(this, "Enter Trade Desription!");
                     }
-
                 } else {
-                    Utils.showAlert(this, "உங்கள் தந்தை / கணவர் பெயரை உள்ளிடவும்!");
+                    Utils.showAlert(this, "Select License type!");
                 }
             } else {
-                Utils.showAlert(this, "உங்கள் பெயரை உள்ளிடவும்!");
+                Utils.showAlert(this, "தேதியைத் தேர்ந்தெடுக்கவும்!");
             }
+        } else {
+            Utils.showAlert(this, "Enter Traders code!");
         }
+    }
+
 
 
 
@@ -441,6 +485,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         startActivity(intent);
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+    }
+
+    public void openCameraScreen() {
+        Intent intent = new Intent(this, CameraScreen.class);
+        intent.putExtra(AppConstant.TRADE_CODE,newTradeLicenceScreenBinding.tradersCode.getText().toString());
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
 }

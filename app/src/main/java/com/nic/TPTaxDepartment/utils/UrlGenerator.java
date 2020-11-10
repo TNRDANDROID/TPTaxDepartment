@@ -15,6 +15,10 @@ public class UrlGenerator {
         return NICApplication.getAppString(R.string.LOGIN_URL);
     }
 
+    public static String saveTradersUrl() {
+        return NICApplication.getAppString(R.string.SAVE_TRADERS_URL);
+    }
+
     public static String getServicesListUrl() {
         return NICApplication.getAppString(R.string.BASE_SERVICES_URL);
     }

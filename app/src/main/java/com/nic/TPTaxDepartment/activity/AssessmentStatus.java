@@ -10,7 +10,7 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.databinding.AssessmentStatusBinding;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
-public class AssessmentStatus extends AppCompatActivity {
+public class  AssessmentStatus extends AppCompatActivity {
 
     private AssessmentStatusBinding assessmentStatusBinding;
 

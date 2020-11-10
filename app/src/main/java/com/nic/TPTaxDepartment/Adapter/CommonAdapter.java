@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 
 import com.nic.TPTaxDepartment.R;
-import com.nic.TPTaxDepartment.model.VPtaxModel;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
 
 import java.util.List;
 
@@ -17,12 +17,12 @@ import java.util.List;
  * Created by shanmugapriyan on 25/05/16.
  */
 public class CommonAdapter extends BaseAdapter {
-    private List<VPtaxModel> vPtaxModels;
+    private List<TPtaxModel> vPtaxModels;
     private Context mContext;
     private String type;
 
 
-    public CommonAdapter(Context mContext, List<VPtaxModel> ODFMonitoringListValue, String type) {
+    public CommonAdapter(Context mContext, List<TPtaxModel> ODFMonitoringListValue, String type) {
         this.vPtaxModels = ODFMonitoringListValue;
         this.mContext = mContext;
         this.type = type;
@@ -50,7 +50,7 @@ public class CommonAdapter extends BaseAdapter {
 //        TextView tv_type = (TextView) view.findViewById(R.id.tv_spinner_item);
         View view = inflater.inflate(R.layout.spinner_value, parent, false);
         TextView tv_type = (TextView) view.findViewById(R.id.spinner_list_value);
-        VPtaxModel ODFMonitoringList = vPtaxModels.get(position);
+        TPtaxModel ODFMonitoringList = vPtaxModels.get(position);
         if (type.equalsIgnoreCase("DistrictList")) {
             tv_type.setText(ODFMonitoringList.getDistrictName());
 

@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.databinding.ExistingTradeLicenceBinding;
+import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 public class ExistingTradeLicence extends AppCompatActivity {
@@ -36,6 +37,14 @@ public class ExistingTradeLicence extends AppCompatActivity {
         Intent intent = new Intent( this, ExistingTradeSubmit.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+    public void validateDetails() {
+
+        if (!existingTradeLicenceBinding.tradersCode.getText().toString().isEmpty() || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || !existingTradeLicenceBinding.streetId.getText().toString().isEmpty() || !existingTradeLicenceBinding.wardId.getText().toString().isEmpty()) {
+            existTradeLicenceSubmit();
+        } else {
+            Utils.showAlert(this, "Enter Any One!");
+        }
     }
 
 

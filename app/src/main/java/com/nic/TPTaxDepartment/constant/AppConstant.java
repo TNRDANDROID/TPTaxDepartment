@@ -37,12 +37,29 @@ public class AppConstant {
     public static String PV_NAME = "pvname";
     public static String DESIG_NAME = "desig_name";
     public static String NAME = "user_name";
-    public static String FATHER_HUSBAND_NAME = "father_husband_name";
-    public static String GENDER = "gender";
-    public static String MOBILE = "mobile";
-    public static String E_MAIL = "email";
+
     public static String ADDRESS = "address";
     public static String DISTRICT = "address";
+
+    public static String MODE = "mode";
+    public static String TRADE_CODE = "tradecode";
+    public static String DATE = "date";
+    public static String LICENCE_TYPE = "licencetypeid";
+    public static String TRADE_DESCRIPTION = "tradedesct";
+    public static String APPLICANT_NAME = "apname_en";
+    public static String GENDER = "apgender";
+    public static String AGE = "apage";
+    public static String FATHER_HUSBAND_NAME = "apfathername_en";
+    public static String MOBILE = "mobileno";
+    public static String E_MAIL = "email";
+    public static String ESTABLISHMENT_NAME = "establishment_name_en";
+    public static String WARD_ID = "wardid";
+    public static String STREET_ID = "streetid";
+    public static String DOOR_NO = "doorno";
+    public static String LICENCE_VALIDITY = "licence_validity";
+    public static String LATITUDE = "loc_lat";
+    public static String LONGITUDE = "loc_long";
+    public static String TRADE_IMAGE = "loc_trade_image";
 
 
 }
