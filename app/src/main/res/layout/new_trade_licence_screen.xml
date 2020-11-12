@@ -251,7 +251,7 @@
 
                             <TextView
                                 android:id="@+id/calendar_icon"
-
+                                android:onClick="@{()-> activity.showDatePickerDialog()}"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_alignParentEnd="true"
@@ -1188,6 +1188,7 @@
                         android:background="@drawable/click_here"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackground"
+                        android:onClick="@{()-> activity.signUP()}"
                         android:text="Submit"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"

@@ -131,57 +131,57 @@ public class dbData {
 
 
 
-    public void update_Track() {
-        String whereClause = "server_flag = server_flag";
-        Log.d("Update id is ", "id");
-        ContentValues values = new ContentValues();
-        values.put("server_flag", 1);
-        db.update(DBHelper.SAVE_TRACK_TABLE, values, whereClause, null);
-    }
-
-    public void deleteVillageTable() {
-        db.execSQL("delete from " + DBHelper.VILLAGE_TABLE_NAME);
-    }
-
-    public void deleteHabitationTable() {
-        db.execSQL("delete from " + DBHelper.HABITATION_TABLE_NAME);
-    }
-
-    public void deleteTankStructure() {
-        db.execSQL("delete from " + DBHelper.MI_TANK_STRUCTURE);
-    }
-
-    public void deleteMITankData() {
-        db.execSQL("delete from " + DBHelper.MI_TANK_DATA);
-    }
-
-    public void deleteStructures() {
-        db.execSQL("delete from " + DBHelper.MI_TANK_DATA_STRUCTURES);
-    }
-
-    public void deleteMITankCondition() {
-        db.execSQL("delete from " + DBHelper.MI_TANK_CONDITION);
-    }
-
-    public void deleteMITankImages() {
-        db.execSQL("delete from " + DBHelper.SAVE_MI_TANK_IMAGES);
-    }
-
-    public void deleteSaveTrackTable() {
-        db.execSQL("delete from " + DBHelper.SAVE_TRACK_TABLE);
-    }
-
-
+//    public void update_Track() {
+//        String whereClause = "server_flag = server_flag";
+//        Log.d("Update id is ", "id");
+//        ContentValues values = new ContentValues();
+//        values.put("server_flag", 1);
+//        db.update(DBHelper.SAVE_TRACK_TABLE, values, whereClause, null);
+//    }
+//
+//    public void deleteVillageTable() {
+//        db.execSQL("delete from " + DBHelper.VILLAGE_TABLE_NAME);
+//    }
+//
+//    public void deleteHabitationTable() {
+//        db.execSQL("delete from " + DBHelper.HABITATION_TABLE_NAME);
+//    }
+//
+//    public void deleteTankStructure() {
+//        db.execSQL("delete from " + DBHelper.MI_TANK_STRUCTURE);
+//    }
+//
+//    public void deleteMITankData() {
+//        db.execSQL("delete from " + DBHelper.MI_TANK_DATA);
+//    }
+//
+//    public void deleteStructures() {
+//        db.execSQL("delete from " + DBHelper.MI_TANK_DATA_STRUCTURES);
+//    }
+//
+//    public void deleteMITankCondition() {
+//        db.execSQL("delete from " + DBHelper.MI_TANK_CONDITION);
+//    }
+//
+//    public void deleteMITankImages() {
+//        db.execSQL("delete from " + DBHelper.SAVE_MI_TANK_IMAGES);
+//    }
+//
+//    public void deleteSaveTrackTable() {
+//        db.execSQL("delete from " + DBHelper.SAVE_TRACK_TABLE);
+//    }
+//
+//
     public void deleteAll() {
 
-        deleteVillageTable();
-        deleteHabitationTable();
-        deleteTankStructure();
-        deleteMITankData();
-        deleteStructures();
-        deleteMITankCondition();
-        deleteMITankImages();
-        deleteSaveTrackTable();
+//        deleteVillageTable();
+//        deleteHabitationTable();
+//        deleteTankStructure();
+//        deleteMITankData();
+//        deleteStructures();
+//        deleteMITankCondition();
+//        deleteMITankImages();
+//        deleteSaveTrackTable();
     }
 
 
