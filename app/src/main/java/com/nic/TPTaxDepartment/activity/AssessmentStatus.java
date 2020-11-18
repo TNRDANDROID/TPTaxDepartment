@@ -2,18 +2,35 @@ package com.nic.TPTaxDepartment.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.android.volley.VolleyError;
+import com.nic.TPTaxDepartment.Api.Api;
+import com.nic.TPTaxDepartment.Api.ApiService;
+import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.databinding.AssessmentStatusBinding;
+import com.nic.TPTaxDepartment.session.PrefManager;
+import com.nic.TPTaxDepartment.utils.UrlGenerator;
+import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
-public class  AssessmentStatus extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class  AssessmentStatus extends AppCompatActivity implements Api.ServerResponseListener {
 
     private AssessmentStatusBinding assessmentStatusBinding;
-
+    private PrefManager prefManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +39,95 @@ public class  AssessmentStatus extends AppCompatActivity {
         assessmentStatusBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        prefManager = new PrefManager(this);
+
+        assessmentStatusBinding.assessmentId.setOnEditorActionListener(
+                new EditText.OnEditorActionListener() {
+                    @Override
+                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                                actionId == EditorInfo.IME_ACTION_DONE ||
+                                event != null &&
+                                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+                            if (event == null || !event.isShiftPressed()) {
+                                // the user is done typing.
+                                getAssessmentStatus();
+                                return true; // consume.
+                            }
+                        }
+                        return false; // pass on to other listeners.
+                    }
+                }
+        );
 
     }
+    public void getAssessmentStatus() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("AssessmentStatus", Api.Method.POST, UrlGenerator.saveTradersUrl(), assessmentStatusJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
+    public JSONObject assessmentStatusJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), checkAssessmentStatusJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("workList", "" + authKey);
+        return dataSet;
+    }
+
+    public JSONObject checkAssessmentStatusJsonParams() throws JSONException {
+
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"CheckAssessmentStatus");
+//        data.put(AppConstant.TAX_TYPE_ID,assessmentStatusBinding.taxType.getSelectedItemId());
+//        data.put(AppConstant.ASSESSMENT_NO,assessmentStatusBinding.assessmentId.getText());
+        data.put(AppConstant.TAX_TYPE_ID,"1");
+        data.put(AppConstant.ASSESSMENT_NO,"28691");
+        return data;
+    }
+
+
+
+    public void OnMyResponse(ServerResponse serverResponse) {
+        try {
+            String urlType = serverResponse.getApi();
+            JSONObject responseObj = serverResponse.getJsonResponse();
+
+            if ("AssessmentStatus".equals(urlType) && responseObj != null) {
+                String key = responseObj.getString(AppConstant.ENCODE_DATA);
+                String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
+                JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
+                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
+                    assessmentStatusBinding.applicantNameTv.setText("");
+                    assessmentStatusBinding.detailsTv.setText("");
+
+                } else if(jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("NO_RECORD")){
+                    Utils.showAlert(this,"NO RECORD FOUND!");
+                }
+//                String authKey = responseDecryptedSchemeKey.toString();
+//                int maxLogSize = 4000;
+//                for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
+//                    int start = i * maxLogSize;
+//                    int end = (i+1) * maxLogSize;
+//                    end = end > authKey.length() ? authKey.length() : end;
+//                    Log.v("to_send", authKey.substring(start, end));
+//                }
+//                Log.d("WorkListResp", "" + responseDecryptedSchemeKey);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void OnError(VolleyError volleyError) {
+
+    }
     public void dashboard() {
         Intent intent = new Intent(this, Dashboard.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

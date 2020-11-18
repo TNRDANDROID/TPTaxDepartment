@@ -2,7 +2,8 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools">
+    xmlns:card_view="http://schemas.android.com/tools"
+    xmlns:customfontdemo="http://schemas.android.com/tools">
 
     <data>
 
@@ -91,6 +92,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -141,8 +143,6 @@
             </RelativeLayout>
 
         </RelativeLayout>
-
-
         <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
@@ -153,22 +153,88 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center">
 
 
-                android:layout_centerInParent="true"
-
-                android:gravity="center">
-
-
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/road_layout"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
                     android:layout_below="@+id/district_card"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginBottom="@dimen/_15sdp"
+                        android:layout_above="@+id/top">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:layout_marginTop="?attr/actionBarSize"
+                            android:text="Date"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_16sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+                        <RelativeLayout
+                            android:id="@+id/date_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/header"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:background="@drawable/rectangle_box"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+
+                            <TextView
+                                android:id="@+id/date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toLeftOf="@+id/calendar_icon"
+                                android:ellipsize="marquee"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:hint=""
+                                android:textAlignment="viewStart"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_15sdp"
+                                customfontdemo:fontName="@string/font_circular_book" />
+
+                            <TextView
+                                android:id="@+id/calendar_icon"
+                                android:onClick="@{()-> activity.showDatePickerDialog()}"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginRight="@dimen/_6sdp"
+                                android:background="@drawable/datepicker_icon"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+
+                                android:gravity="center" />
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/top"
@@ -222,7 +288,7 @@
                                     android:background="@drawable/background" />
 
                                 <TextView
-                                    android:id="@+id/trade_tv"
+                                    android:id="@+id/property_tax"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -241,7 +307,7 @@
                             </LinearLayout>
                         </RelativeLayout>
 
-                        <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                        <RelativeLayout
                             android:id="@+id/attendanecard"
                             android:layout_width="140dp"
                             android:layout_height="170dp"
@@ -250,8 +316,8 @@
 
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="5dp"
-                            card_view:cardElevation="3dp">
+                            app:cardCornerRadius="5dp"
+                            app:cardElevation="3dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -283,9 +349,9 @@
                                     android:background="@drawable/background" />
 
                                 <TextView
-                                    android:id="@+id/field_tv"
+                                    android:id="@+id/water_tax"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="23dp"
                                     android:gravity="center"
                                     android:padding="5dp"
                                     android:text="Field Visit"
@@ -356,7 +422,7 @@
                                     android:background="@drawable/background" />
 
                                 <TextView
-                                    android:id="@+id/assess_tv"
+                                    android:id="@+id/proff_tax"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -417,7 +483,7 @@
                                     android:background="@drawable/background" />
 
                                 <TextView
-                                    android:id="@+id/dailcoll_tv"
+                                    android:id="@+id/non_tax"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -481,7 +547,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Trade Licence"
+                                    android:text="Trade License"
                                     android:textStyle="bold" />
 
                                 <View
@@ -491,7 +557,7 @@
                                     android:background="@drawable/background" />
 
                                 <TextView
-                                    android:id="@+id/trade_count"
+                                    android:id="@+id/trade_license"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
@@ -511,7 +577,7 @@
 
                     </LinearLayout>
 
-                </RelativeLayout>
+                </LinearLayout>
 
 
             </RelativeLayout>

@@ -94,9 +94,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
-        date = (TextView) findViewById(R.id.date);
+        date = newTradeLicenceScreenBinding.date;
         loadGenderList();
-        getLicenceTypeList();
+       // getLicenceTypeList();
+       // getWardList();
+       // getStreetList();
 
         String colored = "*";
         String mobileView= "கைபேசி எண் / Mobile No";
@@ -188,6 +190,42 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
         }
 
+    }
+
+    public void getWardList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("WardList", Api.Method.POST, UrlGenerator.prodOpenUrl(), wardJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject wardJsonParams() throws JSONException {
+
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"Ward");
+        data.put(AppConstant.KEY_STATE_CODE,"");
+        data.put(AppConstant.KEY_DISTRICT_CODE,prefManager.getDistrictCode());
+        data.put(AppConstant.KEY_LB_CODE,"");
+        return data;
+    }
+
+    public void getStreetList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("StreetList", Api.Method.POST, UrlGenerator.prodOpenUrl(), streetJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject streetJsonParams() throws JSONException {
+
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"Street");
+        data.put(AppConstant.KEY_STATE_CODE,"");
+        data.put(AppConstant.KEY_DISTRICT_CODE,prefManager.getDistrictCode());
+        data.put(AppConstant.KEY_LB_CODE,"");
+        return data;
     }
 
     public void getLicenceTypeList() {

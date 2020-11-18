@@ -233,6 +233,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         Log.d("sha", "" + sha256);
 
         params.put(AppConstant.KEY_USER_PASSWORD, sha256);
+        params.put(AppConstant.KEY_APP_CODE,"TP");
 
 
         Log.d("user", "" + loginScreenBinding.username.getText().toString().trim());

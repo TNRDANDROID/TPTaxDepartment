@@ -61,5 +61,12 @@ public class AppConstant {
     public static String LONGITUDE = "loc_long";
     public static String TRADE_IMAGE = "loc_trade_image";
 
+    public static String COLLECTION_DATE = "collection_date";
+    public static String TAX_TYPE_ID = "taxtypeid";
+    public static String ASSESSMENT_NO = "assessment_no";
+    public static String KEY_STATE_CODE = "state_code";
+    public static String KEY_DISTRICT_CODE = "district_code";
+    public static String KEY_LB_CODE = "lb_code";
+
 
 }

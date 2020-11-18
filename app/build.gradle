@@ -41,8 +41,9 @@ android {
             debuggable true
             minifyEnabled false
             signingConfig signingConfigs.debug
-            resValue "string", "LOGIN_URL", "http://landadmin.tn.gov.in/tnrd/rdweb/project/webservices_forms/login_service/login_services.php"
+            resValue "string", "LOGIN_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_stag/project/webservices/login_service/login_services.php"
             resValue "string", "SAVE_TRADERS_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_stag/project/webservices/tndtp/tndtp_dept_services.php"
+            resValue "string", "PROD_OPEN_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_prod/project/webservices/tndtp/tndtp_open_services.php"
             resValue "string", "BASE_SERVICES_URL", "http://10.163.19.140/rdweb/project/webservices_forms/master_services/master_services.php"
             resValue "string", "APP_MAIN_SERVICES_URL", "http://10.163.19.140/rdweb/project/webservices_forms/mi_tank/mi_tank_services.php"
             resValue "string", "TNRD_HOST_NAME", "10.163.19.140"
@@ -54,7 +55,7 @@ android {
             minifyEnabled false
             shrinkResources false
             signingConfig signingConfigs.debug
-            resValue "string", "LOGIN_URL", "https://tnrd.gov.in/project/webservices_forms/login_service/login_services.php"
+            resValue "string", "LOGIN_URL", "https://landadmin.tn.gov.in/project/webservices_forms/login_service/login_services.php"
             resValue "string", "SAVE_TRADERS_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_stag/project/webservices/tndtp/tndtp_dept_services.php"
             resValue "string", "BASE_SERVICES_URL", "https://tnrd.gov.in/project/webservices_forms/master_services/master_services.php"
             resValue "string", "APP_MAIN_SERVICES_URL", "https://tnrd.gov.in/project/webservices_forms/mi_tank/mi_tank_services.php"
@@ -88,6 +89,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.core:core-ktx:1.0.2'
     implementation 'com.google.android.material:material:1.2.0-alpha05'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'

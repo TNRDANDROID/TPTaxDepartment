@@ -463,7 +463,7 @@
                         android:layout_gravity="bottom|end"
                         android:layout_margin="@dimen/fab_margin"
                         app:backgroundTint="@color/colorPrimary"
-                        android:onClick="@{()-> activity.openCameraScreen()"
+                        android:onClick="@{()->activity.image()"
                         app:srcCompat="@drawable/camera_icon" />
 
                     <androidx.appcompat.widget.AppCompatButton
