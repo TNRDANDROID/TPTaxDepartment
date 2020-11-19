@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.databinding.ExistTradeSubmitBinding;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
@@ -37,5 +38,13 @@ public class ExistingTradeSubmit extends AppCompatActivity {
         super.onBackPressed();
         setResult(Activity.RESULT_CANCELED);
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+    }
+
+    public void openCameraScreen() {
+        Intent intent = new Intent(this, CameraScreen.class);
+        intent.putExtra(AppConstant.TRADE_CODE,"");
+        intent.putExtra("screen_status","new");
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

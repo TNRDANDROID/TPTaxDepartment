@@ -32,6 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "pvcode INTEGER," +
                 "tradecode INTEGER," +
                 "loc_trade_image BLOB," +
+                "screen_status TEXT," +
                 "loc_lat TEXT," +
                 "loc_long TEXT)");
 

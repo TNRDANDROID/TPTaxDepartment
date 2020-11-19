@@ -6,7 +6,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
@@ -18,6 +21,7 @@ import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,6 +49,7 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.NewTradeLicenceScreenBinding;
 
 import com.nic.TPTaxDepartment.model.TPtaxModel;
@@ -81,6 +86,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String pref_district;
     private Handler handler = new Handler();
     private static TextView date;
+    private SQLiteDatabase db;
+    public static DBHelper dbHelper;
 
 
     @Override
@@ -89,6 +96,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding = DataBindingUtil.setContentView(this, R.layout.new_trade_licence_screen);
         newTradeLicenceScreenBinding.setActivity(this);
         prefManager = new PrefManager(this);
+        try {
+            dbHelper = new DBHelper(this);
+            db = dbHelper.getWritableDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mApps);
         newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
@@ -249,8 +262,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             new ApiService(this).makeJSONObjectRequest("SaveLicenseTraders", Api.Method.POST, UrlGenerator.saveTradersUrl(), dataTobeSavedJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
-    }
+        } }
 
 
     public JSONObject dataTobeSavedJsonParams() throws JSONException {
@@ -296,11 +308,30 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        dataSet.put(AppConstant.STREET_ID, newTradeLicenceScreenBinding.streetName.getText().toString());
 //        dataSet.put(AppConstant.DOOR_NO, newTradeLicenceScreenBinding.doorNo.getText().toString());
 //        dataSet.put(AppConstant.LICENCE_VALIDITY, newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition());
+
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+newTradeLicenceScreenBinding.tradersCode.getText();
+
+        Cursor cursor = db.rawQuery(sql, null);
+        Log.d("cursor_count", String.valueOf(cursor.getCount()));
+        String image = null;
+        String lat = null;
+        if (cursor.getCount() > 0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    image = cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TRADE_IMAGE));
+                    lat = cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LATITUDE));
+                    Log.d("lat", "" + lat);
+                    Log.d("image", "" + image);
+                } while (cursor.moveToNext());
+            }
+        }
+        Log.d("olat", "" + lat);
+        Log.d("oimage", "" + image);
 //        dataSet.put(AppConstant.LATITUDE, "");
 //        dataSet.put(AppConstant.LONGITUDE, "");
 //        dataSet.put(AppConstant.TRADE_IMAGE, "");
 
-        Log.d("RegisterDataSet", "" + dataSet);
+        Log.d("DataSet", "" + dataSet);
         String authKey = dataSet.toString();
         int maxLogSize = 2000;
         for (int i = 0; i <= authKey.length() / maxLogSize; i++) {
@@ -420,176 +451,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
-
-
-
-    public void getCameraPermission() {
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (CameraUtils.checkPermissions(NewTradeLicenceScreen.this)) {
-                captureImage();
-            } else {
-                requestCameraPermission(MEDIA_TYPE_IMAGE);
-            }
-        } else {
-            captureImage();
-        }
-
-
-    }
-
-    private void captureImage() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        File file = CameraUtils.getOutputMediaFile(MEDIA_TYPE_IMAGE);
-        if (file != null) {
-            imageStoragePath = file.getAbsolutePath();
-        }
-
-        Uri fileUri = CameraUtils.getOutputMediaFileUri(this, file);
-
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-
-        // start the image capture Intent
-        startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
-    }
-
-
-    private void requestCameraPermission(final int type) {
-        Dexter.withActivity(this)
-                .withPermissions(Manifest.permission.CAMERA,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .withListener(new MultiplePermissionsListener() {
-                    @Override
-                    public void onPermissionsChecked(MultiplePermissionsReport report) {
-                        if (report.areAllPermissionsGranted()) {
-
-                            if (type == MEDIA_TYPE_IMAGE) {
-                                // capture picture
-                                captureImage();
-                            } else {
-//                                captureVideo();
-                            }
-
-                        } else if (report.isAnyPermissionPermanentlyDenied()) {
-                            showPermissionsAlert();
-                        }
-                    }
-
-                    @Override
-                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                        token.continuePermissionRequest();
-                    }
-                }).check();
-    }
-
-    private void showPermissionsAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Permissions required!")
-                .setMessage("Camera needs few permissions to work properly. Grant them in settings.")
-                .setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        CameraUtils.openSettings(NewTradeLicenceScreen.this);
-                    }
-                })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).show();
-    }
-
-    public void previewCapturedImage() {
-        try {
-            // hide video preview
-            Bitmap bitmap = CameraUtils.optimizeBitmap(BITMAP_SAMPLE_SIZE, imageStoragePath);
-//            newTradeLicenceScreenBinding.profileImagePreview.setVisibility(View.GONE);
-            ExifInterface ei = null;
-            try {
-                ei = new ExifInterface(imageStoragePath);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_UNDEFINED);
-
-            Bitmap rotatedBitmap = null;
-            switch (orientation) {
-
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    rotatedBitmap = rotateImage(bitmap, 90);
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    rotatedBitmap = rotateImage(bitmap, 180);
-                    break;
-
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    rotatedBitmap = rotateImage(bitmap, 270);
-                    break;
-
-                case ExifInterface.ORIENTATION_NORMAL:
-                default:
-                    rotatedBitmap = bitmap;
-            }
-//            newTradeLicenceScreenBinding.profileImage.setImageBitmap(rotatedBitmap);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                matrix, true);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // if the result is capturing Image
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                // Refreshing the gallery
-                CameraUtils.refreshGallery(getApplicationContext(), imageStoragePath);
-
-                // successfully captured the image
-                // display it in image view
-                previewCapturedImage();
-            } else if (resultCode == RESULT_CANCELED) {
-                // user cancelled Image capture
-                Toast.makeText(getApplicationContext(),
-                        "User cancelled image capture", Toast.LENGTH_SHORT)
-                        .show();
-            } else {
-                // failed to capture image
-                Toast.makeText(getApplicationContext(),
-                        "Sorry! Failed to capture image", Toast.LENGTH_SHORT)
-                        .show();
-            }
-//        } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
-//            if (resultCode == RESULT_OK) {
-//                // Refreshing the gallery
-//                CameraUtils.refreshGallery(getApplicationContext(), imageStoragePath);
-//
-//                // video successfully recorded
-//                // preview the recorded video
-////                previewVideo();
-//            } else if (resultCode == RESULT_CANCELED) {
-//                // user cancelled recording
-//                Toast.makeText(getApplicationContext(),
-//                        "User cancelled video recording", Toast.LENGTH_SHORT)
-//                        .show();
-//            } else {
-//                // failed to record video
-//                Toast.makeText(getApplicationContext(),
-//                        "Sorry! Failed to record video", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-        }
-    }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -608,6 +469,15 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public void openCameraScreen() {
         Intent intent = new Intent(this, CameraScreen.class);
         intent.putExtra(AppConstant.TRADE_CODE,newTradeLicenceScreenBinding.tradersCode.getText().toString());
+        intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"new");
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    public void viewImageScreen() {
+        Intent intent = new Intent(this, FullImageActivity.class);
+        intent.putExtra(AppConstant.TRADE_CODE,newTradeLicenceScreenBinding.tradersCode.getText().toString());
+        intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"new");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }

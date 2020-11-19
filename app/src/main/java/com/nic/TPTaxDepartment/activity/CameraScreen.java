@@ -94,6 +94,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
     String  pref_stage;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String trader_code;
+    String screen_status;
 
 
 
@@ -125,6 +126,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
 
 
        trader_code =  getIntent().getStringExtra(AppConstant.TRADE_CODE);
+       screen_status =  getIntent().getStringExtra("screen_status");
     }
 
     @Override
@@ -160,7 +162,10 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
 
             ContentValues values = new ContentValues();
             values.put(AppConstant.TRADE_IMAGE,image_str.trim());
+            values.put(AppConstant.LATITUDE, offlatTextValue.toString());
+            values.put(AppConstant.LONGITUDE, offlongTextValue.toString());
             values.put(AppConstant.TRADE_CODE,trader_code);
+            values.put("screen_status",screen_status);
             id = db.insert(DBHelper.SAVE_TRADE_IMAGE, null, values);
 //            values.put(AppConstant.WORK_ID,work_id );
 //            values.put(AppConstant.WORK_GROUP_ID, getIntent().getStringExtra(AppConstant.WORK_GROUP_ID));

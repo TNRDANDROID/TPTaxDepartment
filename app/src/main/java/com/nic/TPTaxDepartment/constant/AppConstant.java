@@ -67,6 +67,7 @@ public class AppConstant {
     public static String KEY_STATE_CODE = "state_code";
     public static String KEY_DISTRICT_CODE = "district_code";
     public static String KEY_LB_CODE = "lb_code";
+    public static String KEY_SCREEN_STATUS = "screen_status";
 
 
 }

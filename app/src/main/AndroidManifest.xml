@@ -124,6 +124,12 @@
             android:screenOrientation="locked"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
+        <activity
+            android:name="com.nic.TPTaxDepartment.activity.FullImageActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustPan" />
+
 
         <provider
             android:name="androidx.core.content.FileProvider"

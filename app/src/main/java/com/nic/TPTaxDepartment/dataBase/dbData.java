@@ -2,9 +2,18 @@ package com.nic.TPTaxDepartment.dataBase;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.util.Log;
+
+import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
+
+import java.util.ArrayList;
 
 
 public class dbData {
@@ -183,6 +192,57 @@ public class dbData {
 //        deleteMITankImages();
 //        deleteSaveTrackTable();
     }
+
+    public ArrayList<TPtaxModel> selectImage(String tradecode, String status) {
+        db.isOpen();
+        ArrayList<TPtaxModel> cards = new ArrayList<>();
+        Cursor cursor = null;
+        String selection = "tradecode = ? and screen_status = ?";
+        String[] selectionArgs = new String[]{tradecode,status}; ;
+//        if (status.equalsIgnoreCase("new")) {
+//            selection = "tradecode = ? and screen_status = ?";
+//            selectionArgs = new String[]{tradecode,status};
+//        }else {
+//            selection = "dcode = ? and bcode = ? and pvcode = ? and work_id = ? and type_of_work = ?";
+//            selectionArgs = new String[]{dcode,bcode,pvcode,work_id,type_of_work};
+//        }
+
+        try {
+            cursor = db.query(DBHelper.SAVE_TRADE_IMAGE,
+                    new String[]{"*"}, selection,selectionArgs, null, null, null);
+
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        cards = new ArrayList<>();
+
+                        byte[] photo = cursor.getBlob(cursor.getColumnIndexOrThrow(AppConstant.TRADE_IMAGE));
+                        byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                        TPtaxModel card = new TPtaxModel();
+                        card.setTradecode(cursor.getInt(cursor
+                                .getColumnIndexOrThrow(AppConstant.TRADE_CODE)));
+                        card.setLatitude(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.LATITUDE)));
+                        card.setLongitude(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.LONGITUDE)));
+                        card.setImage(decodedByte);
+
+                        cards.add(card);
+                    }while(cursor.moveToNext());
+                }
+            }
+        } catch (Exception e){
+            //   Log.d(DEBUG_TAG, "Exception raised with a value of " + e);
+        } finally{
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return cards;
+    }
+
 
 
 

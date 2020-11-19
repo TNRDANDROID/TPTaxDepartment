@@ -41,7 +41,7 @@ public class TPtaxModel {
     private String miTankConditionName;
     private String miTankSkillLevel;
     public String pointType;
-    public Integer pointSerialNo;
+    public Integer tradecode;
 
     public String getMiTankStructureId() {
         return miTankStructureId;
@@ -314,11 +314,11 @@ public class TPtaxModel {
         this.pointType = pointType;
     }
 
-    public Integer getPointSerialNo() {
-        return pointSerialNo;
+    public Integer getTradecode() {
+        return tradecode;
     }
 
-    public void setPointSerialNo(Integer pointType) {
-        this.pointSerialNo = pointType;
+    public void setTradecode(Integer pointType) {
+        this.tradecode = tradecode;
     }
 }
