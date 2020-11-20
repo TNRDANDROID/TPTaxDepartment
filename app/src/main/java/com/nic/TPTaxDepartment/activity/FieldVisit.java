@@ -9,9 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,8 +49,6 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.Support.MyLocationListener;
-import com.nic.TPTaxDepartment.dataBase.DBHelper;
-import com.nic.TPTaxDepartment.databinding.AssessmentStatusBinding;
 import com.nic.TPTaxDepartment.databinding.FieldVisitBinding;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
 import com.nic.TPTaxDepartment.utils.FontCache;
@@ -59,26 +56,22 @@ import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 
-public class FieldVisit extends AppCompatActivity implements View.OnClickListener{
+public class FieldVisit extends AppCompatActivity implements View.OnClickListener {
 
     private FieldVisitBinding fieldVisitBinding;
     private List<String> Current_Status = new ArrayList<>();
     private boolean imageboolean;
-    String offlatTextValue, offlanTextValue;
+    Double offlatTextValue, offlanTextValue;
     private List<View> viewArrayList = new ArrayList<>();
     LocationManager mlocManager = null;
     LocationListener mlocListener;
@@ -128,10 +121,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
     public void image() {
-        imageWithDescription((MyCustomTextView) findViewById(R.id.fab),"mobile",scrollView);
+        imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
     }
 
-    public void imageWithDescription(final MyCustomTextView action_tv, final String type, final ScrollView scrollView) {
+    public void imageWithDescription(TextView action_tv, final String type) {
 //        imageboolean = true;
 //        dataset = new JSONObject();
 //
@@ -181,9 +174,9 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //            } catch (JSONException e) {
 //                e.printStackTrace();
 //            }
-
- //       }
-
+//
+//        }
+//
 
         final Dialog dialog = new Dialog(this,
                 R.style.AppTheme);
@@ -209,10 +202,23 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             }
         });
         Button done = (Button) dialog.findViewById(R.id.btn_save_inspection);
+        ImageView back = (ImageView) dialog.findViewById(R.id.back_arrow);
+        ImageView home = (ImageView) dialog.findViewById(R.id.home);
         done.setGravity(Gravity.CENTER);
         done.setVisibility(View.VISIBLE);
         done.setTypeface(FontCache.getInstance(this).getFont(FontCache.Font.HEAVY));
-
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dashboard();
+            }
+        });
         done.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -260,8 +266,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                         String description = myEditTextView.getText().toString();
 
                         if (MyLocationListener.latitude > 0) {
-                            offlatTextValue = "" + MyLocationListener.latitude;
-                            offlanTextValue = "" + MyLocationListener.longitude;
+                            offlatTextValue = MyLocationListener.latitude;
+                            offlanTextValue = MyLocationListener.longitude;
                         }
 
                         // Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
@@ -302,28 +308,28 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             imageJson.put(imageArray);
                         }
 
-                      //  long localImageInserted = LoginScreen.db.insert(DBHelper.LOCAL_IMAGE, null, imageValue);
+                        //  long localImageInserted = LoginScreen.db.insert(DBHelper.LOCAL_IMAGE, null, imageValue);
                     }
 //                    try {
 //                        //dataset.put("image_details", imageJson);
 //
 //                        Log.d("post_dataset_inspection", dataset.toString());
-//                           String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
-//                        String authKey = dataset.toString();
-//                        int maxLogSize = 1000;
-//                        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
-//                            int start = i * maxLogSize;
-//                            int end = (i+1) * maxLogSize;
-//                            end = end > authKey.length() ? authKey.length() : end;
-//                            Log.v("to_send", authKey.substring(start, end));
-//                     }
+//                        //   String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
+////                        String authKey = dataset.toString();
+////                        int maxLogSize = 1000;
+////                        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
+////                            int start = i * maxLogSize;
+////                            int end = (i+1) * maxLogSize;
+////                            end = end > authKey.length() ? authKey.length() : end;
+////                            Log.v("to_send", authKey.substring(start, end));
+////                     }
 //                    } catch (JSONException e) {
 //                        e.printStackTrace();
 //                    }
                 }
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 dialog.dismiss();
-                focusOnView(scrollView, action_tv);
+//                focusOnView(scrollView, action_tv);
 
 
             }
@@ -335,7 +341,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         btnAddMobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateView(FieldVisit.this, mobileNumberLayout, "", type);
                 if (imageView.getDrawable() != null && viewArrayList.size()>0) {
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     updateView(FieldVisit.this, mobileNumberLayout, "", type);
@@ -344,7 +349,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 }
             }
         });
-        updateView(this, mobileNumberLayout, values, type);
         if (!values.isEmpty()) {
 //            String level = "";
 //            if(prefManager.getLevels().equalsIgnoreCase("D")) {
@@ -378,8 +382,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //                        imageValue.setImage(decodedByte);
 //
 //                        imagelistvalues.add(imageValue);
-                        updateView(this, mobileNumberLayout,values, "localImage");
-                        //i++;
+//                        updateView(this, mobileNumberLayout,values, "localImage");
+            //i++;
 //                    } while (imageList.moveToNext());
 //                }
 //                try {
@@ -387,7 +391,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-            }
+        }
 
 
             if (values.contains(",")) {
@@ -403,21 +407,89 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     updateView(this, mobileNumberLayout, values, type);
                 }
             }
-       // }
+        // }
 //        else {
 //            updateView(this, mobileNumberLayout, values, type);
 //        }
     }
 
-    private final void focusOnView(final ScrollView your_scrollview, final MyCustomTextView your_EditBox) {
-        your_scrollview.post(new Runnable() {
-            @Override
-            public void run() {
-                your_scrollview.fullScroll(View.FOCUS_DOWN);
-                //your_scrollview.scrollTo(0, your_EditBox.getY());
-            }
-        });
-    }
+//    public  void  submit() {
+//        try {
+//            db.delete(DBHelper.LOCAL_IMAGE, null, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        String stage_of_work_on_inspection = stageListValues.get(sp_stage.getSelectedItemPosition()).getWorkStageCode();
+//        String stage_of_work_on_inspection_name = stageListValues.get(sp_stage.getSelectedItemPosition()).getWorkStageName();
+//        int observation = observationList.get(sp_observation.getSelectedItemPosition()).getObservationID();
+//        String ae_username = AEList.get(sp_ae.getSelectedItemPosition()).getAEUserName();
+//        String inspection_remark = remarkTv.getText().toString();
+//
+//        if (!Utils.isOnline()) {
+//            ContentValues inspectionValue = new ContentValues();
+//            inspectionValue.put(AppConstant.WORK_ID, work_id);
+//            inspectionValue.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION, stage_of_work_on_inspection);
+//            inspectionValue.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION_NAME, stage_of_work_on_inspection_name);
+//            inspectionValue.put(AppConstant.OBSERVATION, observation);
+//            inspectionValue.put(AppConstant.INSPECTION_REMARK, inspection_remark);
+//            inspectionValue.put(AppConstant.AE_USERNAME, ae_username);
+//
+//            long rowUpdated = LoginScreen.db.update(DBHelper.INSPECTION_PENDING, inspectionValue, "work_id  = ? AND delete_flag = ? and inspection_id = ?", new String[]{work_id,"0", String.valueOf(inspectionID) });
+//
+//            if (rowUpdated != -1) {
+//                Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+//                Dashboard.getPendingCount();
+//                finish();
+//            } else {
+//                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            // db.rawQuery("UPDATE "+DBHelper.INSPECTION_PENDING+" SET (stage_of_work_on_inspection, stage_of_work_on_inspection_name, observation,inspection_remark) = ('"+stage_of_work_on_inspection+"', '"+stage_of_work_on_inspection_name+"', '"+observation+"', '"+inspection_remark+"')  WHERE delete_flag=0 and inspection_id = "+inspectionID+" and work_id ="+work_id, null);
+//        } else {
+//            try {
+//
+//                dataset.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION, stage_of_work_on_inspection);
+//                dataset.put(AppConstant.OBSERVATION, observation);
+//                dataset.put(AppConstant.INSPECTION_REMARK, inspection_remark);
+//                dataset.put(AppConstant.AE_USERNAME, ae_username);
+//                if(prefManager.getLevels().equalsIgnoreCase("S")) {
+//                    dataset.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
+//                }
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//        String authKey = dataset.toString();
+//        int maxLogSize = 2000;
+//        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
+//            int start = i * maxLogSize;
+//            int end = (i+1) * maxLogSize;
+//            end = end > authKey.length() ? authKey.length() : end;
+//            Log.v("to_send+_plain", authKey.substring(start, end));
+//        }
+//
+//        String authKey1 = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
+//
+//        for(int i = 0; i <= authKey1.length() / maxLogSize; i++) {
+//            int start = i * maxLogSize;
+//            int end = (i+1) * maxLogSize;
+//            end = end > authKey.length() ? authKey1.length() : end;
+//            Log.v("to_send_encryt", authKey1.substring(start, end));
+//        }
+//        sync_data();
+//    }
+
+
+//    private final void focusOnView(final ScrollView your_scrollview, TextView your_EditBox) {
+//        your_scrollview.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                your_scrollview.fullScroll(View.FOCUS_DOWN);
+//                //your_scrollview.scrollTo(0, your_EditBox.getY());
+//            }
+//        });
+//    }
 
     //Method for update single view based on email or mobile type
     public View updateView(final Activity activity, final LinearLayout emailOrMobileLayout, final String values, final String type) {
@@ -462,7 +534,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 try {
-                  //  imageView.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.VISIBLE);
                     if (viewArrayList.size() != 1) {
                         ((LinearLayout) hiddenInfo.getParent()).removeView(hiddenInfo);
                         viewArrayList.remove(hiddenInfo);
@@ -542,19 +614,23 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     private void captureImage() {
-//        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//
-//        File file = CameraUtils.getOutputMediaFile(MEDIA_TYPE_IMAGE);
-//        if (file != null) {
-//            imageStoragePath = file.getAbsolutePath();
-//        }
-//
-//        Uri fileUri = CameraUtils.getOutputMediaFileUri(this, file);
-//
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-//
-//        // start the image capture Intent
-//        startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        File file = CameraUtils.getOutputMediaFile(MEDIA_TYPE_IMAGE);
+        if (file != null) {
+            imageStoragePath = file.getAbsolutePath();
+        }
+
+        Uri fileUri = CameraUtils.getOutputMediaFileUri(this, file);
+
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
+
+        // start the image capture Intent
+        startActivityForResult(intent, CAMERA_CAPTURE_IMAGE_REQUEST_CODE);
+        if (MyLocationListener.latitude > 0) {
+            offlatTextValue = MyLocationListener.latitude;
+            offlanTextValue = MyLocationListener.longitude;
+        }
     }
 
 

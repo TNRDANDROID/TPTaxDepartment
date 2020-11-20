@@ -1,60 +1,39 @@
 package com.nic.TPTaxDepartment.activity;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.VolleyError;
-import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
-import com.karumi.dexter.PermissionToken;
-import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
-import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.constant.AppConstant;
-
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.NewTradeLicenceScreenBinding;
-
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
-import com.nic.TPTaxDepartment.utils.CameraUtils;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
@@ -62,8 +41,6 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -88,6 +65,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private static TextView date;
     private SQLiteDatabase db;
     public static DBHelper dbHelper;
+    private List<TPtaxModel> LicenceType = new ArrayList<>();
+    private List<TPtaxModel> LicenceValidity = new ArrayList<>();
 
 
     @Override
@@ -382,72 +361,75 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
 
     public void validateUserDetails() {
-
-        if (!newTradeLicenceScreenBinding.tradersCode.getText().toString().isEmpty()) {
-            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
-                if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty()) {
-                    if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
-                        if (!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()) {
-                            if (!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()) {
-                                if (!"Select Gender".equalsIgnoreCase(GenderList.get(newTradeLicenceScreenBinding.gender.getSelectedItemPosition()))) {
-                                    if (!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()) {
-                                        if (!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()) {
-                                            if (Utils.isValidMobile(newTradeLicenceScreenBinding.mobileNo.getText().toString())) {
-                                                if (!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()) {
-                                                    if (Utils.isEmailValid(newTradeLicenceScreenBinding.emailId.getText().toString())) {
-                                                        if (!newTradeLicenceScreenBinding.establishName.getText().toString().isEmpty()) {
-                                                            if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty()) {
-                                                                if (!newTradeLicenceScreenBinding.streetName.getText().toString().isEmpty()) {
-                                                                    if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
-                                                                        if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty()) {
+        if (Utils.isOnline()) {
+            if (!newTradeLicenceScreenBinding.tradersCode.getText().toString().isEmpty()) {
+                if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
+                    if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty()) {
+                        if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
+                            if (!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()) {
+                                if (!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()) {
+                                    if (!"Select Gender".equalsIgnoreCase(GenderList.get(newTradeLicenceScreenBinding.gender.getSelectedItemPosition()))) {
+                                        if (!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()) {
+                                            if (!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()) {
+                                                if (Utils.isValidMobile(newTradeLicenceScreenBinding.mobileNo.getText().toString())) {
+                                                    if (!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()) {
+                                                        if (Utils.isEmailValid(newTradeLicenceScreenBinding.emailId.getText().toString())) {
+                                                            if (!newTradeLicenceScreenBinding.establishName.getText().toString().isEmpty()) {
+                                                                if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty()) {
+                                                                    if (!newTradeLicenceScreenBinding.streetName.getText().toString().isEmpty()) {
+                                                                        if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
+                                                                            if (!"Select Licence Validitity".equalsIgnoreCase(LicenceValidity.get(newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition()).getLicenceValidity())) {
+                                                                            }
+                                                                        } else {
+                                                                            Utils.showAlert(this, "Enter License validity!");
                                                                         }
                                                                     } else {
-                                                                        Utils.showAlert(this, "Enter License validity!");
+                                                                        Utils.showAlert(this, "Enter Door no!");
                                                                     }
                                                                 } else {
-                                                                    Utils.showAlert(this, "Enter Door no!");
+                                                                    Utils.showAlert(this, "Enter Street name!");
                                                                 }
                                                             } else {
-                                                                Utils.showAlert(this, "Enter Street name!");
+                                                                Utils.showAlert(this, "Enter Ward no name!");
                                                             }
                                                         } else {
-                                                            Utils.showAlert(this, "Enter Ward no name!");
+                                                            Utils.showAlert(this, "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
                                                         }
                                                     } else {
-                                                        Utils.showAlert(this, "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                                        Utils.showAlert(this, "உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
                                                     }
                                                 } else {
-                                                    Utils.showAlert(this, "உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                                    Utils.showAlert(this, "சரியான கைபேசி எண்ணை உள்ளிடவும்!");
                                                 }
                                             } else {
-                                                Utils.showAlert(this, "சரியான கைபேசி எண்ணை உள்ளிடவும்!");
+                                                Utils.showAlert(this, "உங்கள் கைபேசி எண்ணை உள்ளிடவும்!");
                                             }
                                         } else {
-                                            Utils.showAlert(this, "உங்கள் கைபேசி எண்ணை உள்ளிடவும்!");
+                                            Utils.showAlert(this, "உங்கள் age தேர்ந்தெடுக்கவும்!");
                                         }
                                     } else {
-                                        Utils.showAlert(this, "உங்கள் age தேர்ந்தெடுக்கவும்!");
+                                        Utils.showAlert(this, "உங்கள் பாலினத்தைத் தேர்ந்தெடுக்கவும்!");
                                     }
                                 } else {
-                                    Utils.showAlert(this, "உங்கள் பாலினத்தைத் தேர்ந்தெடுக்கவும்!");
+                                    Utils.showAlert(this, "உங்கள் தந்தை / கணவர் பெயரை உள்ளிடவும்!");
                                 }
                             } else {
-                                Utils.showAlert(this, "உங்கள் தந்தை / கணவர் பெயரை உள்ளிடவும்!");
+                                Utils.showAlert(this, "உங்கள் பெயரை உள்ளிடவும்!");
                             }
                         } else {
-                            Utils.showAlert(this, "உங்கள் பெயரை உள்ளிடவும்!");
+                            Utils.showAlert(this, "Enter Trade Desription!");
                         }
                     } else {
-                        Utils.showAlert(this, "Enter Trade Desription!");
+                        Utils.showAlert(this, "Select License type!");
                     }
                 } else {
-                    Utils.showAlert(this, "Select License type!");
+                    Utils.showAlert(this, "தேதியைத் தேர்ந்தெடுக்கவும்!");
                 }
             } else {
-                Utils.showAlert(this, "தேதியைத் தேர்ந்தெடுக்கவும்!");
+                Utils.showAlert(this, "Enter Traders code!");
             }
         } else {
-            Utils.showAlert(this, "Enter Traders code!");
+            Utils.showAlert(this, getResources().getString(R.string.no_internet));
         }
     }
 

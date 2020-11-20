@@ -14,7 +14,7 @@ public class TPtaxModel {
     private String Longitude;
     private String typeOfPhoto;
     private String imageRemark;
-    private String dateTime;
+    private String LicenceValidity;
     private String imageAvailable;
     private String HabCode;
     private String Description;
@@ -25,7 +25,7 @@ public class TPtaxModel {
     private String fatherName;
     private String SeccId;
     private String PvCode;
-    private String PvName;
+    private String LicenceType;
     private String blockName;
 
     private String miTankStructureId;
@@ -213,12 +213,12 @@ public class TPtaxModel {
         this.imageRemark = imageRemark;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getLicenceValidity() {
+        return LicenceValidity;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setLicenceValidity(String dateTime) {
+        this.LicenceValidity = dateTime;
     }
 
 
@@ -231,12 +231,12 @@ public class TPtaxModel {
     }
 
 
-    public String getPvName() {
-        return PvName;
+    public String getLicenceType() {
+        return LicenceType;
     }
 
-    public void setPvName(String name) {
-        PvName = name;
+    public void setLicenceType(String name) {
+        LicenceType = name;
     }
 
 

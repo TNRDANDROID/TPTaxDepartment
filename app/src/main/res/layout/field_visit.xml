@@ -456,15 +456,33 @@
 
                     </LinearLayout>
 
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab"
+                    <LinearLayout
+                        android:id="@+id/take_pic_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="@dimen/fab_margin"
-                        app:backgroundTint="@color/colorPrimary"
-                        android:onClick="@{()->activity.image()"
-                        app:srcCompat="@drawable/camera_icon" />
+                         android:layout_gravity="right"
+                        android:onClick="@{()-> activity.image()}"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:background="@drawable/white_background_left_two_corners"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_8sdp">
+
+                        <TextView
+                            android:id="@+id/take_photo_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="Take Photo"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="normal"
+                            style="@string/font_normal" />
+
+                    </LinearLayout>
+
+
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_register"

@@ -189,11 +189,12 @@
                             android:id="@+id/date_layout"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginLeft="@dimen/_25sdp"
                             android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
+                            android:layout_marginRight="@dimen/_25sdp"
+                            android:background="@drawable/click_here"
                             android:orientation="vertical"
+                            android:onClick="@{()-> activity.showDatePickerDialog()}"
                             android:visibility="visible">
 
 
@@ -217,7 +218,7 @@
 
                             <TextView
                                 android:id="@+id/calendar_icon"
-                                android:onClick="@{()-> activity.showDatePickerDialog()}"
+
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:layout_alignParentEnd="true"
@@ -351,7 +352,7 @@
                                 <TextView
                                     android:id="@+id/water_tax"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="23dp"
+                                    android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="5dp"
                                     android:text="Field Visit"

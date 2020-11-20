@@ -201,6 +201,7 @@
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_book" />
 
+
                             <Spinner
                                 android:id="@+id/tax_type"
                                 android:layout_width="fill_parent"

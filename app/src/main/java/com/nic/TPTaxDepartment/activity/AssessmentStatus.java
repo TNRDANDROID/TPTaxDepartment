@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.databinding.AssessmentStatusBinding;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
@@ -27,10 +29,14 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class  AssessmentStatus extends AppCompatActivity implements Api.ServerResponseListener {
 
     private AssessmentStatusBinding assessmentStatusBinding;
     private PrefManager prefManager;
+    private List<TPtaxModel> Block = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +46,31 @@ public class  AssessmentStatus extends AppCompatActivity implements Api.ServerRe
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
+        assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                if (position == 0) {
+//                    sp_block.setClickable(false);
+//                    sp_block.setVisibility(View.GONE);
+//                } else {
+//                    sp_block.setClickable(true);
+//                    sp_block.setVisibility(View.VISIBLE);
+//                }
+//                pref_district = District.get(position).getDistrictName();
+//                prefManager.setDistrictName(pref_district);
+//
+//                blockFilterSpinner(District.get(position).getDistictCode());
+//                prefManager.setDistrictCode(District.get(position).getDistictCode());
+//
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         assessmentStatusBinding.assessmentId.setOnEditorActionListener(
                 new EditText.OnEditorActionListener() {
@@ -52,7 +83,12 @@ public class  AssessmentStatus extends AppCompatActivity implements Api.ServerRe
                                         event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
                             if (event == null || !event.isShiftPressed()) {
                                 // the user is done typing.
-                                getAssessmentStatus();
+                                if(Utils.isOnline()){
+                                    getAssessmentStatus();
+                                }
+                                else{
+                                    Utils.showAlert(AssessmentStatus.this,getResources().getString(R.string.no_internet));
+                                }
                                 return true; // consume.
                             }
                         }

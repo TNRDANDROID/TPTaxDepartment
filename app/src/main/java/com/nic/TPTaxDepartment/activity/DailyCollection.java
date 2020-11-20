@@ -28,7 +28,6 @@ import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,6 +40,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     private Handler handler = new Handler();
     private PrefManager prefManager;
     private static TextView date;
+    static boolean callApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         prefManager = new PrefManager(this);
         date = dailyCollectionBinding.date;
 
+        dailyCollectionBinding.date.setTranslationX(800);
+        dailyCollectionBinding.dateLayout.setTranslationX(800);
         dailyCollectionBinding.voteprogresscard.setTranslationX(800);
         dailyCollectionBinding.attendanecard.setTranslationX(800);
         dailyCollectionBinding.cameracard.setTranslationX(800);
@@ -60,6 +62,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         dailyCollectionBinding.viewPollingStationImage.setTranslationX(800);
 
 
+        dailyCollectionBinding.date.setAlpha(0);
+        dailyCollectionBinding.dateLayout.setAlpha(0);
         dailyCollectionBinding.voteprogresscard.setAlpha(0);
         dailyCollectionBinding.attendanecard.setAlpha(0);
         dailyCollectionBinding.cameracard.setAlpha(0);
@@ -69,13 +73,15 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                dailyCollectionBinding.voteprogresscard.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
-                dailyCollectionBinding.attendanecard.animate().translationX(0).alpha(1).setDuration(1500).setStartDelay(600).start();
-                dailyCollectionBinding.cameracard.animate().translationX(0).alpha(1).setDuration(1600).setStartDelay(800).start();
-                dailyCollectionBinding.votecountcard.animate().translationX(0).alpha(1).setDuration(1700).setStartDelay(1000).start();
-                dailyCollectionBinding.viewPollingStationImage.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
+                dailyCollectionBinding.date.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
+                dailyCollectionBinding.dateLayout.animate().translationX(0).alpha(1).setDuration(1450).setStartDelay(450).start();
+                dailyCollectionBinding.voteprogresscard.animate().translationX(0).alpha(1).setDuration(1500).setStartDelay(600).start();
+                dailyCollectionBinding.attendanecard.animate().translationX(0).alpha(1).setDuration(1600).setStartDelay(800).start();
+                dailyCollectionBinding.cameracard.animate().translationX(0).alpha(1).setDuration(1700).setStartDelay(1000).start();
+                dailyCollectionBinding.votecountcard.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
+                dailyCollectionBinding.viewPollingStationImage.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1400).start();
             }
-        }, 800);
+        }, 500);
 
 
         Animation anim = new ScaleAnimation(
