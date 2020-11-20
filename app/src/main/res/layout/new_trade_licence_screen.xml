@@ -1154,7 +1154,6 @@
                                 android:checked="false"
                                 android:gravity="center"
                                 android:text="Street"
-                                android:onClick="@{()-> activity.signUP()}"
                                 android:textColor="@android:color/black"
                                 android:textSize="13sp" />
 

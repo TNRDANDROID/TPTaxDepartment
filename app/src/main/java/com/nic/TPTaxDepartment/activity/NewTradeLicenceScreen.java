@@ -379,6 +379,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                                     if (!newTradeLicenceScreenBinding.streetName.getText().toString().isEmpty()) {
                                                                         if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
                                                                             if (!"Select Licence Validitity".equalsIgnoreCase(LicenceValidity.get(newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition()).getLicenceValidity())) {
+                                                                                if ((newTradeLicenceScreenBinding.isPaid.isChecked())){
+
+                                                                                }
+                                                                                else{
+
+                                                                                }
                                                                             }
                                                                         } else {
                                                                             Utils.showAlert(this, "Enter License validity!");
