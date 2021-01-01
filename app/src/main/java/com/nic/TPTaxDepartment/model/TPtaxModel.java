@@ -42,6 +42,9 @@ public class TPtaxModel {
     private String miTankSkillLevel;
     public String pointType;
     public Integer tradecode;
+    public String TaxTypeId;
+    public String AssessmentId;
+    public String CurrentStatus;
 
     public String getMiTankStructureId() {
         return miTankStructureId;
@@ -321,4 +324,32 @@ public class TPtaxModel {
     public void setTradecode(Integer pointType) {
         this.tradecode = tradecode;
     }
+
+    public String getTaxTypeId() {
+        return TaxTypeId;
+    }
+
+    public void setTaxTypeId(String taxtypeid) {
+
+        TaxTypeId = taxtypeid;
+    }
+
+    public String getAssessmentId() {
+        return AssessmentId;
+    }
+
+    public void setAssessmentId(String assessmentId) {
+
+        AssessmentId = assessmentId;
+    }
+
+    public String getCurrentStatus() {
+        return CurrentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+
+        CurrentStatus = currentStatus;
+    }
+
 }

@@ -201,7 +201,7 @@
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_book" />
 
-                            <Spinner
+                            <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/tax_type"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
@@ -253,7 +253,7 @@
                                     android:id="@+id/assessment_id"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+                                    android:inputType="textPersonName"/>
 
                             </com.google.android.material.textfield.TextInputLayout>
 
@@ -290,7 +290,7 @@
                             android:visibility="visible">
 
                             <TextView
-                                android:id="@+id/traders_details_tv"
+                                android:id="@+id/applicant_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
@@ -339,7 +339,7 @@
                             android:visibility="visible">
 
                             <TextView
-                                android:id="@+id/details"
+                                android:id="@+id/build_type"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
@@ -497,6 +497,7 @@
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackground"
                         android:text="Submit"
+                        android:onClick="@{()-> activity.validation()}"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15sdp" />

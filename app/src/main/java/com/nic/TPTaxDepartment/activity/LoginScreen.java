@@ -71,6 +71,12 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.login_screen);
         loginScreenBinding.setActivity(this);
+        try {
+            dbHelper = new DBHelper(this);
+            db = dbHelper.getWritableDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());

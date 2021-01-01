@@ -472,12 +472,46 @@
                     </androidx.cardview.widget.CardView>
 
 
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sync_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/bottom"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/sync"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginLeft="@dimen/margin"
+                        android:layout_marginTop="@dimen/_60sdp"
+                        android:layout_marginRight="@dimen/margin"
+                        android:layout_marginBottom="@dimen/_40sdp"
+                        android:background="@drawable/click_here"
+                        android:clickable="true"
+                        android:foreground="?attr/selectableItemBackground"
+                        android:text="Sync"
+                        android:onClick="@{()-> activity.pendingScreen()}"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp" />
+
+
                 </LinearLayout>
 
             </RelativeLayout>
 
 
         </RelativeLayout>
+
+
 
 
     </androidx.core.widget.NestedScrollView>

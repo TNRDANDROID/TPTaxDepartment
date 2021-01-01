@@ -69,5 +69,12 @@ public class AppConstant {
     public static String KEY_LB_CODE = "lb_code";
     public static String KEY_SCREEN_STATUS = "screen_status";
 
+    public static String FIELD_IMAGE = "field_image";
+    public static String ASSESSMENT_ID = "assessment_id";
+    public static String BUILD_TYPE = "build_type";
+    public static String CURRENT_STATUS = "current_status";
+    public static String REMARKS = "remarks";
+    public static String DESCRIPTION = "description";
+
 
 }

@@ -2,29 +2,46 @@ package com.nic.TPTaxDepartment.activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.MediaRouteButton;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.databinding.DataBindingUtil;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
+import com.nic.TPTaxDepartment.dataBase.dbData;
 import com.nic.TPTaxDepartment.databinding.DashboardBinding;
 import com.nic.TPTaxDepartment.dialog.MyDialog;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import java.util.ArrayList;
 
 public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickListener {
+    private static LinearLayout sync_layout;
+    public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     private BottomAppBar bar;
     private DashboardBinding dashboardBinding;
+    ArrayList<TPtaxModel> pendingList = new ArrayList<>();
     final Handler handler = new Handler();
+    public static DBHelper dbHelper;
+    public static SQLiteDatabase db;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +50,13 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         dashboardBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        try {
+            dbHelper = new DBHelper(this);
+            db = dbHelper.getWritableDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        sync_layout =(LinearLayout)  findViewById(R.id.sync_layout);
 
 
         dashboardBinding.voteprogresscard.setTranslationX(800);
@@ -76,7 +100,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         dashboardBinding.assessTv.startAnimation(anim);
         dashboardBinding.dailcollTv.startAnimation(anim);
 
-
+        syncvisiblity();
     }
 
     public void tradeSilenceScreen(){
@@ -103,6 +127,23 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
+    public void pendingScreen(){
+        Intent intent = new Intent( this, PendingScreen.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+    public static void syncvisiblity() {
+
+        Cursor pendingList = db.rawQuery("select * from "+DBHelper.SAVE_FIELD_VISIT, null);
+        int count = pendingList.getCount();
+        Log.d("pending_count",String.valueOf(count));
+        if (count > 0) {
+            sync_layout.setVisibility(View.VISIBLE);
+           // count_tv.setText(String.valueOf(count));
+        }else {
+            sync_layout.setVisibility(View.GONE);
+        }
+    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();

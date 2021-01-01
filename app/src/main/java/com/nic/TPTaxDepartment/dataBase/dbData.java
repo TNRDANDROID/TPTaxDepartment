@@ -243,6 +243,92 @@ public class dbData {
         return cards;
     }
 
+    public ArrayList<TPtaxModel> selectPendingImage(String taxtypeid) {
+        db.isOpen();
+        ArrayList<TPtaxModel> cards = new ArrayList<>();
+        Cursor cursor = null;
+        String selection = "taxtypeid = ?";
+        String[] selectionArgs = new String[]{taxtypeid}; ;
+//        if (status.equalsIgnoreCase("new")) {
+//            selection = "tradecode = ? and screen_status = ?";
+//            selectionArgs = new String[]{tradecode,status};
+//        }else {
+//            selection = "dcode = ? and bcode = ? and pvcode = ? and work_id = ? and type_of_work = ?";
+//            selectionArgs = new String[]{dcode,bcode,pvcode,work_id,type_of_work};
+//        }
+
+        try {
+            cursor = db.query(DBHelper.CAPTURED_PHOTO,
+                    new String[]{"*"}, selection,selectionArgs, null, null, null);
+
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+
+                        byte[] photo = cursor.getBlob(cursor.getColumnIndexOrThrow(AppConstant.FIELD_IMAGE));
+                        byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                        TPtaxModel card = new TPtaxModel();
+                        card.setTaxTypeId(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.TAX_TYPE_ID)));
+                        card.setLatitude(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.LATITUDE)));
+                        card.setLongitude(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.LONGITUDE)));
+                        card.setImage(decodedByte);
+
+                        cards.add(card);
+                    }while(cursor.moveToNext());
+                }
+            }
+        } catch (Exception e){
+            //   Log.d(DEBUG_TAG, "Exception raised with a value of " + e);
+        } finally{
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return cards;
+    }
+
+    public ArrayList<TPtaxModel> getPendingActivity() {
+        db.isOpen();
+        ArrayList<TPtaxModel> cards = new ArrayList<>();
+        Cursor cursor = null;
+        String selection = null;
+        String[] selectionArgs = null;
+
+
+        try {
+            cursor = db.query(DBHelper.SAVE_FIELD_VISIT,
+                    new String[]{"*"}, selection,selectionArgs, null, null, null);
+
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+                        TPtaxModel card = new TPtaxModel();
+                        card.setTaxTypeId(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.TAX_TYPE_ID)));
+                        card.setAssessmentId(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.ASSESSMENT_ID)));
+                        card.setCurrentStatus(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.CURRENT_STATUS)));
+
+                        cards.add(card);
+                    }while(cursor.moveToNext());
+                }
+            }
+        } catch (Exception e){
+            //   Log.d(DEBUG_TAG, "Exception raised with a value of " + e);
+        } finally{
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return cards;
+    }
+
 
 
 

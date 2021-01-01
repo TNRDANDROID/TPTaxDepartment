@@ -43,7 +43,15 @@ public class ExistingTradeSubmit extends AppCompatActivity {
     public void openCameraScreen() {
         Intent intent = new Intent(this, CameraScreen.class);
         intent.putExtra(AppConstant.TRADE_CODE,"");
-        intent.putExtra("screen_status","new");
+        intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"exist");
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    public void viewImageScreen() {
+        Intent intent = new Intent(this, FullImageActivity.class);
+        intent.putExtra(AppConstant.TRADE_CODE,"");
+        intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"exist");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }

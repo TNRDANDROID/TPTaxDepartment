@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
@@ -49,6 +50,8 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.Support.MyLocationListener;
+import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.FieldVisitBinding;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
 import com.nic.TPTaxDepartment.utils.FontCache;
@@ -56,11 +59,14 @@ import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -69,8 +75,9 @@ import static android.Manifest.permission.CAMERA;
 public class FieldVisit extends AppCompatActivity implements View.OnClickListener {
 
     private FieldVisitBinding fieldVisitBinding;
-    private List<String> Current_Status = new ArrayList<>();
-    private boolean imageboolean;
+    private ArrayList<String> Current_Status = new ArrayList<>();
+    private boolean imageboolean = Boolean.parseBoolean(null);
+    static JSONObject dataset;
     Double offlatTextValue, offlanTextValue;
     private List<View> viewArrayList = new ArrayList<>();
     LocationManager mlocManager = null;
@@ -89,7 +96,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     // Bitmap sampling size
     public static final int BITMAP_SAMPLE_SIZE = 8;
     private static String imageStoragePath;
-
+    public static DBHelper dbHelper;
+    public static SQLiteDatabase db;
     private ScrollView scrollView;
 
     @Override
@@ -100,6 +108,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         loadCurrentStatus();
+        try {
+            dbHelper = new DBHelper(this);
+            db = dbHelper.getWritableDatabase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -125,58 +139,30 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public void imageWithDescription(TextView action_tv, final String type) {
-//        imageboolean = true;
-//        dataset = new JSONObject();
+        imageboolean = true;
+        dataset = new JSONObject();
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        String date = sdf.format(new Date());
+        String tax_type_id = fieldVisitBinding.taxType.getText().toString();
+        String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
+        String applicant_name = fieldVisitBinding.applicantName.getText().toString();
+        String build_type = fieldVisitBinding.buildType.getText().toString();
+        String current_status = fieldVisitBinding.currentStatus.getSelectedItem().toString();
+        String remarks = fieldVisitBinding.remarks.getText().toString();
+
+//            ContentValues fieldValue = new ContentValues();
+//            fieldValue.put(AppConstant.TAX_TYPE_ID, tax_type_id);
+//            fieldValue.put(AppConstant.ASSESSMENT_ID, assessment_id);
+////            fieldValue.put(AppConstant.APPLICANT_NAME, applicant_name);
+////            fieldValue.put(AppConstant.BUILD_TYPE, build_type);
+//            fieldValue.put(AppConstant.CURRENT_STATUS, current_status);
+//          //  fieldValue.put(AppConstant.REMARKS, remarks);
 //
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//            fieldValue.put("delete_flag", 0);
 //
-//        work_id = getIntent().getStringExtra(AppConstant.WORK_ID);
-//        String stage_of_work_on_inspection = stageListValues.get(sp_stage.getSelectedItemPosition()).getWorkStageCode();
-//        String stage_of_work_on_inspection_name = stageListValues.get(sp_stage.getSelectedItemPosition()).getWorkStageName();
-//        String date_of_inspection = sdf.format(new Date());
-//        String inspected_by = "inspected_by";
-//        int observation = observationList.get(sp_observation.getSelectedItemPosition()).getObservationID();
-//        String inspection_remark = remarkTv.getText().toString();
-//        String created_date = date_of_inspection;
-//        String created_ipaddress = "123214124";
-//        String created_username = "test";
-//
-//        if (!Utils.isOnline()) {
-//            ContentValues inspectionValue = new ContentValues();
-//            inspectionValue.put(AppConstant.WORK_ID, work_id);
-//            inspectionValue.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION, stage_of_work_on_inspection);
-//            inspectionValue.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION_NAME, stage_of_work_on_inspection_name);
-//            inspectionValue.put(AppConstant.DATE_OF_INSPECTION, date_of_inspection);
-//            //  inspectionValue.put(AppConstant.INSPECTED_BY,inspected_by);
-//            inspectionValue.put(AppConstant.OBSERVATION, observation);
-//            inspectionValue.put(AppConstant.INSPECTION_REMARK, inspection_remark);
-//            inspectionValue.put(AppConstant.CREATED_DATE, created_date);
-//            inspectionValue.put(AppConstant.CREATED_IMEI_NO, prefManager.getIMEI());
-//            inspectionValue.put(AppConstant.CREATED_USER_NAME, prefManager.getUserName());
-//            inspectionValue.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
-//            if(prefManager.getLevels().equalsIgnoreCase("D")) {
-//                inspectionValue.put("level", "D");
-//            }else if(prefManager.getLevels().equalsIgnoreCase("S")) {
-//                inspectionValue.put("level", "S");
-//            }
-//            inspectionValue.put("delete_flag", 0);
-//
-//            LoginScreen.db.insert(DBHelper.INSPECTION_PENDING, null, inspectionValue);
-//        } else {
-//            try {
-//                dataset.put(AppConstant.KEY_SERVICE_ID, AppConstant.KEY_HIGH_VALUE_PROJECT_INSPECTION_SAVE);
-//                dataset.put(AppConstant.WORK_ID, work_id);
-//                dataset.put(AppConstant.DATE_OF_INSPECTION, date_of_inspection);
-//                // dataset.put(AppConstant.INSPECTED_BY, inspected_by);
-//                dataset.put(AppConstant.CREATED_DATE, created_date);
-//                dataset.put(AppConstant.CREATED_IMEI_NO, prefManager.getIMEI());
-//                dataset.put(AppConstant.CREATED_USER_NAME, prefManager.getUserName());
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//
+//            LoginScreen.db.insert(DBHelper.SAVE_TRADE_IMAGE, null, fieldValue);
 
         final Dialog dialog = new Dialog(this,
                 R.style.AppTheme);
@@ -274,13 +260,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
                         ContentValues imageValue = new ContentValues();
 
-//                        imageValue.put(AppConstant.INSPECTION_ID, inspectionID);
-//                        imageValue.put(AppConstant.WORK_ID, work_id);
-//                        imageValue.put(AppConstant.LATITUDE, offlatTextValue);
-//                        imageValue.put(AppConstant.LONGITUDE, offlanTextValue);
-//                        imageValue.put(AppConstant.IMAGE, image_str.trim());
-//                        imageValue.put(AppConstant.DESCRIPTION, description);
-//                        imageValue.put("pending_flag", 1);
+                        imageValue.put(AppConstant.TAX_TYPE_ID, fieldVisitBinding.taxType.getText().toString());
+                        imageValue.put(AppConstant.LATITUDE, offlatTextValue);
+                        imageValue.put(AppConstant.LONGITUDE, offlanTextValue);
+                        imageValue.put(AppConstant.FIELD_IMAGE, image_str.trim());
+                        imageValue.put(AppConstant.DESCRIPTION, myEditTextView.getText().toString());
+                        imageValue.put("pending_flag", 1);
 //                        if(prefManager.getLevels().equalsIgnoreCase("D")) {
 //                            imageValue.put("level", "D");
 //                        }else if(prefManager.getLevels().equalsIgnoreCase("S")) {
@@ -288,25 +273,25 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //                        }
 
 
-                        if (!Utils.isOnline()) {
-                        //    long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO, null, imageValue);
+                    //    if (!Utils.isOnline()) {
+                            long rowInserted = db.insert(DBHelper.CAPTURED_PHOTO, null, imageValue);
 
-//                            if (rowInserted != -1) {
-//                                Toast.makeText(AddInspectionReportScreen.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-//                                Dashboard.getPendingCount();
-//                               finish();
-//                            } else {
-//                                Toast.makeText(AddInspectionReportScreen.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                            if (rowInserted != -1) {
+                                Utils.showAlert(FieldVisit.this, "Image Saved");
+                                dialog.dismiss();
+                            }
+                            //else {
+//                                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
 //                            }
-                        } else {
-                            imageArray.put(i);
-                         //   imageArray.put(work_id);
-                            imageArray.put(offlatTextValue);
-                            imageArray.put(offlanTextValue);
-                            imageArray.put(image_str.trim());
-                            imageArray.put(description);
-                            imageJson.put(imageArray);
-                        }
+//                        } else {
+//                            imageArray.put(i);
+//                         //   imageArray.put(work_id);
+//                            imageArray.put(offlatTextValue);
+//                            imageArray.put(offlanTextValue);
+//                            imageArray.put(image_str.trim());
+//                            imageArray.put(description);
+//                            imageJson.put(imageArray);
+//                        }
 
                         //  long localImageInserted = LoginScreen.db.insert(DBHelper.LOCAL_IMAGE, null, imageValue);
                     }
@@ -329,7 +314,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 }
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 dialog.dismiss();
-//                focusOnView(scrollView, action_tv);
+      //         focusOnView(scrollView, action_tv);
 
 
             }
@@ -337,6 +322,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         final String values = action_tv.getText().toString().replace("NA", "");
         Button btnAddMobile = (Button) dialog.findViewById(R.id.btn_add);
         btnAddMobile.setTypeface(FontCache.getInstance(this).getFont(FontCache.Font.MEDIUM));
+
+
+        if(fieldVisitBinding.currentStatus.getSelectedItem().equals("Need Improvement")){
+            btnAddMobile.setVisibility(View.VISIBLE);
+        }else {
+            btnAddMobile.setVisibility(View.GONE);
+        }
         viewArrayList.clear();
         btnAddMobile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -413,83 +405,97 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //        }
     }
 
-//    public  void  submit() {
+    public void validation() {
+        if(!fieldVisitBinding.taxType.getText().equals(null)){
+            if(!fieldVisitBinding.assessmentId.getText().equals(null)){
+                if(!fieldVisitBinding.currentStatus.getSelectedItem().equals("Select Current Status")){
+                    if(imageboolean == true) {
+                        submit();
+                    }
+                    else {
+                        Utils.showAlert(FieldVisit.this,"Take Photo");
+                    }
+                }
+                else {
+                    Utils.showAlert(FieldVisit.this," Please Select Current Status");
+                }
+            }
+            else {
+                Utils.showAlert(FieldVisit.this,"Enter Assessment Id");
+            }
+        }
+        else {
+            Utils.showAlert(FieldVisit.this,"Enter Tax Type Id");
+        }
+    }
+
+    public  void  submit() {
 //        try {
 //            db.delete(DBHelper.LOCAL_IMAGE, null, null);
-//        } catch (Exception e) {
+//        } catch (Exception e)
 //            e.printStackTrace();
 //        }
-//        String stage_of_work_on_inspection = stageListValues.get(sp_stage.getSelectedItemPosition()).getWorkStageCode();
-//        String stage_of_work_on_inspection_name = stageListValues.get(sp_stage.getSelectedItemPosition()).getWorkStageName();
-//        int observation = observationList.get(sp_observation.getSelectedItemPosition()).getObservationID();
-//        String ae_username = AEList.get(sp_ae.getSelectedItemPosition()).getAEUserName();
-//        String inspection_remark = remarkTv.getText().toString();
-//
-//        if (!Utils.isOnline()) {
-//            ContentValues inspectionValue = new ContentValues();
-//            inspectionValue.put(AppConstant.WORK_ID, work_id);
-//            inspectionValue.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION, stage_of_work_on_inspection);
-//            inspectionValue.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION_NAME, stage_of_work_on_inspection_name);
-//            inspectionValue.put(AppConstant.OBSERVATION, observation);
-//            inspectionValue.put(AppConstant.INSPECTION_REMARK, inspection_remark);
-//            inspectionValue.put(AppConstant.AE_USERNAME, ae_username);
-//
-//            long rowUpdated = LoginScreen.db.update(DBHelper.INSPECTION_PENDING, inspectionValue, "work_id  = ? AND delete_flag = ? and inspection_id = ?", new String[]{work_id,"0", String.valueOf(inspectionID) });
-//
-//            if (rowUpdated != -1) {
-//                Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-//                Dashboard.getPendingCount();
-//                finish();
-//            } else {
-//                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            // db.rawQuery("UPDATE "+DBHelper.INSPECTION_PENDING+" SET (stage_of_work_on_inspection, stage_of_work_on_inspection_name, observation,inspection_remark) = ('"+stage_of_work_on_inspection+"', '"+stage_of_work_on_inspection_name+"', '"+observation+"', '"+inspection_remark+"')  WHERE delete_flag=0 and inspection_id = "+inspectionID+" and work_id ="+work_id, null);
-//        } else {
-//            try {
-//
-//                dataset.put(AppConstant.STAGE_OF_WORK_ON_INSPECTION, stage_of_work_on_inspection);
-//                dataset.put(AppConstant.OBSERVATION, observation);
-//                dataset.put(AppConstant.INSPECTION_REMARK, inspection_remark);
-//                dataset.put(AppConstant.AE_USERNAME, ae_username);
-//                if(prefManager.getLevels().equalsIgnoreCase("S")) {
-//                    dataset.put(AppConstant.DISTRICT_CODE, prefManager.getDistrictCode());
-//                }
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        String authKey = dataset.toString();
-//        int maxLogSize = 2000;
-//        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
-//            int start = i * maxLogSize;
-//            int end = (i+1) * maxLogSize;
-//            end = end > authKey.length() ? authKey.length() : end;
-//            Log.v("to_send+_plain", authKey.substring(start, end));
-//        }
-//
-//        String authKey1 = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
-//
+
+        String tax_type_id = fieldVisitBinding.taxType.getText().toString();
+        String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
+        String applicant_name = fieldVisitBinding.applicantName.getText().toString();
+        String build_type = fieldVisitBinding.buildType.getText().toString();
+        String current_status = fieldVisitBinding.currentStatus.getSelectedItem().toString();
+        String remarks = fieldVisitBinding.remarks.getText().toString();
+
+        ContentValues fieldValue = new ContentValues();
+        fieldValue.put(AppConstant.TAX_TYPE_ID, tax_type_id);
+        fieldValue.put(AppConstant.ASSESSMENT_ID, assessment_id);
+//        fieldValue.put(AppConstant.APPLICANT_NAME, applicant_name);
+//        fieldValue.put(AppConstant.BUILD_TYPE, build_type);
+        fieldValue.put(AppConstant.CURRENT_STATUS, current_status);
+      //  fieldValue.put(AppConstant.REMARKS, remarks);
+
+          //  long rowUpdated = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "taxtypeid//  = ? AND delete_flag = ?", new String[]{tax_type_id,"0" });
+            long rowUpdated = db.insert(DBHelper.SAVE_FIELD_VISIT, null, fieldValue);
+
+            if (rowUpdated != -1) {
+               // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                Utils.showAlert(FieldVisit.this,"Saved");
+                Dashboard.syncvisiblity();
+                //finish();
+                dashboard();
+            } else {
+                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+            }
+
+            // db.rawQuery("UPDATE "+DBHelper.INSPECTION_PENDING+" SET (stage_of_work_on_inspection, stage_of_work_on_inspection_name, observation,inspection_remark) = ('"+stage_of_work_on_inspection+"', '"+stage_of_work_on_inspection_name+"', '"+observation+"', '"+inspection_remark+"')  WHERE delete_flag=0 and inspection_id = "+inspectionID+" and work_id ="+work_id, null);
+
+        String authKey = dataset.toString();
+        int maxLogSize = 2000;
+        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i+1) * maxLogSize;
+            end = end > authKey.length() ? authKey.length() : end;
+            Log.v("to_send+_plain", authKey.substring(start, end));
+        }
+
+      //  String authKey1 = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
+
 //        for(int i = 0; i <= authKey1.length() / maxLogSize; i++) {
 //            int start = i * maxLogSize;
 //            int end = (i+1) * maxLogSize;
 //            end = end > authKey.length() ? authKey1.length() : end;
 //            Log.v("to_send_encryt", authKey1.substring(start, end));
 //        }
-//        sync_data();
-//    }
+        //sync_data();
+    }
 
 
-//    private final void focusOnView(final ScrollView your_scrollview, TextView your_EditBox) {
-//        your_scrollview.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                your_scrollview.fullScroll(View.FOCUS_DOWN);
-//                //your_scrollview.scrollTo(0, your_EditBox.getY());
-//            }
-//        });
-//    }
+    private final void focusOnView(final ScrollView your_scrollview, TextView your_EditBox) {
+        your_scrollview.post(new Runnable() {
+            @Override
+            public void run() {
+                your_scrollview.fullScroll(View.FOCUS_DOWN);
+                //your_scrollview.scrollTo(0, your_EditBox.getY());
+            }
+        });
+    }
 
     //Method for update single view based on email or mobile type
     public View updateView(final Activity activity, final LinearLayout emailOrMobileLayout, final String values, final String type) {
