@@ -399,28 +399,28 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                                 Utils.showAlert(this, "Enter Ward no name!");
                                                             }
                                                         } else {
-                                                            Utils.showAlert(this, "சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                                            Utils.showAlert(this, "Enter Your Correct Mail Id!");
                                                         }
                                                     } else {
-                                                        Utils.showAlert(this, "உங்கள் மின்னஞ்சல் முகவரியை உள்ளிடவும்!");
+                                                        Utils.showAlert(this, "Enter Your Mail Id!");
                                                     }
                                                 } else {
-                                                    Utils.showAlert(this, "சரியான கைபேசி எண்ணை உள்ளிடவும்!");
+                                                    Utils.showAlert(this, "Enter Your Correct Mobile No!");
                                                 }
                                             } else {
-                                                Utils.showAlert(this, "உங்கள் கைபேசி எண்ணை உள்ளிடவும்!");
+                                                Utils.showAlert(this, "Enter Your Mobile No!");
                                             }
                                         } else {
-                                            Utils.showAlert(this, "உங்கள் age தேர்ந்தெடுக்கவும்!");
+                                            Utils.showAlert(this, "Enter Your Age!");
                                         }
                                     } else {
-                                        Utils.showAlert(this, "உங்கள் பாலினத்தைத் தேர்ந்தெடுக்கவும்!");
+                                        Utils.showAlert(this, "Select Your Gender!");
                                     }
                                 } else {
-                                    Utils.showAlert(this, "உங்கள் தந்தை / கணவர் பெயரை உள்ளிடவும்!");
+                                    Utils.showAlert(this, "Enter Your Father / Husband Name!");
                                 }
                             } else {
-                                Utils.showAlert(this, "உங்கள் பெயரை உள்ளிடவும்!");
+                                Utils.showAlert(this, "Enter Your Name!");
                             }
                         } else {
                             Utils.showAlert(this, "Enter Trade Desription!");
@@ -429,7 +429,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         Utils.showAlert(this, "Select License type!");
                     }
                 } else {
-                    Utils.showAlert(this, "தேதியைத் தேர்ந்தெடுக்கவும்!");
+                    Utils.showAlert(this, "Enter Date!");
                 }
             } else {
                 Utils.showAlert(this, "Enter Traders code!");
