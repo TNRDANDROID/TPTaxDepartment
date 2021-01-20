@@ -84,5 +84,11 @@
         <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
     </style>
     <!-- Theme.AppCompat.Light is not a dialog theme -->
+    <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
 
+    </style>
+
+    <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
+
+    </style>
 </resources>

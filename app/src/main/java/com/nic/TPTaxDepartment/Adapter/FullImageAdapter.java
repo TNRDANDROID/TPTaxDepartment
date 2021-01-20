@@ -65,8 +65,6 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
                 .thumbnail(0.5f)
                 .into(holder.galleryThumbnailBinding.thumbnail);
 
-
-
     }
 
     @Override

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/account_status_green_color">
+    android:color="#A90099CC">
     <item>
         <shape >
-            <solid android:color="@color/account_status_green_color" />
-            <corners android:radius="10dp" />
+            <gradient
+                android:angle="180"
+                android:centerColor="@color/colorPrimary"
+                android:startColor="@color/darkpurple"
+                android:endColor="@color/colorPrimaryDark"/>
+            <corners android:radius="0dp" />
             <stroke
                 android:width="1dip"
-                android:color="@color/account_status_green_color" />
+                android:color="#A90099CC" />
             <padding
                 android:bottom="0dip"
                 android:left="0dip"

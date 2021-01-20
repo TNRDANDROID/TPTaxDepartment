@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
@@ -28,6 +29,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +55,7 @@ import com.nic.TPTaxDepartment.Support.MyLocationListener;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.FieldVisitBinding;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
 import com.nic.TPTaxDepartment.utils.FontCache;
 import com.nic.TPTaxDepartment.utils.Utils;
@@ -66,7 +69,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -99,6 +104,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public static DBHelper dbHelper;
     public static SQLiteDatabase db;
     private ScrollView scrollView;
+    ArrayList<CommonModel> taxType ;
+    HashMap<Integer,String> spinnerMapTaxType;
+    String selectedTaxTypeId;
+    String selectedTaxTypeName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +123,21 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getTaxTypeFieldVisitList();
+
+        fieldVisitBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String TaxTypeId = parent.getSelectedItem().toString();
+                String TaxTypeName = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                selectedTaxTypeId=TaxTypeId;
+                selectedTaxTypeName=TaxTypeName;
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
 
     }
 
@@ -126,6 +150,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, Current_Status);
         RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fieldVisitBinding.currentStatus.setAdapter(RuralUrbanArray);
+        fieldVisitBinding.currentStatus.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
 
     }
 
@@ -145,7 +170,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         String date = sdf.format(new Date());
-        String tax_type_id = fieldVisitBinding.taxType.getText().toString();
+        String tax_type_id = fieldVisitBinding.taxType.getSelectedItem().toString();
         String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
         String applicant_name = fieldVisitBinding.applicantName.getText().toString();
         String build_type = fieldVisitBinding.buildType.getText().toString();
@@ -177,7 +202,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         lp.dimAmount = 0.7f;
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.show();
-
 
         final LinearLayout mobileNumberLayout = (LinearLayout) dialog.findViewById(R.id.mobile_number_layout);
         MyCustomTextView cancel = (MyCustomTextView) dialog.findViewById(R.id.tv_save_cancel);
@@ -260,7 +284,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
                         ContentValues imageValue = new ContentValues();
 
-                        imageValue.put(AppConstant.TAX_TYPE_ID, fieldVisitBinding.taxType.getText().toString());
+                        imageValue.put(AppConstant.TAX_TYPE_ID, fieldVisitBinding.taxType.getSelectedItem().toString());
                         imageValue.put(AppConstant.LATITUDE, offlatTextValue);
                         imageValue.put(AppConstant.LONGITUDE, offlanTextValue);
                         imageValue.put(AppConstant.FIELD_IMAGE, image_str.trim());
@@ -406,7 +430,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public void validation() {
-        if(!fieldVisitBinding.taxType.getText().equals(null)){
+        if(!fieldVisitBinding.taxType.getSelectedItem().equals(null)){
             if(!fieldVisitBinding.assessmentId.getText().equals(null)){
                 if(!fieldVisitBinding.currentStatus.getSelectedItem().equals("Select Current Status")){
                     if(imageboolean == true) {
@@ -436,7 +460,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //            e.printStackTrace();
 //        }
 
-        String tax_type_id = fieldVisitBinding.taxType.getText().toString();
+        String tax_type_id = fieldVisitBinding.taxType.getSelectedItem().toString();
         String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
         String applicant_name = fieldVisitBinding.applicantName.getText().toString();
         String build_type = fieldVisitBinding.buildType.getText().toString();
@@ -799,4 +823,55 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
 
     }
+
+    public void getTaxTypeFieldVisitList() {
+        taxType = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.TAX_TYPE_FIELD_VISIT_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setTaxtypeid(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TAX_TYPE_ID))));
+                    commonModel.setTaxtypedesc_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TAX_TYPE_DESC_EN)));
+                    commonModel.setTaxtypedesc_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TAX_TYPE_DESC_TA)));
+                    commonModel.setTaxcollection_methodlogy(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TAX_COLLECTION_METHODLOGY)));
+                    commonModel.setInstallmenttypeid(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.INSTALLMENT_TYPE_ID))));
+                    taxType.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
+
+        if(taxType != null && taxType.size() >0) {
+
+            spinnerMapTaxType = new HashMap<Integer, String>();
+            spinnerMapTaxType.put(0, null);
+            final String[] items = new String[taxType.size() + 1];
+            items[0] = "Select TaxType";
+            for (int i = 0; i < taxType.size(); i++) {
+                spinnerMapTaxType.put(i + 1, taxType.get(i).taxtypeid);
+                String Class = taxType.get(i).taxtypedesc_en;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    fieldVisitBinding.taxType.setAdapter(RuralUrbanArray);
+                    fieldVisitBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedTaxTypeId=taxType.get(1).taxtypeid;
+                    selectedTaxTypeName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+
+    }
+
 }

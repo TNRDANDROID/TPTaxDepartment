@@ -250,134 +250,27 @@
                         </RelativeLayout>
                     </LinearLayout>
 
+
+
                     <LinearLayout
-                        android:id="@+id/door_no_layout"
+                        android:id="@+id/ward_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
+                        android:layout_below="@id/mobile_layout"
                         android:orientation="vertical">
 
                         <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Ward Id"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_left_20dp"
                             android:layout_marginTop="@dimen/padding"
                             android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Ward Id">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/ward_id"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
-
-                            <Spinner
-                                android:id="@+id/ward_spinner"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginRight="15dp"
-                                android:gravity="center" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/street_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Street Id"
+                            android:text="Ward No"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_15sdp"
                             android:visibility="visible"
                             customfontdemo:fontName="@string/font_circular_medium" />
 
-                        <RelativeLayout
-
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Street Id">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/street_id"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-
-                                    />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -403,25 +296,83 @@
                                 customfontdemo:fontName="@string/font_circular_book" />
 
                             <Spinner
-                                android:id="@+id/street_spinner"
+                                android:id="@+id/ward_no"
                                 android:layout_width="fill_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="15dp"
-                                android:layout_marginRight="15dp"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
+
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/streets_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ward_layout"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:text="Street Name"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/header"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:background="@drawable/rectangle_box"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+
+
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_15sdp"
+                                android:visibility="visible"
+                                customfontdemo:fontName="@string/font_circular_book" />
+
+                            <Spinner
+                                android:id="@+id/streets_name"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/licence_validity_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:orientation="vertical">
 
                         <TextView

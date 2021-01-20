@@ -1,12 +1,14 @@
 package com.nic.TPTaxDepartment.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -14,13 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.android.volley.VolleyError;
-import com.nic.TPTaxDepartment.Adapter.GenderAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
-import com.nic.TPTaxDepartment.databinding.AssessmentStatusBinding;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
+import com.nic.TPTaxDepartment.databinding.AssessmentStatusNewBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
@@ -28,30 +30,38 @@ import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class  AssessmentStatus extends AppCompatActivity implements Api.ServerResponseListener {
+public class  AssessmentStatus extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
 
-    private AssessmentStatusBinding assessmentStatusBinding;
+    private AssessmentStatusNewBinding assessmentStatusBinding;
     private PrefManager prefManager;
     private List<TPtaxModel> Block = new ArrayList<>();
-    ArrayList<CommonModel> taxTypeArrayList;
+
+    ArrayList<CommonModel> taxType ;
+    HashMap<Integer,String> spinnerMapTaxType;
+    String selectedTaxTypeId;
+    String selectedTaxTypeName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        assessmentStatusBinding = DataBindingUtil.setContentView(this, R.layout.assessment_status);
+        assessmentStatusBinding = DataBindingUtil.setContentView(this, R.layout.assessment_status_new);
         assessmentStatusBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
+
+        assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
+        assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
+        assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
+
         assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -102,21 +112,93 @@ public class  AssessmentStatus extends AppCompatActivity implements Api.ServerRe
                     }
                 }
         );
-        getTaxTypes();
+        getTaxTypeList();
+        assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String TaxTypeName = parent.getSelectedItem().toString();
+                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                selectedTaxTypeId=TaxTypeId;
+                selectedTaxTypeName=TaxTypeName;
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+    }
+
+    public void showDetails() {
+        if (!selectedTaxTypeName.isEmpty() && !selectedTaxTypeName.equals("Select TaxType")  ) {
+            if(!assessmentStatusBinding.assessmentId.getText().toString().isEmpty()){
+                assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                assessmentStatusBinding.submit.setVisibility(View.GONE);
+
+            }else { Utils.showAlert(this, "Enter Assessment ID"); }
+
+        }else { Utils.showAlert(this, "Select Tax Type"); }
+    }
+    public void closeDetails() {
+                assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
+                assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
+                assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
+    }
+
+    void getTaxTypeList() {
+        taxType = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.TAX_TYPE_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setTaxtypeid(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TAX_TYPE_ID))));
+                    commonModel.setTaxtypedesc_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TAX_TYPE_DESC_EN)));
+                    commonModel.setTaxtypedesc_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TAX_TYPE_DESC_TA)));
+                    commonModel.setTaxcollection_methodlogy(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TAX_COLLECTION_METHODLOGY)));
+                    commonModel.setInstallmenttypeid(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.INSTALLMENT_TYPE_ID))));
+                    taxType.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
+
+        if(taxType != null && taxType.size() >0) {
+
+            spinnerMapTaxType = new HashMap<Integer, String>();
+            spinnerMapTaxType.put(0, null);
+            final String[] items = new String[taxType.size() + 1];
+            items[0] = "Select TaxType";
+            for (int i = 0; i < taxType.size(); i++) {
+                spinnerMapTaxType.put(i + 1, taxType.get(i).taxtypeid);
+                String Class = taxType.get(i).taxtypedesc_en;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    assessmentStatusBinding.taxType.setAdapter(RuralUrbanArray);
+                    assessmentStatusBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedTaxTypeId=taxType.get(1).taxtypeid;
+                    selectedTaxTypeName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
 
     }
+
     public void getAssessmentStatus() {
         try {
             new ApiService(this).makeJSONObjectRequest("AssessmentStatus", Api.Method.POST, UrlGenerator.saveTradersUrl(), assessmentStatusJsonParams(), "not cache", this);
         } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getTaxTypes() {
-        try {
-            new ApiService(this).makeJSONObjectRequest("TaxTypes", Api.Method.POST, UrlGenerator.prodOpenUrl(), gettaxTypeListJsonParams(), "not cache", this);
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -141,39 +223,20 @@ public class  AssessmentStatus extends AppCompatActivity implements Api.ServerRe
         return data;
     }
 
-    public Map<String,String> gettaxTypeListParams(){
-        Map<String, String> params = new HashMap<>();
-        params.put(AppConstant.KEY_SERVICE_ID, "TaxTypesFieldVisit");
-        Log.d("params", "" + params);
-        return params;
-    }
-
-    public JSONObject gettaxTypeListJsonParams(){
-        JSONObject data = new JSONObject();
-        try {
-            data.put(AppConstant.KEY_SERVICE_ID,"OS_TaxTypes");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return data;
-    }
-
 
 
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
             String urlType = serverResponse.getApi();
             JSONObject responseObj = serverResponse.getJsonResponse();
-           /* String responseObj = serverResponse.getResponse();
-            String urlType = serverResponse.getApi();*/
 
-          /*  if ("AssessmentStatus".equals(urlType) && responseObj != null) {
+            if ("AssessmentStatus".equals(urlType) && responseObj != null) {
                 String key = responseObj.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
                 if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
                     assessmentStatusBinding.applicantNameTv.setText("");
-                    assessmentStatusBinding.detailsTv.setText("");
+                    assessmentStatusBinding.fatherNameTv.setText("");
 
                 } else if(jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("NO_RECORD")){
                     Utils.showAlert(this,"NO RECORD FOUND!");
@@ -187,36 +250,19 @@ public class  AssessmentStatus extends AppCompatActivity implements Api.ServerRe
 //                    Log.v("to_send", authKey.substring(start, end));
 //                }
 //                Log.d("WorkListResp", "" + responseDecryptedSchemeKey);
-            }*/
-          if("TaxTypes".equals(urlType)&&(responseObj!=null)){
-              if (responseObj.getString("STATUS").equalsIgnoreCase("SUCCESS")) {
-                  JSONArray jsonString =responseObj.getJSONArray("DATA");
-                  taxTypeArrayList = new ArrayList<>();
-                  CommonModel commonModel = new CommonModel();
-                  commonModel.setInstallmenttypeid(0);
-                  commonModel.setTaxtypedesc_ta("Select TaxType");
-                  commonModel.setTaxtypedesc_en("Select TaxType");
-                  commonModel.setTaxtypeid("ST");
-                  taxTypeArrayList.add(commonModel);
-                  for (int i = 0; i < jsonString.length(); i++) {
-                      JSONObject jsonObject = jsonString.getJSONObject(i);
-                      CommonModel taxType = new CommonModel();
-                      taxType.setTaxtypeid(jsonObject.getString("taxtypeid"));
-                      taxType.setTaxtypedesc_en(jsonObject.getString("taxtypedesc_en"));
-                      taxType.setTaxtypedesc_ta(jsonObject.getString("taxtypedesc_ta"));
-                      taxType.setInstallmenttypeid(Integer.parseInt(jsonObject.getString("installmenttypeid")));
-                      taxType.setTaxcollection_methodlogy(jsonObject.getString("taxcollection_methodlogy"));
-
-                      taxTypeArrayList.add(taxType);
-                      displayTaxType(taxTypeArrayList);
-                  }
-              }
-          }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+
+        }
+    }
 
     @Override
     public void OnError(VolleyError volleyError) {
@@ -236,11 +282,5 @@ public class  AssessmentStatus extends AppCompatActivity implements Api.ServerRe
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
-    //display ward list
-    public void displayTaxType(ArrayList<CommonModel> taxTypeArrayList) {
-
-        GenderAdapter adapter = new GenderAdapter(AssessmentStatus.this,taxTypeArrayList,"TaxType");
-        assessmentStatusBinding.taxType.setAdapter(adapter);
-    }
 
 }

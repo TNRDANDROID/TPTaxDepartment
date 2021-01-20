@@ -149,19 +149,14 @@
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
-
-
                 <LinearLayout
                     android:id="@+id/road_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:layout_below="@+id/district_card"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -169,10 +164,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginBottom="@dimen/_15sdp"
-                        android:layout_above="@+id/top">
-
+                        android:orientation="vertical">
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -234,349 +226,29 @@
 
                         </RelativeLayout>
 
-
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/top"
-                        android:layout_width="match_parent"
+
+                    <RelativeLayout
+                        android:id="@+id/recy_layout"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:clipToPadding="true"
-                        android:gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_gravity="center"
+                        android:layout_marginTop="0dp"
+                        android:layout_marginBottom="0dp"
+                        android:gravity="center">
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/dailyCollection_recycler"
+                            android:scrollbarSize="1dp"
+                            android:padding="@dimen/margin_left_20dp"
+                            android:visibility="visible"
+                            android:scrollbars="vertical"/>
+
+
+                    </RelativeLayout>
 
-                        <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/voteprogresscard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/click_here"
-                            android:clickable="true"
-
-                            android:foreground="?android:attr/selectableItemBackground"
-
-
-                            >
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_voting_progress"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundpurple"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_vote"
-                                    android:visibility="gone" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Property Tax"
-                                    android:textStyle="bold" />
-
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                                <TextView
-                                    android:id="@+id/property_tax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Trade Licence"
-
-                                    android:textColor="@android:color/black" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:id="@+id/attendanecard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/click_here"
-
-                            android:clickable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="3dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_attendance"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundpink"
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_crew"
-                                    android:visibility="gone" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Water Tax"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                                <TextView
-                                    android:id="@+id/water_tax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Field Visit"
-
-                                    android:textColor="@android:color/black" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/top"
-                        android:clipToPadding="false"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:id="@+id/cameracard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/click_here"
-                            android:clickable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="3dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_camera"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundgreen"
-
-                                    android:padding="10dp"
-                                    android:src="@drawable/ic_camera_black_24dp"
-                                    android:visibility="gone" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Professional Tax"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                                <TextView
-                                    android:id="@+id/proff_tax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Assessment State"
-
-                                    android:textColor="@android:color/black" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-
-                            </LinearLayout>
-                        </RelativeLayout>
-
-                        <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                            android:id="@+id/votecountcard"
-                            android:layout_width="140dp"
-                            android:layout_height="170dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/click_here"
-                            android:clickable="true"
-                            android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="5dp"
-                            card_view:cardElevation="3dp">
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/image_voting_count"
-                                    android:layout_width="64dp"
-
-                                    android:layout_height="64dp"
-                                    android:layout_gravity="center"
-                                    android:background="@drawable/cerclebackgroundyello"
-                                    android:padding="14dp"
-                                    android:src="@drawable/ic_counting"
-                                    android:visibility="gone" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Non tax"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                                <TextView
-                                    android:id="@+id/non_tax"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Daily Collection"
-
-                                    android:textColor="@android:color/black" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-
-                            </LinearLayout>
-                        </RelativeLayout>
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/bottom"
-                        android:clipToPadding="false"
-
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-                        <RelativeLayout
-                            android:id="@+id/view_polling_station_image"
-                            android:layout_width="303dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="10dp"
-                            android:background="@drawable/click_here"
-                            android:clickable="true"
-                            android:focusable="true"
-
-                            android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="8dp"
-                            card_view:cardElevation="3dp">
-
-                            <LinearLayout
-
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/polling_station_image"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:background="@drawable/cerclebackgroundpurple"
-                                    android:contentDescription="TODO"
-                                    android:padding="10dp"
-                                    android:visibility="gone" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Trade License"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                                <TextView
-                                    android:id="@+id/trade_license"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Capture the polling station image"
-                                    android:textColor="@android:color/black" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                            </LinearLayout>
-                        </RelativeLayout>
-
-
-                    </LinearLayout>
 
                 </LinearLayout>
 

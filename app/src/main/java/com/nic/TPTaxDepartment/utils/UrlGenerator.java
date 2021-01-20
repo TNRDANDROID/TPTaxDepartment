@@ -18,6 +18,9 @@ public class UrlGenerator {
     public static String saveTradersUrl() {
         return NICApplication.getAppString(R.string.SAVE_TRADERS_URL);
     }
+    public static String TradersUrl() {
+        return NICApplication.getAppString(R.string.TRADERS_URL);
+    }
 
     public static String prodOpenUrl() {
         return NICApplication.getAppString(R.string.PROD_OPEN_URL);
@@ -29,9 +32,6 @@ public class UrlGenerator {
 
     public static String getTankPondListUrl() {
         return NICApplication.getAppString(R.string.APP_MAIN_SERVICES_URL);
-    }
-    public static String getTradersUrl() {
-        return NICApplication.getAppString(R.string.TRADERS_URL);
     }
 
 

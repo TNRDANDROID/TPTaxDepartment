@@ -15,26 +15,37 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
+import com.nic.TPTaxDepartment.Adapter.DailyCollectionAdapter;
+import com.nic.TPTaxDepartment.Adapter.TraderListAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.databinding.DailyCollectionBinding;
+import com.nic.TPTaxDepartment.model.CommonModel;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
@@ -44,7 +55,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     private PrefManager prefManager;
     private static TextView date;
     static boolean callApi;
-
+    ArrayList<TPtaxModel> collectionList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,32 +69,31 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         dailyCollectionBinding.date.setTranslationX(800);
         dailyCollectionBinding.dateLayout.setTranslationX(800);
-        dailyCollectionBinding.voteprogresscard.setTranslationX(800);
-        dailyCollectionBinding.attendanecard.setTranslationX(800);
-        dailyCollectionBinding.cameracard.setTranslationX(800);
-        dailyCollectionBinding.votecountcard.setTranslationX(800);
-        dailyCollectionBinding.viewPollingStationImage.setTranslationX(800);
-
+        dailyCollectionBinding.recyLayout.setTranslationX(800);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        dailyCollectionBinding.dailyCollectionRecycler.setLayoutManager(mLayoutManager);
+        dailyCollectionBinding.dailyCollectionRecycler.setItemAnimator(new DefaultItemAnimator());
+        dailyCollectionBinding.dailyCollectionRecycler.setHasFixedSize(true);
+        dailyCollectionBinding.dailyCollectionRecycler.setNestedScrollingEnabled(false);
+        dailyCollectionBinding.dailyCollectionRecycler.setFocusable(false);
+        try {
+            LoadDailyCollectionList();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         dailyCollectionBinding.date.setAlpha(0);
         dailyCollectionBinding.dateLayout.setAlpha(0);
-        dailyCollectionBinding.voteprogresscard.setAlpha(0);
-        dailyCollectionBinding.attendanecard.setAlpha(0);
-        dailyCollectionBinding.cameracard.setAlpha(0);
-        dailyCollectionBinding.votecountcard.setAlpha(0);
-        dailyCollectionBinding.viewPollingStationImage.setAlpha(0);
+        dailyCollectionBinding.recyLayout.setAlpha(0);
+
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 dailyCollectionBinding.date.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
                 dailyCollectionBinding.dateLayout.animate().translationX(0).alpha(1).setDuration(1450).setStartDelay(450).start();
-                dailyCollectionBinding.voteprogresscard.animate().translationX(0).alpha(1).setDuration(1500).setStartDelay(600).start();
-                dailyCollectionBinding.attendanecard.animate().translationX(0).alpha(1).setDuration(1600).setStartDelay(800).start();
-                dailyCollectionBinding.cameracard.animate().translationX(0).alpha(1).setDuration(1700).setStartDelay(1000).start();
-                dailyCollectionBinding.votecountcard.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
-                dailyCollectionBinding.viewPollingStationImage.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1400).start();
-            }
+                dailyCollectionBinding.recyLayout.animate().translationX(0).alpha(1).setDuration(1450).setStartDelay(450).start();
+              }
         }, 500);
 
 
@@ -98,20 +108,85 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         anim.setRepeatCount(Animation.INFINITE);
 
 
-        dailyCollectionBinding.propertyTax.startAnimation(anim);
-        dailyCollectionBinding.waterTax.startAnimation(anim);
-        dailyCollectionBinding.proffTax.startAnimation(anim);
-        dailyCollectionBinding.nonTax.startAnimation(anim);
-        dailyCollectionBinding.tradeLicense.startAnimation(anim);
 
         Calendar cldr = Calendar.getInstance();
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
         date.setText(day + "-" + (month + 1) + "-" + year);
+        updateLabel(day + "-" + (month + 1) + "-" + year);
 
        // getDailyCollection();
     }
+
+     private void LoadDailyCollectionList() throws JSONException {
+         collectionList = new ArrayList<TPtaxModel>();
+        for (int i = 0; i < 6; i++) {
+            if(i==0){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("1");
+                Detail.setTaxTypeName("Property Tax");
+                Detail.setTaxCollection("10050.00");
+                collectionList.add(Detail);
+            }else if(i==1){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("2");
+                Detail.setTaxTypeName("Water Tax");
+                Detail.setTaxCollection("");
+                collectionList.add(Detail);
+            }else if(i==2){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("3");
+                Detail.setTaxTypeName("SWM Tax");
+                Detail.setTaxCollection("70050.00");
+                collectionList.add(Detail);
+            }else if(i==3){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("4");
+                Detail.setTaxTypeName("Professional Tax");
+                Detail.setTaxCollection("780050.00");
+                collectionList.add(Detail);
+            }else if(i==4){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("5");
+                Detail.setTaxTypeName("Non Tax");
+                Detail.setTaxCollection("10050.00");
+                collectionList.add(Detail);
+            }else {
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("6");
+                Detail.setTaxTypeName("Trade License Tax");
+                Detail.setTaxCollection("36050.00");
+                collectionList.add(Detail);
+            }
+        }
+
+        /*JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
+        if(jsonarray != null && jsonarray.length() >0) {
+            for (int i = 0; i < jsonarray.length(); i++) {
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                String taxtypeid = jsonobject.getString("taxtypeid");
+                String taxtypedesc_en = jsonobject.getString("taxtypedesc_en");
+                String collectionreceived = jsonobject.getString("collectionreceived");
+
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId(taxtypeid);
+                Detail.setTaxTypeName(taxtypedesc_en);
+                Detail.setTaxCollection(collectionreceived);
+                collectionList.add(Detail);
+            }
+        }*/
+
+         Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeName().compareTo(rhs.getTaxTypeName()));
+         if(collectionList != null && collectionList.size() >0) {
+             DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,collectionList);
+             adapter.notifyDataSetChanged();
+             dailyCollectionBinding.dailyCollectionRecycler.setAdapter(adapter);
+         }
+
+
+    }
+
 
     public void showDatePickerDialog() {
         DialogFragment newFragment = new datePickerFragment();
@@ -140,15 +215,33 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             // Do something with the date chosen by the user
-            date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+//            date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
             String start_date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
             cldr.set(Calendar.YEAR, year);
             cldr.set(Calendar.MONTH, (monthOfYear));
             cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            dateformate(start_date);
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+            updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
         }
 
+
+    }
+    private static String updateLabel(String olddate){
+        final String OLD_FORMAT = "dd-MM-yyyy";
+        final String NEW_FORMAT = "yyyy-MM-dd";
+        String newDateString;
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        Date d = null;
+        try {
+            d = sdf.parse(olddate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        newDateString = sdf.format(d);
+        date.setText(newDateString);
+        return  newDateString;
     }
 
     public void getDailyCollection() {
@@ -188,11 +281,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
                 if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                    dailyCollectionBinding.propertyTax.setText("");
-                    dailyCollectionBinding.waterTax.setText("");
-                    dailyCollectionBinding.proffTax.setText("");
-                    dailyCollectionBinding.nonTax.setText("");
-                    dailyCollectionBinding.tradeLicense.setText("");
+                    JSONArray jsonarrayStreetList = new JSONArray(serverResponse.getResponse());
+                    prefManager.setDailyCollectionList(jsonarrayStreetList.toString());
 
                 } else if(jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("NO_RECORD")){
                     Utils.showAlert(this,"NO RECORD FOUND!");
@@ -235,26 +325,5 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-    }
-
-    private static String dateformate(String date1){
-        final String OLD_FORMAT = "yyyy-MM-dd";
-        final String NEW_FORMAT = "yyyy-MM-dd";
-
-// August 12, 2010
-        String oldDateString = date1;
-        String newDateString;
-
-        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-        Date d = null;
-        try {
-            d = sdf.parse(oldDateString);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        sdf.applyPattern(NEW_FORMAT);
-        newDateString = sdf.format(d);
-        date.setText(newDateString);
-        return newDateString;
     }
 }

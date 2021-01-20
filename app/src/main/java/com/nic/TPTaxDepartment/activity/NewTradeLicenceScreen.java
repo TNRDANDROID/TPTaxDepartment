@@ -14,20 +14,17 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.VolleyError;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.nic.TPTaxDepartment.Adapter.GenderAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -49,15 +46,18 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.nic.TPTaxDepartment.activity.Dashboard.db;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
-    NewTradeLicenceScreenBinding newTradeLicenceScreenBinding; 
-    private List<String> GenderList = new ArrayList<>();
+    NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
+    ArrayList<Gender> genders = new ArrayList<Gender>();
+    ArrayList<CommonModel> wards ;
+    ArrayList<CommonModel> streets;
+    ArrayList<CommonModel> selectedStreets;
+    ArrayList<CommonModel> finYear;
+    ArrayList<CommonModel> traderLicenseTypeList;
     private List<TPtaxModel> District = new ArrayList<>();
     public static final String GALLERY_DIRECTORY_NAME = "Hello Camera";
     public static final int MEDIA_TYPE_IMAGE = 1;
@@ -77,14 +77,23 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public static DBHelper dbHelper;
     private List<TPtaxModel> LicenceType = new ArrayList<>();
     private List<TPtaxModel> LicenceValidity = new ArrayList<>();
-
-    //Gender
-    ArrayList<CommonModel> genderArrayList;
-    ArrayList<CommonModel> wardList;
-    ArrayList<CommonModel> streetList;
-    ArrayList<CommonModel> finYearList;
-    int wardid;
-
+    HashMap<Integer,String> spinnerMap;
+    HashMap<Integer,String> spinnerMapStreets;
+    HashMap<Integer,String> spinnerMapWard;
+    HashMap<Integer,String> spinnerMapFinYear;
+    HashMap<Integer,String> spinnerMapLicenceType;
+    String selectedGenderId;
+    String selectedGender="";
+    String selectedWardId;
+    String selectedWardName="";
+    String selectedFinId;
+    String selectedFinName="";
+    String selectedLicenceTpeId;
+    String selectedLicenceTypeName="";
+    String selectedStreetId;
+    String selectedStreetName="";
+    String traderCode,tradeDate,licenseType,tradeDescription,traderName,traderNameTa,tradeImage, traderGender,traderAge,
+            fatherName,fatherNameTa,mobileNo,email,establishmentName,ward,street,doorNo,licenseValidity,paymentStatus;
 
 
     @Override
@@ -99,21 +108,20 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mApps);
-        newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);
+       /* ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mApps);
+        newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
         date = newTradeLicenceScreenBinding.date;
-        //loadGenderList();
-       // getLicenceTypeList();
-       // getWardList();
-       // getStreetList();
-
-        displayWard();
         getGenderList();
-        getLicenceTypeList();
-        displayFinYear();
+        LoadWardSpinner();
+        LoadFinYearSpinner();
+        try {
+            LoadLicenceTypeSpinner();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         String colored = "*";
         String mobileView= "கைபேசி எண் / Mobile No";
@@ -128,73 +136,94 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         newTradeLicenceScreenBinding.mobileHint.setText(builder);
 
-        newTradeLicenceScreenBinding.licenceValidity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
+        newTradeLicenceScreenBinding.gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String gender = parent.getSelectedItem().toString();
+                String genderCode = spinnerMap.get(parent.getSelectedItemPosition());
+                selectedGenderId=genderCode;
+                selectedGender=gender;
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        newTradeLicenceScreenBinding.licenceValidity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String finYear = parent.getSelectedItem().toString();
+                String finYearId = spinnerMapFinYear.get(parent.getSelectedItemPosition());
+                selectedFinId=finYearId;
+                selectedFinName=finYear;
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        newTradeLicenceScreenBinding.licenceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String LicenceTypeName = parent.getSelectedItem().toString();
+                String LicenceTpeId = spinnerMapLicenceType.get(parent.getSelectedItemPosition());
+                selectedLicenceTpeId=LicenceTpeId;
+                selectedLicenceTypeName=LicenceTypeName;
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        newTradeLicenceScreenBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String ward = parent.getSelectedItem().toString();
+                String wardId = spinnerMapWard.get(parent.getSelectedItemPosition());
+                selectedWardId=wardId;
+                selectedWardName=ward;
+                System.out.println("selectedWardId >> "+selectedWardId);
+                if(selectedWardId != null){
+                        LoadStreetSpinner(selectedWardId);
+                }else {
+                    newTradeLicenceScreenBinding.streetsName.setAdapter(null);                  }
 
+
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+        newTradeLicenceScreenBinding.streetsName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String street = parent.getSelectedItem().toString();
+                String streetCode = spinnerMapStreets.get(parent.getSelectedItemPosition());
+                selectedStreetId=streetCode;
+                selectedStreetName=street;
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+
+        newTradeLicenceScreenBinding.applicantNameTamil.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+
+//imeManager.showInputMethodPicker(); //This is to see available keyboards.
+                    imeManager.setInputMethod(null,"jp.co.omronsoft.openwnn/.OpenWnnJAJP");
                 } else {
-
                 }
-//                pref_district = District.get(position).getDistrictName();
-                prefManager.setDistrictName(pref_district);
-
-
-//                prefManager.setDistrictCode(District.get(position).getDistictCode());
-
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
-        newTradeLicenceScreenBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0){
-                    wardid=wardList.get(i).getWardID();
-                    displayStreet();
-                    newTradeLicenceScreenBinding.strretSpinner.setVisibility(View.VISIBLE);
-                }
-                else {
-                    newTradeLicenceScreenBinding.strretSpinner.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-        newTradeLicenceScreenBinding.strretSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
     }
 
-    public void loadGenderList() {
-        GenderList.clear();
-        GenderList.add("Select Gender");
-        GenderList.add("Male");
-        GenderList.add("Female");
-        GenderList.add("Others");
-        ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, GenderList);
-        RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        newTradeLicenceScreenBinding.gender.setAdapter(RuralUrbanArray);
-
-    }
 
     @Override
     public void onClick(View v) {
@@ -238,98 +267,37 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
-    public void getWardList() {
+    public void getGenderList() {
         try {
-            new ApiService(this).makeJSONObjectRequest("WardList", Api.Method.POST, UrlGenerator.prodOpenUrl(), wardJsonParams(), "not cache", this);
-        } catch (JSONException e) {
+            new ApiService(this).makeJSONObjectRequest("Gender", Api.Method.POST, UrlGenerator.prodOpenUrl(), genderParams(), "not cache", this);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public JSONObject wardJsonParams() throws JSONException {
-
-        JSONObject data = new JSONObject();
-        data.put(AppConstant.KEY_SERVICE_ID,"Ward");
-        data.put(AppConstant.KEY_STATE_CODE,"");
-        data.put(AppConstant.KEY_DISTRICT_CODE,prefManager.getDistrictCode());
-        data.put(AppConstant.KEY_LB_CODE,"");
-        return data;
-    }
-
-    public void getStreetList() {
-        try {
-            new ApiService(this).makeJSONObjectRequest("StreetList", Api.Method.POST, UrlGenerator.prodOpenUrl(), streetJsonParams(), "not cache", this);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getGenderList(){
-        try {
-            new ApiService(this).makeJSONObjectRequest("Gender", Api.Method.POST, UrlGenerator.prodOpenUrl(), genderJsonParams(), "not cache", this);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
-    public JSONObject streetJsonParams() throws JSONException {
-
-        JSONObject data = new JSONObject();
-        data.put(AppConstant.KEY_SERVICE_ID,"Street");
-        data.put(AppConstant.KEY_STATE_CODE,"");
-        data.put(AppConstant.KEY_DISTRICT_CODE,prefManager.getDistrictCode());
-        data.put(AppConstant.KEY_LB_CODE,"");
-        return data;
     }
 
     public JSONObject genderJsonParams() throws JSONException {
-        JSONObject data=new JSONObject();
-        data.put(AppConstant.KEY_SERVICE_ID,"OS_Gender");
+
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"Gender");
         return data;
-
     }
-
-    public Map<String,String> genderParams(){
-        Map<String, String> params = new HashMap<>();
-        params.put(AppConstant.KEY_SERVICE_ID, "Gender");
-        Log.d("params", "" + params);
-        return params;
-    }
-
-    public void getLicenceTypeList() {
-        new ApiService(this).makeRequest("TraderLicenseTypeList", Api.Method.POST, UrlGenerator.saveTradersUrl(), getLicenceTypeListParams(), "not cache", this);
-    }
-
-    public Map<String,String> getLicenceTypeListParams(){
-        Map<String, String> params = new HashMap<>();
-        params.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseTypeList");
-        Log.d("params", "" + params);
-        return params;
-    }
-
-    public JSONObject licencelistJsonParams() throws JSONException{
-
-
+    public JSONObject genderParams() throws JSONException {
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseTypeList");
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "OS_Gender");
         return dataSet;
     }
 
-    public void signUP() {
+
+
+    public void SaveLicenseTraders() {
         try {
-            new ApiService(this).makeJSONObjectRequest("SaveLicenseTraders", Api.Method.POST, UrlGenerator.saveTradersUrl(), dataTobeSavedJsonParams(), "not cache", this);
+            new ApiService(this).makeJSONObjectRequest("SaveLicenseTraders", Api.Method.POST, UrlGenerator.TradersUrl(), dataTobeSavedJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         } }
 
 
     public JSONObject dataTobeSavedJsonParams() throws JSONException {
-
-        byte[] imageInByte = new byte[0];
-        String image_str = "";
-
-
         JSONObject dataSet = new JSONObject();
        dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
        dataSet.put(AppConstant.MODE, "NEW");
@@ -408,11 +376,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         try {
             JSONObject responseObj = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
-            String status = null;
-            //String status = responseObj.getString(AppConstant.KEY_STATUS);
-            //String message = responseObj.getString(AppConstant.KEY_MESSAGE);
-            //String response = responseObj.getString(AppConstant.KEY_RESPONSE);
-           /* if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
+
+            if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
+                String status = responseObj.getString(AppConstant.KEY_STATUS);
+                String response = responseObj.getString(AppConstant.KEY_RESPONSE);
                 if (status.equalsIgnoreCase("OK") && response.equalsIgnoreCase("OK")) {
                     JSONObject jsonObject = responseObj.getJSONObject(AppConstant.JSON_DATA);
 //                    String Motivatorid = jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID);
@@ -429,42 +396,270 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 } else if (status.equalsIgnoreCase("OK") && response.equalsIgnoreCase("FAIL")) {
                     Utils.showAlert(this, responseObj.getString("MESSAGE"));
                 }
-            }*/
-            if("Gender".equals(urlType)&&responseObj!=null){
-
-                if (responseObj.getString("STATUS").equalsIgnoreCase("SUCCESS")) {
-                    JSONArray jsonString =responseObj.getJSONArray("DATA");
-                    genderArrayList = new ArrayList<>();
-                    CommonModel gender1 = new CommonModel();
-                    gender1.setGender_code("SG");
-                    gender1.setGender_name_en("Select Gender");
-                    gender1.setGender_name_ta("Select Gender");
-                    genderArrayList.add(gender1);
-                    for (int i = 0; i < jsonString.length(); i++) {
-                        JSONObject jsonObject = jsonString.getJSONObject(i);
-                        CommonModel gender = new CommonModel();
-                        gender.setGender_code(jsonObject.getString("gender_code"));
-                        gender.setGender_name_en(jsonObject.getString("gender_name_en"));
-                        gender.setGender_name_ta(jsonObject.getString("gender_name_ta"));
-
-                        genderArrayList.add(gender);
-                    }
-
-                    if (genderArrayList.size() > 0) {
-                        GenderAdapter genderAdapter = new GenderAdapter(this, genderArrayList, "Gender");
-                        //RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        newTradeLicenceScreenBinding.gender.setAdapter(genderAdapter);
+            }
+            if ("Gender".equals(urlType) && responseObj != null) {
+                String status = responseObj.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String gender_code = jsonobject.getString("gender_code");
+                            String gender_name_en = jsonobject.getString("gender_name_en");
+                            String gender_name_ta = jsonobject.getString("gender_name_ta");
+                            Gender gender = new Gender();
+                            gender.setGender_code(gender_code);
+                            gender.setGender_name_en(gender_name_en);
+                            gender.setGender_name_ta(gender_name_ta);
+                            genders.add(gender);
+                        }
                     }
                 }
-
-
-
+                LoadGenderSpinner();
+                Log.d("Gender", "" + responseObj);
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private void LoadGenderSpinner() {
+        if(genders != null && genders.size() >0) {
+
+            spinnerMap = new HashMap<Integer, String>();
+            spinnerMap.put(0, null);
+            final String[] items = new String[genders.size() + 1];
+            items[0] = "Select Gender";
+            for (int i = 0; i < genders.size(); i++) {
+                spinnerMap.put(i + 1, genders.get(i).gender_code);
+                String Class = genders.get(i).gender_name_en;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.gender.setAdapter(RuralUrbanArray);
+                    newTradeLicenceScreenBinding.gender.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedGenderId=genders.get(1).gender_code;
+                    selectedGender="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+    }
+    private void LoadStreetSpinner(String selectedWardId)  {
+        streets = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.STREET_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setStatecode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.KEY_STATE_CODE))));
+                    commonModel.setDcode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.DISTRICT_CODE))));
+                    commonModel.setLbcode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.LB_CODE))));
+                    commonModel.setWard_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_CODE)));
+                    commonModel.setWard_id(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.WARD_ID))));
+                    commonModel.setStreetid(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.STREET_ID))));
+                    commonModel.setStreet_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_CODE)));
+                    commonModel.setStreet_name_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_TA)));
+                    commonModel.setStreet_name_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_EN)));
+                    commonModel.setBuilding_zone(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.BUILDING_ZONE)));
+                    streets.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(streets, (lhs, rhs) -> lhs.getStreet_name_ta().compareTo(rhs.getStreet_name_ta()));
+
+        selectedStreets = new ArrayList<CommonModel>();
+        for (int i = 0; i < streets.size(); i++) {
+            if(streets.get(i).ward_id.equals(selectedWardId)){
+                selectedStreets.add(streets.get(i));
+            }else { }
+        }
+
+        if(selectedStreets != null && selectedStreets.size() >0) {
+
+            spinnerMapStreets = new HashMap<Integer, String>();
+            spinnerMapStreets.put(0, null);
+            final String[] items = new String[selectedStreets.size() + 1];
+            items[0] = "Select Street";
+            for (int i = 0; i < selectedStreets.size(); i++) {
+                spinnerMapStreets.put(i + 1, selectedStreets.get(i).streetid);
+                String Class = selectedStreets.get(i).street_name_ta;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.streetsName.setAdapter(RuralUrbanArray);
+                    newTradeLicenceScreenBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedStreetId=selectedStreets.get(1).streetid;
+                    selectedStreetName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+    }
+    //display wards list
+    public void LoadWardSpinner() {
+        wards = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.WARD_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setStatecode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.KEY_STATE_CODE))));
+                    commonModel.setDcode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.DISTRICT_CODE))));
+                    commonModel.setLbcode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.LB_CODE))));
+                    commonModel.setWard_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_CODE)));
+                    commonModel.setWard_id(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.WARD_ID))));
+                    commonModel.setWard_name_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_NAME_EN)));
+                    commonModel.setWard_name_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_NAME_TA)));
+                      wards.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_name_ta().compareTo(rhs.getWard_name_ta()));
+
+        if(wards != null && wards.size() >0) {
+
+            spinnerMapWard = new HashMap<Integer, String>();
+            spinnerMapWard.put(0, null);
+            final String[] items = new String[wards.size() + 1];
+            items[0] = "Select Ward";
+            for (int i = 0; i < wards.size(); i++) {
+                spinnerMapWard.put(i + 1, wards.get(i).ward_id);
+                String Class = wards.get(i).ward_name_ta;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.wardNo.setAdapter(RuralUrbanArray);
+                    newTradeLicenceScreenBinding.wardNo.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedWardId=wards.get(1).ward_id;
+                    selectedWardName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+
+    }
+    public void LoadFinYearSpinner() {
+        finYear = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.LICENCE_VALIDITY_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setFIN_YEAR_ID(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FIN_YEAR_ID))));
+                    commonModel.setFIN_YEAR(String.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FIN_YEAR))));
+                    commonModel.setFROM_FIN_YEAR(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FROM_FIN_YEAR))));
+                    commonModel.setFROM_FIN_MON(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FROM_FIN_MON))));
+                    commonModel.setTO_FIN_YEAR(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TO_FIN_YEAR))));
+                    commonModel.setTO_FIN_MON(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TO_FIN_MON))));
+                    finYear.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(finYear, (lhs, rhs) -> lhs.getFIN_YEAR().compareTo(rhs.getFIN_YEAR()));
+
+        if(finYear != null && finYear.size() >0) {
+
+            spinnerMapFinYear = new HashMap<Integer, String>();
+            spinnerMapFinYear.put(0, null);
+            final String[] items = new String[finYear.size() + 1];
+            items[0] = "Select Licence Validity";
+            for (int i = 0; i < finYear.size(); i++) {
+                spinnerMapFinYear.put(i + 1, finYear.get(i).FIN_YEAR_ID);
+                String Class = finYear.get(i).FIN_YEAR;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.licenceValidity.setAdapter(RuralUrbanArray);
+                    newTradeLicenceScreenBinding.licenceValidity.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedFinId=finYear.get(1).FIN_YEAR_ID;
+                    selectedFinName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+
+    }
+
+    private void LoadLicenceTypeSpinner() throws JSONException {
+        traderLicenseTypeList = new ArrayList<CommonModel>();
+        JSONArray jsonarray=new JSONArray(prefManager.getTraderLicenseTypeList());
+        if(jsonarray != null && jsonarray.length() >0) {
+            for (int i = 0; i < jsonarray.length(); i++) {
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                String traders_license_type_id = jsonobject.getString("traders_license_type_id");
+                String traders_license_type_name = jsonobject.getString("traders_license_type_name");
+                CommonModel Detail = new CommonModel();
+                Detail.setTraders_license_type_id(traders_license_type_id);
+                Detail.setTraders_license_type_name(traders_license_type_name);
+                traderLicenseTypeList.add(Detail);
+            }
+            Collections.sort(traderLicenseTypeList, (lhs, rhs) -> lhs.getTraders_license_type_name().compareTo(rhs.getTraders_license_type_name()));
+        }
+
+
+        if(traderLicenseTypeList != null && traderLicenseTypeList.size() >0) {
+
+            spinnerMapLicenceType = new HashMap<Integer, String>();
+            spinnerMapLicenceType.put(0, null);
+            final String[] items = new String[traderLicenseTypeList.size() + 1];
+            items[0] = "Select Licence Type";
+            for (int i = 0; i < traderLicenseTypeList.size(); i++) {
+                spinnerMapLicenceType.put(i + 1, traderLicenseTypeList.get(i).traders_license_type_id);
+                String Class = traderLicenseTypeList.get(i).traders_license_type_name;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.licenceType.setAdapter(RuralUrbanArray);
+                    newTradeLicenceScreenBinding.licenceType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedLicenceTpeId=traderLicenseTypeList.get(1).traders_license_type_id;
+                    selectedLicenceTypeName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+
     }
 
     @Override
@@ -472,84 +667,114 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
+    public void getNewTraderDetails() {
+         traderCode =newTradeLicenceScreenBinding.tradersCode.getText().toString();
+         tradeDate =newTradeLicenceScreenBinding.date.getText().toString();
+         licenseType =newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString();
+         tradeDescription =newTradeLicenceScreenBinding.tradeDescription.getText().toString();
+         traderName =newTradeLicenceScreenBinding.applicantName.getText().toString();
+         traderNameTa =newTradeLicenceScreenBinding.applicantNameTamil.getText().toString();
+         tradeImage =newTradeLicenceScreenBinding.tradersCode.getText().toString();
+         traderGender =selectedGender;
+         traderAge =newTradeLicenceScreenBinding.age.getText().toString();
+         fatherName =newTradeLicenceScreenBinding.fatherHusName.getText().toString();
+         fatherNameTa =newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString();
+         mobileNo =newTradeLicenceScreenBinding.mobileNo.getText().toString();
+         email =newTradeLicenceScreenBinding.emailId.getText().toString();
+         establishmentName =newTradeLicenceScreenBinding.establishName.getText().toString();
+         ward =selectedWardName;
+         street =selectedStreetName;
+         doorNo =newTradeLicenceScreenBinding.doorNo.getText().toString();
+         licenseValidity =newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString();
+        if ((newTradeLicenceScreenBinding.isPaid.isChecked())){
+             paymentStatus ="Paid";
+        }
+        else{
+             paymentStatus ="UnPaid";
+
+        }
+    }
 
     public void validateUserDetails() {
-        if (Utils.isOnline()) {
-            if (!newTradeLicenceScreenBinding.tradersCode.getText().toString().isEmpty()) {
+        if (!newTradeLicenceScreenBinding.tradersCode.getText().toString().isEmpty()){
                 if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
-                    if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty()) {
+                    if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
                         if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
                             if (!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()) {
                                 if (!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()) {
-                                    if (!"Select Gender".equalsIgnoreCase(GenderList.get(newTradeLicenceScreenBinding.gender.getSelectedItemPosition()))) {
+                                    if (!"Select Gender".equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
                                         if (!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()) {
                                             if (!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()) {
                                                 if (Utils.isValidMobile(newTradeLicenceScreenBinding.mobileNo.getText().toString())) {
                                                     if (!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()) {
                                                         if (Utils.isEmailValid(newTradeLicenceScreenBinding.emailId.getText().toString())) {
-                                                            if (!newTradeLicenceScreenBinding.establishName.getText().toString().isEmpty()) {
-                                                                if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty()) {
-                                                                    if (!newTradeLicenceScreenBinding.streetName.getText().toString().isEmpty()) {
-                                                                        if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
-                                                                            if (!"Select Licence Validitity".equalsIgnoreCase(LicenceValidity.get(newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition()).getLicenceValidity())) {
-                                                                                if ((newTradeLicenceScreenBinding.isPaid.isChecked())){
+                                                                if (!newTradeLicenceScreenBinding.establishName.getText().toString().isEmpty()) {
+                                                                    if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty() && !"Select Ward".equalsIgnoreCase(selectedWardName)) {
+                                                                        if (!newTradeLicenceScreenBinding.streetsName.getSelectedItem().toString().isEmpty() && !"Select Street".equalsIgnoreCase(selectedStreetName)) {
+                                                                            if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
+                                                                                if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty() && !"Select Licence Validity".equalsIgnoreCase(selectedFinName)) {
+                                                                                    if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
+                                                                                        if (Utils.isOnline()) {
+                                                                                            SaveLicenseTraders();
+                                                                                        } else {
+                                                                                            Utils.showAlert(this, getResources().getString(R.string.no_internet));
+                                                                                        }
+                                                                                    } else {
+                                                                                        Utils.showAlert(this, "Please Confirm Payment!");
+                                                                                    }
 
-                                                                                }
-                                                                                else{
-
-                                                                                }
+                                                                            } else {
+                                                                                Utils.showAlert(this, "Enter License validity!");
                                                                             }
                                                                         } else {
-                                                                            Utils.showAlert(this, "Enter License validity!");
+                                                                            Utils.showAlert(this, "Enter Door no!");
                                                                         }
                                                                     } else {
-                                                                        Utils.showAlert(this, "Enter Door no!");
+                                                                        Utils.showAlert(this, "Enter Street name!");
                                                                     }
                                                                 } else {
-                                                                    Utils.showAlert(this, "Enter Street name!");
+                                                                    Utils.showAlert(this, "Enter Ward no name!");
+                                                                }
+                                                                } else {
+                                                                    Utils.showAlert(this, "Enter Establishment name!");
                                                                 }
                                                             } else {
-                                                                Utils.showAlert(this, "Enter Ward no name!");
+                                                                Utils.showAlert(this, "Enter Your Correct Mail Id!");
                                                             }
                                                         } else {
-                                                            Utils.showAlert(this, "Enter Your Correct Mail Id!");
+                                                            Utils.showAlert(this, "Enter Your Mail Id!");
                                                         }
                                                     } else {
-                                                        Utils.showAlert(this, "Enter Your Mail Id!");
+                                                        Utils.showAlert(this, "Enter Your Correct Mobile No!");
                                                     }
                                                 } else {
-                                                    Utils.showAlert(this, "Enter Your Correct Mobile No!");
+                                                    Utils.showAlert(this, "Enter Your Mobile No!");
                                                 }
                                             } else {
-                                                Utils.showAlert(this, "Enter Your Mobile No!");
+                                                Utils.showAlert(this, "Enter Your Age!");
                                             }
                                         } else {
-                                            Utils.showAlert(this, "Enter Your Age!");
+                                            Utils.showAlert(this, "Select Your Gender!");
                                         }
                                     } else {
-                                        Utils.showAlert(this, "Select Your Gender!");
+                                        Utils.showAlert(this, "Enter Your Father / Husband Name!");
                                     }
                                 } else {
-                                    Utils.showAlert(this, "Enter Your Father / Husband Name!");
+                                    Utils.showAlert(this, "Enter Your Name!");
                                 }
                             } else {
-                                Utils.showAlert(this, "Enter Your Name!");
+                                Utils.showAlert(this, "Enter Trade Desription!");
                             }
                         } else {
-                            Utils.showAlert(this, "Enter Trade Desription!");
+                            Utils.showAlert(this, "Select License type!");
                         }
                     } else {
-                        Utils.showAlert(this, "Select License type!");
+                        Utils.showAlert(this, "Enter Date!");
                     }
                 } else {
-                    Utils.showAlert(this, "Enter Date!");
+                    Utils.showAlert(this, "Enter Traders code!");
                 }
-            } else {
-                Utils.showAlert(this, "Enter Traders code!");
-            }
-        } else {
-            Utils.showAlert(this, getResources().getString(R.string.no_internet));
-        }
+
     }
 
     @Override
@@ -581,61 +806,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"new");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    }
-
-    //display ward list
-    public void displayWard() {
-        wardList = new ArrayList<>();
-        CommonModel commonModel=new CommonModel();
-        commonModel.setWardID(0);
-        commonModel.setWard_name_tamil("Select Ward");
-        commonModel.setWard_code("SW");
-        wardList.add(commonModel);
-        wardList.addAll(Dashboard.dbHelper.getAllWard());
-        GenderAdapter adapter = new GenderAdapter(NewTradeLicenceScreen.this,wardList,"Ward");
-        newTradeLicenceScreenBinding.wardNo.setAdapter(adapter);
-    }
-
-    //display Street
-    public void displayStreet() {
-        streetList=new ArrayList<>();
-        String select_query= "SELECT *FROM " + DBHelper.STREET_TABLE_NAME + " WHERE wardid="+wardid+ " ORDER BY street_name_ta";
-        Cursor cursor = db.rawQuery(select_query, null);
-        CommonModel commonModel1=new CommonModel();
-        commonModel1.setStreet_code("SC");
-        commonModel1.setStreet_id(0);
-        commonModel1.setStreet_name_tamil("Select Street");
-        if(cursor.getCount()>0){
-
-            if(cursor.moveToFirst()){
-                do{
-                    CommonModel commonModel=new CommonModel();
-                    commonModel.setState_code(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.STATE_CODE)));
-                    commonModel.setD_code(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.DISTRICT_CODE)));
-                    commonModel.setLocal_pan_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LP_CODE)));
-                    commonModel.setWard_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_CODE)));
-                    commonModel.setWardID(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.WARD_ID)));
-                    commonModel.setStreet_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_CODE)));
-                    commonModel.setStreet_id(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.STREET_ID)));
-                    commonModel.setStreet_name_english(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_EN)));
-                    commonModel.setStreet_name_tamil(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_TA)));
-                    streetList.add(commonModel);
-                }while (cursor.moveToNext());
-            }
-        }
-        GenderAdapter adapter = new GenderAdapter(NewTradeLicenceScreen.this,streetList,"Street");
-        newTradeLicenceScreenBinding.strretSpinner.setAdapter(adapter);
-    }
-
-    public void displayFinYear() {
-        finYearList = new ArrayList<>();
-        CommonModel commonModel=new CommonModel();
-        commonModel.setFIN_YEAR_ID(""+0);
-        commonModel.setFIN_YEAR("Select Financial Year");
-        finYearList.add(commonModel);
-        finYearList.addAll(Dashboard.dbHelper.getAllStreet());
-        GenderAdapter adapter = new GenderAdapter(NewTradeLicenceScreen.this,finYearList,"FinancialYear");
-        newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);
     }
 
 }

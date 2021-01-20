@@ -12,9 +12,7 @@ import android.graphics.Canvas;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -23,47 +21,33 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
 
 import com.nic.TPTaxDepartment.Application.NICApplication;
 import com.nic.TPTaxDepartment.BuildConfig;
 import com.nic.TPTaxDepartment.R;
-import com.nic.TPTaxDepartment.session.PrefManager;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.InvalidParameterSpecException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 
 public class Utils {
-    ;
+
     private static final String SHARED_PREFERENCE_UTILS = "Nimble";
     private static final int SECONDS_IN_A_MINUTE = 60;
     private static final int MINUTES_IN_AN_HOUR = 60;
@@ -73,10 +57,6 @@ public class Utils {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
     private static String CIPHER_NAME = "AES/CBC/NoPadding";
-    private static String CIPHER_NAME1="AES/CTR/NoPadding";
-    private static SecretKeySpec secretKey;
-    private static byte[] key;
-
     private static String CIPHER_NAME2 = "AES/CBC/PKCS5PADDING";
     private static int CIPHER_KEY_LEN = 16; //128 bits
 
@@ -112,6 +92,20 @@ public class Utils {
             }
         }
         return status;
+    }
+    public static String getSHA512(String input){
+
+        String toReturn = null;
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-512");
+            digest.reset();
+            digest.update(input.getBytes("utf8"));
+            toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return toReturn;
     }
 
     public static boolean validateMail(String email) {
@@ -402,50 +396,6 @@ public class Utils {
         return "";
     }
 
-    public static String getSHA512(String input){
-
-//        String toReturn = null;
-//        try {
-//            MessageDigest digest = MessageDigest.getInstance("SHA-512");
-//            digest.reset();
-//            digest.update(input.getBytes("utf8"));
-//            toReturn = String.format("%0128x", new BigInteger(1, digest.digest()));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return toReturn;
-
-        try {
-            // getInstance() method is called with algorithm SHA-512
-            MessageDigest md = MessageDigest.getInstance("SHA-512");
-
-            // digest() method is called
-            // to calculate message digest of the input string
-            // returned as array of byte
-            byte[] messageDigest = md.digest(input.getBytes());
-
-            // Convert byte array into signum representation
-            BigInteger no = new BigInteger(1, messageDigest);
-
-            // Convert message digest into hex value
-            String hashtext = no.toString(16);
-
-            // Add preceding 0s to make it 32 bit
-            while (hashtext.length() < 32) {
-                hashtext = "0" + hashtext;
-            }
-
-            // return the HashText
-            return hashtext;
-        }
-
-        // For specifying wrong message digest algorithms
-        catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     public static String encrypt(String key, String iv, String data) {
 
@@ -499,49 +449,9 @@ public class Utils {
      */
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public static String decrypt1(String key, String data) {
+    public static String decrypt(String key, String data) {
 
         try {
-            // Generating IV.
-            byte[] iv = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-            String[] parts = data.split(":");
-
-//Create IvParameterSpec
-            AlgorithmParameterSpec ivSpec = new IvParameterSpec(iv);
-            //SecretKeySpec secretKey = new SecretKeySpec(fixKey(key).getBytes("UTF-8"), "AES");
-            SecretKeySpec secretKey = new SecretKeySpec(fixKey(key).getBytes(),"AES");
-            SecretKeySpec secretKey1 = new SecretKeySpec(key.getBytes("UTF-8"), "AES");
-            Cipher cipher = Cipher.getInstance(CIPHER_NAME1);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            //byte[] original = cipher.doFinal(Base64.decode(data,Base64.DEFAULT));
-
-            byte[] decodedString = java.util.Base64.getDecoder().decode(new String(data).getBytes("UTF-8"));
-
-            return new String(cipher.doFinal(decodedString));
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-
-    public static String decrypt(String cipherText, String secret) {
-        try {
-            SecretKeySpec secretKey = new SecretKeySpec(fixKey(secret).getBytes("UTF-8"), "AES");
-            Cipher cipher = Cipher.getInstance(CIPHER_NAME);
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
-            byte[] decode = Base64.decode(cipherText, Base64.NO_WRAP);
-            String decryptString = new String(cipher.doFinal(decode), "UTF-8");
-            return decryptString;
-
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-    public static String decrypt2(String key, String data) {
-
-        try {
-
             String[] parts = data.split(":");
 
             IvParameterSpec iv = new IvParameterSpec(android.util.Base64.decode(parts[1], 1));
@@ -560,5 +470,7 @@ public class Utils {
             throw new RuntimeException(ex);
         }
     }
+
+
 
 }

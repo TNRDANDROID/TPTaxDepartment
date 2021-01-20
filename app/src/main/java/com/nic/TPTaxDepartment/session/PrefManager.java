@@ -61,16 +61,20 @@ public class PrefManager {
     private static final String MI_TANK_SURVEY_ID = "mi_tank_survey_id";
 
 
-    //tptax new
-    private static final String STATE_CODE="state_code";
-    private static final String LB_TYPE="lbtype";
-    private static final String TP_CODE="tpcode";
-    private static final String ROLE_CODE="role_code";
-    private static final String ROLE_NAME="role_name";
-    private static final String USER_FIRST_NAME="user_first_name";
-    private static final String USER_LAST_NAME="user_last_name";
-    private static final String DISTRICT_NAME_EN="district_name_en";
-    private static final String LOCAL_BODY_NAME_EN="lbody_name_en";
+    private static final String WARD_LIST = "WardList";
+    private static final String STREET_LIST = "StreetList";
+    private static final String TAX_TYPE_LIST = "TaxTypeList";
+    private static final String TRADER_LICENSE_TYPE_LIST = "TraderLicenseTypeList";
+    private static final String TRADERS_LIST = "TradersList";
+    private static final String DAILY_COLLECTION_LIST = "DailyCollectionList";
+    private static final String STATE_CODE = "StateCode";
+    private static final String LB_TYPE = "lbtype";
+    private static final String TP_CODE = "tpcode";
+    private static final String LBODY_NAME_EN = "lbody_name_en";
+    private static final String ROLE_CODE = "role_code";
+    private static final String ROLE_NAME = "role_name";
+    private static final String USER_FNAME = "user_first_name";
+    private static final String USER_LNAME = "user_last_name";
 
 
 
@@ -106,6 +110,121 @@ public class PrefManager {
 
     public String getAppKey() {
         return pref.getString(APP_KEY, null);
+    }
+
+    public void setWardList(String ward) {
+        editor.putString(WARD_LIST, ward);
+        editor.commit();
+    }
+
+    public String getWardList() {
+        return pref.getString(WARD_LIST, null);
+    }
+    public void setUserFname(String userFname) {
+        editor.putString(USER_FNAME, userFname);
+        editor.commit();
+    }
+
+    public String getUserFname() {
+        return pref.getString(USER_FNAME, null);
+    }
+    public void setUserLname(String userLname) {
+        editor.putString(USER_LNAME, userLname);
+        editor.commit();
+    }
+
+    public String getUserLname() {
+        return pref.getString(USER_LNAME, null);
+    }
+    public void setRoleName(String roleName) {
+        editor.putString(ROLE_NAME, roleName);
+        editor.commit();
+    }
+
+    public String getRoleName() {
+        return pref.getString(ROLE_NAME, null);
+    }
+    public void setRoleCode(String roleCode) {
+        editor.putString(ROLE_CODE, roleCode);
+        editor.commit();
+    }
+
+    public String getRoleCode() {
+        return pref.getString(ROLE_CODE, null);
+    }
+    public void setLbodyNameEn(String lbodyNameEn) {
+        editor.putString(LBODY_NAME_EN, lbodyNameEn);
+        editor.commit();
+    }
+
+    public String getLbodyNameEn() {
+        return pref.getString(LBODY_NAME_EN, null);
+    }
+    public void setLbType(String lbType) {
+        editor.putString(LB_TYPE, lbType);
+        editor.commit();
+    }
+
+    public String getLbType() {
+        return pref.getString(LB_TYPE, null);
+    }
+    public void setStateCode(String stateCode) {
+        editor.putString(STATE_CODE, stateCode);
+        editor.commit();
+    }
+
+    public String getStateCode() {
+        return pref.getString(STATE_CODE, null);
+    }
+
+    public void setStreetList(String street) {
+        editor.putString(STREET_LIST, street);
+        editor.commit();
+    }
+
+    public String getStreetList() {
+        return pref.getString(STREET_LIST, null);
+    }
+    public void setTpCode(String tpCode) {
+        editor.putString(TP_CODE, tpCode);
+        editor.commit();
+    }
+
+    public String getTpCode() {
+        return pref.getString(TP_CODE, null);
+    }
+    public void setDailyCollectionList(String dailyCollectionList) {
+        editor.putString(DAILY_COLLECTION_LIST, dailyCollectionList);
+        editor.commit();
+    }
+
+    public String getDailyCollectionList() {
+        return pref.getString(DAILY_COLLECTION_LIST, null);
+    }
+
+    public void setTaxTypeList(String taxTypeList) {
+        editor.putString(TAX_TYPE_LIST, taxTypeList);
+        editor.commit();
+    }
+
+    public String getTaxTypeList() {
+        return pref.getString(TAX_TYPE_LIST, null);
+    }
+    public void setTraderLicenseTypeList(String TraderLicenseTypeList) {
+        editor.putString(TRADER_LICENSE_TYPE_LIST, TraderLicenseTypeList);
+        editor.commit();
+    }
+
+    public String getTraderLicenseTypeList() {
+        return pref.getString(TRADER_LICENSE_TYPE_LIST, null);
+    }
+    public void setTradersList(String TradersList) {
+        editor.putString(TRADERS_LIST, TradersList);
+        editor.commit();
+    }
+
+    public String getTradersList() {
+        return pref.getString(TRADERS_LIST, null);
     }
 
 
@@ -385,98 +504,5 @@ public class PrefManager {
     public String getMiTankSurveyId() {
         return pref.getString(MI_TANK_SURVEY_ID, null);
     }
-
-    //TPTAX DEPT LOGIBN GETTER SETTR
-
-
-    public   String getStateCode() {
-        return pref.getString(STATE_CODE, null);
-    }
-
-    public   String getLbType1() {
-      return pref.getString(LB_TYPE, null);
-    }
-
-    public   String getTpCode1() {
-        return pref.getString(TP_CODE, null);
-    }
-
-    public   String getRoleCode1() {
-        return pref.getString(ROLE_CODE, null);
-    }
-
-    public   String getRoleName1() {
-        return pref.getString(ROLE_NAME, null);
-    }
-
-    public   String getUserFirstName1() {
-        return pref.getString(USER_FIRST_NAME, null);
-    }
-
-    public   String getUserLastName1() {
-        return pref.getString(USER_LAST_NAME, null);
-    }
-
-
-    public   String getDistrictNameEn1() {
-        return pref.getString(DISTRICT_NAME_EN, null);
-    }
-
-    public   String getLocalBodyNameEn1() {
-        return pref.getString(LOCAL_BODY_NAME_EN, null);
-    }
-
-    public Object setStateCode(Object key) {
-        editor.putString(STATE_CODE, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public Object setLbType(Object key) {
-        editor.putString(LB_TYPE, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-    public Object setTpCode(Object key) {
-        editor.putString(TP_CODE, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public Object setRoleCode(Object key) {
-        editor.putString(ROLE_CODE, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-    public Object setRoleName(Object key) {
-        editor.putString(ROLE_NAME, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public Object setUserFirstName(Object key) {
-        editor.putString(USER_FIRST_NAME, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public Object setUserLastName(Object key) {
-        editor.putString(USER_LAST_NAME, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public Object setDistrictNameEn(Object key) {
-        editor.putString(DISTRICT_NAME_EN, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
-    public Object setLocalBodyNameEn(Object key) {
-        editor.putString(LOCAL_BODY_NAME_EN, String.valueOf(key));
-        editor.commit();
-        return key;
-    }
-
 
 }

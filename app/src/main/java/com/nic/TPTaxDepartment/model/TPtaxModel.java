@@ -43,8 +43,144 @@ public class TPtaxModel {
     public String pointType;
     public Integer tradecode;
     public String TaxTypeId;
+    public String TaxTypeName;
+    public String TaxCollection;
     public String AssessmentId;
     public String CurrentStatus;
+
+
+    public String traderName;
+    public String traderCode;
+    public String traderPayment;
+    public String traders_typ;
+    public String tradedesct;
+    public String doorno;
+    public String apfathername_ta;
+    public String establishment_name_ta;
+    public String licence_validity;
+    public String traders_license_type_name;
+    public String mobileno;
+    public String paymentdate;
+    public String getTaxTypeName() {
+        return TaxTypeName;
+    }
+
+    public void setTaxTypeName(String taxTypeName) {
+        TaxTypeName = taxTypeName;
+    }
+
+    public String getTaxCollection() {
+        return TaxCollection;
+    }
+
+    public void setTaxCollection(String taxCollection) {
+        TaxCollection = taxCollection;
+    }
+
+
+
+    public String getMobileno() {
+        return mobileno;
+    }
+
+    public void setMobileno(String mobileno) {
+        this.mobileno = mobileno;
+    }
+
+    public String getPaymentdate() {
+        return paymentdate;
+    }
+
+    public void setPaymentdate(String paymentdate) {
+        this.paymentdate = paymentdate;
+    }
+
+
+
+    public String getTraders_typ() {
+        return traders_typ;
+    }
+
+    public void setTraders_typ(String traders_typ) {
+        this.traders_typ = traders_typ;
+    }
+
+    public String getTradedesct() {
+        return tradedesct;
+    }
+
+    public void setTradedesct(String tradedesct) {
+        this.tradedesct = tradedesct;
+    }
+
+    public String getDoorno() {
+        return doorno;
+    }
+
+    public void setDoorno(String doorno) {
+        this.doorno = doorno;
+    }
+
+    public String getApfathername_ta() {
+        return apfathername_ta;
+    }
+
+    public void setApfathername_ta(String apfathername_ta) {
+        this.apfathername_ta = apfathername_ta;
+    }
+
+    public String getEstablishment_name_ta() {
+        return establishment_name_ta;
+    }
+
+    public void setEstablishment_name_ta(String establishment_name_ta) {
+        this.establishment_name_ta = establishment_name_ta;
+    }
+
+    public String getLicence_validity() {
+        return licence_validity;
+    }
+
+    public void setLicence_validity(String licence_validity) {
+        this.licence_validity = licence_validity;
+    }
+
+    public String getTraders_license_type_name() {
+        return traders_license_type_name;
+    }
+
+    public void setTraders_license_type_name(String traders_license_type_name) {
+        this.traders_license_type_name = traders_license_type_name;
+    }
+
+
+
+
+    public String getTraderName() {
+        return traderName;
+    }
+
+    public void setTraderName(String traderName) {
+        this.traderName = traderName;
+    }
+
+    public String getTraderCode() {
+        return traderCode;
+    }
+
+    public void setTraderCode(String traderCode) {
+        this.traderCode = traderCode;
+    }
+
+    public String getTraderPayment() {
+        return traderPayment;
+    }
+
+    public void setTraderPayment(String traderPayment) {
+        this.traderPayment = traderPayment;
+    }
+
+
 
     public String getMiTankStructureId() {
         return miTankStructureId;

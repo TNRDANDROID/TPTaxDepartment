@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.InputType;
@@ -19,7 +18,6 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -42,17 +40,10 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidParameterSpecException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 
 /**
@@ -159,7 +150,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
+        loginScreenBinding.username.setText("tpbc1@gmail.com");
+        loginScreenBinding.password.setText("test123#$");
     }
 
 
@@ -240,12 +232,17 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         params.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         Log.d("user", "" + loginScreenBinding.username.getText().toString().trim());
 
-       String encryptUserPass1 = Utils.md5(loginScreenBinding.password.getText().toString().trim());
-        String encryptUserPass = Utils.getSHA512(loginScreenBinding.password.getText().toString().trim());
+       /* String encryptUserPass = Utils.md5(loginScreenBinding.password.getText().toString().trim());
+        prefManager.setEncryptPass(encryptUserPass);
+        Log.d("md5", "" + encryptUserPass);*/
 
-        String encryptionText=Utils.md5(encryptUserPass);
-        prefManager.setEncryptPass(encryptionText);
-        Log.d("md5", "" + encryptUserPass);
+
+
+        String encryptUserPass = Utils.getSHA512(loginScreenBinding.password.getText().toString().trim());
+        String encryptUserPassword = Utils.md5(encryptUserPass);
+        prefManager.setEncryptPass(encryptUserPassword);
+        Log.d("SHA512", "" + encryptUserPass);
+
 
         String userPass = encryptUserPass.concat(random);
         Log.d("userpass", "" + userPass);
@@ -265,7 +262,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     //The method for opening the registration page and another processes or checks for registering
 
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
@@ -281,31 +277,23 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     if (response.equals("LOGIN_SUCCESS")) {
                         String key = loginResponse.getString(AppConstant.KEY_USER);
                         String user_data = loginResponse.getString(AppConstant.USER_DATA);
-                        String decryptedKey = Utils.decrypt2(prefManager.getEncryptPass(),key);
-                        String userDataDecryptKey = Utils.decrypt2(decryptedKey, user_data);
-//                        String userDataDecrypt = Utils.decrypt(prefManager.getEncryptPass(), user_data);
-                        Log.d("userdatadecry", "" + decryptedKey);
-                        Log.d("userdatadecryKey", "" + userDataDecryptKey);
-                        jsonObject = new JSONObject(userDataDecryptKey);
-                        prefManager.setDistrictCode(jsonObject.get(AppConstant.DISTRICT_CODE));
-                        prefManager.setStateCode(jsonObject.get(AppConstant.STATE_CODE1));
-                        prefManager.setTpCode(jsonObject.get(AppConstant.TP_CODE));
-                        prefManager.setUserFirstName(jsonObject.get(AppConstant.USER_FIRST_NAME));
-                        prefManager.setUserLastName(jsonObject.get(AppConstant.USER_LAST_NAME));
-                        prefManager.setLbType(jsonObject.get(AppConstant.LB_TYPE));
-                        prefManager.setRoleCode(jsonObject.get(AppConstant.ROLE_CODE));
-                        prefManager.setRoleName(jsonObject.get(AppConstant.ROLE_NAME));
-                        prefManager.setDistrictNameEn(jsonObject.getString(AppConstant.DISTRICT_NAME_EN));
-                        prefManager.setLocalBodyNameEn(jsonObject.getString(AppConstant.LOCAL_BODY_NAME_EN));
-                        prefManager.setUserName(loginScreenBinding.username.getText().toString());
+                        String decryptedKey = Utils.decrypt(prefManager.getEncryptPass(), key);
+                        String userDataDecrypt = Utils.decrypt(decryptedKey, user_data);
+                        Log.d("userdatadecry", "" + userDataDecrypt);
+                        jsonObject = new JSONObject(userDataDecrypt);
+                        prefManager.setStateCode(jsonObject.getString(AppConstant.STATE_CODE));
+                        prefManager.setDistrictCode("20"/*jsonObject.get(AppConstant.DISTRICT_CODE)*/);
+                        prefManager.setLbType(jsonObject.getString(AppConstant.LB_TYPE));
+                        prefManager.setTpCode("200292"/*jsonObject.getString(AppConstant.TP_CODE)*/);
+                        prefManager.setLbodyNameEn(jsonObject.getString(AppConstant.LBODY_NAME_EN));
+                        prefManager.setRoleCode(jsonObject.getString(AppConstant.ROLE_CODE));
+                        prefManager.setRoleName(jsonObject.getString(AppConstant.ROLE_NAME));
+                        prefManager.setUserFname(jsonObject.getString(AppConstant.USER_FNAME));
+                        prefManager.setUserLname(jsonObject.getString(AppConstant.USER_LNAME));
 
-                        //prefManager.setBlockCode(jsonObject.get(AppConstant.BLOCK_CODE));
-                        //prefManager.setPvCode(jsonObject.get(AppConstant.PV_CODE));
-                        //prefManager.setDistrictName(jsonObject.get(AppConstant.DISTRICT_NAME));
-                        //prefManager.setBlockName(jsonObject.get(AppConstant.BLOCK_NAME));
-                        //prefManager.setDesignation(jsonObject.get(AppConstant.DESIG_NAME));
-                         //prefManager.setName(String.valueOf(jsonObject.get(AppConstant.DESIG_NAME)));
-                        Log.d("userdata", "" + prefManager.getDistrictCode() + prefManager.getBlockCode() + prefManager.getPvCode() + prefManager.getDistrictName() + prefManager.getBlockName() + prefManager.getName());
+                        Log.d("userdata", "" + prefManager.getStateCode() + prefManager.getDistrictCode() +
+                                prefManager.getLbType() + prefManager.getTpCode() + prefManager.getLbodyNameEn() +
+                                prefManager.getRoleCode()+prefManager.getRoleName()+prefManager.getUserFname()+prefManager.getUserLname());
                         prefManager.setUserPassKey(decryptedKey);
                         new Handler().postDelayed(new Runnable() {
                             @Override
@@ -320,30 +308,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         }
                     }
                 }
-
-            }
-            if ("VillageList".equals(urlType) && loginResponse != null) {
-                String key = loginResponse.getString(AppConstant.ENCODE_DATA);
-                String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
-                JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-
-                }
-                Log.d("VillageList", "" + responseDecryptedBlockKey);
-            }
-            if ("HabitationList".equals(urlType) && loginResponse != null) {
-                String key = loginResponse.getString(AppConstant.ENCODE_DATA);
-                String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
-                JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-
-                }
-                Log.d("HabitationList", "" + responseDecryptedBlockKey);
             }
 
         } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
             e.printStackTrace();
         }
     }
