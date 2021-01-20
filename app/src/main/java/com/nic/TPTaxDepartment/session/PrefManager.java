@@ -61,6 +61,20 @@ public class PrefManager {
     private static final String MI_TANK_SURVEY_ID = "mi_tank_survey_id";
 
 
+    //tptax new
+    private static final String STATE_CODE="state_code";
+    private static final String LB_TYPE="lbtype";
+    private static final String TP_CODE="tpcode";
+    private static final String ROLE_CODE="role_code";
+    private static final String ROLE_NAME="role_name";
+    private static final String USER_FIRST_NAME="user_first_name";
+    private static final String USER_LAST_NAME="user_last_name";
+    private static final String DISTRICT_NAME_EN="district_name_en";
+    private static final String LOCAL_BODY_NAME_EN="lbody_name_en";
+
+
+
+
     public PrefManager(Context context) {
         this._context = context;
         pref = _context.getSharedPreferences(AppConstant.PREF_NAME, PRIVATE_MODE);
@@ -371,5 +385,98 @@ public class PrefManager {
     public String getMiTankSurveyId() {
         return pref.getString(MI_TANK_SURVEY_ID, null);
     }
+
+    //TPTAX DEPT LOGIBN GETTER SETTR
+
+
+    public   String getStateCode() {
+        return pref.getString(STATE_CODE, null);
+    }
+
+    public   String getLbType1() {
+      return pref.getString(LB_TYPE, null);
+    }
+
+    public   String getTpCode1() {
+        return pref.getString(TP_CODE, null);
+    }
+
+    public   String getRoleCode1() {
+        return pref.getString(ROLE_CODE, null);
+    }
+
+    public   String getRoleName1() {
+        return pref.getString(ROLE_NAME, null);
+    }
+
+    public   String getUserFirstName1() {
+        return pref.getString(USER_FIRST_NAME, null);
+    }
+
+    public   String getUserLastName1() {
+        return pref.getString(USER_LAST_NAME, null);
+    }
+
+
+    public   String getDistrictNameEn1() {
+        return pref.getString(DISTRICT_NAME_EN, null);
+    }
+
+    public   String getLocalBodyNameEn1() {
+        return pref.getString(LOCAL_BODY_NAME_EN, null);
+    }
+
+    public Object setStateCode(Object key) {
+        editor.putString(STATE_CODE, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public Object setLbType(Object key) {
+        editor.putString(LB_TYPE, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+    public Object setTpCode(Object key) {
+        editor.putString(TP_CODE, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public Object setRoleCode(Object key) {
+        editor.putString(ROLE_CODE, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+    public Object setRoleName(Object key) {
+        editor.putString(ROLE_NAME, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public Object setUserFirstName(Object key) {
+        editor.putString(USER_FIRST_NAME, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public Object setUserLastName(Object key) {
+        editor.putString(USER_LAST_NAME, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public Object setDistrictNameEn(Object key) {
+        editor.putString(DISTRICT_NAME_EN, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
+    public Object setLocalBodyNameEn(Object key) {
+        editor.putString(LOCAL_BODY_NAME_EN, String.valueOf(key));
+        editor.commit();
+        return key;
+    }
+
 
 }

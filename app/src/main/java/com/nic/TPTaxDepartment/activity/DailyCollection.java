@@ -31,7 +31,10 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 
 public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
@@ -142,6 +145,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             cldr.set(Calendar.YEAR, year);
             cldr.set(Calendar.MONTH, (monthOfYear));
             cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            dateformate(start_date);
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
         }
 
@@ -231,5 +235,26 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
+    }
+
+    private static String dateformate(String date1){
+        final String OLD_FORMAT = "yyyy-MM-dd";
+        final String NEW_FORMAT = "yyyy-MM-dd";
+
+// August 12, 2010
+        String oldDateString = date1;
+        String newDateString;
+
+        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
+        Date d = null;
+        try {
+            d = sdf.parse(oldDateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        sdf.applyPattern(NEW_FORMAT);
+        newDateString = sdf.format(d);
+        date.setText(newDateString);
+        return newDateString;
     }
 }

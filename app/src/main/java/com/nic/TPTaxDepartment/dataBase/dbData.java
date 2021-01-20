@@ -9,8 +9,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 
 import java.util.ArrayList;
@@ -317,6 +319,110 @@ public class dbData {
 
                         cards.add(card);
                     }while(cursor.moveToNext());
+                }
+            }
+        } catch (Exception e){
+            //   Log.d(DEBUG_TAG, "Exception raised with a value of " + e);
+        } finally{
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return cards;
+    }
+
+
+    /****** DISTRICT TABLE *****/
+    public CommonModel insertDistrict(CommonModel commonModel) {
+
+        ContentValues values = new ContentValues();
+        values.put(AppConstant.DISTRICT_CODE, commonModel.getD_code());
+        values.put(AppConstant.DISTRICT_NAME, commonModel.getD_name());
+
+        long id = db.insert(DBHelper.DISTRICT_TABLE_NAME,null,values);
+        Log.d("Inserted_id_district", String.valueOf(id));
+
+        return commonModel;
+    }
+
+    /****** LOCAL BODY TABLE *****/
+    public CommonModel insertLocalPanchayt(CommonModel commonModel) {
+
+        ContentValues values = new ContentValues();
+        values.put(AppConstant.DISTRICT_CODE, commonModel.getD_code());
+        values.put(AppConstant.STATE_CODE, commonModel.getState_code());
+        values.put(AppConstant.LP_CODE,commonModel.getLocal_pan_code());
+        values.put(AppConstant.LP_NAME,commonModel.getLocal_pan_name());
+
+        long id = db.insert(DBHelper.LOCAL_BODY_NAME,null,values);
+        Log.d("Inserted_id_LOCALBODY", String.valueOf(id));
+
+        return commonModel;
+    }
+
+    /****** WARD  TABLE *****/
+    public CommonModel insertWARD(CommonModel commonModel) {
+
+        ContentValues values = new ContentValues();
+        values.put(AppConstant.DISTRICT_CODE, commonModel.getD_code());
+        values.put(AppConstant.STATE_CODE, commonModel.getState_code());
+        values.put(AppConstant.LP_CODE,commonModel.getLocal_pan_code());
+        values.put(AppConstant.WARD_CODE,commonModel.getWard_code());
+        values.put(AppConstant.WARD_ID,commonModel.getWardID());
+        //values.put(AppConstant.WARD_NAME,commonModel.getWard_name());
+        values.put(AppConstant.WARD_NAME_EN,commonModel.getWard_name_english());
+        values.put(AppConstant.WARD_NAME_TA,commonModel.getWard_name_tamil());
+
+        long id = db.insert(DBHelper.LOCAL_BODY_NAME,null,values);
+        Log.d("Insert_WARD_ID", String.valueOf(id));
+        Toast.makeText(context, "Insertede Successfully", Toast.LENGTH_SHORT).show();
+
+        return commonModel;
+    }
+
+    /****** WARD  TABLE *****/
+    public CommonModel insertStreet(CommonModel commonModel) {
+
+        ContentValues values = new ContentValues();
+        values.put(AppConstant.DISTRICT_CODE, commonModel.getD_code());
+        values.put(AppConstant.STATE_CODE, commonModel.getState_code());
+        values.put(AppConstant.LP_CODE,commonModel.getLocal_pan_code());
+        values.put(AppConstant.WARD_CODE,commonModel.getWard_code());
+        values.put(AppConstant.WARD_ID,commonModel.getWardID());
+        values.put(AppConstant.STREET_CODE,commonModel.getStreet_code());
+        values.put(AppConstant.STREET_ID,commonModel.getStreet_id());
+        values.put(AppConstant.STREET_NAME_EN,commonModel.getStreet_name_english());
+        values.put(AppConstant.STREET_NAME_TA,commonModel.getWard_name_tamil());
+
+        long id = db.insert(DBHelper.LOCAL_BODY_NAME,null,values);
+        Log.d("Inserted_id_STREET", String.valueOf(id));
+        Toast.makeText(context, "Insertede Successfully", Toast.LENGTH_SHORT).show();
+        return commonModel;
+    }
+
+    public ArrayList<CommonModel> getAllWard() {
+        db.isOpen();
+        ArrayList<CommonModel> cards = new ArrayList<>();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery("select * from "+DBHelper.WARD_TABLE_NAME,null);
+            // cursor = db.query(CardsDBHelper.TABLE_CARDS,
+            //       COLUMNS, null, null, null, null, null);
+            if (cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    CommonModel  card = new CommonModel ();
+                    card.setD_code(cursor.getInt(cursor
+                            .getColumnIndexOrThrow(AppConstant.DISTRICT_CODE)));
+                    card.setState_code(cursor.getInt(cursor
+                            .getColumnIndexOrThrow(AppConstant.STATE_CODE)));
+                    card.setLocal_pan_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LP_CODE)));
+                    card.setWard_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_CODE)));
+                    card.setWardID(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.WARD_CODE)));
+                    card.setWard_name_english(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_NAME_EN)));
+                    card.setWard_name_tamil(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_NAME_TA)));
+
+                    cards.add(card);
                 }
             }
         } catch (Exception e){

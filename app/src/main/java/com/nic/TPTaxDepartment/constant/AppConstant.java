@@ -77,4 +77,36 @@ public class AppConstant {
     public static String DESCRIPTION = "description";
 
 
+    public static String STATE_CODE="scode";
+    public static String WARD_CODE="wardcode";
+    public static String STREET_CODE="streetcode";
+    public static String LP_CODE="lpcode";
+    public static String STREET_NAME="streetname";
+    public static String WARD_NAME="wardname";
+    public static String LP_NAME="lpname";
+    public static String WARD_NAME_EN="ward_name_en";
+    public static String WARD_NAME_TA="ward_name_ta";
+    public static String STREET_NAME_EN="street_name_en";
+    public static String STREET_NAME_TA="street_name_ta";
+
+
+    public static final String STATE_CODE1="state_code";
+    public static final String LB_TYPE="lbtype";
+    public static final String TP_CODE="tpcode";
+    public static final String ROLE_CODE="role_code";
+    public static final String ROLE_NAME="role_name";
+    public static final String USER_FIRST_NAME="user_first_name";
+    public static final String USER_LAST_NAME="user_last_name";
+    public static final String DISTRICT_NAME_EN="district_name_en";
+    public static final String LOCAL_BODY_NAME_EN="lbody_name_en";
+
+    public static  String FIN_YEAR_ID="fin_yearid";
+    public static String FIN_YEAR="fin_year";
+    public static String FROM_FIN_YEAR="from_fin_year";
+    public static String TO_FIN_YEAR="to_fin_year";
+    public static String FROM_FIN_MONTH="from_fin_mon";
+    public static String TO_FIN_MONTH="to_fin_mon";
+
+
+
 }

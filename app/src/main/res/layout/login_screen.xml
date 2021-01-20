@@ -99,11 +99,11 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
                             android:hint="Username">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/username"
+                                android:singleLine="true"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
 
@@ -152,6 +152,7 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/password"
+                                android:singleLine="true"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPassword"/>
@@ -217,7 +218,7 @@
                     android:layout_marginTop="@dimen/_40sdp"
                     android:background="@drawable/button_background"
 
-                    android:onClick="@{()-> activity.showHomeScreen()}"
+                    android:onClick="@{()-> activity.checkLoginScreen()}"
                     android:text="Login"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white" />

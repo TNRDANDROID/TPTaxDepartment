@@ -11,13 +11,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.nic.TPTaxDepartment.BuildConfig;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.databinding.SplashScreenBinding;
 import com.nic.TPTaxDepartment.helper.AppVersionHelper;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
+
+import rx.android.BuildConfig;
 
 
 public class SplashScreen extends AppCompatActivity implements

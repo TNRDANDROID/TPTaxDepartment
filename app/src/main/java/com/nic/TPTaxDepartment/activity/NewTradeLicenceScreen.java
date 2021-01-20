@@ -25,6 +25,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.VolleyError;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.nic.TPTaxDepartment.Adapter.GenderAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -32,18 +35,25 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.NewTradeLicenceScreenBinding;
+import com.nic.TPTaxDepartment.model.CommonModel;
+import com.nic.TPTaxDepartment.model.Gender;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static com.nic.TPTaxDepartment.activity.Dashboard.db;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding; 
@@ -68,6 +78,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private List<TPtaxModel> LicenceType = new ArrayList<>();
     private List<TPtaxModel> LicenceValidity = new ArrayList<>();
 
+    //Gender
+    ArrayList<CommonModel> genderArrayList;
+    ArrayList<CommonModel> wardList;
+    ArrayList<CommonModel> streetList;
+    ArrayList<CommonModel> finYearList;
+    int wardid;
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,10 +105,15 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
         date = newTradeLicenceScreenBinding.date;
-        loadGenderList();
+        //loadGenderList();
        // getLicenceTypeList();
        // getWardList();
        // getStreetList();
+
+        displayWard();
+        getGenderList();
+        getLicenceTypeList();
+        displayFinYear();
 
         String colored = "*";
         String mobileView= "கைபேசி எண் / Mobile No";
@@ -124,6 +147,37 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        newTradeLicenceScreenBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i>0){
+                    wardid=wardList.get(i).getWardID();
+                    displayStreet();
+                    newTradeLicenceScreenBinding.strretSpinner.setVisibility(View.VISIBLE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.strretSpinner.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        newTradeLicenceScreenBinding.strretSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
         });
@@ -210,6 +264,15 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
+    public void getGenderList(){
+        try {
+            new ApiService(this).makeJSONObjectRequest("Gender", Api.Method.POST, UrlGenerator.prodOpenUrl(), genderJsonParams(), "not cache", this);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     public JSONObject streetJsonParams() throws JSONException {
 
         JSONObject data = new JSONObject();
@@ -220,12 +283,29 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         return data;
     }
 
+    public JSONObject genderJsonParams() throws JSONException {
+        JSONObject data=new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"OS_Gender");
+        return data;
+
+    }
+
+    public Map<String,String> genderParams(){
+        Map<String, String> params = new HashMap<>();
+        params.put(AppConstant.KEY_SERVICE_ID, "Gender");
+        Log.d("params", "" + params);
+        return params;
+    }
+
     public void getLicenceTypeList() {
-        try {
-            new ApiService(this).makeJSONObjectRequest("TraderLicenseTypeList", Api.Method.POST, UrlGenerator.saveTradersUrl(), licencelistJsonParams(), "not cache", this);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        new ApiService(this).makeRequest("TraderLicenseTypeList", Api.Method.POST, UrlGenerator.saveTradersUrl(), getLicenceTypeListParams(), "not cache", this);
+    }
+
+    public Map<String,String> getLicenceTypeListParams(){
+        Map<String, String> params = new HashMap<>();
+        params.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseTypeList");
+        Log.d("params", "" + params);
+        return params;
     }
 
     public JSONObject licencelistJsonParams() throws JSONException{
@@ -328,9 +408,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         try {
             JSONObject responseObj = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
-            String status = responseObj.getString(AppConstant.KEY_STATUS);
-            String response = responseObj.getString(AppConstant.KEY_RESPONSE);
-            if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
+            String status = null;
+            //String status = responseObj.getString(AppConstant.KEY_STATUS);
+            //String message = responseObj.getString(AppConstant.KEY_MESSAGE);
+            //String response = responseObj.getString(AppConstant.KEY_RESPONSE);
+           /* if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
                 if (status.equalsIgnoreCase("OK") && response.equalsIgnoreCase("OK")) {
                     JSONObject jsonObject = responseObj.getJSONObject(AppConstant.JSON_DATA);
 //                    String Motivatorid = jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID);
@@ -347,7 +429,38 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 } else if (status.equalsIgnoreCase("OK") && response.equalsIgnoreCase("FAIL")) {
                     Utils.showAlert(this, responseObj.getString("MESSAGE"));
                 }
+            }*/
+            if("Gender".equals(urlType)&&responseObj!=null){
+
+                if (responseObj.getString("STATUS").equalsIgnoreCase("SUCCESS")) {
+                    JSONArray jsonString =responseObj.getJSONArray("DATA");
+                    genderArrayList = new ArrayList<>();
+                    CommonModel gender1 = new CommonModel();
+                    gender1.setGender_code("SG");
+                    gender1.setGender_name_en("Select Gender");
+                    gender1.setGender_name_ta("Select Gender");
+                    genderArrayList.add(gender1);
+                    for (int i = 0; i < jsonString.length(); i++) {
+                        JSONObject jsonObject = jsonString.getJSONObject(i);
+                        CommonModel gender = new CommonModel();
+                        gender.setGender_code(jsonObject.getString("gender_code"));
+                        gender.setGender_name_en(jsonObject.getString("gender_name_en"));
+                        gender.setGender_name_ta(jsonObject.getString("gender_name_ta"));
+
+                        genderArrayList.add(gender);
+                    }
+
+                    if (genderArrayList.size() > 0) {
+                        GenderAdapter genderAdapter = new GenderAdapter(this, genderArrayList, "Gender");
+                        //RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        newTradeLicenceScreenBinding.gender.setAdapter(genderAdapter);
+                    }
+                }
+
+
+
             }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -468,6 +581,61 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"new");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    //display ward list
+    public void displayWard() {
+        wardList = new ArrayList<>();
+        CommonModel commonModel=new CommonModel();
+        commonModel.setWardID(0);
+        commonModel.setWard_name_tamil("Select Ward");
+        commonModel.setWard_code("SW");
+        wardList.add(commonModel);
+        wardList.addAll(Dashboard.dbHelper.getAllWard());
+        GenderAdapter adapter = new GenderAdapter(NewTradeLicenceScreen.this,wardList,"Ward");
+        newTradeLicenceScreenBinding.wardNo.setAdapter(adapter);
+    }
+
+    //display Street
+    public void displayStreet() {
+        streetList=new ArrayList<>();
+        String select_query= "SELECT *FROM " + DBHelper.STREET_TABLE_NAME + " WHERE wardid="+wardid+ " ORDER BY street_name_ta";
+        Cursor cursor = db.rawQuery(select_query, null);
+        CommonModel commonModel1=new CommonModel();
+        commonModel1.setStreet_code("SC");
+        commonModel1.setStreet_id(0);
+        commonModel1.setStreet_name_tamil("Select Street");
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setState_code(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.STATE_CODE)));
+                    commonModel.setD_code(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.DISTRICT_CODE)));
+                    commonModel.setLocal_pan_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LP_CODE)));
+                    commonModel.setWard_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_CODE)));
+                    commonModel.setWardID(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.WARD_ID)));
+                    commonModel.setStreet_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_CODE)));
+                    commonModel.setStreet_id(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.STREET_ID)));
+                    commonModel.setStreet_name_english(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_EN)));
+                    commonModel.setStreet_name_tamil(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_TA)));
+                    streetList.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        GenderAdapter adapter = new GenderAdapter(NewTradeLicenceScreen.this,streetList,"Street");
+        newTradeLicenceScreenBinding.strretSpinner.setAdapter(adapter);
+    }
+
+    public void displayFinYear() {
+        finYearList = new ArrayList<>();
+        CommonModel commonModel=new CommonModel();
+        commonModel.setFIN_YEAR_ID(""+0);
+        commonModel.setFIN_YEAR("Select Financial Year");
+        finYearList.add(commonModel);
+        finYearList.addAll(Dashboard.dbHelper.getAllStreet());
+        GenderAdapter adapter = new GenderAdapter(NewTradeLicenceScreen.this,finYearList,"FinancialYear");
+        newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);
     }
 
 }

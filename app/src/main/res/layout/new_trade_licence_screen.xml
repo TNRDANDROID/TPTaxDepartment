@@ -857,8 +857,8 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
@@ -892,7 +892,7 @@
                             android:layout_marginRight="@dimen/margin_left_20dp"
 
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <com.google.android.material.textfield.TextInputLayout
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -914,6 +914,40 @@
                                     />
                             </com.google.android.material.textfield.TextInputLayout>
                         </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/header"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:background="@drawable/rectangle_box"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_15sdp"
+                                android:visibility="visible"
+                                customfontdemo:fontName="@string/font_circular_book" />
+
+                            <Spinner
+                                android:id="@+id/strret_spinner"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginRight="15dp"
+                                android:gravity="center" />
+
+                        </RelativeLayout>
+
 
 
                     </LinearLayout>
@@ -1007,13 +1041,11 @@
 
                             <Spinner
                                 android:id="@+id/licence_validity"
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
