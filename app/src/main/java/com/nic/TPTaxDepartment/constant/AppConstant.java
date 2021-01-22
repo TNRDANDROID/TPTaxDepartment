@@ -56,16 +56,19 @@ public class AppConstant {
     public static String DATE = "date";
     public static String LICENCE_TYPE = "licencetypeid";
     public static String TRADE_DESCRIPTION = "tradedesct";
-    public static String APPLICANT_NAME = "apname_en";
+    public static String APPLICANT_NAME_EN = "apname_en";
+    public static String APPLICANT_NAME_TA = "apname_ta";
     public static String GENDER = "apgender";
     public static String GENDER_CODE = "gender_code";
     public static String GENDER_EN = "gender_name_en";
     public static String GENDER_TA = "gender_name_ta";
     public static String AGE = "apage";
-    public static String FATHER_HUSBAND_NAME = "apfathername_en";
+    public static String FATHER_HUSBAND_NAME_EN = "apfathername_en";
+    public static String FATHER_HUSBAND_NAME_TA = "apfathername_ta";
     public static String MOBILE = "mobileno";
     public static String E_MAIL = "email";
-    public static String ESTABLISHMENT_NAME = "establishment_name_en";
+    public static String ESTABLISHMENT_NAME_EN = "establishment_name_en";
+    public static String ESTABLISHMENT_NAME_TA = "establishment_name_ta";
     public static String WARD_ID = "ward_id";
     public static String WARD_CODE = "ward_code";
     public static String WARD_NAME_EN = "ward_name_en";
@@ -80,7 +83,10 @@ public class AppConstant {
     public static String LB_CODE = "lbcode";
     public static String LATITUDE = "loc_lat";
     public static String LONGITUDE = "loc_long";
-    public static String TRADE_IMAGE = "loc_trade_image";
+    public static String TRADE_IMAGE = "trade_image";
+    public static String LICENCE_TYPE_ID="licencetypeid";
+    public static String PAYMENT_STATUS="payment_status";
+    public static String ATTACHMENT_FILES="attachment_files";
 
     public static String COLLECTION_DATE = "collection_date";
     public static String TAX_TYPE_ID = "taxtypeid";
@@ -107,5 +113,18 @@ public class AppConstant {
     public static String FROM_FIN_MON = "from_fin_mon";
     public static String TO_FIN_YEAR = "to_fin_year";
     public static String TO_FIN_MON = "to_fin_mon";
+
+
+    //TradeCodeDetailsList
+    public static String TRADE_DETAILS_ID = "tradedetails_id";
+    public static String LB_TRADE_CODE = "lb_tradecode";
+    public static String DESCRIPTION_EN = "description_en";
+    public static String DESCRIPTION_TA = "description_ta";
+    public static String DATE_FIELD = "date";
+    public static String FINYEAR = "finyear";
+    public static String TRADE_RATE = "traderate";
+    public static String LICENSE_TYPE_ID = "licencetypeid";
+    public static String STATECODE = "statecode";
+
 
 }

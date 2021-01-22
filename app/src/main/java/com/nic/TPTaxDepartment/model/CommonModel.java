@@ -27,7 +27,93 @@ public class CommonModel {
     public  String TO_FIN_YEAR ;
     public  String TO_FIN_MON ;
 
+   ///TradeCodeListDetails
+   public  String TRADE_DETAILS_ID;
+    public  String LB_TRADE_CODE ;
+    public  String DESCRIPTION_EN;
+    public  String DESCRIPTION_TA ;
+    public  String DATE_FIELD;
+    public  String FINYEAR ;
+    public  String TRADE_RATE;
+    public  String LICENSE_TYPE_ID ;
+    public  String STATECODE ;
 
+    /////............../////
+
+
+    public String getTRADE_DETAILS_ID() {
+        return TRADE_DETAILS_ID;
+    }
+
+    public void setTRADE_DETAILS_ID(String TRADE_DETAILS_ID) {
+        this.TRADE_DETAILS_ID = TRADE_DETAILS_ID;
+    }
+
+    public String getLB_TRADE_CODE() {
+        return LB_TRADE_CODE;
+    }
+
+    public void setLB_TRADE_CODE(String LB_TRADE_CODE) {
+        this.LB_TRADE_CODE = LB_TRADE_CODE;
+    }
+
+    public String getDESCRIPTION_EN() {
+        return DESCRIPTION_EN;
+    }
+
+    public void setDESCRIPTION_EN(String DESCRIPTION_EN) {
+        this.DESCRIPTION_EN = DESCRIPTION_EN;
+    }
+
+    public String getDESCRIPTION_TA() {
+        return DESCRIPTION_TA;
+    }
+
+    public void setDESCRIPTION_TA(String DESCRIPTION_TA) {
+        this.DESCRIPTION_TA = DESCRIPTION_TA;
+    }
+
+    public String getDATE_FIELD() {
+        return DATE_FIELD;
+    }
+
+    public void setDATE_FIELD(String DATE_FIELD) {
+        this.DATE_FIELD = DATE_FIELD;
+    }
+
+    public String getFINYEAR() {
+        return FINYEAR;
+    }
+
+    public void setFINYEAR(String FINYEAR) {
+        this.FINYEAR = FINYEAR;
+    }
+
+    public String getTRADE_RATE() {
+        return TRADE_RATE;
+    }
+
+    public void setTRADE_RATE(String TRADE_RATE) {
+        this.TRADE_RATE = TRADE_RATE;
+    }
+
+    public String getLICENSE_TYPE_ID() {
+        return LICENSE_TYPE_ID;
+    }
+
+    public void setLICENSE_TYPE_ID(String LICENSE_TYPE_ID) {
+        this.LICENSE_TYPE_ID = LICENSE_TYPE_ID;
+    }
+
+    public String getSTATECODE() {
+        return STATECODE;
+    }
+
+    public void setSTATECODE(String STATECODE) {
+        this.STATECODE = STATECODE;
+    }
+
+    /////.................//////
     public String getFIN_YEAR_ID() {
         return FIN_YEAR_ID;
     }

@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.nic.TPTaxDepartment.constant.AppConstant;
+
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "TPTaxDepartment";
@@ -22,6 +24,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TAX_TYPE_LIST = "tax_type_list";
     public static final String TAX_TYPE_FIELD_VISIT_LIST = "tax_type_field_visit_list";
     public static final String LICENCE_VALIDITY_LIST = "licence_validity_list";
+    public static final String SAVE_NEW_TRADER_DETAILS="save_new_trader_details";
+    public static final String TRADE_CODE_LIST="trade_code_list";
 
 
     private Context context;
@@ -80,7 +84,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "bcode INTEGER," +
                 "pvcode INTEGER," +
                 "tradecode INTEGER," +
-                "loc_trade_image BLOB," +
+                "trade_image BLOB," +
                 "screen_status TEXT," +
                 "loc_lat TEXT," +
                 "loc_long TEXT)");
@@ -125,6 +129,46 @@ public class DBHelper extends SQLiteOpenHelper {
                 "to_fin_year INTEGER," +
                 "to_fin_mon INTEGER)");
 
+        db.execSQL("CREATE TABLE " + SAVE_NEW_TRADER_DETAILS + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                AppConstant.MODE+" TEXT ," +
+                AppConstant.TRADE_CODE+" INTEGER," +
+                AppConstant.DATE+" TEXT," +
+                AppConstant.LICENCE_TYPE_ID+" INTEGER," +
+                AppConstant.TRADE_DESCRIPTION+" TEXT," +
+                AppConstant.APPLICANT_NAME_EN+" TEXT," +
+                AppConstant.APPLICANT_NAME_TA+" TEXT," +
+                AppConstant.GENDER+" TEXT," +
+                AppConstant.AGE+" INTEGER," +
+                AppConstant.FATHER_HUSBAND_NAME_EN+" TEXT," +
+                AppConstant.FATHER_HUSBAND_NAME_TA+" TEXT," +
+                AppConstant.MOBILE+" INTEGER," +
+                AppConstant.E_MAIL+" TEXT," +
+                AppConstant.ESTABLISHMENT_NAME_EN+" TEXT," +
+                AppConstant.ESTABLISHMENT_NAME_TA+" TEXT," +
+                AppConstant.WARD_ID+" TEXT," +
+                AppConstant.STREET_ID+" TEXT," +
+                AppConstant.DOOR_NO+" TEXT," +
+                AppConstant.LICENCE_VALIDITY+" TEXT," +
+                AppConstant.LATITUDE+" TEXT," +
+                AppConstant.TRADE_IMAGE+" BLOB,"+
+                AppConstant.PAYMENT_STATUS+" TEXT, "+
+                AppConstant.LONGITUDE+" TEXT)");
+
+        db.execSQL("CREATE TABLE " + TRADE_CODE_LIST + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "tradedetails_id INTEGER," +
+                "lb_tradecode INTEGER," +
+                "description_en TEXT," +
+                "description_ta TEXT," +
+                "date TEXT," +
+                "finyear TEXT," +
+                "traderate TEXT," +
+                "licencetypeid TEXT,"+
+                "lbcode INTEGER,"+
+                "statecode INTEGER,"+
+                "dcode INTEGER)");
+
     }
 
     @Override
@@ -142,6 +186,8 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + TAX_TYPE_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + TAX_TYPE_FIELD_VISIT_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + LICENCE_VALIDITY_LIST);
+            db.execSQL("DROP TABLE IF EXISTS " + SAVE_NEW_TRADER_DETAILS);
+            db.execSQL("DROP TABLE IF EXISTS " + TRADE_CODE_LIST);
 
             onCreate(db);
         }

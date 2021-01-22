@@ -130,6 +130,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         getLicenceValidityList();
         getLicenceTypeList();
         getGenderList();
+        getTradeList();
        /* if(getTaxTypeCount()<= 0){
             getTaxTypeList();
         }
@@ -150,9 +151,31 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             e.printStackTrace();
         }
     }
+
+    public void getTradeList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("TradeLicenseTradeList", Api.Method.POST, UrlGenerator.TradersUrl(), encryptTradeJsonParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public JSONObject genderParams() throws JSONException {
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "OS_Gender");
+        return dataSet;
+    }
+
+    public JSONObject encryptTradeJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), tradeJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TradeLicenseTradeList", "" + authKey);
+        return dataSet;
+    }
+    public JSONObject tradeJsonParams() throws JSONException {
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradeList");
         return dataSet;
     }
 
@@ -518,7 +541,40 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                              prefManager.setTraderLicenseTypeList(jsonarray.toString());
                              Log.d("TraderLicenseTypeList", "" + jsonObject);
 
-                         } }
+                         }
+            }
+            if("TradeLicenseTradeList".equals(urlType)){
+                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("userdatadecry", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                status = jsonObject.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    Log.d("TraderLicenseTypeList", "" + jsonObject);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        db.execSQL("delete from "+ DBHelper.TRADE_CODE_LIST);
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put(AppConstant.TRADE_DETAILS_ID, jsonObject.getString(AppConstant.TRADE_DETAILS_ID));
+                            fieldValue.put(AppConstant.LB_TRADE_CODE, jsonObject.getString(AppConstant.LB_TRADE_CODE));
+                            fieldValue.put(AppConstant.DESCRIPTION_EN, jsonObject.getString(AppConstant.DESCRIPTION_EN));
+                            fieldValue.put(AppConstant.DESCRIPTION_TA, jsonObject.getString(AppConstant.DESCRIPTION_TA));
+                            fieldValue.put(AppConstant.DATE_FIELD, jsonObject.getString(AppConstant.DATE_FIELD));
+                            fieldValue.put(AppConstant.FINYEAR, jsonObject.getString(AppConstant.FINYEAR));
+                            fieldValue.put(AppConstant.TRADE_RATE, jsonObject.getString(AppConstant.TRADE_RATE));
+                            fieldValue.put(AppConstant.LICENSE_TYPE_ID, jsonObject.getString(AppConstant.LICENSE_TYPE_ID));
+                            fieldValue.put(AppConstant.LB_CODE, jsonObject.getString(AppConstant.LB_CODE));
+                            fieldValue.put(AppConstant.STATECODE, jsonObject.getString(AppConstant.STATECODE));
+                            fieldValue.put(AppConstant.DISTRICT_CODE, jsonObject.getString(AppConstant.DISTRICT_CODE));
+
+                            db.insert(DBHelper.TRADE_CODE_LIST, null, fieldValue);
+                        }
+                    }
+                }
+            }
             if ("Gender".equals(urlType) && responseObj != null) {
                  status = responseObj.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
