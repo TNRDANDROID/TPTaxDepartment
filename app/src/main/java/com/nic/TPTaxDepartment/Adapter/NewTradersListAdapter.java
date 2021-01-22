@@ -5,20 +5,23 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.activity.ExistingTradeList;
-import com.nic.TPTaxDepartment.activity.ExistingTradeSubmit;
+import com.nic.TPTaxDepartment.activity.NewTradeLicenceScreen;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.SummaryViewHolder>{
+public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAdapter.SummaryViewHolder>{
     private Activity activity;
     private ArrayList<TPtaxModel> traders;
     LayoutInflater mInflater;
 
-    public TraderListAdapter( Activity activity, ArrayList<TPtaxModel> traders) {
+    public NewTradersListAdapter( Activity activity, ArrayList<TPtaxModel> traders) {
         this.activity=activity;
         this.traders=traders;
         mInflater = LayoutInflater.from(activity);
@@ -28,7 +31,7 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
         LayoutInflater mInflater = LayoutInflater.from(viewGroup.getContext());
 
         ViewGroup mainGroup = (ViewGroup) mInflater.inflate(
-                R.layout.trade_recycler, viewGroup, false);
+                R.layout.new_trader_recycler, viewGroup, false);
         SummaryViewHolder mainHolder = new SummaryViewHolder(mainGroup) {
             @Override
             public String toString() {
@@ -43,23 +46,20 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
         try {
             holder.name.setText(traders.get(position).traderName);
             holder.code.setText(traders.get(position).traderCode);
-            holder.payment.setText(traders.get(position).traderPayment);
             holder.mobileValue.setText(traders.get(position).mobileno);
-            holder.paymentDateValue.setText(traders.get(position).paymentdate);
+            holder.date.setText(traders.get(position).paymentdate);
 
-
-            if(traders.get(position).traderPayment .equals("Paid")){
-                holder.payment.setBackground(activity.getResources().getDrawable(R.drawable.round_green_bg));
-            }else if(traders.get(position).traderPayment .equals("UnPaid")){
-                holder.payment.setBackground(activity.getResources().getDrawable(R.drawable.round_red_bg));
-            }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (activity instanceof ExistingTradeList) {
-                        ((ExistingTradeList)activity).showTraderDetails(position,traders);
-                    }
+                    Intent intent = new Intent( activity, NewTradeLicenceScreen.class);
+                    intent.putExtra("flag",true);
+                    intent.putExtra("position",position);
+                    intent.putExtra("tradersList", (Serializable) traders);
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
 
                 }
 
@@ -77,15 +77,17 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
         return traders.size();
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
-        TextView name,code,payment,mobileValue,paymentDateValue;
+        TextView name,code,mobileValue,date;
+        RelativeLayout delete,upload;
 
         SummaryViewHolder(View view) {
             super(view);
             name=(TextView)view.findViewById(R.id.nameValue);
             code=(TextView)view.findViewById(R.id.codeValue);
-            payment=(TextView)view.findViewById(R.id.paymentStatus);
             mobileValue=(TextView)view.findViewById(R.id.mobileValue);
-            paymentDateValue=(TextView)view.findViewById(R.id.paymentDateValue);
+            date=(TextView)view.findViewById(R.id.date);
+            delete=(RelativeLayout)view.findViewById(R.id.left);
+            upload=(RelativeLayout)view.findViewById(R.id.right);
         }
     }
 }

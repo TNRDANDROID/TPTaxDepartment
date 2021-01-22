@@ -24,12 +24,14 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.AssessmentStatusNewBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
+import com.nic.TPTaxDepartment.model.Gender;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -62,32 +64,8 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
         assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
 
-        assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                if (position == 0) {
-//                    sp_block.setClickable(false);
-//                    sp_block.setVisibility(View.GONE);
-//                } else {
-//                    sp_block.setClickable(true);
-//                    sp_block.setVisibility(View.VISIBLE);
-//                }
-//                pref_district = District.get(position).getDistrictName();
-//                prefManager.setDistrictName(pref_district);
-//
-//                blockFilterSpinner(District.get(position).getDistictCode());
-//                prefManager.setDistrictCode(District.get(position).getDistictCode());
-//
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-
+/*
         assessmentStatusBinding.assessmentId.setOnEditorActionListener(
                 new EditText.OnEditorActionListener() {
                     @Override
@@ -112,6 +90,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                     }
                 }
         );
+*/
         getTaxTypeList();
         assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -131,10 +110,8 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     public void showDetails() {
         if (!selectedTaxTypeName.isEmpty() && !selectedTaxTypeName.equals("Select TaxType")  ) {
             if(!assessmentStatusBinding.assessmentId.getText().toString().isEmpty()){
-                assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
-                assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
-                assessmentStatusBinding.submit.setVisibility(View.GONE);
 
+                getAssessmentStatus();
             }else { Utils.showAlert(this, "Enter Assessment ID"); }
 
         }else { Utils.showAlert(this, "Select Tax Type"); }
@@ -197,7 +174,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
     public void getAssessmentStatus() {
         try {
-            new ApiService(this).makeJSONObjectRequest("AssessmentStatus", Api.Method.POST, UrlGenerator.saveTradersUrl(), assessmentStatusJsonParams(), "not cache", this);
+            new ApiService(this).makeJSONObjectRequest("AssessmentStatus", Api.Method.POST, UrlGenerator.TradersUrl(), assessmentStatusJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -208,7 +185,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("workList", "" + authKey);
+        Log.d("AssessmentStatusReq", "" + authKey);
         return dataSet;
     }
 
@@ -216,10 +193,8 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
         JSONObject data = new JSONObject();
         data.put(AppConstant.KEY_SERVICE_ID,"CheckAssessmentStatus");
-//        data.put(AppConstant.TAX_TYPE_ID,assessmentStatusBinding.taxType.getSelectedItemId());
-//        data.put(AppConstant.ASSESSMENT_NO,assessmentStatusBinding.assessmentId.getText());
-        data.put(AppConstant.TAX_TYPE_ID,"1");
-        data.put(AppConstant.ASSESSMENT_NO,"28691");
+        data.put(AppConstant.TAX_TYPE_ID,selectedTaxTypeId);
+        data.put(AppConstant.ASSESSMENT_NO,assessmentStatusBinding.assessmentId.getText().toString());
         return data;
     }
 
@@ -234,11 +209,30 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                 String key = responseObj.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                    assessmentStatusBinding.applicantNameTv.setText("");
-                    assessmentStatusBinding.fatherNameTv.setText("");
+                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String assessment_no = jsonobject.getString("assessment_no");
+                            String owner_name = jsonobject.getString("owner_name");
+                            String father_name = jsonobject.getString("father_name");
+                            String permanent_address = jsonobject.getString("permanent_address");
+                            String area_in_sq_feet = jsonobject.getString("area_in_sq_feet");
+                            assessmentStatusBinding.assessmentIdTv.setText(assessment_no);
+                            assessmentStatusBinding.applicantNameTv.setText(owner_name);
+                            assessmentStatusBinding.fatherNameTv.setText(father_name);
+                            assessmentStatusBinding.addressTv.setText(permanent_address);
+                            assessmentStatusBinding.areaTv.setText(area_in_sq_feet);
+                        }
+                        assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                        assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                        assessmentStatusBinding.submit.setVisibility(View.GONE);
+                    }
+                    Log.d("AssessmentStatus", "" + jsonObject);
 
-                } else if(jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("NO_RECORD")){
+                } else {
                     Utils.showAlert(this,"NO RECORD FOUND!");
                 }
 //                String authKey = responseDecryptedSchemeKey.toString();

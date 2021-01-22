@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,7 +47,8 @@ public class ExistingTradeList extends AppCompatActivity {
         existingTradeList.tradeRecycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         existingTradeList.tradeRecycler.setLayoutManager(layoutManager);
-
+        tradersList = new ArrayList<TPtaxModel>();
+        tradersList = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
         try {
             LoadTradersList();
         } catch (JSONException e) {
@@ -132,13 +134,19 @@ public class ExistingTradeList extends AppCompatActivity {
             }
         }*/
 
-
         Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
         if(tradersList != null && tradersList.size() >0) {
             TraderListAdapter adapter = new TraderListAdapter(ExistingTradeList.this,tradersList);
             adapter.notifyDataSetChanged();
             existingTradeList.tradeRecycler.setAdapter(adapter);
         }
+    }
+    public void showTraderDetails( int position , ArrayList<TPtaxModel> tradersList) {
+        Intent intent = new Intent( this, ExistingTradeSubmit.class);
+        intent.putExtra("tradersList", (Serializable)tradersList);
+        intent.putExtra("position", position);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
     }
 

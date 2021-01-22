@@ -6,11 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.nic.TPTaxDepartment.R;
-import com.nic.TPTaxDepartment.activity.ExistingTradeSubmit;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 
 import java.util.ArrayList;

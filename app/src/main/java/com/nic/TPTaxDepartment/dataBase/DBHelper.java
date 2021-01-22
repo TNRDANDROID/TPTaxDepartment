@@ -14,11 +14,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String CAPTURED_PHOTO = "captured_photo";
     public static final String SAVE_FIELD_VISIT = "field_visit";
 
-
     public static final String DISTRICT_LIST = "district_list";
     public static final String LOCAL_LIST = "local_list";
     public static final String WARD_LIST = "ward_list";
     public static final String STREET_LIST = "street_list";
+    public static final String GENDER_LIST = "gender_list";
     public static final String TAX_TYPE_LIST = "tax_type_list";
     public static final String TAX_TYPE_FIELD_VISIT_LIST = "tax_type_field_visit_list";
     public static final String LICENCE_VALIDITY_LIST = "licence_validity_list";
@@ -68,6 +68,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 "street_name_en TEXT,"+
                 "street_name_ta TEXT,"+
                 "building_zone TEXT)");
+        db.execSQL("CREATE TABLE " + GENDER_LIST + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "gender_code TEXT," +
+                "gender_name_en TEXT," +
+                "gender_name_ta TEXT)");
 
         db.execSQL("CREATE TABLE " + SAVE_TRADE_IMAGE + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -133,6 +138,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + LOCAL_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + WARD_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + STREET_LIST);
+            db.execSQL("DROP TABLE IF EXISTS " + GENDER_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + TAX_TYPE_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + TAX_TYPE_FIELD_VISIT_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + LICENCE_VALIDITY_LIST);

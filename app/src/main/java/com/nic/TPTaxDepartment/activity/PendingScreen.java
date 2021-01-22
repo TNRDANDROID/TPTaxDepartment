@@ -1,6 +1,7 @@
 package com.nic.TPTaxDepartment.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
+import com.nic.TPTaxDepartment.Adapter.FieldVisitListAdapter;
+import com.nic.TPTaxDepartment.Adapter.NewTradersListAdapter;
 import com.nic.TPTaxDepartment.Adapter.PendingScreenAdapter;
+import com.nic.TPTaxDepartment.Adapter.TraderListAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -36,27 +41,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PendingScreen extends AppCompatActivity implements Api.ServerResponseListener, View.OnClickListener {
 
-    private RecyclerView pendingRecycler;
+    private RecyclerView newTraderRecycler,fieldVisitRecycler;
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
-    ArrayList<TPtaxModel> pendingList = new ArrayList<>();
-    private PendingScreenAdapter pendingScreenAdapter;
+    ArrayList<TPtaxModel> newTraderList = new ArrayList<>();
+    ArrayList<TPtaxModel> fieldVisitList = new ArrayList<>();
     private ImageView back_img, home_img;
-    private RelativeLayout sync_data;
+    private TextView newTrader, fieldVisit;
+    private RelativeLayout left, right;
     private PrefManager prefManager;
     public static DBHelper dbHelper;
     public static SQLiteDatabase db;
-    private ProgressHUD progressHUD;
-    Handler myHandler = new Handler();
-   // public HomePage homePage;
+    Context mContext;
+    Activity activity;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pending_screen);
+        mContext = this;
+        activity = this;
         intializeUI();
     }
 
@@ -69,22 +77,37 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             e.printStackTrace();
         }
 
-        pendingRecycler = (RecyclerView) findViewById(R.id.pending_list);
+        newTraderRecycler = (RecyclerView) findViewById(R.id.new_trader_recycler);
+        fieldVisitRecycler = (RecyclerView) findViewById(R.id.field_visit_recycler);
         back_img = (ImageView) findViewById(R.id.back_img);
         home_img = (ImageView) findViewById(R.id.home_img);
-        sync_data = (RelativeLayout) findViewById(R.id.upload);
+        newTrader = (TextView) findViewById(R.id.new_trader);
+        fieldVisit = (TextView) findViewById(R.id.field_visit);
+        left = (RelativeLayout) findViewById(R.id.left);
+        right = (RelativeLayout) findViewById(R.id.right);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        pendingRecycler.setLayoutManager(mLayoutManager);
-        pendingRecycler.setItemAnimator(new DefaultItemAnimator());
-        pendingRecycler.setHasFixedSize(true);
-        pendingRecycler.setNestedScrollingEnabled(false);
-        pendingRecycler.setFocusable(false);
-        pendingScreenAdapter = new PendingScreenAdapter(this, pendingList, dbData);
-        pendingRecycler.setAdapter(pendingScreenAdapter);
+        newTraderRecycler.setLayoutManager(mLayoutManager);
+        newTraderRecycler.setItemAnimator(new DefaultItemAnimator());
+        newTraderRecycler.setHasFixedSize(true);
+        newTraderRecycler.setNestedScrollingEnabled(false);
+        newTraderRecycler.setFocusable(false);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        fieldVisitRecycler.setLayoutManager(layoutManager);
+        fieldVisitRecycler.setItemAnimator(new DefaultItemAnimator());
+        fieldVisitRecycler.setHasFixedSize(true);
+        fieldVisitRecycler.setNestedScrollingEnabled(false);
+        fieldVisitRecycler.setFocusable(false);
+
 
         back_img.setOnClickListener(this);
         home_img.setOnClickListener(this);
-        new fetchpendingtask().execute();
+        left.setOnClickListener(this);
+        right.setOnClickListener(this);
+        loadNewTraderList();
+        loadFieldVisitList();
+
+
     }
 
     @Override
@@ -96,8 +119,121 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             case R.id.home_img:
                 dashboard();
                 break;
+            case R.id.left:
+                left.setBackground(activity.getResources().getDrawable(R.drawable.left_selected_bg));
+                right.setBackground(activity.getResources().getDrawable(R.drawable.right_bg));
+                newTrader.setTextColor(activity.getResources().getColor(R.color.white));
+                fieldVisit.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+                newTraderRecycler.setVisibility(View.VISIBLE);
+                fieldVisitRecycler.setVisibility(View.GONE);
+                loadNewTraderList();
+                break;
+            case R.id.right:
+                left.setBackground(activity.getResources().getDrawable(R.drawable.left_bg));
+                right.setBackground(activity.getResources().getDrawable(R.drawable.right_selected_bg));
+                newTrader.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+                fieldVisit.setTextColor(activity.getResources().getColor(R.color.white));
+                newTraderRecycler.setVisibility(View.GONE);
+                fieldVisitRecycler.setVisibility(View.VISIBLE);
+                loadFieldVisitList();
+                break;
         }
     }
+
+
+    private void loadFieldVisitList() {
+        fieldVisitList = new ArrayList<TPtaxModel>();
+        for (int i = 0; i < 5; i++) {
+            if(i==2){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTraderName("raj");
+                Detail.setAssessmentId("12");
+                Detail.setTaxTypeName("PropertyTax");
+                fieldVisitList.add(Detail);
+            }else if(i==4){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTraderName("kumar");
+                Detail.setAssessmentId("34");
+                Detail.setTaxTypeName("WaterTax");
+                fieldVisitList.add(Detail);
+            }else {
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTraderName("raj");
+                Detail.setAssessmentId("12");
+                Detail.setTaxTypeName("PropertyTax");
+                fieldVisitList.add(Detail);
+            }
+        }
+
+        Collections.sort(fieldVisitList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
+        if(fieldVisitList != null && fieldVisitList.size() >0) {
+            FieldVisitListAdapter adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitList);
+            adapter.notifyDataSetChanged();
+            fieldVisitRecycler.setAdapter(adapter);
+        }else {
+            Utils.showAlert(this, "No Data Found!");
+        }
+    }
+    private void loadNewTraderList() {
+        newTraderList = new ArrayList<TPtaxModel>();
+        for (int i = 0; i < 5; i++) {
+            if(i==2){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTraderName("raj");
+                Detail.setTraderCode("12");
+                Detail.setTraders_typ("Industrial");
+                Detail.setTradedesct("Traders Description");
+                Detail.setDoorno("1/A");
+                Detail.setApfathername_ta("Muthu");
+                Detail.setEstablishment_name_ta("Establish");
+                Detail.setLicenceValidity("2027");
+                Detail.setTraders_license_type_name("TradersType");
+                Detail.setTraderPayment("UnPaid");
+                Detail.setMobileno("12233445");
+                Detail.setPaymentdate("20/05/2020");
+                newTraderList.add(Detail);
+            }else if(i==4){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTraderName("raj");
+                Detail.setTraderCode("12");
+                Detail.setTraders_typ("Industrial");
+                Detail.setTradedesct("Traders Description");
+                Detail.setDoorno("1/A");
+                Detail.setApfathername_ta("Muthu");
+                Detail.setEstablishment_name_ta("Establish");
+                Detail.setLicenceValidity("2027");
+                Detail.setTraders_license_type_name("TradersType");
+                Detail.setTraderPayment("UnPaid");
+                Detail.setMobileno("12233445");
+                Detail.setPaymentdate("20/05/2020");
+                newTraderList.add(Detail);
+            }else {
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTraderName("raj");
+                Detail.setTraderCode("12");
+                Detail.setTraders_typ("Industrial");
+                Detail.setTradedesct("Traders Description");
+                Detail.setDoorno("1/A");
+                Detail.setApfathername_ta("Muthu");
+                Detail.setEstablishment_name_ta("Establish");
+                Detail.setLicenceValidity("2027");
+                Detail.setTraders_license_type_name("TradersType");
+                Detail.setTraderPayment("Paid");
+                Detail.setMobileno("12233445");
+                Detail.setPaymentdate("20/05/2020");
+                newTraderList.add(Detail);}
+        }
+
+        Collections.sort(newTraderList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
+        if(newTraderList != null && newTraderList.size() >0) {
+            NewTradersListAdapter adapter = new NewTradersListAdapter(PendingScreen.this,newTraderList);
+            adapter.notifyDataSetChanged();
+            newTraderRecycler.setAdapter(adapter);
+        }else {
+            Utils.showAlert(this, "No Data Found!");
+        }
+    }
+
 
 
     public void onBackPress() {
@@ -123,41 +259,8 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
-    public class fetchpendingtask extends AsyncTask<JSONObject, Void,
-            ArrayList<TPtaxModel>> {
-        @Override
-        protected ArrayList<TPtaxModel> doInBackground(JSONObject... params) {
-            dbData.open();
-            pendingList = new ArrayList<>();
-            pendingList = dbData.getPendingActivity();
-            Log.d("pending_count", String.valueOf(pendingList.size()));
-            return pendingList;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<TPtaxModel> pendingList) {
-            super.onPostExecute(pendingList);
-            pendingScreenAdapter = new PendingScreenAdapter(PendingScreen.this,
-                    pendingList, dbData);
-            pendingRecycler.setAdapter(pendingScreenAdapter);
-        }
-    }
 
 
-    public JSONObject syncData(JSONObject dataset) {
-        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
-        JSONObject savedDataSet = new JSONObject();
-        try {
-            savedDataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
-            savedDataSet.put(AppConstant.DATA_CONTENT, authKey);
-
-           // new ApiService(this).makeJSONObjectRequest("saveActivityImage", Api.Method.POST, UrlGenerator.getMotivatorSchedule(), savedDataSet, "not cache", this);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return savedDataSet;
-    }
 
 
     @Override

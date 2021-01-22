@@ -337,12 +337,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
-    public void RegisterScreen() {
-        Intent intent = new Intent(LoginScreen.this, NewTradeLicenceScreen.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    }
-
     public void offline_mode(String name, String pass) {
         String userName = prefManager.getUserName();
         String password = prefManager.getUserPassword();

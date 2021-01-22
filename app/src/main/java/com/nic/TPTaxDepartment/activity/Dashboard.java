@@ -82,6 +82,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         dashboardBinding.cameracard.setTranslationX(800);
         dashboardBinding.votecountcard.setTranslationX(800);
         dashboardBinding.viewPollingStationImage.setTranslationX(800);
+        dashboardBinding.pendingScreen.setTranslationX(800);
 
 
         dashboardBinding.voteprogresscard.setAlpha(0);
@@ -89,6 +90,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         dashboardBinding.cameracard.setAlpha(0);
         dashboardBinding.votecountcard.setAlpha(0);
         dashboardBinding.viewPollingStationImage.setAlpha(0);
+        dashboardBinding.pendingScreen.setAlpha(0);
 
         handler.postDelayed(new Runnable() {
             @Override
@@ -98,6 +100,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 dashboardBinding.cameracard.animate().translationX(0).alpha(1).setDuration(1600).setStartDelay(800).start();
                 dashboardBinding.votecountcard.animate().translationX(0).alpha(1).setDuration(1700).setStartDelay(1000).start();
                 dashboardBinding.viewPollingStationImage.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
+                dashboardBinding.pendingScreen.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
             }
         }, 800);
 
@@ -117,6 +120,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         dashboardBinding.fieldTv.startAnimation(anim);
         dashboardBinding.assessTv.startAnimation(anim);
         dashboardBinding.dailcollTv.startAnimation(anim);
+        dashboardBinding.pendingTv.startAnimation(anim);
 
         syncvisiblity();
         getTaxTypeList();
@@ -125,7 +129,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         getStreetList();
         getLicenceValidityList();
         getLicenceTypeList();
-
+        getGenderList();
        /* if(getTaxTypeCount()<= 0){
             getTaxTypeList();
         }
@@ -138,6 +142,18 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
 
 
+    }
+    public void getGenderList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("Gender", Api.Method.POST, UrlGenerator.prodOpenUrl(), genderParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public JSONObject genderParams() throws JSONException {
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "OS_Gender");
+        return dataSet;
     }
 
     public void tradeSilenceScreen(){
@@ -503,6 +519,29 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                              Log.d("TraderLicenseTypeList", "" + jsonObject);
 
                          } }
+            if ("Gender".equals(urlType) && responseObj != null) {
+                 status = responseObj.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        db.execSQL("delete from "+ DBHelper.GENDER_LIST);
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String gender_code = jsonobject.getString("gender_code");
+                            String gender_name_en = jsonobject.getString("gender_name_en");
+                            String gender_name_ta = jsonobject.getString("gender_name_ta");
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put(AppConstant.GENDER_CODE, gender_code);
+                            fieldValue.put(AppConstant.GENDER_EN, gender_name_en);
+                            fieldValue.put(AppConstant.GENDER_TA, gender_name_ta);
+
+                            db.insert(DBHelper.GENDER_LIST, null, fieldValue);
+                        }
+                    }
+                }
+                Log.d("Gender", "" + responseObj);
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

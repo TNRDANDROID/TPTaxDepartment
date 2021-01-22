@@ -52,7 +52,7 @@ import java.util.List;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
-    ArrayList<Gender> genders = new ArrayList<Gender>();
+    ArrayList<Gender> genders ;
     ArrayList<CommonModel> wards ;
     ArrayList<CommonModel> streets;
     ArrayList<CommonModel> selectedStreets;
@@ -94,7 +94,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String selectedStreetName="";
     String traderCode,tradeDate,licenseType,tradeDescription,traderName,traderNameTa,tradeImage, traderGender,traderAge,
             fatherName,fatherNameTa,mobileNo,email,establishmentName,ward,street,doorNo,licenseValidity,paymentStatus;
-
+    int position;
+    Boolean flag;
+    ArrayList< TPtaxModel > traders ;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -114,9 +116,41 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
         date = newTradeLicenceScreenBinding.date;
-        getGenderList();
+
+        //getIntent Data
+        traders =new ArrayList<TPtaxModel>();
+        flag=getIntent().getBooleanExtra("flag",false);
+        if(flag){
+            position=getIntent().getIntExtra("position",0);
+            traders = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
+
+            newTradeLicenceScreenBinding.tradersCode.setText(traders.get(position).getTraderCode());
+            newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
+            newTradeLicenceScreenBinding.licenceType.setSelection(Integer.parseInt(traders.get(position).getLicencetypeid()));
+            newTradeLicenceScreenBinding.tradeDescription.setText(traders.get(position).getTradedesce());
+            newTradeLicenceScreenBinding.applicantName.setText(traders.get(position).getTraderName());
+            newTradeLicenceScreenBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
+            newTradeLicenceScreenBinding.gender.setSelection(Integer.parseInt(traders.get(position).getGender()));
+            newTradeLicenceScreenBinding.age.setText(traders.get(position).getApage());
+            newTradeLicenceScreenBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
+            newTradeLicenceScreenBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
+            newTradeLicenceScreenBinding.mobileNo.setText(traders.get(position).getMobileno());
+            newTradeLicenceScreenBinding.emailId.setText(traders.get(position).getEmail());
+            newTradeLicenceScreenBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
+            newTradeLicenceScreenBinding.wardNo.setSelection(Integer.parseInt(traders.get(position).getGender()));
+            newTradeLicenceScreenBinding.streetsName.setSelection(Integer.parseInt(traders.get(position).getGender()));
+            newTradeLicenceScreenBinding.doorNo.setText(traders.get(position).getDoorno());
+            newTradeLicenceScreenBinding.licenceValidity.setSelection(Integer.parseInt(traders.get(position).getGender()));
+            newTradeLicenceScreenBinding.isPaid.setChecked(true);
+
+        }else {
+
+        }
+
+
         LoadWardSpinner();
         LoadFinYearSpinner();
+        LoadGenderSpinner();
         try {
             LoadLicenceTypeSpinner();
         } catch (JSONException e) {
@@ -267,27 +301,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
-    public void getGenderList() {
-        try {
-            new ApiService(this).makeJSONObjectRequest("Gender", Api.Method.POST, UrlGenerator.prodOpenUrl(), genderParams(), "not cache", this);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public JSONObject genderJsonParams() throws JSONException {
-
-        JSONObject data = new JSONObject();
-        data.put(AppConstant.KEY_SERVICE_ID,"Gender");
-        return data;
-    }
-    public JSONObject genderParams() throws JSONException {
-        JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "OS_Gender");
-        return dataSet;
-    }
-
-
 
     public void SaveLicenseTraders() {
         try {
@@ -397,27 +410,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     Utils.showAlert(this, responseObj.getString("MESSAGE"));
                 }
             }
-            if ("Gender".equals(urlType) && responseObj != null) {
-                String status = responseObj.getString(AppConstant.KEY_STATUS);
-                if (status.equalsIgnoreCase("SUCCESS") ) {
-                    JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
-                    if(jsonarray != null && jsonarray.length() >0) {
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String gender_code = jsonobject.getString("gender_code");
-                            String gender_name_en = jsonobject.getString("gender_name_en");
-                            String gender_name_ta = jsonobject.getString("gender_name_ta");
-                            Gender gender = new Gender();
-                            gender.setGender_code(gender_code);
-                            gender.setGender_name_en(gender_name_en);
-                            gender.setGender_name_ta(gender_name_ta);
-                            genders.add(gender);
-                        }
-                    }
-                }
-                LoadGenderSpinner();
-                Log.d("Gender", "" + responseObj);
-            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -425,6 +417,22 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     private void LoadGenderSpinner() {
+        genders = new ArrayList<Gender>();
+        String select_query= "SELECT *FROM " + DBHelper.GENDER_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+            if(cursor.moveToFirst()){
+                do{
+                    Gender commonModel=new Gender();
+                    commonModel.setGender_code(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.GENDER_CODE)));
+                    commonModel.setGender_name_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.GENDER_EN)));
+                    commonModel.setGender_name_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.GENDER_TA)));
+                    genders.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(genders, (lhs, rhs) -> lhs.getGender_name_en().compareTo(rhs.getGender_name_en()));
+
         if(genders != null && genders.size() >0) {
 
             spinnerMap = new HashMap<Integer, String>();

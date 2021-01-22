@@ -2,11 +2,13 @@ package com.nic.TPTaxDepartment.model;
 
 import android.graphics.Bitmap;
 
+import java.io.Serializable;
+
 /**
  * Created by AchanthiSundar on 01-11-2017.
  */
 
-public class TPtaxModel {
+public class TPtaxModel  implements Serializable {
 
     private String distictCode;
     private String districtName;
@@ -60,7 +62,245 @@ public class TPtaxModel {
     public String licence_validity;
     public String traders_license_type_name;
     public String mobileno;
+    public String tradersdetails_id;
+    public String lb_sno;
+    public String tradedetails_id;
+    public String description_en;
+    public String description_ta;
+    public String traderate;
+    public String traders_rate;
+    public String trade_date;
+    public String tradersperiod;
+    public String tradedesce;
+    public String licencefor;
+    public String fin_year;
+    public String traderstypee;
+    public String demandtype;
+    public String onlineapplicationno;
+    public String email;
+    public String licencetypeid;
+    public String apgender;
+    public String apage;
+    public String apfathername_en;
+    public String licenceno;
+    public String statecode;
+    public String dcode;
+    public String lbcode;
+    public String apname_ta;
+    public String establishment_name_en;
     public String paymentdate;
+
+
+    public String getDcode() {
+        return dcode;
+    }
+
+    public void setDcode(String dcode) {
+        this.dcode = dcode;
+    }
+    public String getTradersdetails_id() {
+        return tradersdetails_id;
+    }
+
+    public void setTradersdetails_id(String tradersdetails_id) {
+        this.tradersdetails_id = tradersdetails_id;
+    }
+
+    public String getLb_sno() {
+        return lb_sno;
+    }
+
+    public void setLb_sno(String lb_sno) {
+        this.lb_sno = lb_sno;
+    }
+
+    public String getTradedetails_id() {
+        return tradedetails_id;
+    }
+
+    public void setTradedetails_id(String tradedetails_id) {
+        this.tradedetails_id = tradedetails_id;
+    }
+
+    public String getDescription_en() {
+        return description_en;
+    }
+
+    public void setDescription_en(String description_en) {
+        this.description_en = description_en;
+    }
+
+    public String getDescription_ta() {
+        return description_ta;
+    }
+
+    public void setDescription_ta(String description_ta) {
+        this.description_ta = description_ta;
+    }
+
+    public String getTraderate() {
+        return traderate;
+    }
+
+    public void setTraderate(String traderate) {
+        this.traderate = traderate;
+    }
+
+    public String getTraders_rate() {
+        return traders_rate;
+    }
+
+    public void setTraders_rate(String traders_rate) {
+        this.traders_rate = traders_rate;
+    }
+
+    public String getTrade_date() {
+        return trade_date;
+    }
+
+    public void setTrade_date(String trade_date) {
+        this.trade_date = trade_date;
+    }
+
+    public String getTradersperiod() {
+        return tradersperiod;
+    }
+
+    public void setTradersperiod(String tradersperiod) {
+        this.tradersperiod = tradersperiod;
+    }
+
+    public String getTradedesce() {
+        return tradedesce;
+    }
+
+    public void setTradedesce(String tradedesce) {
+        this.tradedesce = tradedesce;
+    }
+
+    public String getLicencefor() {
+        return licencefor;
+    }
+
+    public void setLicencefor(String licencefor) {
+        this.licencefor = licencefor;
+    }
+
+    public String getFin_year() {
+        return fin_year;
+    }
+
+    public void setFin_year(String fin_year) {
+        this.fin_year = fin_year;
+    }
+
+    public String getTraderstypee() {
+        return traderstypee;
+    }
+
+    public void setTraderstypee(String traderstypee) {
+        this.traderstypee = traderstypee;
+    }
+
+    public String getDemandtype() {
+        return demandtype;
+    }
+
+    public void setDemandtype(String demandtype) {
+        this.demandtype = demandtype;
+    }
+
+    public String getOnlineapplicationno() {
+        return onlineapplicationno;
+    }
+
+    public void setOnlineapplicationno(String onlineapplicationno) {
+        this.onlineapplicationno = onlineapplicationno;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLicencetypeid() {
+        return licencetypeid;
+    }
+
+    public void setLicencetypeid(String licencetypeid) {
+        this.licencetypeid = licencetypeid;
+    }
+
+    public String getApgender() {
+        return apgender;
+    }
+
+    public void setApgender(String apgender) {
+        this.apgender = apgender;
+    }
+
+    public String getApage() {
+        return apage;
+    }
+
+    public void setApage(String apage) {
+        this.apage = apage;
+    }
+
+    public String getApfathername_en() {
+        return apfathername_en;
+    }
+
+    public void setApfathername_en(String apfathername_en) {
+        this.apfathername_en = apfathername_en;
+    }
+
+    public String getLicenceno() {
+        return licenceno;
+    }
+
+    public void setLicenceno(String licenceno) {
+        this.licenceno = licenceno;
+    }
+
+    public String getStatecode() {
+        return statecode;
+    }
+
+    public void setStatecode(String statecode) {
+        this.statecode = statecode;
+    }
+
+    public String getLbcode() {
+        return lbcode;
+    }
+
+    public void setLbcode(String lbcode) {
+        this.lbcode = lbcode;
+    }
+
+    public String getApname_ta() {
+        return apname_ta;
+    }
+
+    public void setApname_ta(String apname_ta) {
+        this.apname_ta = apname_ta;
+    }
+
+    public String getEstablishment_name_en() {
+        return establishment_name_en;
+    }
+
+    public void setEstablishment_name_en(String establishment_name_en) {
+        this.establishment_name_en = establishment_name_en;
+    }
+
+
+
+
     public String getTaxTypeName() {
         return TaxTypeName;
     }

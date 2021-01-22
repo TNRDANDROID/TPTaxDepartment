@@ -193,6 +193,7 @@ public class PrefManager {
     public String getTpCode() {
         return pref.getString(TP_CODE, null);
     }
+
     public void setDailyCollectionList(String dailyCollectionList) {
         editor.putString(DAILY_COLLECTION_LIST, dailyCollectionList);
         editor.commit();

@@ -13,7 +13,11 @@ import androidx.databinding.DataBindingUtil;
 
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.databinding.TradeLicenceScreenBinding;
+import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
+
+import java.io.Serializable;
+import java.util.ArrayList;
 
 public class TradeLicenceScreen extends AppCompatActivity {
     TradeLicenceScreenBinding tradeLicenceScreenBinding;
@@ -71,7 +75,11 @@ public class TradeLicenceScreen extends AppCompatActivity {
     }
 
     public void newTradeSilenceScreen(){
+        ArrayList< TPtaxModel > traders =new ArrayList<TPtaxModel>();
         Intent intent = new Intent( this, NewTradeLicenceScreen.class);
+        intent.putExtra("flag",false);
+        intent.putExtra("position",0);
+        intent.putExtra("tradersList", (Serializable) traders);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }

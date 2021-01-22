@@ -49,5 +49,43 @@
     <string name="action_logout">Logout</string>
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="privacy_policy">Privacy Policy</string>
+
+
+
+    //21/01/2021
+
+    <string name="Applicant_Name_Tamil">	விண்ணப்பதாரர் பெயர்	</string>
+    <string name="New_Trade_Licence_Tamil">	புதிய வர்த்தக உரிமம்	</string>
+    <string name="Trader_Code_Tamil">	வர்த்தகர்கள் குறியீடு	</string>
+    <string name="Date_Tamil">	தேதி	</string>
+    <string name="License_Type_Tamil">	உரிம வகை	</string>
+    <string name="Trade_Description_Tamil">	வர்த்தக விளக்கம்	</string>
+    <string name="Gender_Tamil">	பாலினம்	</string>
+    <string name="Age_Tamil">	வயது	</string>
+    <string name="Father_husband_name_tamil">	தந்தை / கணவரின் பெயர்	</string>
+    <string name="Email_ID_tamil">	மின்னஞ்சல் முகவரி	</string>
+    <string name="Establishment_Name_Tamil">	ஸ்தாபனத்தின் பெயர்	</string>
+    <string name="Ward_Name_Tamil">	வார்டு பெயர்	</string>
+    <string name="Street_name_tamil">	தெருவின் பெயர்	</string>
+    <string name="Door_Number_Tamil">	கதவு எண்	</string>
+    <string name="License_Validity_Tamil">	உரிமம் செல்லுபடியாகும் காலம்	</string>
+    <string name="Amount_to_Pay_Tamil">	செலுத்த வேண்டிய தொகை	</string>
+    <string name="View_Image_Tamil">	படத்தைக் காண்க	</string>
+    <string name="Submit_tamil">	சமர்ப்பிக்கவும்	</string>
+    <string name="Existing_Tamil">	பழையது	</string>
+    <string name="New_tamil">	புதியது	</string>
+    <string name="Trade_License_Tamil">	வர்த்தக உரிமம்	</string>
+    <string name="Field_Visit_Tamil">	கள வருகை	</string>
+    <string name="Assessment_Status_Tamil">	மதிப்பீட்டு நிலை	</string>
+    <string name="Daily_Collection_Tamil">	தினசரி சேகரிப்பு	</string>
+    <string name="Daily_AMount_Tamil">	தினசரி தொகை	</string>
+    <string name="Tax_Type_Tamil">	வரி வகை	</string>
+    <string name="Assessment_ID_Tamil">	மதிப்பீட்டு ஐடி	</string>
+    <string name="Current_Status_Tamil">	தற்போதைய நிலை	</string>
+    <string name="Remarks_Tamil">	கருத்து	</string>
+    <string name="Take_photo_Tamil">	புகைப்படம் எடுக்கவும்	</string>
+    <string name="Address_Tamil">	முகவரி	</string>
+    <string name="Area_Squre_Fit_Tamil">	நில அளவு	</string>
+
 </resources>
 

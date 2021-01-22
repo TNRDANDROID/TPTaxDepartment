@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cornered_border_bg"
+    android:layout_margin="5dp"
+    android:elevation="@dimen/_6sdp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/content2"
+        android:id="@+id/content1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal"
+            android:id="@+id/content"
+            android:baselineAligned="false">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/left"
+                android:background="@drawable/delete_bg"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:id="@+id/delete"
+                    android:text="Delete"
+                    android:fontFamily="sans-serif" />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/right"
+                android:background="@drawable/upload_bg"
+                android:layout_weight="1">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:id="@+id/upload"
+                    android:text="Upload"
+                    android:fontFamily="sans-serif" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/content2"
+        android:padding="10dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textSize="13sp"
+            android:textColor="@color/border_line"
+            android:id="@+id/code"
+            android:text="AssessmentId"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:id="@+id/codec"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/border_line"
+            android:layout_toRightOf="@+id/name"
+            android:fontFamily="sans-serif"
+            android:gravity="start"
+            android:text=" : "
+            android:textSize="13sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/border_line"
+            android:textSize="13sp"
+            android:layout_toRightOf="@+id/codec"
+            android:id="@+id/codeValue"
+            android:text="Trader code"
+            android:fontFamily="sans-serif" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:textColor="@color/border_line"
+            android:id="@+id/name"
+            android:layout_below="@+id/code"
+            android:text="ApplicantName"
+            android:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textSize="13sp"
+            android:textColor="@color/border_line"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/name"
+            android:layout_below="@+id/code"
+            android:id="@+id/namec"
+            android:text=" : "
+            android:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/border_line"
+            android:textSize="13sp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/namec"
+            android:layout_below="@+id/code"
+            android:id="@+id/nameValue"
+            android:text="Mobile No"
+            android:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:layout_marginTop="5dp"
+            android:textSize="13sp"
+            android:textColor="@color/border_line"
+            android:id="@+id/mobile"
+            android:layout_below="@+id/name"
+            android:text="TaxType"
+            android:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textSize="13sp"
+            android:textColor="@color/border_line"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/name"
+            android:layout_below="@+id/name"
+            android:id="@+id/mobilec"
+            android:text=" : "
+            android:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textColor="@color/border_line"
+            android:textSize="13sp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/mobilec"
+            android:layout_below="@+id/name"
+            android:id="@+id/taxTypeValue"
+            android:text="Mobile No"
+            android:fontFamily="sans-serif" />
+
+    </RelativeLayout>
+</RelativeLayout>
+
+

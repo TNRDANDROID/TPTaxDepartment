@@ -76,11 +76,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         dailyCollectionBinding.dailyCollectionRecycler.setHasFixedSize(true);
         dailyCollectionBinding.dailyCollectionRecycler.setNestedScrollingEnabled(false);
         dailyCollectionBinding.dailyCollectionRecycler.setFocusable(false);
-        try {
-            LoadDailyCollectionList();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
         dailyCollectionBinding.date.setAlpha(0);
         dailyCollectionBinding.dateLayout.setAlpha(0);
@@ -113,14 +108,13 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
-        date.setText(day + "-" + (month + 1) + "-" + year);
         updateLabel(day + "-" + (month + 1) + "-" + year);
 
-       // getDailyCollection();
     }
 
      private void LoadDailyCollectionList() throws JSONException {
          collectionList = new ArrayList<TPtaxModel>();
+/*
         for (int i = 0; i < 6; i++) {
             if(i==0){
                 TPtaxModel Detail = new TPtaxModel();
@@ -160,8 +154,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 collectionList.add(Detail);
             }
         }
-
-        /*JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
+*/
+        JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
         if(jsonarray != null && jsonarray.length() >0) {
             for (int i = 0; i < jsonarray.length(); i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -175,7 +169,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection(collectionreceived);
                 collectionList.add(Detail);
             }
-        }*/
+        }
 
          Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeName().compareTo(rhs.getTaxTypeName()));
          if(collectionList != null && collectionList.size() >0) {
@@ -194,9 +188,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public static class datePickerFragment extends DialogFragment implements
+    public class datePickerFragment extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
-        static Calendar cldr = Calendar.getInstance();
+        Calendar cldr = Calendar.getInstance();
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -223,11 +217,12 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
             updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+
         }
 
 
     }
-    private static String updateLabel(String olddate){
+    private String updateLabel(String olddate){
         final String OLD_FORMAT = "dd-MM-yyyy";
         final String NEW_FORMAT = "yyyy-MM-dd";
         String newDateString;
@@ -241,12 +236,13 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         sdf.applyPattern(NEW_FORMAT);
         newDateString = sdf.format(d);
         date.setText(newDateString);
+        getDailyCollection();
         return  newDateString;
     }
 
     public void getDailyCollection() {
         try {
-            new ApiService(this).makeJSONObjectRequest("DailyCollection", Api.Method.POST, UrlGenerator.saveTradersUrl(), dailyCollectionJsonParams(), "not cache", this);
+            new ApiService(this).makeJSONObjectRequest("DailyCollection", Api.Method.POST, UrlGenerator.TradersUrl(), dailyCollectionJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -257,7 +253,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("workList", "" + authKey);
+        Log.d("DailyCollectionReq", "" + authKey);
         return dataSet;
     }
 
@@ -265,7 +261,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         JSONObject data = new JSONObject();
         data.put(AppConstant.KEY_SERVICE_ID,"TaxDailyCollection");
-        data.put(AppConstant.COLLECTION_DATE,"2020-04-09");
+        data.put(AppConstant.COLLECTION_DATE,date.getText().toString());
         return data;
     }
 
@@ -280,11 +276,14 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 String key = responseObj.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
-                    JSONArray jsonarrayStreetList = new JSONArray(serverResponse.getResponse());
-                    prefManager.setDailyCollectionList(jsonarrayStreetList.toString());
+                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    prefManager.setDailyCollectionList(jsonarray.toString());
+                    LoadDailyCollectionList();
+                    Log.d("DailyCollection", "" + jsonObject);
 
-                } else if(jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("NO_RECORD")){
+                } else {
                     Utils.showAlert(this,"NO RECORD FOUND!");
                 }
 //                String authKey = responseDecryptedSchemeKey.toString();

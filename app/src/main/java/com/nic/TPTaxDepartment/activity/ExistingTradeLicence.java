@@ -33,6 +33,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,6 +51,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     String selectedWardName="";
     String selectedStreetId;
     String selectedStreetName="";
+    ArrayList<TPtaxModel> tradersList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,10 +61,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
-
+        getTradersList();
         LoadWardSpinner();
-
-       // getTradersList();
 
         existingTradeLicenceBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -103,19 +103,25 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     }
     public void getTradersList() {
         try {
-            new ApiService(this).makeJSONObjectRequest("TradeLicenseTradersList", Api.Method.POST, UrlGenerator.saveTradersUrl(), traderlistJsonParams(), "not cache", this);
+            new ApiService(this).makeJSONObjectRequest("TradeLicenseTradersList", Api.Method.POST, UrlGenerator.TradersUrl(), traderlistJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-    public JSONObject traderlistJsonParams() throws JSONException{
+    public JSONObject traderlistJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), tradersJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TradeLicenseTradersList", "" + authKey);
+        return dataSet;
+    }
 
-
+    public JSONObject tradersJsonParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersList");
         return dataSet;
     }
-
     private void LoadStreetSpinner(String selectedWardId)  {
         streets = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.STREET_LIST;
@@ -237,23 +243,230 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
-    public void existTradeLicenceSubmit() {
-        Intent intent = new Intent( this, ExistingTradeList.class);
+    public void existTradeLicenceSubmit(String wardId,String streetId,String traderCode,String mobileNo) {
+
+        tradersList = new ArrayList<TPtaxModel>();
+        JSONArray jsonarray= null;
+        try {
+            jsonarray = new JSONArray(prefManager.getTradersList());
+            if(jsonarray != null && jsonarray.length() >0) {
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    JSONObject jsonobject = jsonarray.getJSONObject(i);
+                     String tradersdetails_id= jsonobject.getString("tradersdetails_id");
+                     String lb_sno= jsonobject.getString("lb_sno");
+                     String tradedetails_id= jsonobject.getString("tradedetails_id");
+                     String lb_tradecode= jsonobject.getString("lb_tradecode");
+                     String description_en= jsonobject.getString("description_en");
+                     String description_ta= jsonobject.getString("description_ta");
+                     String traderate= jsonobject.getString("traderate");
+                     String lb_traderscode= jsonobject.getString("lb_traderscode");
+                     String traders_rate= jsonobject.getString("traders_rate");
+                     String traders_type= jsonobject.getString("traders_type");
+                     String date= jsonobject.getString("date");
+                     String tradersperiod= jsonobject.getString("tradersperiod");
+                     String tradedesct= jsonobject.getString("tradedesct");
+                     String tradedesce= jsonobject.getString("tradedesce");
+                     String wardid= jsonobject.getString("wardid");
+                     String streetid= jsonobject.getString("streetid");
+                     String doorno= jsonobject.getString("doorno");
+                     String licencefor= jsonobject.getString("licencefor");
+                     String fin_year= jsonobject.getString("fin_year");
+                     String traderstypee= jsonobject.getString("traderstypee");
+                     String demandtype= jsonobject.getString("demandtype");
+                     String onlineapplicationno= jsonobject.getString("onlineapplicationno");
+                     String mobileno= jsonobject.getString("mobileno");
+                     String email= jsonobject.getString("email");
+                     String paymentstatus= jsonobject.getString("paymentstatus");
+                     String licencetypeid= jsonobject.getString("licencetypeid");
+                     String traders_license_type_name= jsonobject.getString("traders_license_type_name");
+                     String apgender= jsonobject.getString("apgender");
+                     String apage= jsonobject.getString("apage");
+                     String apfathername_ta= jsonobject.getString("apfathername_ta");
+                     String apfathername_en= jsonobject.getString("apfathername_en");
+                     String licenceno= jsonobject.getString("licenceno");
+                     String paymentdate= jsonobject.getString("paymentdate");
+                     String statecode= jsonobject.getString("statecode");
+                     String dcode= jsonobject.getString("dcode");
+                     String lbcode= jsonobject.getString("lbcode");
+                     String apname_ta= jsonobject.getString("apname_ta");
+                     String apname_en= jsonobject.getString("apname_en");
+                     String establishment_name_ta= jsonobject.getString("establishment_name_ta");
+                     String establishment_name_en= jsonobject.getString("establishment_name_en");
+                     String licence_validity= jsonobject.getString("licence_validity");
+                     if(!wardId.equals("") && !wardId.isEmpty()){
+                         if(!streetId.equals("") && !streetId.isEmpty()){
+                             if(wardId.equals(wardid) && streetId.equals(streetid)){
+                                 TPtaxModel Detail = new TPtaxModel();
+                                 Detail.setTraderName(apname_en);
+                                 Detail.setTraderCode(lb_traderscode);
+                                 Detail.setTraders_typ(traders_type);
+                                 Detail.setTradedesct(tradedesct);
+                                 Detail.setDoorno(doorno);
+                                 Detail.setApfathername_ta(apfathername_ta);
+                                 Detail.setEstablishment_name_ta(establishment_name_ta);
+                                 Detail.setLicenceValidity(licence_validity);
+                                 Detail.setTraders_license_type_name(traders_license_type_name);
+                                 Detail.setTraderPayment(paymentstatus);
+                                 Detail.setMobileno(mobileno);
+                                 Detail.setPaymentdate(paymentdate);
+                                 Detail.setTradersdetails_id(tradersdetails_id);
+                                 Detail.setLb_sno(lb_sno);
+                                 Detail.setTradedetails_id(tradedetails_id);
+                                 Detail.setDescription_en(description_en);
+                                 Detail.setDescription_ta(description_ta);
+                                 Detail.setTraderate(traderate);
+                                 Detail.setTraders_rate(traders_rate);
+                                 Detail.setTrade_date(date);
+                                 Detail.setTradersperiod(tradersperiod);
+                                 Detail.setTradedesce(tradedesce);
+                                 Detail.setLicencefor(licencefor);
+                                 Detail.setFin_year(fin_year);
+                                 Detail.setTraderstypee(traderstypee);
+                                 Detail.setDemandtype(demandtype);
+                                 Detail.setOnlineapplicationno(onlineapplicationno);
+                                 Detail.setEmail(email);
+                                 Detail.setLicencetypeid(licencetypeid);
+                                 Detail.setApgender(apgender);
+                                 Detail.setApage(apage);
+                                 Detail.setApfathername_en(apfathername_en);
+                                 Detail.setLicenceno(licenceno);
+                                 Detail.setStatecode(statecode);
+                                 Detail.setDcode(dcode);
+                                 Detail.setLbcode(lbcode);
+                                 Detail.setApname_ta(apname_ta);
+                                 Detail.setEstablishment_name_en(establishment_name_en);
+
+                                 tradersList.add(Detail);
+                             }
+                         }
+                     }else if(!traderCode.equals("") && !traderCode.isEmpty()){
+                             if(traderCode.equals(lb_tradecode)){
+                                 TPtaxModel Detail = new TPtaxModel();
+                                 Detail.setTraderName(apname_en);
+                                 Detail.setTraderCode(lb_traderscode);
+                                 Detail.setTraders_typ(traders_type);
+                                 Detail.setTradedesct(tradedesct);
+                                 Detail.setDoorno(doorno);
+                                 Detail.setApfathername_ta(apfathername_ta);
+                                 Detail.setEstablishment_name_ta(establishment_name_ta);
+                                 Detail.setLicenceValidity(licence_validity);
+                                 Detail.setTraders_license_type_name(traders_license_type_name);
+                                 Detail.setTraderPayment(paymentstatus);
+                                 Detail.setMobileno(mobileno);
+                                 Detail.setPaymentdate(paymentdate);
+                                 Detail.setTradersdetails_id(tradersdetails_id);
+                                 Detail.setLb_sno(lb_sno);
+                                 Detail.setTradedetails_id(tradedetails_id);
+                                 Detail.setDescription_en(description_en);
+                                 Detail.setDescription_ta(description_ta);
+                                 Detail.setTraderate(traderate);
+                                 Detail.setTraders_rate(traders_rate);
+                                 Detail.setTrade_date(date);
+                                 Detail.setTradersperiod(tradersperiod);
+                                 Detail.setTradedesce(tradedesce);
+                                 Detail.setLicencefor(licencefor);
+                                 Detail.setFin_year(fin_year);
+                                 Detail.setTraderstypee(traderstypee);
+                                 Detail.setDemandtype(demandtype);
+                                 Detail.setOnlineapplicationno(onlineapplicationno);
+                                 Detail.setEmail(email);
+                                 Detail.setLicencetypeid(licencetypeid);
+                                 Detail.setApgender(apgender);
+                                 Detail.setApage(apage);
+                                 Detail.setApfathername_en(apfathername_en);
+                                 Detail.setLicenceno(licenceno);
+                                 Detail.setStatecode(statecode);
+                                 Detail.setDcode(dcode);
+                                 Detail.setLbcode(lbcode);
+                                 Detail.setApname_ta(apname_ta);
+                                 Detail.setEstablishment_name_en(establishment_name_en);
+
+                                 tradersList.add(Detail);
+                             }
+                     }else if(!mobileNo.equals("") && !mobileNo.isEmpty()){
+                             if(mobileNo.equals(mobileno)){
+                                 TPtaxModel Detail = new TPtaxModel();
+                                 Detail.setTraderName(apname_en);
+                                 Detail.setTraderCode(lb_traderscode);
+                                 Detail.setTraders_typ(traders_type);
+                                 Detail.setTradedesct(tradedesct);
+                                 Detail.setDoorno(doorno);
+                                 Detail.setApfathername_ta(apfathername_ta);
+                                 Detail.setEstablishment_name_ta(establishment_name_ta);
+                                 Detail.setLicenceValidity(licence_validity);
+                                 Detail.setTraders_license_type_name(traders_license_type_name);
+                                 Detail.setTraderPayment(paymentstatus);
+                                 Detail.setMobileno(mobileno);
+                                 Detail.setPaymentdate(paymentdate);
+                                 Detail.setTradersdetails_id(tradersdetails_id);
+                                 Detail.setLb_sno(lb_sno);
+                                 Detail.setTradedetails_id(tradedetails_id);
+                                 Detail.setDescription_en(description_en);
+                                 Detail.setDescription_ta(description_ta);
+                                 Detail.setTraderate(traderate);
+                                 Detail.setTraders_rate(traders_rate);
+                                 Detail.setTrade_date(date);
+                                 Detail.setTradersperiod(tradersperiod);
+                                 Detail.setTradedesce(tradedesce);
+                                 Detail.setLicencefor(licencefor);
+                                 Detail.setFin_year(fin_year);
+                                 Detail.setTraderstypee(traderstypee);
+                                 Detail.setDemandtype(demandtype);
+                                 Detail.setOnlineapplicationno(onlineapplicationno);
+                                 Detail.setEmail(email);
+                                 Detail.setLicencetypeid(licencetypeid);
+                                 Detail.setApgender(apgender);
+                                 Detail.setApage(apage);
+                                 Detail.setApfathername_en(apfathername_en);
+                                 Detail.setLicenceno(licenceno);
+                                 Detail.setStatecode(statecode);
+                                 Detail.setDcode(dcode);
+                                 Detail.setLbcode(lbcode);
+                                 Detail.setApname_ta(apname_ta);
+                                 Detail.setEstablishment_name_en(establishment_name_en);
+
+                                 tradersList.add(Detail);
+                             }
+                     }
+                }
+                Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        if(tradersList != null  && tradersList.size() == 1) {
+            Intent intent = new Intent( this, ExistingTradeSubmit.class);
+            intent.putExtra("tradersList", (Serializable)tradersList);
+            intent.putExtra("position", 0);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        }else if(tradersList != null && tradersList.size() >1 ) {
+            Intent intent = new Intent( this, ExistingTradeList.class);
+            startActivity(intent);
+            intent.putExtra("tradersList", (Serializable)tradersList);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        }else {
+            Utils.showAlert(this, "No Data Found!");
+        }
+
+       /* Intent intent = new Intent( this, ExistingTradeList.class);
         startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        intent.putExtra("tradersList", (Serializable)tradersList);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);*/
     }
+
     public void validateDetails() {
 
         if (!existingTradeLicenceBinding.tradersCode.getText().toString().isEmpty() || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || (!selectedWardName.isEmpty()&& !selectedWardName.equals("Select Ward")) || ( !selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street"))) {
 
                 if(!selectedWardName.isEmpty() && !selectedWardName.equals("Select Ward")){
                     if(!selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street")){
-                        existTradeLicenceSubmit();
+                        existTradeLicenceSubmit(selectedWardId,selectedStreetId,existingTradeLicenceBinding.tradersCode.getText().toString(),existingTradeLicenceBinding.mobileNo.getText().toString());
                     }else {
                         Utils.showAlert(this, "Please Select Street!");
                     }
                 }else {
-                    existTradeLicenceSubmit();
+                    existTradeLicenceSubmit(selectedWardId,selectedStreetId,existingTradeLicenceBinding.tradersCode.getText().toString(),existingTradeLicenceBinding.mobileNo.getText().toString());
                 }
 
         }else { Utils.showAlert(this, "Select Any One!"); }
@@ -270,36 +483,22 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
-            String responseObj = serverResponse.getResponse();
+            JSONObject responseObj = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
-            /*String status = responseObj.getString(AppConstant.KEY_STATUS);
-            String response = responseObj.getString(AppConstant.KEY_RESPONSE);
-            if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
-                if (status.equalsIgnoreCase("OK") && response.equalsIgnoreCase("OK")) {
-                    JSONObject jsonObject = responseObj.getJSONObject(AppConstant.JSON_DATA);
-//                    String Motivatorid = jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID);
-//                    Log.d("motivatorid",""+Motivatorid);
-                    Utils.showAlert(this, "நீங்கள் வெற்றிகரமாக பதிவு செய்யப்பட்டுள்ளீர்கள்!");
-                    Runnable runnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    };
-                    handler.postDelayed(runnable, 2000);
-
-                } else if (status.equalsIgnoreCase("OK") && response.equalsIgnoreCase("FAIL")) {
-                    Utils.showAlert(this, responseObj.getString("MESSAGE"));
-                }
-            }*/
+            String status ;
             if ("TradeLicenseTradersList".equals(urlType) && responseObj != null) {
-                String jsonStr = responseObj;
-                JSONArray jsonarray = new JSONArray(jsonStr);
-                if(jsonarray != null && jsonarray.length() >0) {
-                    prefManager.setTradersList(jsonStr);
-                }
-                Log.d("TradeLicenseTradersList", "" + responseObj);
-            }
+                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("userdatadecry", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                status = jsonObject.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    prefManager.setTradersList(jsonarray.toString());
+                    Log.d("TradeLicenseTradersList", "" + jsonObject);
+
+                } }
 
         } catch (JSONException e) {
             e.printStackTrace();

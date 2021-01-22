@@ -31,15 +31,18 @@
                 android:layout_gravity="start"
                 android:src="@mipmap/back_arrow" />
 
-            <com.nic.TPTaxDepartment.Support.MyCustomTextView
+            <TextView
                 android:id="@+id/title_tv"
-                style="@style/font_circular_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="15dp"
                 android:text="Pending List"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/_15sdp" />
+                android:textAlignment="center"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/_15sdp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/home_img"
@@ -65,17 +68,90 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="visible"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pending_list"
+            <RelativeLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp">
+                android:background="@drawable/cornered_border_bg_strong"
+                android:layout_margin="10dp"
+                android:elevation="@dimen/_6sdp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:orientation="horizontal"
+                    android:id="@+id/content1"
+                    android:baselineAligned="false">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/left"
+                        android:background="@drawable/left_selected_bg"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/white"
+                            android:textSize="13sp"
+                            android:id="@+id/new_trader"
+                            android:text="New Traders"
+                            android:fontFamily="sans-serif" />
 
-            </androidx.recyclerview.widget.RecyclerView>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:id="@+id/right"
+                        android:background="@drawable/right_bg"
+                        android:layout_weight="1">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="13sp"
+                            android:id="@+id/field_visit"
+                            android:text="Field Visit"
+                            android:fontFamily="sans-serif" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/content2"
+                    android:layout_below="@+id/content1"
+                    android:padding="5dp"
+                    >
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/new_trader_recycler"
+                        android:scrollbarSize="1dp"
+                        android:padding="@dimen/margin_left_20dp"
+                        android:visibility="visible"
+                        android:scrollbars="vertical"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/field_visit_recycler"
+                        android:scrollbarSize="1dp"
+                        android:padding="@dimen/margin_left_20dp"
+                        android:visibility="gone"
+                        android:scrollbars="vertical"/>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
         </RelativeLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 

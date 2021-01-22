@@ -58,6 +58,9 @@ public class AppConstant {
     public static String TRADE_DESCRIPTION = "tradedesct";
     public static String APPLICANT_NAME = "apname_en";
     public static String GENDER = "apgender";
+    public static String GENDER_CODE = "gender_code";
+    public static String GENDER_EN = "gender_name_en";
+    public static String GENDER_TA = "gender_name_ta";
     public static String AGE = "apage";
     public static String FATHER_HUSBAND_NAME = "apfathername_en";
     public static String MOBILE = "mobileno";
