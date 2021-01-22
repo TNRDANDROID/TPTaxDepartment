@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.activity.ExistingTradeList;
-import com.nic.TPTaxDepartment.activity.ExistingTradeSubmit;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import java.util.ArrayList;
 

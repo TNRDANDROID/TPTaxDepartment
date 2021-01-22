@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -47,7 +49,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
     HashMap<Integer,String> spinnerMapStreets;
     HashMap<Integer,String> spinnerMapWard;
-    String selectedWardId;
+    String selectedWardId="";
     String selectedWardName="";
     String selectedStreetId;
     String selectedStreetName="";
@@ -73,12 +75,15 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 selectedWardName=ward;
                 selectedWardId=wardId;
                 System.out.println("selectedWardId >> "+selectedWardId);
-                if(selectedWardId != null){
+                if(selectedWardId != null ){
                     LoadStreetSpinner(selectedWardId);
+                    existingTradeLicenceBinding.tradersCode.setEnabled(false);
+                    existingTradeLicenceBinding.mobileNo.setEnabled(false);
                 }else {
-                    existingTradeLicenceBinding.streetsName.setAdapter(null);                  }
-
-
+                    existingTradeLicenceBinding.streetsName.setAdapter(null);
+                    existingTradeLicenceBinding.tradersCode.setEnabled(true);
+                    existingTradeLicenceBinding.mobileNo.setEnabled(true);
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -98,7 +103,52 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             {
             }
         });
+        existingTradeLicenceBinding.tradersCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(existingTradeLicenceBinding.tradersCode.length() > 0){
+                    existingTradeLicenceBinding.mobileNo.setEnabled(false);
+                    existingTradeLicenceBinding.wardNo.setEnabled(false);
+                }else {
+                    existingTradeLicenceBinding.mobileNo.setEnabled(true);
+                    existingTradeLicenceBinding.wardNo.setEnabled(true);
+                }
+
+            }
+        });
+        existingTradeLicenceBinding.mobileNo.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(existingTradeLicenceBinding.mobileNo.length() > 0){
+                    existingTradeLicenceBinding.tradersCode.setEnabled(false);
+                    existingTradeLicenceBinding.wardNo.setEnabled(false);
+                }else {
+                    existingTradeLicenceBinding.tradersCode.setEnabled(true);
+                    existingTradeLicenceBinding.wardNo.setEnabled(true);
+                }
+
+            }
+        });
 
     }
     public void getTradersList() {
@@ -172,7 +222,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeLicenceBinding.streetsName.setAdapter(RuralUrbanArray);
                     existingTradeLicenceBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedStreetId=selectedStreets.get(1).streetid;
+                    selectedStreetId="0";
                     selectedStreetName="";
                 }
             } catch (Exception exp) {
@@ -224,7 +274,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeLicenceBinding.wardNo.setAdapter(RuralUrbanArray);
                     existingTradeLicenceBinding.wardNo.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedWardId=wards.get(1).ward_id;
+                    selectedWardId="0";
                     selectedWardName="";
                 }
             } catch (Exception exp) {
@@ -270,7 +320,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      String streetid= jsonobject.getString("streetid");
                      String doorno= jsonobject.getString("doorno");
                      String licencefor= jsonobject.getString("licencefor");
-                     String fin_year= jsonobject.getString("fin_year");
+                     String fin_year= jsonobject.getString("from_fin_year");
                      String traderstypee= jsonobject.getString("traderstypee");
                      String demandtype= jsonobject.getString("demandtype");
                      String onlineapplicationno= jsonobject.getString("onlineapplicationno");
@@ -293,9 +343,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      String establishment_name_ta= jsonobject.getString("establishment_name_ta");
                      String establishment_name_en= jsonobject.getString("establishment_name_en");
                      String licence_validity= jsonobject.getString("licence_validity");
-                     if(!wardId.equals("") && !wardId.isEmpty()){
-                         if(!streetId.equals("") && !streetId.isEmpty()){
-                             if(wardId.equals(wardid) && streetId.equals(streetid)){
+                         if(!traderCode.equals("") && !traderCode.isEmpty() && traderCode != null){
+                             if(traderCode.equals(lb_traderscode)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
                                  Detail.setTraderCode(lb_traderscode);
@@ -335,55 +384,9 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setLbcode(lbcode);
                                  Detail.setApname_ta(apname_ta);
                                  Detail.setEstablishment_name_en(establishment_name_en);
-
                                  tradersList.add(Detail);
                              }
-                         }
-                     }else if(!traderCode.equals("") && !traderCode.isEmpty()){
-                             if(traderCode.equals(lb_tradecode)){
-                                 TPtaxModel Detail = new TPtaxModel();
-                                 Detail.setTraderName(apname_en);
-                                 Detail.setTraderCode(lb_traderscode);
-                                 Detail.setTraders_typ(traders_type);
-                                 Detail.setTradedesct(tradedesct);
-                                 Detail.setDoorno(doorno);
-                                 Detail.setApfathername_ta(apfathername_ta);
-                                 Detail.setEstablishment_name_ta(establishment_name_ta);
-                                 Detail.setLicenceValidity(licence_validity);
-                                 Detail.setTraders_license_type_name(traders_license_type_name);
-                                 Detail.setTraderPayment(paymentstatus);
-                                 Detail.setMobileno(mobileno);
-                                 Detail.setPaymentdate(paymentdate);
-                                 Detail.setTradersdetails_id(tradersdetails_id);
-                                 Detail.setLb_sno(lb_sno);
-                                 Detail.setTradedetails_id(tradedetails_id);
-                                 Detail.setDescription_en(description_en);
-                                 Detail.setDescription_ta(description_ta);
-                                 Detail.setTraderate(traderate);
-                                 Detail.setTraders_rate(traders_rate);
-                                 Detail.setTrade_date(date);
-                                 Detail.setTradersperiod(tradersperiod);
-                                 Detail.setTradedesce(tradedesce);
-                                 Detail.setLicencefor(licencefor);
-                                 Detail.setFin_year(fin_year);
-                                 Detail.setTraderstypee(traderstypee);
-                                 Detail.setDemandtype(demandtype);
-                                 Detail.setOnlineapplicationno(onlineapplicationno);
-                                 Detail.setEmail(email);
-                                 Detail.setLicencetypeid(licencetypeid);
-                                 Detail.setApgender(apgender);
-                                 Detail.setApage(apage);
-                                 Detail.setApfathername_en(apfathername_en);
-                                 Detail.setLicenceno(licenceno);
-                                 Detail.setStatecode(statecode);
-                                 Detail.setDcode(dcode);
-                                 Detail.setLbcode(lbcode);
-                                 Detail.setApname_ta(apname_ta);
-                                 Detail.setEstablishment_name_en(establishment_name_en);
-
-                                 tradersList.add(Detail);
-                             }
-                     }else if(!mobileNo.equals("") && !mobileNo.isEmpty()){
+                     }else if(!mobileNo.equals("") && !mobileNo.isEmpty() && mobileNo != null){
                              if(mobileNo.equals(mobileno)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
@@ -427,23 +430,71 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
                                  tradersList.add(Detail);
                              }
-                     }
+                     }else if(wardId != null && !wardId.equals("0") && !wardId.isEmpty() ){
+                        if(streetId != null &&!streetId.equals("0")&& !streetId.isEmpty() ){
+                            if(wardId.equals(wardid) && streetId.equals(streetid)){
+                                TPtaxModel Detail = new TPtaxModel();
+                                Detail.setTraderName(apname_en);
+                                Detail.setTraderCode(lb_traderscode);
+                                Detail.setTraders_typ(traders_type);
+                                Detail.setTradedesct(tradedesct);
+                                Detail.setDoorno(doorno);
+                                Detail.setApfathername_ta(apfathername_ta);
+                                Detail.setEstablishment_name_ta(establishment_name_ta);
+                                Detail.setLicenceValidity(licence_validity);
+                                Detail.setTraders_license_type_name(traders_license_type_name);
+                                Detail.setTraderPayment(paymentstatus);
+                                Detail.setMobileno(mobileno);
+                                Detail.setPaymentdate(paymentdate);
+                                Detail.setTradersdetails_id(tradersdetails_id);
+                                Detail.setLb_sno(lb_sno);
+                                Detail.setTradedetails_id(tradedetails_id);
+                                Detail.setDescription_en(description_en);
+                                Detail.setDescription_ta(description_ta);
+                                Detail.setTraderate(traderate);
+                                Detail.setTraders_rate(traders_rate);
+                                Detail.setTrade_date(date);
+                                Detail.setTradersperiod(tradersperiod);
+                                Detail.setTradedesce(tradedesce);
+                                Detail.setLicencefor(licencefor);
+                                Detail.setFin_year(fin_year);
+                                Detail.setTraderstypee(traderstypee);
+                                Detail.setDemandtype(demandtype);
+                                Detail.setOnlineapplicationno(onlineapplicationno);
+                                Detail.setEmail(email);
+                                Detail.setLicencetypeid(licencetypeid);
+                                Detail.setApgender(apgender);
+                                Detail.setApage(apage);
+                                Detail.setApfathername_en(apfathername_en);
+                                Detail.setLicenceno(licenceno);
+                                Detail.setStatecode(statecode);
+                                Detail.setDcode(dcode);
+                                Detail.setLbcode(lbcode);
+                                Detail.setApname_ta(apname_ta);
+                                Detail.setEstablishment_name_en(establishment_name_en);
+
+                                tradersList.add(Detail);
+                            }
+                        }
+                    }
                 }
                 Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        System.out.println("size >>"+ tradersList.size());
+
         if(tradersList != null  && tradersList.size() == 1) {
             Intent intent = new Intent( this, ExistingTradeSubmit.class);
-            intent.putExtra("tradersList", (Serializable)tradersList);
             intent.putExtra("position", 0);
+            intent.putExtra("tradersList", tradersList);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }else if(tradersList != null && tradersList.size() >1 ) {
             Intent intent = new Intent( this, ExistingTradeList.class);
+            intent.putExtra("tradersList", tradersList);
             startActivity(intent);
-            intent.putExtra("tradersList", (Serializable)tradersList);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }else {
             Utils.showAlert(this, "No Data Found!");
@@ -466,7 +517,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                         Utils.showAlert(this, "Please Select Street!");
                     }
                 }else {
-                    existTradeLicenceSubmit(selectedWardId,selectedStreetId,existingTradeLicenceBinding.tradersCode.getText().toString(),existingTradeLicenceBinding.mobileNo.getText().toString());
+                    existTradeLicenceSubmit("0","0",existingTradeLicenceBinding.tradersCode.getText().toString(),existingTradeLicenceBinding.mobileNo.getText().toString());
                 }
 
         }else { Utils.showAlert(this, "Select Any One!"); }
@@ -489,7 +540,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             if ("TradeLicenseTradersList".equals(urlType) && responseObj != null) {
                 String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
-                Log.d("userdatadecry", "" + userDataDecrypt);
+                Log.d("Tradersdatadecry", "" + userDataDecrypt);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
                 status = jsonObject.getString(AppConstant.KEY_STATUS);

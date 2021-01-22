@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -108,7 +110,25 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
-        updateLabel(day + "-" + (month + 1) + "-" + year);
+       // updateLabel(day + "-" + (month + 1) + "-" + year);
+        date.setText("Select Date");
+
+        date.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                getDailyCollection();
+            }
+        });
 
     }
 
@@ -188,7 +208,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public class datePickerFragment extends DialogFragment implements
+    public static class datePickerFragment extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
         Calendar cldr = Calendar.getInstance();
 
@@ -210,7 +230,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
             // Do something with the date chosen by the user
 //            date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-
+            datePickerFragment d = new datePickerFragment();
             String start_date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
             cldr.set(Calendar.YEAR, year);
             cldr.set(Calendar.MONTH, (monthOfYear));
@@ -222,7 +242,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
 
     }
-    private String updateLabel(String olddate){
+    public static String updateLabel(String olddate){
         final String OLD_FORMAT = "dd-MM-yyyy";
         final String NEW_FORMAT = "yyyy-MM-dd";
         String newDateString;
@@ -236,11 +256,12 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         sdf.applyPattern(NEW_FORMAT);
         newDateString = sdf.format(d);
         date.setText(newDateString);
-        getDailyCollection();
+
+
         return  newDateString;
     }
 
-    public void getDailyCollection() {
+    public  void getDailyCollection() {
         try {
             new ApiService(this).makeJSONObjectRequest("DailyCollection", Api.Method.POST, UrlGenerator.TradersUrl(), dailyCollectionJsonParams(), "not cache", this);
         } catch (JSONException e) {
@@ -276,13 +297,12 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 String key = responseObj.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
+                Log.d("AssessmentStatus", "" + jsonObject);
                 String status = jsonObject.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     prefManager.setDailyCollectionList(jsonarray.toString());
                     LoadDailyCollectionList();
-                    Log.d("DailyCollection", "" + jsonObject);
-
                 } else {
                     Utils.showAlert(this,"NO RECORD FOUND!");
                 }

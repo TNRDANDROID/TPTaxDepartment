@@ -209,6 +209,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                 String key = responseObj.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
+                Log.d("AssessmentStatus", "" + jsonObject);
                 String status = jsonObject.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
@@ -230,7 +231,6 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                         assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
                         assessmentStatusBinding.submit.setVisibility(View.GONE);
                     }
-                    Log.d("AssessmentStatus", "" + jsonObject);
 
                 } else {
                     Utils.showAlert(this,"NO RECORD FOUND!");
