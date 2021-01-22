@@ -209,8 +209,7 @@ public class ExistingTradeList extends AppCompatActivity {
         }
     }
     public void showTraderDetails( int position , ArrayList<TPtaxModel> tradersList) {
-        JSONArray jsArray = new JSONArray(tradersList);
-        prefManager.setFilteredTradersList(jsArray.toString());
+
         Intent intent = new Intent( this, ExistingTradeSubmit.class);
         intent.putExtra("position", position);
         intent.putExtra("tradersList", tradersList);
