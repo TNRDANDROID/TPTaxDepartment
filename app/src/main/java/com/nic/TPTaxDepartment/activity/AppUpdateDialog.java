@@ -26,6 +26,7 @@ public class AppUpdateDialog extends AppCompatActivity implements View.OnClickLi
         appUpdateDialogBinding.setActivity(this);
         intializeUI();
 
+
     }
 
     public void intializeUI() {
