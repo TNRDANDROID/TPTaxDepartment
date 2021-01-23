@@ -122,7 +122,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         fieldVisitBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
-        loadCurrentStatus();
+        //loadCurrentStatus();
         try {
             dbHelper = new DBHelper(this);
             db = dbHelper.getWritableDatabase();
@@ -130,6 +130,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             e.printStackTrace();
         }
         getTaxTypeFieldVisitList();
+
+        getFieldVisitStatusList();
 
         fieldVisitBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -144,6 +146,22 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             {
             }
         });
+
+        fieldVisitBinding.currentStatus.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String Id = parent.getSelectedItem().toString();
+                String Name = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                selectedFieldVisitStatusId=Id;
+                selectedFieldVisitStatusName=Name;
+
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+
 
     }
 
@@ -888,14 +906,14 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             if(cursor.moveToFirst()){
                 do{
                     CommonModel commonModel=new CommonModel();
-                    commonModel.setFIELD_VISIT_STATUS(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FIELD_VISIT_STATUS))));
+                    commonModel.setFIELD_VISIT_STATUS(String.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FIELD_VISIT_STATUS))));
                     commonModel.setFIELD_VISIT_STATUS_ID(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FIELD_VISIT_STATUS_ID)));
 
                     fieldVisitStatus.add(commonModel);
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(fieldVisitStatus, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
+        //Collections.sort(fieldVisitStatus, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
 
         if(fieldVisitStatus != null && fieldVisitStatus.size() >0) {
 
