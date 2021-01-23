@@ -47,7 +47,7 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
             holder.name.setText(traders.get(position).traderName);
             holder.code.setText(traders.get(position).traderCode);
             holder.mobileValue.setText(traders.get(position).mobileno);
-            holder.date.setText(traders.get(position).paymentdate);
+            holder.date.setText(traders.get(position).trade_date);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

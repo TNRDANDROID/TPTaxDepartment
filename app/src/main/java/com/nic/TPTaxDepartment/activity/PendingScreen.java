@@ -3,6 +3,7 @@ package com.nic.TPTaxDepartment.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.session.PrefManager;
@@ -176,6 +178,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     }
     private void loadNewTraderList() {
         newTraderList = new ArrayList<TPtaxModel>();
+/*
         for (int i = 0; i < 5; i++) {
             if(i==2){
                 TPtaxModel Detail = new TPtaxModel();
@@ -222,6 +225,45 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 Detail.setMobileno("12233445");
                 Detail.setPaymentdate("20/05/2020");
                 newTraderList.add(Detail);}
+        }
+*/
+        String select_query= "SELECT *FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+             if(cursor.moveToFirst()){
+                do{
+                    TPtaxModel Detail = new TPtaxModel();
+                    Detail.setTraderName(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.APPLICANT_NAME_EN)));
+                    Detail.setTraderCode(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TRADE_CODE)));
+                    Detail.setTradecodeId(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TRADE_CODE_ID)));
+                    Detail.setTradedesce(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TRADE_DESCRIPTION)));
+                    Detail.setWardId(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_ID)));
+                    Detail.setWardname(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.WARD_NAME_EN)));
+                    Detail.setStreetId(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_ID)));
+                    Detail.setStreetname(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STREET_NAME_EN)));
+                    Detail.setDoorno(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.DOOR_NO)));
+                    Detail.setApfathername_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FATHER_HUSBAND_NAME_TA)));
+                    Detail.setEstablishment_name_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.ESTABLISHMENT_NAME_TA)));
+                    Detail.setLicenceValidity(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LICENCE_VALIDITY)));
+                    Detail.setLicence_validity(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LICENCE_VALIDITY_ID)));
+                    Detail.setMobileno(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.MOBILE)));
+                    Detail.setTrade_date(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.DATE)));
+                    Detail.setEmail(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.E_MAIL)));
+                    Detail.setLicencetypeid(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LICENCE_TYPE_ID)));
+                    Detail.setTraders_license_type_name(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LICENCE_TYPE)));
+                    Detail.setApgender(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.GENDER)));
+                    Detail.setApgenderId(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.GENDER_CODE)));
+                    Detail.setApage(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.AGE)));
+                    Detail.setApfathername_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FATHER_HUSBAND_NAME_EN)));
+                    Detail.setLatitude(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LATITUDE)));
+                    Detail.setLongitude(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LONGITUDE)));
+                    Detail.setPaymentStatus(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.PAYMENT_STATUS)));
+                    Detail.setTradeImage(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TRADE_IMAGE)));
+                    Detail.setApname_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.APPLICANT_NAME_TA)));
+                    Detail.setEstablishment_name_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.ESTABLISHMENT_NAME_EN)));
+                    newTraderList.add(Detail);
+                }while (cursor.moveToNext());
+            }
         }
 
         Collections.sort(newTraderList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));

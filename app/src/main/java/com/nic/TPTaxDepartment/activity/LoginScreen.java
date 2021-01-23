@@ -282,9 +282,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         Log.d("userdatadecry", "" + userDataDecrypt);
                         jsonObject = new JSONObject(userDataDecrypt);
                         prefManager.setStateCode(jsonObject.getString(AppConstant.STATE_CODE));
-                        prefManager.setDistrictCode(jsonObject.get(AppConstant.DISTRICT_CODE));
+                        prefManager.setDistrictCode("20"/*jsonObject.get(AppConstant.DISTRICT_CODE)*/);
                         prefManager.setLbType(jsonObject.getString(AppConstant.LB_TYPE));
-                        prefManager.setTpCode(jsonObject.getString(AppConstant.TP_CODE));
+                        prefManager.setTpCode("200292"/*jsonObject.getString(AppConstant.TP_CODE)*/);
                         prefManager.setLbodyNameEn(jsonObject.getString(AppConstant.LBODY_NAME_EN));
                         prefManager.setRoleCode(jsonObject.getString(AppConstant.ROLE_CODE));
                         prefManager.setRoleName(jsonObject.getString(AppConstant.ROLE_NAME));

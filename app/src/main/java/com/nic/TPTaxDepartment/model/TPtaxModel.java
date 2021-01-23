@@ -44,6 +44,7 @@ public class TPtaxModel  implements Serializable {
     private String miTankSkillLevel;
     public String pointType;
     public Integer tradecode;
+    public String tradecodeId;
     public String TaxTypeId;
     public String TaxTypeName;
     public String TaxCollection;
@@ -56,6 +57,7 @@ public class TPtaxModel  implements Serializable {
     public String traderPayment;
     public String traders_typ;
     public String tradedesct;
+    public String tradeImage;
     public String doorno;
     public String apfathername_ta;
     public String establishment_name_ta;
@@ -80,16 +82,86 @@ public class TPtaxModel  implements Serializable {
     public String email;
     public String licencetypeid;
     public String apgender;
+    public String apgenderId;
     public String apage;
     public String apfathername_en;
     public String licenceno;
     public String statecode;
     public String dcode;
+    public String wardId;
+    public String wardname;
+    public String streetId;
+    public String streetname;
     public String lbcode;
     public String apname_ta;
     public String establishment_name_en;
     public String paymentdate;
+    public String paymentStatus;
 
+
+    public String getApgenderId() {
+        return apgenderId;
+    }
+
+    public void setApgenderId(String apgenderId) {
+        this.apgenderId = apgenderId;
+    }
+
+    public String getWardname() {
+        return wardname;
+    }
+
+    public void setWardname(String wardname) {
+        this.wardname = wardname;
+    }
+
+    public String getStreetname() {
+        return streetname;
+    }
+
+    public void setStreetname(String streetname) {
+        this.streetname = streetname;
+    }
+
+    public String getTradecodeId() {
+        return tradecodeId;
+    }
+
+    public void setTradecodeId(String tradecodeId) {
+        this.tradecodeId = tradecodeId;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getTradeImage() {
+        return tradeImage;
+    }
+
+    public void setTradeImage(String tradeImage) {
+        this.tradeImage = tradeImage;
+    }
+
+    public String getWardId() {
+        return wardId;
+    }
+
+    public void setWardId(String wardId) {
+        this.wardId = wardId;
+    }
+
+    public String getStreetId() {
+        return streetId;
+    }
+
+    public void setStreetId(String streetId) {
+        this.streetId = streetId;
+    }
 
     public String getDcode() {
         return dcode;

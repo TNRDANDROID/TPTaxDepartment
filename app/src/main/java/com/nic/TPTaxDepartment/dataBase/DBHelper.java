@@ -133,13 +133,18 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + SAVE_NEW_TRADER_DETAILS + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 AppConstant.MODE+" TEXT ," +
-                AppConstant.TRADE_CODE+" INTEGER," +
+                AppConstant.TRADE_CODE_ID+" INTEGER," +
+                AppConstant.TRADE_CODE+" TEXT," +
                 AppConstant.DATE+" TEXT," +
+                "description_en TEXT," +
+                "description_ta TEXT," +
                 AppConstant.LICENCE_TYPE_ID+" INTEGER," +
+                AppConstant.LICENCE_TYPE+" TEXT," +
                 AppConstant.TRADE_DESCRIPTION+" TEXT," +
                 AppConstant.APPLICANT_NAME_EN+" TEXT," +
                 AppConstant.APPLICANT_NAME_TA+" TEXT," +
                 AppConstant.GENDER+" TEXT," +
+                AppConstant.GENDER_CODE+" TEXT," +
                 AppConstant.AGE+" INTEGER," +
                 AppConstant.FATHER_HUSBAND_NAME_EN+" TEXT," +
                 AppConstant.FATHER_HUSBAND_NAME_TA+" TEXT," +
@@ -148,9 +153,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 AppConstant.ESTABLISHMENT_NAME_EN+" TEXT," +
                 AppConstant.ESTABLISHMENT_NAME_TA+" TEXT," +
                 AppConstant.WARD_ID+" TEXT," +
+                AppConstant.WARD_NAME_EN+" TEXT," +
                 AppConstant.STREET_ID+" TEXT," +
+                AppConstant.STREET_NAME_EN+" TEXT," +
                 AppConstant.DOOR_NO+" TEXT," +
                 AppConstant.LICENCE_VALIDITY+" TEXT," +
+                AppConstant.LICENCE_VALIDITY_ID+" TEXT," +
                 AppConstant.LATITUDE+" TEXT," +
                 AppConstant.TRADE_IMAGE+" BLOB,"+
                 AppConstant.PAYMENT_STATUS+" TEXT, "+

@@ -53,8 +53,9 @@ public class AppConstant {
 
     public static String MODE = "mode";
     public static String TRADE_CODE = "tradecode";
+    public static String TRADE_CODE_ID = "tradecodeid";
     public static String DATE = "date";
-    public static String LICENCE_TYPE = "licencetypeid";
+    public static String LICENCE_TYPE = "licencetype";
     public static String TRADE_DESCRIPTION = "tradedesct";
     public static String APPLICANT_NAME_EN = "apname_en";
     public static String APPLICANT_NAME_TA = "apname_ta";
@@ -80,6 +81,7 @@ public class AppConstant {
     public static String BUILDING_ZONE = "building_zone";
     public static String DOOR_NO = "doorno";
     public static String LICENCE_VALIDITY = "licence_validity";
+    public static String LICENCE_VALIDITY_ID = "licence_validityid";
     public static String LB_CODE = "lbcode";
     public static String LATITUDE = "loc_lat";
     public static String LONGITUDE = "loc_long";
