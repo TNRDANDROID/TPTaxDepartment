@@ -38,8 +38,29 @@ public class CommonModel {
     public  String LICENSE_TYPE_ID ;
     public  String STATECODE ;
 
+
+    ////FieldVisitStatus
+    public String FIELD_VISIT_STATUS_ID;
+    public String FIELD_VISIT_STATUS;
+
     /////............../////
 
+
+    public String getFIELD_VISIT_STATUS_ID() {
+        return FIELD_VISIT_STATUS_ID;
+    }
+
+    public void setFIELD_VISIT_STATUS_ID(String FIELD_VISIT_STATUS_ID) {
+        this.FIELD_VISIT_STATUS_ID = FIELD_VISIT_STATUS_ID;
+    }
+
+    public String getFIELD_VISIT_STATUS() {
+        return FIELD_VISIT_STATUS;
+    }
+
+    public void setFIELD_VISIT_STATUS(String FIELD_VISIT_STATUS) {
+        this.FIELD_VISIT_STATUS = FIELD_VISIT_STATUS;
+    }
 
     public String getTRADE_DETAILS_ID() {
         return TRADE_DETAILS_ID;

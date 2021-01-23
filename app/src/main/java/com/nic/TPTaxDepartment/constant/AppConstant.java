@@ -127,4 +127,9 @@ public class AppConstant {
     public static String STATECODE = "statecode";
 
 
+    //FieldVisit Status
+    public static  String FIELD_VISIT_STATUS_ID="field_visit_status_id";
+    public static  String FIELD_VISIT_STATUS="field_visit_status";
+
+
 }

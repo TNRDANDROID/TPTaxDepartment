@@ -259,6 +259,13 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         }
     }
 
+    public void getFieldVisitStatus() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("FieldVisitStatus", Api.Method.POST, UrlGenerator.prodOpenUrl(), fieldVisitStatusJsonParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void getWardList() {
         try {
             new ApiService(this).makeJSONObjectRequest("WardList", Api.Method.POST, UrlGenerator.prodOpenUrl(), wardJsonParam(), "not cache", this);
@@ -283,6 +290,13 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public JSONObject taxTpeJsonParam() throws JSONException {
         JSONObject data = new JSONObject();
         data.put(AppConstant.KEY_SERVICE_ID,"OS_TaxTypes");
+        Log.d("params", "" + data);
+        return data;
+    }
+
+    public JSONObject fieldVisitStatusJsonParams() throws JSONException {
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"OS_FieldVisitStatus");
         Log.d("params", "" + data);
         return data;
     }
@@ -551,24 +565,24 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 status = jsonObject.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
-                    Log.d("TraderLicenseTypeList", "" + jsonObject);
+                    Log.d("TraderLicenseTradeList", "" + jsonObject);
                     if(jsonarray != null && jsonarray.length() >0) {
                         db.execSQL("delete from "+ DBHelper.TRADE_CODE_LIST);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
 
                             ContentValues fieldValue = new ContentValues();
-                            fieldValue.put(AppConstant.TRADE_DETAILS_ID, jsonObject.getString(AppConstant.TRADE_DETAILS_ID));
-                            fieldValue.put(AppConstant.LB_TRADE_CODE, jsonObject.getString(AppConstant.LB_TRADE_CODE));
-                            fieldValue.put(AppConstant.DESCRIPTION_EN, jsonObject.getString(AppConstant.DESCRIPTION_EN));
-                            fieldValue.put(AppConstant.DESCRIPTION_TA, jsonObject.getString(AppConstant.DESCRIPTION_TA));
-                            fieldValue.put(AppConstant.DATE_FIELD, jsonObject.getString(AppConstant.DATE_FIELD));
-                            fieldValue.put(AppConstant.FINYEAR, jsonObject.getString(AppConstant.FINYEAR));
-                            fieldValue.put(AppConstant.TRADE_RATE, jsonObject.getString(AppConstant.TRADE_RATE));
-                            fieldValue.put(AppConstant.LICENSE_TYPE_ID, jsonObject.getString(AppConstant.LICENSE_TYPE_ID));
-                            fieldValue.put(AppConstant.LB_CODE, jsonObject.getString(AppConstant.LB_CODE));
-                            fieldValue.put(AppConstant.STATECODE, jsonObject.getString(AppConstant.STATECODE));
-                            fieldValue.put(AppConstant.DISTRICT_CODE, jsonObject.getString(AppConstant.DISTRICT_CODE));
+                            fieldValue.put(AppConstant.TRADE_DETAILS_ID, jsonobject.getString(AppConstant.TRADE_DETAILS_ID));
+                            fieldValue.put(AppConstant.LB_TRADE_CODE, jsonobject.getString(AppConstant.LB_TRADE_CODE));
+                            fieldValue.put(AppConstant.DESCRIPTION_EN, jsonobject.getString(AppConstant.DESCRIPTION_EN));
+                            fieldValue.put(AppConstant.DESCRIPTION_TA, jsonobject.getString(AppConstant.DESCRIPTION_TA));
+                            fieldValue.put(AppConstant.DATE_FIELD, jsonobject.getString(AppConstant.DATE_FIELD));
+                            fieldValue.put(AppConstant.FINYEAR, jsonobject.getString(AppConstant.FINYEAR));
+                            fieldValue.put(AppConstant.TRADE_RATE, jsonobject.getString(AppConstant.TRADE_RATE));
+                            fieldValue.put(AppConstant.LICENSE_TYPE_ID, jsonobject.getString(AppConstant.LICENSE_TYPE_ID));
+                            fieldValue.put(AppConstant.LB_CODE, jsonobject.getString(AppConstant.LB_CODE));
+                            fieldValue.put(AppConstant.STATECODE, jsonobject.getString(AppConstant.STATECODE));
+                            fieldValue.put(AppConstant.DISTRICT_CODE, jsonobject.getString(AppConstant.DISTRICT_CODE));
 
                             db.insert(DBHelper.TRADE_CODE_LIST, null, fieldValue);
                         }
@@ -597,6 +611,29 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 }
                 Log.d("Gender", "" + responseObj);
             }
+            if ("FieldVisitStatus".equals(urlType) && responseObj != null) {
+                status = responseObj.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        db.execSQL("delete from "+ DBHelper.FIELD_VISIT_STATUS);
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String field_visit_status_id = jsonobject.getString("field_visit_status_id");
+                            String field_visit_status = jsonobject.getString("field_visit_status");
+
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put(AppConstant.FIELD_VISIT_STATUS_ID, field_visit_status_id);
+                            fieldValue.put(AppConstant.FIELD_VISIT_STATUS, field_visit_status);
+
+
+                            db.insert(DBHelper.FIELD_VISIT_STATUS, null, fieldValue);
+                        }
+                    }
+                }
+                Log.d("Gender", "" + responseObj);
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();

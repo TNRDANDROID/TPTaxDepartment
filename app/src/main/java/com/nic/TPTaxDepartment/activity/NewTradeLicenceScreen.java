@@ -92,7 +92,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String selectedGenderId;
     String selectedGender="";
     String selectedWardId;
-    String selectedTradeCodeID;
+    String selectedTradeCode;
     String selectedTrdeCodeDetailsID;
     String selectedWardName="";
     String selectedFinId;
@@ -230,7 +230,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 String tradeCode = parent.getSelectedItem().toString();
                 String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
                 selectedTrdeCodeDetailsID=tradeID;
-                selectedTradeCodeID=tradeCode;
+                selectedTradeCode=tradeCode;
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -644,7 +644,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     private void LoadTradeCodeListSpinner(){
          loadTradeCodeList = new ArrayList<>();
-        String select_query= "SELECT *FROM " + DBHelper.STREET_LIST+ " WHERE lbcode="+prefManager.getTpCode();
+        String select_query= "SELECT *FROM " + DBHelper.TRADE_CODE_LIST+ " WHERE lbcode="+prefManager.getTpCode();
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
             if(cursor.moveToFirst()){
@@ -676,7 +676,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
                 spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
-                String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE();
+                String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -688,7 +688,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     newTradeLicenceScreenBinding.tradeCodeSpinner.setAdapter(RuralUrbanArray);
                     newTradeLicenceScreenBinding.tradeCodeSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
                     selectedTrdeCodeDetailsID = "0";
-                    selectedTradeCodeID = "";
+                    selectedTradeCode = "";
                 }
             } catch (Exception exp) {
                 exp.printStackTrace();
@@ -730,7 +730,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void validateUserDetails() {
-        if (!newTradeLicenceScreenBinding.tradersCode.getText().toString().isEmpty()){
+        if (!selectedTrdeCodeDetailsID.equals("0")){
                 if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
                     if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
                         if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
@@ -813,7 +813,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         Utils.showAlert(this, "Enter Date!");
                     }
                 } else {
-                    Utils.showAlert(this, "Enter Traders code!");
+                    Utils.showAlert(this, "Select Trade code!");
                 }
 
     }
@@ -834,15 +834,15 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void openCameraScreen() {
-        if(!newTradeLicenceScreenBinding.tradersCode.getText().toString().equals("")) {
+        if(!selectedTrdeCodeDetailsID.equals("0")) {
             Intent intent = new Intent(this, CameraScreen.class);
-            intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradersCode.getText().toString());
+            intent.putExtra(AppConstant.TRADE_CODE, selectedTradeCode);
             intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
         else {
-            Utils.showAlert(NewTradeLicenceScreen.this,"Enter Trade Code");
+            Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
         }
     }
 
@@ -855,11 +855,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }*/
 
     public void viewImageScreen() {
-        if(!newTradeLicenceScreenBinding.tradersCode.getText().toString().equals("")) {
+        if(!selectedTradeCode.equals("0")) {
             if (getSaveTradeImageTable() == 1) {
 
                 Intent intent = new Intent(this, FullImageActivity.class);
-                intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradersCode.getText().toString());
+                intent.putExtra(AppConstant.TRADE_CODE, selectedTradeCode);
                 intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -868,7 +868,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
         else {
-            Utils.showAlert(NewTradeLicenceScreen.this,"Enter Trade Code");
+            Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
         }
 
     }
@@ -893,7 +893,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void savenewTraderINLocal(){
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+newTradeLicenceScreenBinding.tradersCode.getText();
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTradeCode;
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
@@ -917,7 +917,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             ContentValues values = new ContentValues();
             //values.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
             values.put(AppConstant.MODE, "NEW");
-            values.put(AppConstant.TRADE_CODE,newTradeLicenceScreenBinding.tradersCode.getText().toString());
+            values.put(AppConstant.TRADE_CODE,selectedTrdeCodeDetailsID);
             values.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
             values.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
             values.put(AppConstant.TRADE_DESCRIPTION,newTradeLicenceScreenBinding.tradeDescription.getText().toString());
@@ -960,7 +960,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public int getSaveTradeImageTable(){
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+newTradeLicenceScreenBinding.tradersCode.getText();;
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTradeCode;
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
@@ -986,7 +986,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
 
     public JSONObject dataSavedEncryptJsonParams() throws JSONException {
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+newTradeLicenceScreenBinding.tradersCode.getText();
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTradeCode;
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
         JSONArray imageArray = new JSONArray();
@@ -1034,7 +1034,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
         dataSet.put(AppConstant.MODE, "NEW");
-        dataSet.put(AppConstant.TRADE_CODE,newTradeLicenceScreenBinding.tradersCode.getText().toString());
+        dataSet.put(AppConstant.TRADE_CODE,selectedTrdeCodeDetailsID);
         dataSet.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
         dataSet.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
         dataSet.put(AppConstant.TRADE_DESCRIPTION,newTradeLicenceScreenBinding.tradeDescription.getText().toString());
@@ -1072,7 +1072,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        dataSet.put(AppConstant.DOOR_NO, newTradeLicenceScreenBinding.doorNo.getText().toString());
 //        dataSet.put(AppConstant.LICENCE_VALIDITY, newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition());
 
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+newTradeLicenceScreenBinding.tradersCode.getText();
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTradeCode;
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 

@@ -109,6 +109,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
 
+    //FieldVisitStatus;
+    ArrayList<CommonModel> fieldVisitStatus ;
+    HashMap<Integer,String> spinnerMapFieldVisitType;
+    String selectedFieldVisitStatusId;
+    String selectedFieldVisitStatusName="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -873,5 +879,53 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
 
     }
+    public void getFieldVisitStatusList() {
+        fieldVisitStatus = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.FIELD_VISIT_STATUS;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setFIELD_VISIT_STATUS(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FIELD_VISIT_STATUS))));
+                    commonModel.setFIELD_VISIT_STATUS_ID(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FIELD_VISIT_STATUS_ID)));
+
+                    fieldVisitStatus.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(fieldVisitStatus, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
+
+        if(fieldVisitStatus != null && fieldVisitStatus.size() >0) {
+
+            spinnerMapFieldVisitType = new HashMap<Integer, String>();
+            spinnerMapFieldVisitType.put(0, null);
+            final String[] items = new String[fieldVisitStatus.size() + 1];
+            items[0] = "Select Status";
+            for (int i = 0; i < fieldVisitStatus.size(); i++) {
+                spinnerMapFieldVisitType.put(i + 1, fieldVisitStatus.get(i).getFIELD_VISIT_STATUS_ID());
+                String Class = fieldVisitStatus.get(i).getFIELD_VISIT_STATUS();
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    fieldVisitBinding.currentStatus.setAdapter(RuralUrbanArray);
+                    fieldVisitBinding.currentStatus.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedFieldVisitStatusId=fieldVisitStatus.get(1).getFIELD_VISIT_STATUS_ID();
+                    selectedFieldVisitStatusName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+
+    }
+
 
 }
