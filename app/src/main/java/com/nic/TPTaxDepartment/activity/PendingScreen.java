@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telecom.Call;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -28,6 +29,7 @@ import com.nic.TPTaxDepartment.Adapter.TraderListAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
+import com.nic.TPTaxDepartment.Interface.AdapterInterface;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
@@ -39,13 +41,14 @@ import com.nic.TPTaxDepartment.Support.ProgressHUD;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PendingScreen extends AppCompatActivity implements Api.ServerResponseListener, View.OnClickListener {
+public class PendingScreen extends AppCompatActivity implements Api.ServerResponseListener, View.OnClickListener, AdapterInterface {
 
     private RecyclerView newTraderRecycler,fieldVisitRecycler;
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
@@ -59,6 +62,12 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     public static SQLiteDatabase db;
     Context mContext;
     Activity activity;
+    private Handler handler = new Handler();
+
+    RelativeLayout no_data_fond_layout;
+    int recyclerClickedPosition;
+
+    NewTradersListAdapter newTradersListAdapter;
 
 
     @Override
@@ -79,6 +88,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             e.printStackTrace();
         }
 
+        no_data_fond_layout=findViewById(R.id.no_data_found_layout);
         newTraderRecycler = (RecyclerView) findViewById(R.id.new_trader_recycler);
         fieldVisitRecycler = (RecyclerView) findViewById(R.id.field_visit_recycler);
         back_img = (ImageView) findViewById(R.id.back_img);
@@ -108,6 +118,13 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         right.setOnClickListener(this);
         loadNewTraderList();
         loadFieldVisitList();
+
+        left.setBackground(activity.getResources().getDrawable(R.drawable.left_selected_bg));
+        right.setBackground(activity.getResources().getDrawable(R.drawable.right_bg));
+        newTrader.setTextColor(activity.getResources().getColor(R.color.white));
+        fieldVisit.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+        fieldVisitRecycler.setVisibility(View.GONE);
+        newTraderRecycler.setVisibility(View.VISIBLE);
 
 
     }
@@ -169,11 +186,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
         Collections.sort(fieldVisitList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
         if(fieldVisitList != null && fieldVisitList.size() >0) {
+            no_data_fond_layout.setVisibility(View.GONE);
             FieldVisitListAdapter adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitList);
             adapter.notifyDataSetChanged();
             fieldVisitRecycler.setAdapter(adapter);
+            fieldVisitRecycler.setVisibility(View.VISIBLE);
         }else {
-            Utils.showAlert(this, "No Data Found!");
+            no_data_fond_layout.setVisibility(View.VISIBLE);
+            fieldVisitRecycler.setVisibility(View.GONE);
+            //Utils.showAlert(this, "No Data Found!");
         }
     }
     private void loadNewTraderList() {
@@ -261,6 +282,8 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     Detail.setTradeImage(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.TRADE_IMAGE)));
                     Detail.setApname_ta(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.APPLICANT_NAME_TA)));
                     Detail.setEstablishment_name_en(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.ESTABLISHMENT_NAME_EN)));
+                    Detail.setDescription_en(cursor.getString(cursor.getColumnIndexOrThrow("description_en")));
+                    Detail.setDescription_ta(cursor.getString(cursor.getColumnIndexOrThrow("description_ta")));
                     newTraderList.add(Detail);
                 }while (cursor.moveToNext());
             }
@@ -268,11 +291,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
         Collections.sort(newTraderList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
         if(newTraderList != null && newTraderList.size() >0) {
-            NewTradersListAdapter adapter = new NewTradersListAdapter(PendingScreen.this,newTraderList);
-            adapter.notifyDataSetChanged();
-            newTraderRecycler.setAdapter(adapter);
+            no_data_fond_layout.setVisibility(View.GONE);
+            newTraderRecycler.setVisibility(View.VISIBLE);
+            newTradersListAdapter = new NewTradersListAdapter(PendingScreen.this,newTraderList);
+            newTradersListAdapter.notifyDataSetChanged();
+            newTraderRecycler.setAdapter(newTradersListAdapter);
         }else {
-            Utils.showAlert(this, "No Data Found!");
+            no_data_fond_layout.setVisibility(View.VISIBLE);
+            newTraderRecycler.setVisibility(View.GONE);
+            //Utils.showAlert(this, "No Data Found!");
         }
     }
 
@@ -325,6 +352,38 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 }
                 Log.d("savedImage", "" + responseDecryptedBlockKey);
             }
+            if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
+                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                Log.d("Response",""+userDataDecrypt);
+                //String status = responseObj.getString(AppConstant.KEY_STATUS);
+                //String response = responseObj.getString(AppConstant.KEY_RESPONSE);
+                if (status.equalsIgnoreCase("SUCCESS") ){
+                    //JSONObject jsonObject = responseObj.getJSONObject(AppConstant.JSON_DATA);
+                    //JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+//                    String Motivatorid = jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID);
+//                    Log.d("motivatorid",""+Motivatorid);
+                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                    Utils.showAlert(this, jsonObject.getString("MESSAGE_TA"));
+                    db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
+                    newTradersListAdapter.notifyDataSetChanged();
+                    /*Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            //finish();
+                        }
+                    };
+                    handler.postDelayed(runnable, 2000);*/
+
+                }
+                else if (status.equalsIgnoreCase("FAILD"))
+                {
+                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                }
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -341,4 +400,91 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         super.onResume();
 
     }
+    public void SaveLicenseTraders(int pos) {
+        recyclerClickedPosition=pos;
+        try {
+            new ApiService(this).makeJSONObjectRequest("SaveLicenseTraders", Api.Method.POST, UrlGenerator.TradersUrl(), dataSavedEncryptJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } }
+
+    public JSONObject dataSavedEncryptJsonParams() throws JSONException {
+        JSONArray imageArray = new JSONArray();
+
+
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataTobeSavedJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        JSONObject dataSet1 = new JSONObject();
+
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        //dataSet.put(AppConstant.LATITUDE, lat);
+        //dataSet.put(AppConstant.LONGITUDE, lan);
+        dataSet1.put(AppConstant.TRADE_IMAGE, newTraderList.get(recyclerClickedPosition).getTradeImage());
+        imageArray.put(dataSet1);
+        dataSet.put(AppConstant.ATTACHMENT_FILES,imageArray);
+        Log.d("TraderLicenseTypeList", "" + authKey);
+        Log.d("DataSetS__:",""+dataSet);
+        return dataSet;
+    }
+
+    public JSONObject dataTobeSavedJsonParams() throws JSONException {
+
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
+        dataSet.put(AppConstant.MODE, "NEW");
+        dataSet.put(AppConstant.TRADE_CODE,newTraderList.get(recyclerClickedPosition).getTradecodeId());
+        dataSet.put(AppConstant.DATE,newTraderList.get(recyclerClickedPosition).getTrade_date());
+        dataSet.put(AppConstant.LICENCE_TYPE_ID,newTraderList.get(recyclerClickedPosition).getLicencetypeid());
+        dataSet.put(AppConstant.TRADE_DESCRIPTION,newTraderList.get(recyclerClickedPosition).getTradedesce());
+        dataSet.put(AppConstant.APPLICANT_NAME_EN, newTraderList.get(recyclerClickedPosition).getTraderName());
+        dataSet.put(AppConstant.APPLICANT_NAME_TA, newTraderList.get(recyclerClickedPosition).getApname_ta());
+        dataSet.put(AppConstant.GENDER,newTraderList.get(recyclerClickedPosition).getApgenderId());
+        dataSet.put(AppConstant.AGE, newTraderList.get(recyclerClickedPosition).getApage());
+        dataSet.put(AppConstant.FATHER_HUSBAND_NAME_EN, newTraderList.get(recyclerClickedPosition).getApfathername_en());
+        dataSet.put(AppConstant.FATHER_HUSBAND_NAME_TA, newTraderList.get(recyclerClickedPosition).getApfathername_ta());
+        dataSet.put(AppConstant.MOBILE, newTraderList.get(recyclerClickedPosition).getMobileno());
+        dataSet.put(AppConstant.E_MAIL, newTraderList.get(recyclerClickedPosition).getEmail());
+        dataSet.put(AppConstant.ESTABLISHMENT_NAME_EN, newTraderList.get(recyclerClickedPosition).getEstablishment_name_en());
+        dataSet.put(AppConstant.ESTABLISHMENT_NAME_TA,newTraderList.get(recyclerClickedPosition).getEstablishment_name_ta());
+//        dataSet.put(AppConstant.WARD_ID, selectedWardId);
+        dataSet.put(AppConstant.STREET_ID, newTraderList.get(recyclerClickedPosition).getStreetId());
+        dataSet.put(AppConstant.DOOR_NO,newTraderList.get(recyclerClickedPosition).getDoorno());
+        dataSet.put(AppConstant.LICENCE_VALIDITY,newTraderList.get(recyclerClickedPosition).getLicence_validity());
+        dataSet.put("wardid", newTraderList.get(recyclerClickedPosition).getWardId());
+        dataSet.put("description_en", newTraderList.get(recyclerClickedPosition).getDescription_en());
+        dataSet.put("description_ta", newTraderList.get(recyclerClickedPosition).getDescription_ta());
+        dataSet.put(AppConstant.LATITUDE, newTraderList.get(recyclerClickedPosition).getLatitude());
+        dataSet.put(AppConstant.LONGITUDE, newTraderList.get(recyclerClickedPosition).getLongitude());
+        //dataSet.put(AppConstant.TRADE_IMAGE, image);
+
+        Log.d("DataSet", "" + dataSet);
+        String authKey = dataSet.toString();
+        int maxLogSize = 2000;
+        for (int i = 0; i <= authKey.length() / maxLogSize; i++) {
+            int start = i * maxLogSize;
+            int end = (i + 1) * maxLogSize;
+            end = end > authKey.length() ? authKey.length() : end;
+            Log.v("to_send+_plain", authKey.substring(start, end));
+        }
+        return dataSet;
+    }
+
+    @Override
+    public void newTraderecyclerPosition(int pos) {
+        recyclerClickedPosition=pos;
+        //SaveLicenseTraders();
+    }
+
+    @Override
+    public void fieldVisitRecyclerposition(int pos) {
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        newTradersListAdapter.notifyDataSetChanged();
+    }
+
 }

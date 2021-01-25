@@ -2,24 +2,43 @@ package com.nic.TPTaxDepartment.Adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.nic.TPTaxDepartment.Api.Api;
+import com.nic.TPTaxDepartment.Api.ApiService;
+import com.nic.TPTaxDepartment.Interface.AdapterInterface;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.activity.ExistingTradeList;
 import com.nic.TPTaxDepartment.activity.NewTradeLicenceScreen;
+import com.nic.TPTaxDepartment.activity.PendingScreen;
+import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
+import com.nic.TPTaxDepartment.utils.UrlGenerator;
+import com.nic.TPTaxDepartment.utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+
+import static com.nic.TPTaxDepartment.activity.Dashboard.db;
 
 public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAdapter.SummaryViewHolder>{
     private Activity activity;
     private ArrayList<TPtaxModel> traders;
     LayoutInflater mInflater;
+
+    AdapterInterface adapterInterface;
 
     public NewTradersListAdapter( Activity activity, ArrayList<TPtaxModel> traders) {
         this.activity=activity;
@@ -48,8 +67,6 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
             holder.code.setText(traders.get(position).traderCode);
             holder.mobileValue.setText(traders.get(position).mobileno);
             holder.date.setText(traders.get(position).trade_date);
-
-
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -64,6 +81,23 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
                 }
 
             });
+            holder.upload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((PendingScreen)activity).SaveLicenseTraders(position);
+                    //adapterInterface.newTraderecyclerPosition(position);
+                }
+            });
+
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
+                    traders.remove(position);
+                    notifyDataSetChanged();
+                }
+            });
+
 
         } catch (Exception exp){
             exp.printStackTrace();
@@ -90,4 +124,7 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
             upload=(RelativeLayout)view.findViewById(R.id.right);
         }
     }
+
+
+
 }
