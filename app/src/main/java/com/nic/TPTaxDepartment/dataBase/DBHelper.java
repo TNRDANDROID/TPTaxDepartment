@@ -87,6 +87,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "tradecode INTEGER," +
                 "trade_image BLOB," +
                 "screen_status TEXT," +
+                "mobileno TEXT," +
                 "loc_lat TEXT," +
                 "loc_long TEXT)");
 

@@ -887,7 +887,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     fieldVisitBinding.taxType.setAdapter(RuralUrbanArray);
                     fieldVisitBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedTaxTypeId=taxType.get(1).taxtypeid;
+                    selectedTaxTypeId="0";
                     selectedTaxTypeName="";
                 }
             } catch (Exception exp) {
@@ -934,7 +934,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     fieldVisitBinding.currentStatus.setAdapter(RuralUrbanArray);
                     fieldVisitBinding.currentStatus.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedFieldVisitStatusId=fieldVisitStatus.get(1).getFIELD_VISIT_STATUS_ID();
+                    selectedFieldVisitStatusId="0";
                     selectedFieldVisitStatusName="";
                 }
             } catch (Exception exp) {

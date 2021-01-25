@@ -161,7 +161,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     assessmentStatusBinding.taxType.setAdapter(RuralUrbanArray);
                     assessmentStatusBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedTaxTypeId=taxType.get(1).taxtypeid;
+                    selectedTaxTypeId="0";
                     selectedTaxTypeName="";
                 }
             } catch (Exception exp) {

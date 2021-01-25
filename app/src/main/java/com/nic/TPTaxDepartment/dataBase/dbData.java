@@ -193,12 +193,12 @@ public class dbData {
 //        deleteSaveTrackTable();
     }
 
-    public ArrayList<TPtaxModel> selectImage(String tradecode, String status) {
+    public ArrayList<TPtaxModel> selectImage(String mobileNo, String status) {
         db.isOpen();
         ArrayList<TPtaxModel> cards = new ArrayList<>();
         Cursor cursor = null;
-        String selection = "tradecode = ? and screen_status = ?";
-        String[] selectionArgs = new String[]{tradecode,status}; ;
+        String selection = "mobileno = ? and screen_status = ?";
+        String[] selectionArgs = new String[]{mobileNo,status}; ;
 //        if (status.equalsIgnoreCase("new")) {
 //            selection = "tradecode = ? and screen_status = ?";
 //            selectionArgs = new String[]{tradecode,status};

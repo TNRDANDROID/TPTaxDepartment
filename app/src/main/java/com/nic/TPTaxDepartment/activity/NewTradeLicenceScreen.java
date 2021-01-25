@@ -104,7 +104,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String traderCode,tradeDate,licenseType,tradeDescription,traderName,traderNameTa,tradeImage, traderGender,traderAge,
             fatherName,fatherNameTa,mobileNo,email,establishmentName,ward,street,doorNo,licenseValidity,paymentStatus;
     int position;
-    Boolean flag;
+    Boolean flag,wardFlag=false;
     ArrayList< TPtaxModel > traders ;
 
     String image="",lat="",lan="";
@@ -135,8 +135,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
         date = newTradeLicenceScreenBinding.date;
+        date.setText("Select Date");
 
-        LoadWardSpinner();
+
         LoadFinYearSpinner();
         LoadGenderSpinner();
         LoadTradeCodeListSpinner();
@@ -153,8 +154,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             position=getIntent().getIntExtra("position",0);
             traders = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
             LoadPendingTraderDetails();
-        }else {
 
+        }else {
+            LoadWardSpinner();
         }
 
         newTradeLicenceScreenBinding.isPaid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -239,15 +241,30 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         });
         newTradeLicenceScreenBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
                 String ward = parent.getSelectedItem().toString();
                 String wardId = spinnerMapWard.get(parent.getSelectedItemPosition());
                 selectedWardId=wardId;
                 selectedWardName=ward;
-                System.out.println("selectedWardId >> "+selectedWardId);
+
                 if(selectedWardId != null){
-                        LoadStreetSpinner(selectedWardId);
+                    if(wardFlag){
+                        LoadStreetSpinner(selectedWardId, "");
+                    }else {
+
+                    }
+
+                    System.out.println("selectedWardId >> "+selectedWardId);
+                    if (!flag ) {
+                        LoadStreetSpinner(selectedWardId, "");
+                    }else {
+                        wardFlag=true;
+//                        LoadStreetSpinner(selectedWardId, traders.get(position).getStreetname());
+                    }
+
+
+
                 }else {
                     newTradeLicenceScreenBinding.streetsName.setAdapter(null);                  }
 
@@ -276,7 +293,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     private void LoadPendingTraderDetails() {
         int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
-        LoadStreetSpinner(traders.get(position).getWardId());
+        String stre = traders.get(position).getStreetname();
+        LoadWardSpinner();
+        LoadStreetSpinner(traders.get(position).getWardId(),traders.get(position).getStreetname());
         newTradeLicenceScreenBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
         newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
         newTradeLicenceScreenBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
@@ -290,8 +309,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.mobileNo.setText(traders.get(position).getMobileno());
         newTradeLicenceScreenBinding.emailId.setText(traders.get(position).getEmail());
         newTradeLicenceScreenBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
+
         newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(traders.get(position).getWardname()));
-        newTradeLicenceScreenBinding.streetsName.setSelection(streetArray.getPosition(traders.get(position).getStreetname()));
+
+//        newTradeLicenceScreenBinding.streetsName.setSelection(streetArray.getPosition(traders.get(position).getStreetname()));
+//        newTradeLicenceScreenBinding.streetsName.setSelection(2);
         newTradeLicenceScreenBinding.doorNo.setText(traders.get(position).getDoorno());
         newTradeLicenceScreenBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
 
@@ -449,7 +471,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
     }
-    private void LoadStreetSpinner(String selectedWardId)  {
+    private void LoadStreetSpinner(String selectedWardId,String streetName)  {
         streets = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.STREET_LIST;
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
@@ -499,8 +521,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     streetArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.streetsName.setAdapter(streetArray);
                     newTradeLicenceScreenBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedStreetId=selectedStreets.get(1).streetid;
-                    selectedStreetName="";
+                    selectedStreetId="0";
+                    selectedStreetName=streetName;
+                    newTradeLicenceScreenBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
+
                 }
             } catch (Exception exp) {
                 exp.printStackTrace();
@@ -550,7 +574,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     wardArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.wardNo.setAdapter(wardArray);
                     newTradeLicenceScreenBinding.wardNo.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedWardId=wards.get(1).ward_id;
+                    selectedWardId="0";
                     selectedWardName="";
                 }
             } catch (Exception exp) {
@@ -600,7 +624,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     licenceValidityArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.licenceValidity.setAdapter(licenceValidityArray);
                     newTradeLicenceScreenBinding.licenceValidity.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedFinId=finYear.get(1).FIN_YEAR_ID;
+                    selectedFinId="0";
                     selectedFinName="";
                 }
             } catch (Exception exp) {
@@ -647,7 +671,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     licenceTypeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.licenceType.setAdapter(licenceTypeArray);
                     newTradeLicenceScreenBinding.licenceType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedLicenceTpeId=traderLicenseTypeList.get(1).traders_license_type_id;
+                    selectedLicenceTpeId="0";
                     selectedLicenceTypeName="";
                 }
             } catch (Exception exp) {
@@ -768,7 +792,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                                                     if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
                                                                                         if (getSaveTradeImageTable()==1) {
                                                                                             if (Utils.isOnline()) {
-                                                                                                SaveLicenseTraders();
+//                                                                                                setResult(RESULT_OK,new Intent().putExtra("key","ok"));
+                                                                                                savenewTraderINLocal();
+
+//                                                                                                SaveLicenseTraders();
                                                                                             } else {
                                                                                                 savenewTraderINLocal();
                                                                                                 Utils.showAlert(this, getResources().getString(R.string.no_internet));
@@ -861,7 +888,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public void openCameraScreen() {
         if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
             Intent intent = new Intent(this, CameraScreen.class);
-            intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
+            intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItemPosition());
+            intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
             intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -880,21 +908,41 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }*/
 
     public void viewImageScreen() {
-        if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
-            if (getSaveTradeImageTable() == 1) {
+        if(!flag){
+            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
+                if (getSaveTradeImageTable() == 1) {
 
-                Intent intent = new Intent(this, FullImageActivity.class);
-                intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
-                intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            } else {
-                Utils.showAlert(NewTradeLicenceScreen.this, "No image Saved in Local");
+                    Intent intent = new Intent(this, FullImageActivity.class);
+                    intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
+                    intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
+                    intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                } else {
+                    Utils.showAlert(NewTradeLicenceScreen.this, "No image Saved in Local");
+                }
+            }
+            else {
+                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
+            }
+        }else {
+            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
+                if (getSaveTradeImageTable() == 1) {
+                    Intent intent = new Intent(this, FullImageActivity.class);
+                    intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItemPosition());
+                    intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
+                    intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                } else {
+                    Utils.showAlert(NewTradeLicenceScreen.this, "No image Saved in Local");
+                }
+            }
+            else {
+                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
             }
         }
-        else {
-            Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
-        }
+
 
     }
     public void decryptRegister(){
@@ -969,6 +1017,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             values.put(AppConstant.LATITUDE, lat);
             values.put(AppConstant.LONGITUDE, lan);
             values.put(AppConstant.TRADE_IMAGE, image);
+            values.put("description_en", newTradeLicenceScreenBinding.descriptionEnglish.getText().toString());
+            values.put("description_ta", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
+            if(newTradeLicenceScreenBinding.isPaid.isChecked()){
+                paymentStatus="Paid";
+            }else {
+                paymentStatus="UnPaid";
+            }
             values.put(AppConstant.PAYMENT_STATUS,paymentStatus);
 
             db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
@@ -991,7 +1046,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public int getSaveTradeImageTable(){
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTrdeCodeDetailsID;
+        image="";lat="";lan="";
+
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+newTradeLicenceScreenBinding.mobileNo.getText().toString();
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
@@ -1017,7 +1074,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
 
     public JSONObject dataSavedEncryptJsonParams() throws JSONException {
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTrdeCodeDetailsID;
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+newTradeLicenceScreenBinding.mobileNo.getText().toString();
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
         JSONArray imageArray = new JSONArray();
@@ -1107,7 +1164,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        dataSet.put(AppConstant.DOOR_NO, newTradeLicenceScreenBinding.doorNo.getText().toString());
 //        dataSet.put(AppConstant.LICENCE_VALIDITY, newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition());
 
-        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTrdeCodeDetailsID;
+        String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+newTradeLicenceScreenBinding.mobileNo.getText().toString();
         Cursor cursor = db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 

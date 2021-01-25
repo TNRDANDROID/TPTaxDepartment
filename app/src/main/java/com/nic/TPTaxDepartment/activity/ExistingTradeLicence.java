@@ -74,8 +74,9 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 String wardId = spinnerMapWard.get(parent.getSelectedItemPosition());
                 selectedWardName=ward;
                 selectedWardId=wardId;
-                System.out.println("selectedWardId >> "+selectedWardId);
+
                 if(selectedWardId != null ){
+                    System.out.println("selectedWardId >> "+selectedWardId);
                     LoadStreetSpinner(selectedWardId);
                     existingTradeLicenceBinding.tradersCode.setEnabled(false);
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);

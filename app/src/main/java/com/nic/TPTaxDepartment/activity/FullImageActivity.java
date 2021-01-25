@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 public class FullImageActivity extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     private FullImageRecyclerBinding fullImageRecyclerBinding;
-    public String tradecode,status,taxtypeid;
+    public String tradecode,status,taxtypeid,mobileNo;
     private FullImageAdapter fullImageAdapter;
     private PrefManager prefManager;
     private static  ArrayList<TPtaxModel> activityImage = new ArrayList<>();
@@ -53,6 +53,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         fullImageRecyclerBinding.setActivity(this);
         prefManager = new PrefManager(this);
         tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
+        mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
         status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
         taxtypeid = getIntent().getStringExtra(AppConstant.TAX_TYPE_ID);
 
@@ -89,9 +90,9 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             dbData.open();
             activityImage = new ArrayList<>();
             if(status.equals("pending")) {
-                activityImage = dbData.selectPendingImage(taxtypeid);
+                activityImage = dbData.selectPendingImage(mobileNo);
             }else {
-                activityImage = dbData.selectImage(tradecode,status);
+                activityImage = dbData.selectImage(mobileNo,status);
             }
 
 
