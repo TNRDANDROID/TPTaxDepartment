@@ -345,14 +345,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
         String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
-        LoadStreetSpinner(traders.get(position).getWardId(),traders.get(position).getStreetname());
+        LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
         newTradeLicenceScreenBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
         newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
         newTradeLicenceScreenBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
         newTradeLicenceScreenBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         newTradeLicenceScreenBinding.applicantName.setText(traders.get(position).getTraderName());
         newTradeLicenceScreenBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
-        newTradeLicenceScreenBinding.gender.setSelection(genderArray.getPosition(traders.get(position).getApgender()));
+        newTradeLicenceScreenBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
         newTradeLicenceScreenBinding.age.setText(traders.get(position).getApage());
         newTradeLicenceScreenBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
         newTradeLicenceScreenBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
@@ -360,7 +360,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.emailId.setText(traders.get(position).getEmail());
         newTradeLicenceScreenBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
 
-        newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(traders.get(position).getWardname()));
+        newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
 
 //        newTradeLicenceScreenBinding.streetsName.setSelection(streetArray.getPosition(traders.get(position).getStreetname()));
 //        newTradeLicenceScreenBinding.streetsName.setSelection(2);

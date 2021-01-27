@@ -140,7 +140,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         date = newTradeDetailsViewBinding.date;
         date.setText("Select Date");
 
-
+         spinnerMapStreets=new HashMap<>();
         LoadFinYearSpinner();
         LoadGenderSpinner();
         LoadTradeCodeListSpinner();
@@ -347,14 +347,16 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
         String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
-        LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
+        // iterate each entry of hashmap
+
+
         newTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(spinnerTradeCode.get(traders.get(position).getTradecode())));
         newTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
-        newTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
+        newTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition((traders.get(position).getTraders_license_type_name())));
         newTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         newTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
         newTradeDetailsViewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
-        newTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
+        newTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgender())));
         newTradeDetailsViewBinding.age.setText(traders.get(position).getApage());
         newTradeDetailsViewBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
         newTradeDetailsViewBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
@@ -362,12 +364,23 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         newTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
         newTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
 
-        //newTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+        if(traders.get(position).getWardId()!=null&&!traders.get(position).getWardId().isEmpty()) {
+            newTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+            LoadStreetSpinner(traders.get(position).getWardId(),"");
+        }
+        // iterate each entry of hashmap
 
-//       newTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
+
+        if(traders.get(position).getStreetId()!=null&&!traders.get(position).getStreetId().isEmpty()) {
+            //LoadStreetSpinner(traders.get(position).getWardId(),"");
+            //newTradeDetailsViewBinding.streetsName.setSelection(0);
+            newTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
+
+        }
+
 //        newTradeDetailsViewBinding.streetsName.setSelection(2);
         newTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
-        newTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
+        newTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(spinnerMapFinYear.get(traders.get(position).getLicenceValidity())));
 
        /* if(traders.get(position).getPaymentStatus().equals("Paid")){
             newTradeDetailsViewBinding.isPaid.setChecked(true);
@@ -575,7 +588,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     newTradeDetailsViewBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
                     selectedStreetId="0";
                     selectedStreetName=streetName;
-                    newTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
+                    //newTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
 
                 }
             } catch (Exception exp) {
