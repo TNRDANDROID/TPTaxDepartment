@@ -27,6 +27,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String SAVE_NEW_TRADER_DETAILS="save_new_trader_details";
     public static final String TRADE_CODE_LIST="trade_code_list";
     public static final String FIELD_VISIT_STATUS="field_visit_status";
+    public static final String SERVICE_LIST_FIELD_VISIT_TYPES="service_list_field_visit_types";
 
 
     private Context context;
@@ -184,6 +185,12 @@ public class DBHelper extends SQLiteOpenHelper {
                 "field_visit_status_id INTEGER," +
                 "field_visit_status TEXT)");
 
+        db.execSQL("CREATE TABLE " + SERVICE_LIST_FIELD_VISIT_TYPES + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "service_list_field_visit_taxtype_id INTEGER," +
+                "service_list_field_visit_service_id INTEGER," +
+                "service_list_field_visit_types_desc TEXT)");
+
     }
 
     @Override
@@ -204,6 +211,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL("DROP TABLE IF EXISTS " + SAVE_NEW_TRADER_DETAILS);
             db.execSQL("DROP TABLE IF EXISTS " + TRADE_CODE_LIST);
             db.execSQL("DROP TABLE IF EXISTS " + FIELD_VISIT_STATUS);
+            db.execSQL("DROP TABLE IF EXISTS " + SERVICE_LIST_FIELD_VISIT_TYPES);
 
             onCreate(db);
         }

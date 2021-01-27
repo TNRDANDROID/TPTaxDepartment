@@ -43,8 +43,38 @@ public class CommonModel {
     public String FIELD_VISIT_STATUS_ID;
     public String FIELD_VISIT_STATUS;
 
+
+    ///ServiceListFieldVisitTypes
+    public String service_list_field_visit_taxtype_id;
+    public String service_list_field_visit_service_id;
+    public String service_list_field_visit_types_desc;
+
     /////............../////
 
+
+    public String getService_list_field_visit_taxtype_id() {
+        return service_list_field_visit_taxtype_id;
+    }
+
+    public void setService_list_field_visit_taxtype_id(String service_list_field_visit_taxtype_id) {
+        this.service_list_field_visit_taxtype_id = service_list_field_visit_taxtype_id;
+    }
+
+    public String getService_list_field_visit_service_id() {
+        return service_list_field_visit_service_id;
+    }
+
+    public void setService_list_field_visit_service_id(String service_list_field_visit_service_id) {
+        this.service_list_field_visit_service_id = service_list_field_visit_service_id;
+    }
+
+    public String getService_list_field_visit_types_desc() {
+        return service_list_field_visit_types_desc;
+    }
+
+    public void setService_list_field_visit_types_desc(String service_list_field_visit_types_desc) {
+        this.service_list_field_visit_types_desc = service_list_field_visit_types_desc;
+    }
 
     public String getFIELD_VISIT_STATUS_ID() {
         return FIELD_VISIT_STATUS_ID;

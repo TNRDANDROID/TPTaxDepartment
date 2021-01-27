@@ -131,6 +131,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         getLicenceTypeList();
         getGenderList();
         getTradeList();
+        getFieldVisitStatus();
+        getServiceFieldVisitTypes();
        /* if(getTaxTypeCount()<= 0){
             getTaxTypeList();
         }
@@ -266,6 +268,14 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             e.printStackTrace();
         }
     }
+    public void getServiceFieldVisitTypes() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("ServiceFieldVisitTypes", Api.Method.POST, UrlGenerator.prodOpenUrl(), serviceListFieldVisitTypesJsonParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void getWardList() {
         try {
             new ApiService(this).makeJSONObjectRequest("WardList", Api.Method.POST, UrlGenerator.prodOpenUrl(), wardJsonParam(), "not cache", this);
@@ -297,6 +307,12 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public JSONObject fieldVisitStatusJsonParams() throws JSONException {
         JSONObject data = new JSONObject();
         data.put(AppConstant.KEY_SERVICE_ID,"OS_FieldVisitStatus");
+        Log.d("params", "" + data);
+        return data;
+    }
+    public JSONObject serviceListFieldVisitTypesJsonParams() throws JSONException {
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"OS_ServiceListFieldVisit");
         Log.d("params", "" + data);
         return data;
     }
@@ -633,6 +649,31 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 }
                 Log.d("Gender", "" + responseObj);
             }
+            if ("ServiceFieldVisitTypes".equals(urlType) && responseObj != null) {
+                status = responseObj.getString(AppConstant.KEY_STATUS);
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        db.execSQL("delete from "+ DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES);
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String service_list_field_visit_taxtype_id = jsonobject.getString("taxtypeid");
+                            String service_list_field_visit_service_id = jsonobject.getString("serviceid");
+                            String service_list_field_visit_types_desc=jsonobject.getString("servicedesc");
+
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put("service_list_field_visit_taxtype_id", service_list_field_visit_taxtype_id);
+                            fieldValue.put("service_list_field_visit_service_id", service_list_field_visit_service_id);
+                            fieldValue.put("service_list_field_visit_types_desc", service_list_field_visit_types_desc);
+
+
+                            db.insert(DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES, null, fieldValue);
+                        }
+                    }
+                }
+                Log.d("ServiceFieldVisitTypes", "" + responseObj);
+            }
+
 
 
         } catch (JSONException e) {

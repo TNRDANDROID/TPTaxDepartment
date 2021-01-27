@@ -160,7 +160,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:src="@drawable/no_data_icon"
-                            android:id="@+id/no_data_img"></ImageView>
+                            android:id="@+id/no_data_img"
+                            android:scaleType="center"></ImageView>
 
                         <TextView
                             android:visibility="gone"

@@ -115,6 +115,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     String selectedFieldVisitStatusId;
     String selectedFieldVisitStatusName="";
 
+    //ServiceListFieldTypes
+    //FieldVisitStatus;
+    ArrayList<CommonModel> serviceFieldVisitTypes ;
+    HashMap<Integer,String> spinnerMapServiceFieldVisitTypes;
+    String selectedServiceFieldVisitTypesId;
+    String selectedServiceFieldVisitTypesName="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,14 +140,31 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
         getFieldVisitStatusList();
 
+
+
         fieldVisitBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String TaxTypeName = parent.getSelectedItem().toString();
+                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                selectedTaxTypeId = TaxTypeId;
+                selectedTaxTypeName = TaxTypeName;
+
+                getServiceListFieldVisitTypes(selectedTaxTypeId);
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
+
+        fieldVisitBinding.serviceFiledType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String TaxTypeId = parent.getSelectedItem().toString();
-                String TaxTypeName = spinnerMapTaxType.get(parent.getSelectedItemPosition());
-                selectedTaxTypeId=TaxTypeId;
-                selectedTaxTypeName=TaxTypeName;
+                String serviceListFieldTaxTypeId = parent.getSelectedItem().toString();
+                String serviceListFieldDesc = spinnerMapServiceFieldVisitTypes.get(parent.getSelectedItemPosition());
+                selectedServiceFieldVisitTypesId=serviceListFieldTaxTypeId;
+                selectedServiceFieldVisitTypesName=serviceListFieldDesc;
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -944,6 +968,62 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
 
     }
+    public void getServiceListFieldVisitTypes(String id) {
+        serviceFieldVisitTypes = new ArrayList<CommonModel>();
+        String select_query= "SELECT * FROM " + DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setService_list_field_visit_taxtype_id((cursor.getString(cursor.getColumnIndexOrThrow("service_list_field_visit_taxtype_id"))));
+                    commonModel.setService_list_field_visit_service_id(cursor.getString(cursor.getColumnIndexOrThrow("service_list_field_visit_service_id")));
+                    commonModel.setService_list_field_visit_types_desc(cursor.getString(cursor.getColumnIndexOrThrow("service_list_field_visit_types_desc")));
+
+
+                    serviceFieldVisitTypes.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        //Collections.sort(fieldVisitStatus, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
+       ArrayList<CommonModel> selectedService = new ArrayList<CommonModel>();
+        for (int i = 0; i < serviceFieldVisitTypes.size(); i++) {
+            if(serviceFieldVisitTypes.get(i).getService_list_field_visit_taxtype_id().equals(id)){
+                selectedService.add(serviceFieldVisitTypes.get(i));
+            }else { }
+        }
+        if(selectedService != null && selectedService.size() >0) {
+
+            spinnerMapServiceFieldVisitTypes = new HashMap<Integer, String>();
+            spinnerMapServiceFieldVisitTypes.put(0, null);
+            final String[] items = new String[selectedService.size() + 1];
+            items[0] = "Select ServiceListFieldVisit";
+            for (int i = 0; i < selectedService.size(); i++) {
+                spinnerMapServiceFieldVisitTypes.put(i + 1, selectedService.get(i).getService_list_field_visit_service_id());
+                String Class = selectedService.get(i).getService_list_field_visit_types_desc();
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    fieldVisitBinding.serviceFiledType.setAdapter(RuralUrbanArray);
+                    fieldVisitBinding.serviceFiledType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedServiceFieldVisitTypesId="0";
+                    selectedServiceFieldVisitTypesName="";
+                    fieldVisitBinding.serviceFiledType.setSelection(1);
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+
+    }
+
 
 
 }

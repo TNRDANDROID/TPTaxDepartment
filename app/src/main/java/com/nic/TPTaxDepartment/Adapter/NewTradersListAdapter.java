@@ -63,6 +63,9 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
     public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
+            if(traders.size()<0){
+                ((PendingScreen)activity).noDataLayout();
+            }
             holder.name.setText(traders.get(position).traderName);
             holder.code.setText(traders.get(position).traderCode);
             holder.mobileValue.setText(traders.get(position).mobileno);

@@ -368,7 +368,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     Utils.showAlert(this, jsonObject.getString("MESSAGE"));
                     Utils.showAlert(this, jsonObject.getString("MESSAGE_TA"));
                     db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
-                    newTradersListAdapter.notifyDataSetChanged();
+                    loadNewTraderList();
                     /*Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
@@ -398,7 +398,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     @Override
     protected void onResume() {
         super.onResume();
-
+        loadNewTraderList();
     }
     public void SaveLicenseTraders(int pos) {
         recyclerClickedPosition=pos;
@@ -485,6 +485,12 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     protected void onRestart() {
         super.onRestart();
         newTradersListAdapter.notifyDataSetChanged();
+    }
+
+    public void noDataLayout(){
+        no_data_fond_layout.setVisibility(View.VISIBLE);
+        fieldVisitRecycler.setVisibility(View.GONE);
+        newTraderRecycler.setVisibility(View.GONE);
     }
 
 }
