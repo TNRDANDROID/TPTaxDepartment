@@ -569,7 +569,7 @@
                         android:layout_margin="@dimen/fab_margin"
                         app:backgroundTint="@color/colorPrimary"
                         android:onClick="@{()-> activity.openCameraScreen()}"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:srcCompat="@drawable/camera_icon" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -601,6 +601,7 @@
                         android:layout_marginBottom="@dimen/_40sdp"
                         android:background="@drawable/click_here"
                         android:clickable="true"
+                        android:visibility="gone"
                         android:foreground="?attr/selectableItemBackground"
                         android:text="Submit"
                         android:textAllCaps="false"

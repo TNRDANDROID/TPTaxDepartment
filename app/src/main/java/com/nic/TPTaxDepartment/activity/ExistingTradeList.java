@@ -203,9 +203,14 @@ public class ExistingTradeList extends AppCompatActivity {
 */
 
         if(tradersList != null && tradersList.size() >0) {
+            existingTradeList.tradeRecycler.setVisibility(View.VISIBLE);
+            existingTradeList.noDataFoundLayout.setVisibility(View.GONE);
             TraderListAdapter adapter = new TraderListAdapter(ExistingTradeList.this,tradersList);
             adapter.notifyDataSetChanged();
             existingTradeList.tradeRecycler.setAdapter(adapter);
+        }else {
+            existingTradeList.tradeRecycler.setVisibility(View.GONE);
+            existingTradeList.noDataFoundLayout.setVisibility(View.VISIBLE);
         }
     }
     public void showTraderDetails( int position , ArrayList<TPtaxModel> tradersList) {

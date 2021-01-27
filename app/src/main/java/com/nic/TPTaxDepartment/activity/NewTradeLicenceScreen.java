@@ -257,6 +257,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
                     System.out.println("selectedWardId >> "+selectedWardId);
                     if (!flag ) {
+                        wardFlag=false;
                         LoadStreetSpinner(selectedWardId, "");
                     }else {
                         wardFlag=true;
@@ -292,6 +293,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     private void LoadPendingTraderDetails() {
+        wardFlag=false;
         int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
         String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
@@ -792,10 +794,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                                                     if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
                                                                                         if (getSaveTradeImageTable()==1) {
                                                                                             if (Utils.isOnline()) {
-//                                                                                                setResult(RESULT_OK,new Intent().putExtra("key","ok"));
-                                                                                                savenewTraderINLocal();
-
-//                                                                                                SaveLicenseTraders();
+//                                                                                                savenewTraderINLocal();
+                                                                                                  SaveLicenseTraders();
                                                                                             } else {
                                                                                                 savenewTraderINLocal();
                                                                                                 Utils.showAlert(this, getResources().getString(R.string.no_internet));
@@ -886,7 +886,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void openCameraScreen() {
-        if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
+        if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
+                && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode) && !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
             Intent intent = new Intent(this, CameraScreen.class);
             intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItemPosition());
             intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
@@ -895,7 +896,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
         else {
-            Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
+            Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
         }
     }
 
@@ -909,7 +910,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void viewImageScreen() {
         if(!flag){
-            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
+            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
+                    !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
+                    !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
 
                     Intent intent = new Intent(this, FullImageActivity.class);
@@ -923,10 +926,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
             else {
-                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
+                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
             }
         }else {
-            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
+            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
+                    !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
+                    !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
                     Intent intent = new Intent(this, FullImageActivity.class);
                     intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItemPosition());
@@ -939,7 +944,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
             else {
-                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code");
+                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
             }
         }
 

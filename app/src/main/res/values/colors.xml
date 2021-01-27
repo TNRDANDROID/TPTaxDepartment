@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#6CBCE2</color>
     <color name="colorAccent">#D81B60</color>
 
+    <color name="start">#0189ff</color>
+    <color name="end">#01f1fa</color>
     <color name="address">#2F7092</color>
     <color name="followers">#0D5D98</color>
     <color name="headings">#3797CF</color>

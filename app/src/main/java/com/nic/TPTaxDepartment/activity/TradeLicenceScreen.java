@@ -41,11 +41,11 @@ public class TradeLicenceScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                tradeLicenceScreenBinding.newcard.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
-                tradeLicenceScreenBinding.existCard.animate().translationX(0).alpha(1).setDuration(1500).setStartDelay(600).start();
+                tradeLicenceScreenBinding.newcard.animate().translationX(0).alpha(1).setDuration(1000).setStartDelay(200).start();
+                tradeLicenceScreenBinding.existCard.animate().translationX(0).alpha(1).setDuration(1100).setStartDelay(400).start();
 
             }
-        }, 800);
+        }, 300);
 
 
         Animation anim = new ScaleAnimation(
@@ -54,7 +54,7 @@ public class TradeLicenceScreen extends AppCompatActivity {
                 Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
                 Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
         anim.setFillAfter(true); // Needed to keep the result of the animation
-        anim.setDuration(1000);
+        anim.setDuration(500);
         anim.setRepeatMode(Animation.INFINITE);
         anim.setRepeatCount(Animation.INFINITE);
 

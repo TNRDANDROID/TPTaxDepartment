@@ -69,9 +69,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         prefManager = new PrefManager(this);
         date = dailyCollectionBinding.date;
 
-        dailyCollectionBinding.date.setTranslationX(800);
+        /*dailyCollectionBinding.date.setTranslationX(800);
         dailyCollectionBinding.dateLayout.setTranslationX(800);
-        dailyCollectionBinding.recyLayout.setTranslationX(800);
+        dailyCollectionBinding.recyLayout.setTranslationX(800);*/
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         dailyCollectionBinding.dailyCollectionRecycler.setLayoutManager(mLayoutManager);
         dailyCollectionBinding.dailyCollectionRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -79,7 +79,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         dailyCollectionBinding.dailyCollectionRecycler.setNestedScrollingEnabled(false);
         dailyCollectionBinding.dailyCollectionRecycler.setFocusable(false);
 
-        dailyCollectionBinding.date.setAlpha(0);
+       /* dailyCollectionBinding.date.setAlpha(0);
         dailyCollectionBinding.dateLayout.setAlpha(0);
         dailyCollectionBinding.recyLayout.setAlpha(0);
 
@@ -102,7 +102,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         anim.setFillAfter(true); // Needed to keep the result of the animation
         anim.setDuration(1000);
         anim.setRepeatMode(Animation.INFINITE);
-        anim.setRepeatCount(Animation.INFINITE);
+        anim.setRepeatCount(Animation.INFINITE);*/
 
 
 
@@ -196,6 +196,11 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
              DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,collectionList);
              adapter.notifyDataSetChanged();
              dailyCollectionBinding.dailyCollectionRecycler.setAdapter(adapter);
+             dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.VISIBLE);
+             dailyCollectionBinding.noDataFound.setVisibility(View.GONE);
+         }else {
+             dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
+             dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
          }
 
 
@@ -304,7 +309,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                     prefManager.setDailyCollectionList(jsonarray.toString());
                     LoadDailyCollectionList();
                 } else {
-                    Utils.showAlert(this,"NO RECORD FOUND!");
+                    dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
+                    dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
                 }
 //                String authKey = responseDecryptedSchemeKey.toString();
 //                int maxLogSize = 4000;

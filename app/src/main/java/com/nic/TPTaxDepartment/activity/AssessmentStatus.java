@@ -186,6 +186,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
         Log.d("AssessmentStatusReq", "" + authKey);
+        Log.d("AssessmentStatusReq", "" + dataSet);
         return dataSet;
     }
 
@@ -208,6 +209,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
             if ("AssessmentStatus".equals(urlType) && responseObj != null) {
                 String key = responseObj.getString(AppConstant.ENCODE_DATA);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
+                Log.d("AssessmentStatus1", "" + responseDecryptedSchemeKey);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
                 Log.d("AssessmentStatus", "" + jsonObject);
                 String status = jsonObject.getString(AppConstant.KEY_STATUS);

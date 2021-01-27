@@ -245,6 +245,17 @@
                             android:padding="@dimen/margin_left_20dp"
                             android:visibility="visible"
                             android:scrollbars="vertical"/>
+                        <TextView
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="No Data Found"
+                            android:id="@+id/no_data_found"
+                            android:layout_marginTop="130dp"
+                            android:textSize="@dimen/_18sdp"
+                            android:layout_below="@+id/no_data_img">
+
+                        </TextView>
 
 
                     </RelativeLayout>

@@ -51,9 +51,14 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     HashMap<Integer,String> spinnerMapWard;
     String selectedWardId="";
     String selectedWardName="";
-    String selectedStreetId;
+    String selectedStreetId="";
     String selectedStreetName="";
     ArrayList<TPtaxModel> tradersList;
+    String selectedTradeCode="";
+    String selectedTrdeCodeDetailsID="";
+    HashMap<Integer,String> spinnerTradeCode;
+    ArrayList<CommonModel> loadTradeCodeList;
+    ArrayAdapter<String> tradeCodeSpArray;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +70,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         prefManager = new PrefManager(this);
         getTradersList();
         LoadWardSpinner();
-
+        LoadTradeCodeListSpinner();
         existingTradeLicenceBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
@@ -78,11 +83,11 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 if(selectedWardId != null ){
                     System.out.println("selectedWardId >> "+selectedWardId);
                     LoadStreetSpinner(selectedWardId);
-                    existingTradeLicenceBinding.tradersCode.setEnabled(false);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(false);
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);
                 }else {
                     existingTradeLicenceBinding.streetsName.setAdapter(null);
-                    existingTradeLicenceBinding.tradersCode.setEnabled(true);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(true);
                     existingTradeLicenceBinding.mobileNo.setEnabled(true);
                 }
             }
@@ -104,29 +109,6 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             {
             }
         });
-        existingTradeLicenceBinding.tradersCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if(existingTradeLicenceBinding.tradersCode.length() > 0){
-                    existingTradeLicenceBinding.mobileNo.setEnabled(false);
-                    existingTradeLicenceBinding.wardNo.setEnabled(false);
-                }else {
-                    existingTradeLicenceBinding.mobileNo.setEnabled(true);
-                    existingTradeLicenceBinding.wardNo.setEnabled(true);
-                }
-
-            }
-        });
         existingTradeLicenceBinding.mobileNo.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -141,17 +123,94 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             @Override
             public void afterTextChanged(Editable editable) {
                 if(existingTradeLicenceBinding.mobileNo.length() > 0){
-                    existingTradeLicenceBinding.tradersCode.setEnabled(false);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(false);
                     existingTradeLicenceBinding.wardNo.setEnabled(false);
                 }else {
-                    existingTradeLicenceBinding.tradersCode.setEnabled(true);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(true);
                     existingTradeLicenceBinding.wardNo.setEnabled(true);
                 }
 
             }
         });
+        existingTradeLicenceBinding.tradeCodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                String tradeCode = parent.getSelectedItem().toString();
+                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+                selectedTrdeCodeDetailsID=tradeID;
+                selectedTradeCode=tradeCode;
+                if(selectedTrdeCodeDetailsID != null){
+                    existingTradeLicenceBinding.mobileNo.setEnabled(false);
+                    existingTradeLicenceBinding.wardNo.setEnabled(false);
+                }else {
+                    selectedTrdeCodeDetailsID="0";
+                    selectedTradeCode="";
+                    existingTradeLicenceBinding.mobileNo.setEnabled(true);
+                    existingTradeLicenceBinding.wardNo.setEnabled(true);
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+            }
+        });
 
     }
+
+    private void LoadTradeCodeListSpinner(){
+        loadTradeCodeList = new ArrayList<>();
+        String select_query= "SELECT *FROM " + DBHelper.TRADE_CODE_LIST+ " WHERE lbcode="+"200046"/*prefManager.getTpCode()*/;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setTRADE_DETAILS_ID(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TRADE_DETAILS_ID))));
+                    commonModel.setTRADE_RATE(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TRADE_RATE))));
+                    commonModel.setLB_TRADE_CODE(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.LB_TRADE_CODE))));
+                    commonModel.setSTATECODE(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.STATECODE)));
+                    commonModel.setDcode(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.DISTRICT_CODE))));
+                    commonModel.setLICENSE_TYPE_ID(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.LICENSE_TYPE_ID))));
+                    commonModel.setFINYEAR(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FINYEAR)));
+                    commonModel.setDESCRIPTION_EN(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.DESCRIPTION_EN)));
+                    commonModel.setDESCRIPTION_TA(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.DESCRIPTION_TA)));
+                    commonModel.setLbcode(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.LB_CODE)));
+                    commonModel.setDATE_FIELD(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.DATE_FIELD)));
+
+                    loadTradeCodeList.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+
+
+        if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
+
+            spinnerTradeCode = new HashMap<Integer, String>();
+            spinnerTradeCode.put(0, null);
+            final String[] items = new String[loadTradeCodeList.size() + 1];
+            items[0] = "Select TradeCode";
+            for (int i = 0; i < loadTradeCodeList.size(); i++) {
+                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
+                String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    tradeCodeSpArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    tradeCodeSpArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setAdapter(tradeCodeSpArray);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedTrdeCodeDetailsID = "0";
+                    selectedTradeCode = "";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+    }
+
     public void getTradersList() {
         try {
             new ApiService(this).makeJSONObjectRequest("TradeLicenseTradersList", Api.Method.POST, UrlGenerator.TradersUrl(), traderlistJsonParams(), "not cache", this);
@@ -344,8 +403,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      String establishment_name_ta= jsonobject.getString("establishment_name_ta");
                      String establishment_name_en= jsonobject.getString("establishment_name_en");
                      String licence_validity= jsonobject.getString("licence_validity");
-                         if(!traderCode.equals("") && !traderCode.isEmpty() && traderCode != null){
-                             if(traderCode.equals(lb_traderscode)){
+                         if(!traderCode.equals("0") && !traderCode.isEmpty() && traderCode != null){
+                             if(traderCode.equals(tradedetails_id)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
                                  Detail.setTraderCode(lb_traderscode);
@@ -509,16 +568,19 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
     public void validateDetails() {
 
-        if (!existingTradeLicenceBinding.tradersCode.getText().toString().isEmpty() || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || (!selectedWardName.isEmpty()&& !selectedWardName.equals("Select Ward")) || ( !selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street"))) {
+        if ((!selectedTradeCode.isEmpty()&& !selectedTradeCode.equals("Select TradeCode")) || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || (!selectedWardName.isEmpty()&& !selectedWardName.equals("Select Ward")) || ( !selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street"))) {
 
                 if(!selectedWardName.isEmpty() && !selectedWardName.equals("Select Ward")){
                     if(!selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street")){
-                        existTradeLicenceSubmit(selectedWardId,selectedStreetId,existingTradeLicenceBinding.tradersCode.getText().toString(),existingTradeLicenceBinding.mobileNo.getText().toString());
+                        existTradeLicenceSubmit(selectedWardId,selectedStreetId,selectedTrdeCodeDetailsID,existingTradeLicenceBinding.mobileNo.getText().toString());
                     }else {
                         Utils.showAlert(this, "Please Select Street!");
                     }
-                }else {
-                    existTradeLicenceSubmit("0","0",existingTradeLicenceBinding.tradersCode.getText().toString(),existingTradeLicenceBinding.mobileNo.getText().toString());
+                }else if(!selectedTradeCode.isEmpty() && !selectedTradeCode.equals("Select TradeCode")){
+                    existTradeLicenceSubmit("0","0",selectedTrdeCodeDetailsID,"");
+
+                }else  {
+                    existTradeLicenceSubmit("0","0","0",existingTradeLicenceBinding.mobileNo.getText().toString());
                 }
 
         }else { Utils.showAlert(this, "Select Any One!"); }

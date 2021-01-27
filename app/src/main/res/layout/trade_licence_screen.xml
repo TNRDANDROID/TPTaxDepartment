@@ -103,10 +103,10 @@
                     <RelativeLayout xmlns:card_view="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/newcard"
                         android:layout_width="match_parent"
-                        android:layout_height="90dp"
+                        android:layout_height="50dp"
                         android:layout_margin="10dp"
                         android:onClick="@{()-> activity.newTradeSilenceScreen()}"
-                        android:background="@drawable/click_here"
+                        android:background="@drawable/round_cornered_bg"
 
 
                         android:clickable="true"
@@ -134,7 +134,9 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_margin="10dp"
+                                android:layout_margin="0dp"
+                                android:visibility="gone"
+
                                 android:background="@drawable/background" />
 
                             <TextView
@@ -142,15 +144,17 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:padding="5dp"
+                                android:padding="2dp"
                                 android:text="New"
-
-                                android:textColor="@android:color/black" />
+                                android:textSize="23sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_margin="10dp"
+                                android:layout_margin="0dp"
+                                android:visibility="gone"
                                 android:background="@drawable/background" />
 
 
@@ -175,9 +179,9 @@
                     <RelativeLayout
                         android:id="@+id/exist_card"
                         android:layout_width="match_parent"
-                        android:layout_height="90dp"
+                        android:layout_height="50dp"
                         android:layout_margin="10dp"
-                        android:background="@drawable/click_here"
+                        android:background="@drawable/round_cornered_bg"
                         android:onClick="@{()-> activity.existTradeSilenceScreen()}"
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
@@ -204,7 +208,8 @@
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_margin="10dp"
+                                android:layout_margin="0dp"
+                                android:visibility="gone"
 
                                 android:background="@drawable/background" />
 
@@ -213,15 +218,18 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
-                                android:padding="5dp"
+                                android:padding="2dp"
                                 android:text="Existing"
-
-                                android:textColor="@android:color/black" />
+                                android:textSize="23sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/white" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
-                                android:layout_margin="10dp"
+                                android:layout_margin="0dp"
+                                android:visibility="gone"
+
                                 android:background="@drawable/background" />
 
 
