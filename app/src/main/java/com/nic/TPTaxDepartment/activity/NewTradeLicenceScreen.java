@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
@@ -190,9 +191,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String gender = parent.getSelectedItem().toString();
-                String genderCode = spinnerMap.get(parent.getSelectedItemPosition());
-                selectedGenderId=genderCode;
                 selectedGender=gender;
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMap.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedGender) {
+                        selectedGenderId=entry.getKey();
+                        break;
+                    }
+                }
+
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -203,9 +212,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String finYear = parent.getSelectedItem().toString();
-                String finYearId = spinnerMapFinYear.get(parent.getSelectedItemPosition());
-                selectedFinId=finYearId;
                 selectedFinName=finYear;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedFinName) {
+                        selectedFinId=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -217,9 +234,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String tradeCode = parent.getSelectedItem().toString();
-                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
-                selectedTrdeCodeDetailsID=tradeID;
                 selectedTradeCode=tradeCode;
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedTradeCode) {
+                        selectedTrdeCodeDetailsID=entry.getKey();
+                        break;
+                    }
+                }
+
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -231,9 +256,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String LicenceTypeName = parent.getSelectedItem().toString();
-                String LicenceTpeId = spinnerMapLicenceType.get(parent.getSelectedItemPosition());
-                selectedLicenceTpeId=LicenceTpeId;
                 selectedLicenceTypeName=LicenceTypeName;
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapLicenceType.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedLicenceTypeName) {
+                        selectedLicenceTpeId=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -244,9 +276,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
                 String ward = parent.getSelectedItem().toString();
-                String wardId = spinnerMapWard.get(parent.getSelectedItemPosition());
-                selectedWardId=wardId;
                 selectedWardName=ward;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedWardName) {
+                        selectedWardId=entry.getKey();
+                        break;
+                    }
+                }
 
                 if(selectedWardId != null){
                     if(wardFlag){
@@ -280,9 +320,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String street = parent.getSelectedItem().toString();
-                String streetCode = spinnerMapStreets.get(parent.getSelectedItemPosition());
-                selectedStreetId=streetCode;
                 selectedStreetName=street;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedStreetName) {
+                        selectedStreetId=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {

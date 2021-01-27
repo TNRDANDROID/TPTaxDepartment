@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExistTradeViewClass extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener{
 
@@ -83,12 +84,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     public static DBHelper dbHelper;
     private List<TPtaxModel> LicenceType = new ArrayList<>();
     private List<TPtaxModel> LicenceValidity = new ArrayList<>();
-    HashMap<Integer,String> spinnerMap;
-    HashMap<Integer,String> spinnerMapStreets;
-    HashMap<Integer,String> spinnerMapWard;
-    HashMap<Integer,String> spinnerMapFinYear;
-    HashMap<Integer,String> spinnerMapLicenceType;
-    HashMap<Integer,String> spinnerTradeCode;
+    HashMap<String,String> spinnerMap;
+    HashMap<String,String> spinnerMapStreets;
+    HashMap<String,String> spinnerMapWard;
+    HashMap<String,String> spinnerMapFinYear;
+    HashMap<String,String> spinnerMapLicenceType;
+    HashMap<String,String> spinnerTradeCode;
     String selectedGenderId;
     String selectedGender="";
     String selectedWardId;
@@ -192,9 +193,17 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String gender = parent.getSelectedItem().toString();
-                String genderCode = spinnerMap.get(parent.getSelectedItemPosition());
-                selectedGenderId=genderCode;
                 selectedGender=gender;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMap.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedGender) {
+                        selectedGenderId=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -205,9 +214,16 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String finYear = parent.getSelectedItem().toString();
-                String finYearId = spinnerMapFinYear.get(parent.getSelectedItemPosition());
-                selectedFinId=finYearId;
                 selectedFinName=finYear;
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedFinName) {
+                        selectedFinId=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -219,9 +235,17 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String tradeCode = parent.getSelectedItem().toString();
-                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
-                selectedTrdeCodeDetailsID=tradeID;
                 selectedTradeCode=tradeCode;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedTradeCode) {
+                        selectedTrdeCodeDetailsID=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -233,9 +257,17 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String LicenceTypeName = parent.getSelectedItem().toString();
-                String LicenceTpeId = spinnerMapLicenceType.get(parent.getSelectedItemPosition());
-                selectedLicenceTpeId=LicenceTpeId;
                 selectedLicenceTypeName=LicenceTypeName;
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapLicenceType.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedLicenceTypeName) {
+                        selectedLicenceTpeId=entry.getKey();
+                        break;
+                    }
+                }
+
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -246,9 +278,17 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
                 String ward = parent.getSelectedItem().toString();
-                String wardId = spinnerMapWard.get(parent.getSelectedItemPosition());
-                selectedWardId=wardId;
                 selectedWardName=ward;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedWardName) {
+                        selectedWardId=entry.getKey();
+                        break;
+                    }
+                }
 
                 if(selectedWardId != null){
                     if(wardFlag){
@@ -282,9 +322,17 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String street = parent.getSelectedItem().toString();
-                String streetCode = spinnerMapStreets.get(parent.getSelectedItemPosition());
-                selectedStreetId=streetCode;
                 selectedStreetName=street;
+
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == selectedStreetName) {
+                        selectedStreetId=entry.getKey();
+                        break;
+                    }
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -299,14 +347,14 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
         String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
-        LoadStreetSpinner(traders.get(position).getWardId(),traders.get(position).getStreetname());
-        newTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
+        LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
+        newTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(spinnerTradeCode.get(traders.get(position).getTradecode())));
         newTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
         newTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
         newTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         newTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
         newTradeDetailsViewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
-        newTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(traders.get(position).getApgender()));
+        newTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
         newTradeDetailsViewBinding.age.setText(traders.get(position).getApage());
         newTradeDetailsViewBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
         newTradeDetailsViewBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
@@ -314,9 +362,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         newTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
         newTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
 
-        newTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(traders.get(position).getWardname()));
+        //newTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
 
-//        newTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(traders.get(position).getStreetname()));
+//       newTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
 //        newTradeDetailsViewBinding.streetsName.setSelection(2);
         newTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
         newTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
@@ -449,12 +497,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(genders != null && genders.size() >0) {
 
-            spinnerMap = new HashMap<Integer, String>();
-            spinnerMap.put(0, null);
+            spinnerMap = new HashMap<String, String>();
+            spinnerMap.put(null, null);
             final String[] items = new String[genders.size() + 1];
             items[0] = "Select Gender";
             for (int i = 0; i < genders.size(); i++) {
-                spinnerMap.put(i + 1, genders.get(i).gender_code);
+                spinnerMap.put( genders.get(i).gender_code, genders.get(i).gender_name_en);
                 String Class = genders.get(i).gender_name_en;
                 items[i + 1] = Class;
             }
@@ -508,12 +556,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(selectedStreets != null && selectedStreets.size() >0) {
 
-            spinnerMapStreets = new HashMap<Integer, String>();
-            spinnerMapStreets.put(0, null);
+            spinnerMapStreets = new HashMap<String, String>();
+            spinnerMapStreets.put(null, null);
             final String[] items = new String[selectedStreets.size() + 1];
             items[0] = "Select Street";
             for (int i = 0; i < selectedStreets.size(); i++) {
-                spinnerMapStreets.put(i + 1, selectedStreets.get(i).streetid);
+                spinnerMapStreets.put(selectedStreets.get(i).streetid, selectedStreets.get(i).street_name_ta);
                 String Class = selectedStreets.get(i).street_name_ta;
                 items[i + 1] = Class;
             }
@@ -561,12 +609,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(wards != null && wards.size() >0) {
 
-            spinnerMapWard = new HashMap<Integer, String>();
-            spinnerMapWard.put(0, null);
+            spinnerMapWard = new HashMap<String, String>();
+            spinnerMapWard.put(null, null);
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(i + 1, wards.get(i).ward_id);
+                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_name_ta);
                 String Class = wards.get(i).ward_name_ta;
                 items[i + 1] = Class;
             }
@@ -611,12 +659,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(finYear != null && finYear.size() >0) {
 
-            spinnerMapFinYear = new HashMap<Integer, String>();
-            spinnerMapFinYear.put(0, null);
+            spinnerMapFinYear = new HashMap<String, String>();
+            spinnerMapFinYear.put(null, null);
             final String[] items = new String[finYear.size() + 1];
             items[0] = "Select Licence Validity";
             for (int i = 0; i < finYear.size(); i++) {
-                spinnerMapFinYear.put(i + 1, finYear.get(i).FIN_YEAR_ID);
+                spinnerMapFinYear.put(finYear.get(i).FIN_YEAR_ID, finYear.get(i).FIN_YEAR);
                 String Class = finYear.get(i).FIN_YEAR;
                 items[i + 1] = Class;
             }
@@ -658,12 +706,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(traderLicenseTypeList != null && traderLicenseTypeList.size() >0) {
 
-            spinnerMapLicenceType = new HashMap<Integer, String>();
-            spinnerMapLicenceType.put(0, null);
+            spinnerMapLicenceType = new HashMap<String, String>();
+            spinnerMapLicenceType.put(null, null);
             final String[] items = new String[traderLicenseTypeList.size() + 1];
             items[0] = "Select Licence Type";
             for (int i = 0; i < traderLicenseTypeList.size(); i++) {
-                spinnerMapLicenceType.put(i + 1, traderLicenseTypeList.get(i).traders_license_type_id);
+                spinnerMapLicenceType.put(traderLicenseTypeList.get(i).traders_license_type_id, traderLicenseTypeList.get(i).traders_license_type_name);
                 String Class = traderLicenseTypeList.get(i).traders_license_type_name;
                 items[i + 1] = Class;
             }
@@ -714,12 +762,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
 
-            spinnerTradeCode = new HashMap<Integer, String>();
-            spinnerTradeCode.put(0, null);
+            spinnerTradeCode = new HashMap<String, String>();
+            spinnerTradeCode.put(null, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
+                spinnerTradeCode.put(loadTradeCodeList.get(i).getTRADE_DETAILS_ID(), loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
