@@ -39,6 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class  AssessmentStatus extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
 
@@ -47,7 +48,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     private List<TPtaxModel> Block = new ArrayList<>();
 
     ArrayList<CommonModel> taxType ;
-    HashMap<Integer,String> spinnerMapTaxType;
+    HashMap<String,String> spinnerMapTaxType;
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
 
@@ -97,7 +98,16 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String TaxTypeName = parent.getSelectedItem().toString();
-                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                String TaxTypeId ="";
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapTaxType.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == TaxTypeName) {
+                        TaxTypeId=entry.getKey();
+                        break;
+                    }
+                }
                 selectedTaxTypeId=TaxTypeId;
                 selectedTaxTypeName=TaxTypeName;
             }
@@ -144,12 +154,12 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
         if(taxType != null && taxType.size() >0) {
 
-            spinnerMapTaxType = new HashMap<Integer, String>();
-            spinnerMapTaxType.put(0, null);
+            spinnerMapTaxType = new HashMap<String, String>();
+            spinnerMapTaxType.put(null, null);
             final String[] items = new String[taxType.size() + 1];
             items[0] = "Select TaxType";
             for (int i = 0; i < taxType.size(); i++) {
-                spinnerMapTaxType.put(i + 1, taxType.get(i).taxtypeid);
+                spinnerMapTaxType.put(taxType.get(i).taxtypeid, taxType.get(i).taxtypedesc_en);
                 String Class = taxType.get(i).taxtypedesc_en;
                 items[i + 1] = Class;
             }

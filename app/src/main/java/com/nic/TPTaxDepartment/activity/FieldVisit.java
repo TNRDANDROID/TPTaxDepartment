@@ -73,6 +73,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
@@ -105,20 +106,20 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public static SQLiteDatabase db;
     private ScrollView scrollView;
     ArrayList<CommonModel> taxType ;
-    HashMap<Integer,String> spinnerMapTaxType;
+    HashMap<String,String> spinnerMapTaxType;
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
 
     //FieldVisitStatus;
     ArrayList<CommonModel> fieldVisitStatus ;
-    HashMap<Integer,String> spinnerMapFieldVisitType;
+    HashMap<String,String> spinnerMapFieldVisitType;
     String selectedFieldVisitStatusId;
     String selectedFieldVisitStatusName="";
 
     //ServiceListFieldTypes
     //FieldVisitStatus;
     ArrayList<CommonModel> serviceFieldVisitTypes ;
-    HashMap<Integer,String> spinnerMapServiceFieldVisitTypes;
+    HashMap<String,String> spinnerMapServiceFieldVisitTypes;
     String selectedServiceFieldVisitTypesId;
     String selectedServiceFieldVisitTypesName="";
 
@@ -161,8 +162,18 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String serviceListFieldTaxTypeId = parent.getSelectedItem().toString();
-                String serviceListFieldDesc = spinnerMapServiceFieldVisitTypes.get(parent.getSelectedItemPosition());
+                String serviceListFieldDesc = parent.getSelectedItem().toString();
+                String serviceListFieldTaxTypeId = "";
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapServiceFieldVisitTypes.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == serviceListFieldDesc) {
+                        serviceListFieldTaxTypeId=entry.getKey();
+                        break;
+                    }
+                }
+
                 selectedServiceFieldVisitTypesId=serviceListFieldTaxTypeId;
                 selectedServiceFieldVisitTypesName=serviceListFieldDesc;
             }
@@ -175,8 +186,17 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String Id = parent.getSelectedItem().toString();
-                String Name = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                String Name = parent.getSelectedItem().toString();
+                String Id = "";
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapTaxType.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == Name) {
+                        Id=entry.getKey();
+                        break;
+                    }
+                }
                 selectedFieldVisitStatusId=Id;
                 selectedFieldVisitStatusName=Name;
 
@@ -894,12 +914,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
         if(taxType != null && taxType.size() >0) {
 
-            spinnerMapTaxType = new HashMap<Integer, String>();
-            spinnerMapTaxType.put(0, null);
+            spinnerMapTaxType = new HashMap<String, String>();
+            spinnerMapTaxType.put(null, null);
             final String[] items = new String[taxType.size() + 1];
             items[0] = "Select TaxType";
             for (int i = 0; i < taxType.size(); i++) {
-                spinnerMapTaxType.put(i + 1, taxType.get(i).taxtypeid);
+                spinnerMapTaxType.put( taxType.get(i).taxtypeid, taxType.get(i).taxtypedesc_en);
                 String Class = taxType.get(i).taxtypedesc_en;
                 items[i + 1] = Class;
             }
@@ -941,12 +961,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
         if(fieldVisitStatus != null && fieldVisitStatus.size() >0) {
 
-            spinnerMapFieldVisitType = new HashMap<Integer, String>();
-            spinnerMapFieldVisitType.put(0, null);
+            spinnerMapFieldVisitType = new HashMap<String, String>();
+            spinnerMapFieldVisitType.put(null, null);
             final String[] items = new String[fieldVisitStatus.size() + 1];
             items[0] = "Select Status";
             for (int i = 0; i < fieldVisitStatus.size(); i++) {
-                spinnerMapFieldVisitType.put(i + 1, fieldVisitStatus.get(i).getFIELD_VISIT_STATUS_ID());
+                spinnerMapFieldVisitType.put(fieldVisitStatus.get(i).getFIELD_VISIT_STATUS_ID(), fieldVisitStatus.get(i).getFIELD_VISIT_STATUS());
                 String Class = fieldVisitStatus.get(i).getFIELD_VISIT_STATUS();
                 items[i + 1] = Class;
             }
@@ -995,12 +1015,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         }
         if(selectedService != null && selectedService.size() >0) {
 
-            spinnerMapServiceFieldVisitTypes = new HashMap<Integer, String>();
-            spinnerMapServiceFieldVisitTypes.put(0, null);
+            spinnerMapServiceFieldVisitTypes = new HashMap<String, String>();
+            spinnerMapServiceFieldVisitTypes.put(null, null);
             final String[] items = new String[selectedService.size() + 1];
             items[0] = "Select ServiceListFieldVisit";
             for (int i = 0; i < selectedService.size(); i++) {
-                spinnerMapServiceFieldVisitTypes.put(i + 1, selectedService.get(i).getService_list_field_visit_service_id());
+                spinnerMapServiceFieldVisitTypes.put(selectedService.get(i).getService_list_field_visit_service_id(), selectedService.get(i).getService_list_field_visit_types_desc());
                 String Class = selectedService.get(i).getService_list_field_visit_types_desc();
                 items[i + 1] = Class;
             }

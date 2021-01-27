@@ -39,6 +39,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ExistingTradeLicence extends AppCompatActivity implements Api.ServerResponseListener{
     private ExistingTradeLicenceBinding existingTradeLicenceBinding;
@@ -47,8 +48,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     ArrayList<CommonModel> streets;
     ArrayList<CommonModel> selectedStreets;
 
-    HashMap<Integer,String> spinnerMapStreets;
-    HashMap<Integer,String> spinnerMapWard;
+    HashMap<String,String> spinnerMapStreets;
+    HashMap<String,String> spinnerMapWard;
     String selectedWardId="";
     String selectedWardName="";
     String selectedStreetId="";
@@ -56,7 +57,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     ArrayList<TPtaxModel> tradersList;
     String selectedTradeCode="";
     String selectedTrdeCodeDetailsID="";
-    HashMap<Integer,String> spinnerTradeCode;
+    HashMap<String,String> spinnerTradeCode;
     ArrayList<CommonModel> loadTradeCodeList;
     ArrayAdapter<String> tradeCodeSpArray;
 
@@ -77,11 +78,20 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             {
                 String ward = parent.getSelectedItem().toString();
                 String wardId = spinnerMapWard.get(parent.getSelectedItemPosition());
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == ward) {
+                        wardId=entry.getKey();
+                        break;
+                    }
+                }
                 selectedWardName=ward;
                 selectedWardId=wardId;
+                System.out.println("selectedWardId >> "+selectedWardId);
+                if(selectedWardId != null  && !selectedWardId.isEmpty() && !selectedWardId.equals("Select Ward")){
 
-                if(selectedWardId != null ){
-                    System.out.println("selectedWardId >> "+selectedWardId);
                     LoadStreetSpinner(selectedWardId);
                     existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(false);
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);
@@ -101,7 +111,16 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String street = parent.getSelectedItem().toString();
-                String streetCode = spinnerMapStreets.get(parent.getSelectedItemPosition());
+                String streetCode = "";
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == street) {
+                        streetCode=entry.getKey();
+                        break;
+                    }
+                }
                 selectedStreetId=streetCode;
                 selectedStreetName=street;
             }
@@ -137,10 +156,20 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String tradeCode = parent.getSelectedItem().toString();
-                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+                String tradeID ="";
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == tradeCode) {
+                        tradeID=entry.getKey();
+                        break;
+                    }
+                }
                 selectedTrdeCodeDetailsID=tradeID;
+                System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
                 selectedTradeCode=tradeCode;
-                if(selectedTrdeCodeDetailsID != null){
+                if(selectedTrdeCodeDetailsID != null && !selectedTrdeCodeDetailsID.isEmpty()){
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);
                     existingTradeLicenceBinding.wardNo.setEnabled(false);
                 }else {
@@ -185,12 +214,12 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
         if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
 
-            spinnerTradeCode = new HashMap<Integer, String>();
-            spinnerTradeCode.put(0, null);
+            spinnerTradeCode = new HashMap<String, String>();
+            spinnerTradeCode.put(null, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
+                spinnerTradeCode.put(loadTradeCodeList.get(i).getTRADE_DETAILS_ID(), loadTradeCodeList.get(i).getDESCRIPTION_EN());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
@@ -265,12 +294,12 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
         if(selectedStreets != null && selectedStreets.size() >0) {
 
-            spinnerMapStreets = new HashMap<Integer, String>();
-            spinnerMapStreets.put(0, null);
+            spinnerMapStreets = new HashMap<String, String>();
+            spinnerMapStreets.put(null, null);
             final String[] items = new String[selectedStreets.size() + 1];
             items[0] = "Select Street";
             for (int i = 0; i < selectedStreets.size(); i++) {
-                spinnerMapStreets.put(i + 1, selectedStreets.get(i).streetid);
+                spinnerMapStreets.put(selectedStreets.get(i).streetid, selectedStreets.get(i).street_name_ta);
                 String Class = selectedStreets.get(i).street_name_ta;
                 items[i + 1] = Class;
             }
@@ -317,12 +346,12 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
         if(wards != null && wards.size() >0) {
 
-            spinnerMapWard = new HashMap<Integer, String>();
-            spinnerMapWard.put(0, null);
+            spinnerMapWard = new HashMap<String, String>();
+            spinnerMapWard.put(null, null);
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(i + 1, wards.get(i).ward_id);
+                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_name_ta);
                 String Class = wards.get(i).ward_name_ta;
                 items[i + 1] = Class;
             }

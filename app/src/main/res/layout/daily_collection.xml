@@ -170,7 +170,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_left_20dp"
                             android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:layout_marginTop="?attr/actionBarSize"
+                            android:layout_marginTop="10dp"
                             android:text="Date"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_16sdp"
@@ -251,7 +251,7 @@
                             android:layout_height="match_parent"
                             android:text="No Data Found"
                             android:id="@+id/no_data_found"
-                            android:layout_marginTop="130dp"
+                            android:layout_marginTop="120dp"
                             android:textSize="@dimen/_18sdp"
                             android:layout_below="@+id/no_data_img">
 
