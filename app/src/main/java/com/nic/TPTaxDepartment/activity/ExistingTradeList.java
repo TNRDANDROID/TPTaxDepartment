@@ -215,9 +215,10 @@ public class ExistingTradeList extends AppCompatActivity {
     }
     public void showTraderDetails( int position , ArrayList<TPtaxModel> tradersList) {
 
-        Intent intent = new Intent( this, ExistingTradeSubmit.class);
+        Intent intent = new Intent( this, ExistTradeViewClass.class);
         intent.putExtra("position", position);
         intent.putExtra("tradersList", tradersList);
+        intent.putExtra("flag",true);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
 
