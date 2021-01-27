@@ -147,7 +147,17 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String TaxTypeName = parent.getSelectedItem().toString();
-                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+//                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
+                String TaxTypeId = "";
+                // iterate each entry of hashmap
+                for(Map.Entry<String, String> entry: spinnerMapTaxType.entrySet()) {
+                    // if give value is equal to value from entry
+                    // print the corresponding key
+                    if(entry.getValue() == TaxTypeName) {
+                        TaxTypeId=entry.getKey();
+                        break;
+                    }
+                }
                 selectedTaxTypeId = TaxTypeId;
                 selectedTaxTypeName = TaxTypeName;
 
@@ -189,7 +199,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 String Name = parent.getSelectedItem().toString();
                 String Id = "";
                 // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerMapTaxType.entrySet()) {
+                for(Map.Entry<String, String> entry: spinnerMapFieldVisitType.entrySet()) {
                     // if give value is equal to value from entry
                     // print the corresponding key
                     if(entry.getValue() == Name) {

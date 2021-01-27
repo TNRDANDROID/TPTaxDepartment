@@ -57,7 +57,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     ArrayList<TPtaxModel> tradersList;
     String selectedTradeCode="";
     String selectedTrdeCodeDetailsID="";
-    HashMap<String,String> spinnerTradeCode;
+    HashMap<Integer,String> spinnerTradeCode;
     ArrayList<CommonModel> loadTradeCodeList;
     ArrayAdapter<String> tradeCodeSpArray;
 
@@ -156,7 +156,9 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String tradeCode = parent.getSelectedItem().toString();
-                String tradeID ="";
+                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+              /*  String tradeID ="";
+                System.out.println("tradeCode>> "+ tradeCode);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
                     // if give value is equal to value from entry
@@ -165,11 +167,11 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                         tradeID=entry.getKey();
                         break;
                     }
-                }
+                }*/
                 selectedTrdeCodeDetailsID=tradeID;
                 System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
                 selectedTradeCode=tradeCode;
-                if(selectedTrdeCodeDetailsID != null && !selectedTrdeCodeDetailsID.isEmpty()){
+               /* if(selectedTrdeCodeDetailsID != null && !selectedTrdeCodeDetailsID.isEmpty()){
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);
                     existingTradeLicenceBinding.wardNo.setEnabled(false);
                 }else {
@@ -177,7 +179,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                     selectedTradeCode="";
                     existingTradeLicenceBinding.mobileNo.setEnabled(true);
                     existingTradeLicenceBinding.wardNo.setEnabled(true);
-                }
+                }*/
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -214,12 +216,12 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
         if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
 
-            spinnerTradeCode = new HashMap<String, String>();
-            spinnerTradeCode.put(null, null);
+            spinnerTradeCode = new HashMap<Integer, String>();
+            spinnerTradeCode.put(0, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(loadTradeCodeList.get(i).getTRADE_DETAILS_ID(), loadTradeCodeList.get(i).getDESCRIPTION_EN());
+                spinnerTradeCode.put(i+1, loadTradeCodeList.get(i).getLB_TRADE_CODE());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
@@ -433,10 +435,10 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      String establishment_name_en= jsonobject.getString("establishment_name_en");
                      String licence_validity= jsonobject.getString("licence_validity");
                          if(!traderCode.equals("0") && !traderCode.isEmpty() && traderCode != null){
-                             if(traderCode.equals(tradedetails_id)){
+                             if(traderCode.equals(lb_tradecode)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
-                                 Detail.setTraderCode(lb_traderscode);
+                                 Detail.setTraderCode(lb_tradecode);
                                  Detail.setTraders_typ(traders_type);
                                  Detail.setTradedesct(tradedesct);
                                  Detail.setDoorno(doorno);
@@ -464,7 +466,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setOnlineapplicationno(onlineapplicationno);
                                  Detail.setEmail(email);
                                  Detail.setLicencetypeid(licencetypeid);
-                                 Detail.setApgender(apgender);
+                                 Detail.setApgenderId(apgender);
                                  Detail.setApage(apage);
                                  Detail.setApfathername_en(apfathername_en);
                                  Detail.setLicenceno(licenceno);
@@ -473,13 +475,16 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setLbcode(lbcode);
                                  Detail.setApname_ta(apname_ta);
                                  Detail.setEstablishment_name_en(establishment_name_en);
+                                 Detail.setWardId(wardid);
+                                 Detail.setStreetId(streetid);
+
                                  tradersList.add(Detail);
                              }
                      }else if(!mobileNo.equals("") && !mobileNo.isEmpty() && mobileNo != null){
                              if(mobileNo.equals(mobileno)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
-                                 Detail.setTraderCode(lb_traderscode);
+                                 Detail.setTraderCode(lb_tradecode);
                                  Detail.setTraders_typ(traders_type);
                                  Detail.setTradedesct(tradedesct);
                                  Detail.setDoorno(doorno);
@@ -507,7 +512,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setOnlineapplicationno(onlineapplicationno);
                                  Detail.setEmail(email);
                                  Detail.setLicencetypeid(licencetypeid);
-                                 Detail.setApgender(apgender);
+                                 Detail.setApgenderId(apgender);
                                  Detail.setApage(apage);
                                  Detail.setApfathername_en(apfathername_en);
                                  Detail.setLicenceno(licenceno);
@@ -516,6 +521,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setLbcode(lbcode);
                                  Detail.setApname_ta(apname_ta);
                                  Detail.setEstablishment_name_en(establishment_name_en);
+                                 Detail.setWardId(wardid);
+                                 Detail.setStreetId(streetid);
 
                                  tradersList.add(Detail);
                              }
@@ -524,7 +531,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                             if(wardId.equals(wardid) && streetId.equals(streetid)){
                                 TPtaxModel Detail = new TPtaxModel();
                                 Detail.setTraderName(apname_en);
-                                Detail.setTraderCode(lb_traderscode);
+                                Detail.setTraderCode(lb_tradecode);
                                 Detail.setTraders_typ(traders_type);
                                 Detail.setTradedesct(tradedesct);
                                 Detail.setDoorno(doorno);
@@ -552,7 +559,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 Detail.setOnlineapplicationno(onlineapplicationno);
                                 Detail.setEmail(email);
                                 Detail.setLicencetypeid(licencetypeid);
-                                Detail.setApgender(apgender);
+                                Detail.setApgenderId(apgender);
                                 Detail.setApage(apage);
                                 Detail.setApfathername_en(apfathername_en);
                                 Detail.setLicenceno(licenceno);
@@ -561,6 +568,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 Detail.setLbcode(lbcode);
                                 Detail.setApname_ta(apname_ta);
                                 Detail.setEstablishment_name_en(establishment_name_en);
+                                Detail.setWardId(wardid);
+                                Detail.setStreetId(streetid);
 
                                 tradersList.add(Detail);
                             }
