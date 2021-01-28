@@ -393,47 +393,47 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             if(jsonarray != null && jsonarray.length() >0) {
                 for (int i = 0; i < jsonarray.length(); i++) {
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
-                     String tradersdetails_id= jsonobject.getString("tradersdetails_id");
-                     String lb_sno= jsonobject.getString("lb_sno");
-                     String tradedetails_id= jsonobject.getString("tradedetails_id");
-                     String lb_tradecode= jsonobject.getString("lb_tradecode");
-                     String description_en= jsonobject.getString("description_en");
-                     String description_ta= jsonobject.getString("description_ta");
-                     String traderate= jsonobject.getString("traderate");
-                     String lb_traderscode= jsonobject.getString("lb_traderscode");
-                     String traders_rate= jsonobject.getString("traders_rate");
-                     String traders_type= jsonobject.getString("traders_type");
-                     String date= jsonobject.getString("date");
-                     String tradersperiod= jsonobject.getString("tradersperiod");
-                     String tradedesct= jsonobject.getString("tradedesct");
-                     String tradedesce= jsonobject.getString("tradedesce");
-                     String wardid= Utils.notNullString(jsonobject.getString("wardid"));
-                     String streetid= Utils.notNullString(jsonobject.getString("streetid"));
-                     String doorno= jsonobject.getString("doorno");
-                     String licencefor= jsonobject.getString("licencefor");
-                     String fin_year= jsonobject.getString("from_fin_year");
-                     String traderstypee= jsonobject.getString("traderstypee");
-                     String demandtype= jsonobject.getString("demandtype");
-                     String onlineapplicationno= jsonobject.getString("onlineapplicationno");
-                     String mobileno= jsonobject.getString("mobileno");
-                     String email= jsonobject.getString("email");
-                     String paymentstatus=Utils.notNullString(jsonobject.getString("paymentstatus"));
-                     String licencetypeid= jsonobject.getString("licencetypeid");
-                     String traders_license_type_name= jsonobject.getString("traders_license_type_name");
-                     String apgender= jsonobject.getString("apgender");
-                     String apage= jsonobject.getString("apage");
-                     String apfathername_ta= jsonobject.getString("apfathername_ta");
-                     String apfathername_en= jsonobject.getString("apfathername_en");
-                     String licenceno= jsonobject.getString("licenceno");
-                     String paymentdate= jsonobject.getString("paymentdate");
-                     String statecode= jsonobject.getString("statecode");
-                     String dcode= jsonobject.getString("dcode");
-                     String lbcode= jsonobject.getString("lbcode");
-                     String apname_ta= jsonobject.getString("apname_ta");
-                     String apname_en= jsonobject.getString("apname_en");
-                     String establishment_name_ta= jsonobject.getString("establishment_name_ta");
-                     String establishment_name_en= jsonobject.getString("establishment_name_en");
-                     String licence_validity= jsonobject.getString("licence_validity");
+                     String tradersdetails_id= Utils.NotNullString(jsonobject.getString("tradersdetails_id"));
+                     String lb_sno= Utils.NotNullString(jsonobject.getString("lb_sno"));
+                     String tradedetails_id= Utils.NotNullString(jsonobject.getString("tradedetails_id"));
+                     String lb_tradecode= Utils.NotNullString(jsonobject.getString("lb_tradecode"));
+                     String description_en= Utils.NotNullString(jsonobject.getString("description_en"));
+                     String description_ta= Utils.NotNullString(jsonobject.getString("description_ta"));
+                     String traderate= Utils.NotNullString(jsonobject.getString("traderate"));
+                     String lb_traderscode= Utils.NotNullString(jsonobject.getString("lb_traderscode"));
+                     String traders_rate= Utils.NotNullString(jsonobject.getString("traders_rate"));
+                     String traders_type= Utils.NotNullString(jsonobject.getString("traders_type"));
+                     String date= Utils.NotNullString(jsonobject.getString("date"));
+                     String tradersperiod= Utils.NotNullString(jsonobject.getString("tradersperiod"));
+                     String tradedesct= Utils.NotNullString(jsonobject.getString("tradedesct"));
+                     String tradedesce= Utils.NotNullString(jsonobject.getString("tradedesce"));
+                     String wardid= (Utils.NotNullString(jsonobject.getString("wardid")));
+                     String streetid= (Utils.NotNullString(jsonobject.getString("streetid")));
+                     String doorno= Utils.NotNullString(jsonobject.getString("doorno"));
+                     String licencefor= Utils.NotNullString(jsonobject.getString("licencefor"));
+                     String fin_year= Utils.NotNullString(jsonobject.getString("from_fin_year"));
+                     String traderstypee= Utils.NotNullString(jsonobject.getString("traderstypee"));
+                     String demandtype= Utils.NotNullString(jsonobject.getString("demandtype"));
+                     String onlineapplicationno= Utils.NotNullString(jsonobject.getString("onlineapplicationno"));
+                     String mobileno= Utils.NotNullString(jsonobject.getString("mobileno"));
+                     String email= Utils.NotNullString(jsonobject.getString("email"));
+                     String paymentstatus=Utils.NotNullString(jsonobject.getString("paymentstatus"));
+                     String licencetypeid= Utils.NotNullString(jsonobject.getString("licencetypeid"));
+                     String traders_license_type_name= Utils.NotNullString(jsonobject.getString("traders_license_type_name"));
+                     String apgender= Utils.NotNullString(jsonobject.getString("apgender"));
+                     String apage= Utils.NotNullString(jsonobject.getString("apage"));
+                     String apfathername_ta= Utils.NotNullString(jsonobject.getString("apfathername_ta"));
+                     String apfathername_en= Utils.NotNullString(jsonobject.getString("apfathername_en"));
+                     String licenceno=Utils.NotNullString( jsonobject.getString("licenceno"));
+                     String paymentdate= Utils.NotNullString(jsonobject.getString("paymentdate"));
+                     String statecode= Utils.NotNullString(jsonobject.getString("statecode"));
+                     String dcode= Utils.NotNullString(jsonobject.getString("dcode"));
+                     String lbcode= Utils.NotNullString(jsonobject.getString("lbcode"));
+                     String apname_ta= Utils.NotNullString(jsonobject.getString("apname_ta"));
+                     String apname_en= Utils.NotNullString(jsonobject.getString("apname_en"));
+                     String establishment_name_ta= Utils.NotNullString(jsonobject.getString("establishment_name_ta"));
+                     String establishment_name_en= Utils.NotNullString(jsonobject.getString("establishment_name_en"));
+                     String licence_validity= Utils.NotNullString(jsonobject.getString("licence_validity"));
                          if(!traderCode.equals("0") && !traderCode.isEmpty() && traderCode != null){
                              if(traderCode.equals(lb_tradecode)){
                                  TPtaxModel Detail = new TPtaxModel();
@@ -475,8 +475,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setLbcode(lbcode);
                                  Detail.setApname_ta(apname_ta);
                                  Detail.setEstablishment_name_en(establishment_name_en);
-                                 Detail.setWardId(wardid);
-                                 Detail.setStreetId(streetid);
+                                 Detail.setWardId(String.valueOf(wardid));
+                                 Detail.setStreetId(String.valueOf(streetid));
 
                                  tradersList.add(Detail);
                              }
@@ -521,8 +521,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setLbcode(lbcode);
                                  Detail.setApname_ta(apname_ta);
                                  Detail.setEstablishment_name_en(establishment_name_en);
-                                 Detail.setWardId(wardid);
-                                 Detail.setStreetId(streetid);
+                                 Detail.setWardId(String.valueOf(wardid));
+                                 Detail.setStreetId(String.valueOf(streetid));
 
                                  tradersList.add(Detail);
                              }
@@ -568,8 +568,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 Detail.setLbcode(lbcode);
                                 Detail.setApname_ta(apname_ta);
                                 Detail.setEstablishment_name_en(establishment_name_en);
-                                Detail.setWardId(wardid);
-                                Detail.setStreetId(streetid);
+                                Detail.setWardId(String.valueOf(wardid));
+                                Detail.setStreetId(String.valueOf(streetid));
 
                                 tradersList.add(Detail);
                             }
@@ -639,12 +639,12 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             String urlType = serverResponse.getApi();
             String status ;
             if ("TradeLicenseTradersList".equals(urlType) && responseObj != null) {
-                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 Log.d("Tradersdatadecry", "" + userDataDecrypt);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
-                status = jsonObject.getString(AppConstant.KEY_STATUS);
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     prefManager.setTradersList(jsonarray.toString());

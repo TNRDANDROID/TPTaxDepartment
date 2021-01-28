@@ -402,13 +402,13 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                         prefManager.setWardList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String statecode = jsonobject.getString("statecode");
-                            String dcode = jsonobject.getString("dcode");
-                            String lbcode = jsonobject.getString("lbcode");
-                            String ward_id = jsonobject.getString("ward_id");
-                            String ward_code = jsonobject.getString("ward_code");
-                            String ward_name_en = jsonobject.getString("ward_name_en");
-                            String ward_name_ta = jsonobject.getString("ward_name_ta");
+                            String statecode = Utils.NotNullString(jsonobject.getString("statecode"));
+                            String dcode = Utils.NotNullString(jsonobject.getString("dcode"));
+                            String lbcode = Utils.NotNullString(jsonobject.getString("lbcode"));
+                            String ward_id = Utils.NotNullString(jsonobject.getString("ward_id"));
+                            String ward_code = Utils.NotNullString(jsonobject.getString("ward_code"));
+                            String ward_name_en = Utils.NotNullString(jsonobject.getString("ward_name_en"));
+                            String ward_name_ta = Utils.NotNullString(jsonobject.getString("ward_name_ta"));
                             ContentValues fieldValue = new ContentValues();
                             fieldValue.put(AppConstant.KEY_STATE_CODE, statecode);
                             fieldValue.put(AppConstant.DISTRICT_CODE, dcode);
@@ -425,7 +425,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 Log.d("wards", "" + responseObj);
             }
             if ("StreetList".equals(urlType) && responseObj != null) {
-                status = responseObj.getString(AppConstant.KEY_STATUS);
+                status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS")) {
                     JSONArray jsonarray = new JSONArray();
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
@@ -434,16 +434,16 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                         prefManager.setStreetList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String statecode = jsonobject.getString("statecode");
-                            String dcode = jsonobject.getString("dcode");
-                            String lbcode = jsonobject.getString("lbcode");
-                            String ward_id = jsonobject.getString("wardid");
-                            String ward_code = jsonobject.getString("ward_code");
-                            String streetid = jsonobject.getString("streetid");
-                            String street_code = jsonobject.getString("street_code");
-                            String street_name_en = jsonobject.getString("street_name_en");
-                            String street_name_ta = jsonobject.getString("street_name_ta");
-                            String building_zone = jsonobject.getString("building_zone");
+                            String statecode = Utils.NotNullString(jsonobject.getString("statecode"));
+                            String dcode = Utils.NotNullString(jsonobject.getString("dcode"));
+                            String lbcode = Utils.NotNullString(jsonobject.getString("lbcode"));
+                            String ward_id = Utils.NotNullString(jsonobject.getString("wardid"));
+                            String ward_code = Utils.NotNullString(jsonobject.getString("ward_code"));
+                            String streetid = Utils.NotNullString(jsonobject.getString("streetid"));
+                            String street_code = Utils.NotNullString(jsonobject.getString("street_code"));
+                            String street_name_en = Utils.NotNullString(jsonobject.getString("street_name_en"));
+                            String street_name_ta = Utils.NotNullString(jsonobject.getString("street_name_ta"));
+                            String building_zone = Utils.NotNullString(jsonobject.getString("building_zone"));
                             ContentValues fieldValue = new ContentValues();
                             fieldValue.put(AppConstant.KEY_STATE_CODE, statecode);
                             fieldValue.put(AppConstant.DISTRICT_CODE, dcode);
@@ -475,9 +475,9 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             int taxtypeid = jsonobject.getInt("taxtypeid");
-                            String taxtypedesc_en = jsonobject.getString("taxtypedesc_en");
-                            String taxtypedesc_ta = jsonobject.getString("taxtypedesc_ta");
-                            String taxcollection_methodlogy = jsonobject.getString("taxcollection_methodlogy");
+                            String taxtypedesc_en = Utils.NotNullString(jsonobject.getString("taxtypedesc_en"));
+                            String taxtypedesc_ta = Utils.NotNullString(jsonobject.getString("taxtypedesc_ta"));
+                            String taxcollection_methodlogy = Utils.NotNullString(jsonobject.getString("taxcollection_methodlogy"));
                             int installmenttypeid = jsonobject.getInt("installmenttypeid");
 
                             ContentValues fieldValue = new ContentValues();
@@ -496,7 +496,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 Log.d("TaxTypeList", "" + responseObj);
             }
             if ("TaxTypeListFieldVisit".equals(urlType) && responseObj != null) {
-                status = responseObj.getString(AppConstant.KEY_STATUS);
+                status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = new JSONArray();
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
@@ -506,9 +506,9 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             int taxtypeid = jsonobject.getInt("taxtypeid");
-                            String taxtypedesc_en = jsonobject.getString("taxtypedesc_en");
-                            String taxtypedesc_ta = jsonobject.getString("taxtypedesc_ta");
-                            String taxcollection_methodlogy = jsonobject.getString("taxcollection_methodlogy");
+                            String taxtypedesc_en = Utils.NotNullString(jsonobject.getString("taxtypedesc_en"));
+                            String taxtypedesc_ta = Utils.NotNullString(jsonobject.getString("taxtypedesc_ta"));
+                            String taxcollection_methodlogy = Utils.NotNullString(jsonobject.getString("taxcollection_methodlogy"));
                             int installmenttypeid = jsonobject.getInt("installmenttypeid");
 
                             ContentValues fieldValue = new ContentValues();
@@ -536,9 +536,9 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                         prefManager.setTaxTypeList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            int fin_yearid = jsonobject.getInt("fin_yearid");
-                            String fin_year = jsonobject.getString("fin_year");
-                            int from_fin_year = jsonobject.getInt("from_fin_year");
+                            int fin_yearid = (jsonobject.getInt("fin_yearid"));
+                            String fin_year = Utils.NotNullString(jsonobject.getString("fin_year"));
+                            int from_fin_year = (jsonobject.getInt("from_fin_year"));
                             int from_fin_mon = jsonobject.getInt("from_fin_mon");
                             int to_fin_year = jsonobject.getInt("to_fin_year");
                             int to_fin_mon = jsonobject.getInt("to_fin_mon");
@@ -561,11 +561,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             }
             if ("TraderLicenseTypeList".equals(urlType)) {
                 traderLicenseTypeList=new ArrayList<CommonModel>();
-                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                         Log.d("userdatadecry", "" + userDataDecrypt);
                         JSONObject jsonObject = new JSONObject(userDataDecrypt);
-                         status = jsonObject.getString(AppConstant.KEY_STATUS);
+                         status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                          if (status.equalsIgnoreCase("SUCCESS") ) {
                              JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                              prefManager.setTraderLicenseTypeList(jsonarray.toString());
@@ -574,11 +574,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                          }
             }
             if("TradeLicenseTradeList".equals(urlType)){
-                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 Log.d("userdatadecry", "" + userDataDecrypt);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
-                status = jsonObject.getString(AppConstant.KEY_STATUS);
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     Log.d("TraderLicenseTradeList", "" + jsonObject);
@@ -588,17 +588,17 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
 
                             ContentValues fieldValue = new ContentValues();
-                            fieldValue.put(AppConstant.TRADE_DETAILS_ID, jsonobject.getString(AppConstant.TRADE_DETAILS_ID));
-                            fieldValue.put(AppConstant.LB_TRADE_CODE, jsonobject.getString(AppConstant.LB_TRADE_CODE));
-                            fieldValue.put(AppConstant.DESCRIPTION_EN, jsonobject.getString(AppConstant.DESCRIPTION_EN));
-                            fieldValue.put(AppConstant.DESCRIPTION_TA, jsonobject.getString(AppConstant.DESCRIPTION_TA));
-                            fieldValue.put(AppConstant.DATE_FIELD, jsonobject.getString(AppConstant.DATE_FIELD));
-                            fieldValue.put(AppConstant.FINYEAR, jsonobject.getString(AppConstant.FINYEAR));
-                            fieldValue.put(AppConstant.TRADE_RATE, jsonobject.getString(AppConstant.TRADE_RATE));
-                            fieldValue.put(AppConstant.LICENSE_TYPE_ID, jsonobject.getString(AppConstant.LICENSE_TYPE_ID));
-                            fieldValue.put(AppConstant.LB_CODE, jsonobject.getString(AppConstant.LB_CODE));
-                            fieldValue.put(AppConstant.STATECODE, jsonobject.getString(AppConstant.STATECODE));
-                            fieldValue.put(AppConstant.DISTRICT_CODE, jsonobject.getString(AppConstant.DISTRICT_CODE));
+                            fieldValue.put(AppConstant.TRADE_DETAILS_ID, Utils.NotNullString(jsonobject.getString(AppConstant.TRADE_DETAILS_ID)));
+                            fieldValue.put(AppConstant.LB_TRADE_CODE, Utils.NotNullString(jsonobject.getString(AppConstant.LB_TRADE_CODE)));
+                            fieldValue.put(AppConstant.DESCRIPTION_EN, Utils.NotNullString(jsonobject.getString(AppConstant.DESCRIPTION_EN)));
+                            fieldValue.put(AppConstant.DESCRIPTION_TA, Utils.NotNullString(jsonobject.getString(AppConstant.DESCRIPTION_TA)));
+                            fieldValue.put(AppConstant.DATE_FIELD, Utils.NotNullString(jsonobject.getString(AppConstant.DATE_FIELD)));
+                            fieldValue.put(AppConstant.FINYEAR, Utils.NotNullString(jsonobject.getString(AppConstant.FINYEAR)));
+                            fieldValue.put(AppConstant.TRADE_RATE, Utils.NotNullString(jsonobject.getString(AppConstant.TRADE_RATE)));
+                            fieldValue.put(AppConstant.LICENSE_TYPE_ID, Utils.NotNullString(jsonobject.getString(AppConstant.LICENSE_TYPE_ID)));
+                            fieldValue.put(AppConstant.LB_CODE, Utils.NotNullString(jsonobject.getString(AppConstant.LB_CODE)));
+                            fieldValue.put(AppConstant.STATECODE, Utils.NotNullString(jsonobject.getString(AppConstant.STATECODE)));
+                            fieldValue.put(AppConstant.DISTRICT_CODE, Utils.NotNullString(jsonobject.getString(AppConstant.DISTRICT_CODE)));
 
                             db.insert(DBHelper.TRADE_CODE_LIST, null, fieldValue);
                         }
@@ -606,16 +606,16 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 }
             }
             if ("Gender".equals(urlType) && responseObj != null) {
-                 status = responseObj.getString(AppConstant.KEY_STATUS);
+                 status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
                         db.execSQL("delete from "+ DBHelper.GENDER_LIST);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String gender_code = jsonobject.getString("gender_code");
-                            String gender_name_en = jsonobject.getString("gender_name_en");
-                            String gender_name_ta = jsonobject.getString("gender_name_ta");
+                            String gender_code = Utils.NotNullString(jsonobject.getString("gender_code"));
+                            String gender_name_en = Utils.NotNullString(jsonobject.getString("gender_name_en"));
+                            String gender_name_ta = Utils.NotNullString(jsonobject.getString("gender_name_ta"));
                             ContentValues fieldValue = new ContentValues();
                             fieldValue.put(AppConstant.GENDER_CODE, gender_code);
                             fieldValue.put(AppConstant.GENDER_EN, gender_name_en);
@@ -628,15 +628,15 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 Log.d("Gender", "" + responseObj);
             }
             if ("FieldVisitStatus".equals(urlType) && responseObj != null) {
-                status = responseObj.getString(AppConstant.KEY_STATUS);
+                status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
                         db.execSQL("delete from "+ DBHelper.FIELD_VISIT_STATUS);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String field_visit_status_id = jsonobject.getString("field_visit_status_id");
-                            String field_visit_status = jsonobject.getString("field_visit_status");
+                            String field_visit_status_id = Utils.NotNullString(jsonobject.getString("field_visit_status_id"));
+                            String field_visit_status = Utils.NotNullString(jsonobject.getString("field_visit_status"));
 
                             ContentValues fieldValue = new ContentValues();
                             fieldValue.put(AppConstant.FIELD_VISIT_STATUS_ID, field_visit_status_id);
@@ -650,16 +650,16 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 Log.d("Gender", "" + responseObj);
             }
             if ("ServiceFieldVisitTypes".equals(urlType) && responseObj != null) {
-                status = responseObj.getString(AppConstant.KEY_STATUS);
+                status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
                         db.execSQL("delete from "+ DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String service_list_field_visit_taxtype_id = jsonobject.getString("taxtypeid");
-                            String service_list_field_visit_service_id = jsonobject.getString("serviceid");
-                            String service_list_field_visit_types_desc=jsonobject.getString("servicedesc");
+                            String service_list_field_visit_taxtype_id = Utils.NotNullString(jsonobject.getString("taxtypeid"));
+                            String service_list_field_visit_service_id = Utils.NotNullString(jsonobject.getString("serviceid"));
+                            String service_list_field_visit_types_desc=Utils.NotNullString(jsonobject.getString("servicedesc"));
 
                             ContentValues fieldValue = new ContentValues();
                             fieldValue.put("service_list_field_visit_taxtype_id", service_list_field_visit_taxtype_id);

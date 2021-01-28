@@ -34,7 +34,6 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.ExistingTradeDetailsViewBinding;
-import com.nic.TPTaxDepartment.databinding.NewTradeDetailsViewBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.Gender;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
@@ -367,7 +366,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
         existingTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
 
-        if(!traders.get(position).getWardId().isEmpty()) {
+        if(!traders.get(position).getWardId().equals("0")) {
             try {
                 existingTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
                 LoadStreetSpinner(traders.get(position).getWardId(),"");
@@ -377,7 +376,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         }
 
-        if(!traders.get(position).getStreetId().isEmpty()) {
+        if(!traders.get(position).getStreetId().equals("0")) {
             try {
                 existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
             }
@@ -463,10 +462,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             String urlType = serverResponse.getApi();
 
             if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
-                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
-                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 Log.d("Response",""+userDataDecrypt);
                 //String status = responseObj.getString(AppConstant.KEY_STATUS);
                 //String response = responseObj.getString(AppConstant.KEY_RESPONSE);
@@ -475,8 +474,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     //JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
 //                    String Motivatorid = jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID);
 //                    Log.d("motivatorid",""+Motivatorid);
-                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
-                    Utils.showAlert(this, jsonObject.getString("MESSAGE_TA"));
+                    Utils.showAlert(this, Utils.NotNullString(jsonObject.getString("MESSAGE")));
+                    Utils.showAlert(this, Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {

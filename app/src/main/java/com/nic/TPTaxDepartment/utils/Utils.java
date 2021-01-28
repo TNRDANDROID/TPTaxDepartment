@@ -472,13 +472,40 @@ public class Utils {
     }
 
 
-    public static String notNullString(String text){
-        if(text.equals("")&& (text==null)){
-            return "";
+    public static String notNullInt(String text){
+        if(text.equals("")){
+            return "0";
+        }
+        else if(text==null){
+            return "0";
+
+        }
+        else if(text=="null"){
+            return "0";
         }
         else {
             return text;
         }
+
+
     }
+
+    public static String NotNullString(String text){
+        if(text.equals("")){
+            return "";
+        }
+          else if(text.equals("null")){
+            return "";
+
+        }
+        else if(text==null){
+            return "";
+
+        }
+          else {
+              return text;
+        }
+    }
+
 
 }
