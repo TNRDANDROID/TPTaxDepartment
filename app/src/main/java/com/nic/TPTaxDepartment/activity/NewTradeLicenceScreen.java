@@ -447,20 +447,20 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             String urlType = serverResponse.getApi();
 
             if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
-                String user_data = responseObj.getString(AppConstant.ENCODE_DATA);
+                String user_data = Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
-                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                String status = Utils.NotNullString( jsonObject.getString(AppConstant.KEY_STATUS));
                 Log.d("Response",""+userDataDecrypt);
-                //String status = responseObj.getString(AppConstant.KEY_STATUS);
-                //String response = responseObj.getString(AppConstant.KEY_RESPONSE);
+                //String status = Utils.NotNullString( responseObj.getString(AppConstant.KEY_STATUS));
+                //String response =  Utils.NotNullString(responseObj.getString(AppConstant.KEY_RESPONSE));
                 if (status.equalsIgnoreCase("SUCCESS") ){
                     //JSONObject jsonObject = responseObj.getJSONObject(AppConstant.JSON_DATA);
                     //JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
-//                    String Motivatorid = jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID);
+//                    String Motivatorid =  Utils.NotNullString(jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID));
 //                    Log.d("motivatorid",""+Motivatorid);
-                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
-                    Utils.showAlert(this, jsonObject.getString("MESSAGE_TA"));
+                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
@@ -472,7 +472,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
                 else if (status.equalsIgnoreCase("FAILD"))
                 {
-                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                 }
             }
 

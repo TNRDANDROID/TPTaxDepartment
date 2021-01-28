@@ -217,22 +217,22 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
             JSONObject responseObj = serverResponse.getJsonResponse();
 
             if ("AssessmentStatus".equals(urlType) && responseObj != null) {
-                String key = responseObj.getString(AppConstant.ENCODE_DATA);
+                String key =Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 Log.d("AssessmentStatus1", "" + responseDecryptedSchemeKey);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
                 Log.d("AssessmentStatus", "" + jsonObject);
-                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String assessment_no = jsonobject.getString("assessment_no");
-                            String owner_name = jsonobject.getString("owner_name");
-                            String father_name = jsonobject.getString("father_name");
-                            String permanent_address = jsonobject.getString("permanent_address");
-                            String area_in_sq_feet = jsonobject.getString("area_in_sq_feet");
+                            String assessment_no = Utils.NotNullString(jsonobject.getString("assessment_no"));
+                            String owner_name = Utils.NotNullString(jsonobject.getString("owner_name"));
+                            String father_name = Utils.NotNullString(jsonobject.getString("father_name"));
+                            String permanent_address = Utils.NotNullString(jsonobject.getString("permanent_address"));
+                            String area_in_sq_feet = Utils.NotNullString(jsonobject.getString("area_in_sq_feet"));
                             assessmentStatusBinding.assessmentIdTv.setText(assessment_no);
                             assessmentStatusBinding.applicantNameTv.setText(owner_name);
                             assessmentStatusBinding.fatherNameTv.setText(father_name);

@@ -173,10 +173,10 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             JSONObject responseObj = serverResponse.getJsonResponse();
 
             if ("OnlineImage".equals(urlType) && responseObj != null) {
-                String key = responseObj.getString(AppConstant.ENCODE_DATA);
+                String key =  Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
-                if (jsonObject.getString("STATUS").equalsIgnoreCase("OK") && jsonObject.getString("RESPONSE").equalsIgnoreCase("OK")) {
+                if ( Utils.NotNullString(jsonObject.getString("STATUS")).equalsIgnoreCase("OK") &&  Utils.NotNullString(jsonObject.getString("RESPONSE")).equalsIgnoreCase("OK")) {
                     generateImageArrayList(jsonObject.getJSONArray(AppConstant.JSON_DATA));
                     Log.d("Length", "" + jsonObject.getJSONArray(AppConstant.JSON_DATA).length());
                 }

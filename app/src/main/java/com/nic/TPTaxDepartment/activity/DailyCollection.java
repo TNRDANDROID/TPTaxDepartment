@@ -104,8 +104,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         anim.setRepeatMode(Animation.INFINITE);
         anim.setRepeatCount(Animation.INFINITE);*/
 
-
-
         Calendar cldr = Calendar.getInstance();
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
@@ -179,9 +177,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         if(jsonarray != null && jsonarray.length() >0) {
             for (int i = 0; i < jsonarray.length(); i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
-                String taxtypeid = jsonobject.getString("taxtypeid");
-                String taxtypedesc_en = jsonobject.getString("taxtypedesc_en");
-                String collectionreceived = jsonobject.getString("collectionreceived");
+                String taxtypeid = Utils.NotNullString(jsonobject.getString("taxtypeid"));
+                String taxtypedesc_en =Utils.NotNullString(jsonobject.getString("taxtypedesc_en"));
+                String collectionreceived = Utils.NotNullString(jsonobject.getString("collectionreceived"));
 
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId(taxtypeid);
@@ -299,15 +297,18 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             JSONObject responseObj = serverResponse.getJsonResponse();
 
             if ("DailyCollection".equals(urlType) && responseObj != null) {
-                String key = responseObj.getString(AppConstant.ENCODE_DATA);
+                String key =Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
                 Log.d("AssessmentStatus", "" + jsonObject);
-                String status = jsonObject.getString(AppConstant.KEY_STATUS);
+                String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
-                    prefManager.setDailyCollectionList(jsonarray.toString());
-                    LoadDailyCollectionList();
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        prefManager.setDailyCollectionList(jsonarray.toString());
+                        LoadDailyCollectionList();
+                    }
+
                 } else {
                     dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
                     dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);

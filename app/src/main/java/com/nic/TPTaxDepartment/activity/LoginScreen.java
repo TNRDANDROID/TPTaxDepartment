@@ -271,25 +271,25 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             String response;
 
             if ("LoginScreen".equals(urlType)) {
-                status = loginResponse.getString(AppConstant.KEY_STATUS);
-                response = loginResponse.getString(AppConstant.KEY_RESPONSE);
+                status =  Utils.NotNullString(loginResponse.getString(AppConstant.KEY_STATUS));
+                response =  Utils.NotNullString(loginResponse.getString(AppConstant.KEY_RESPONSE));
                 if (status.equalsIgnoreCase("OK")) {
                     if (response.equals("LOGIN_SUCCESS")) {
-                        String key = loginResponse.getString(AppConstant.KEY_USER);
-                        String user_data = loginResponse.getString(AppConstant.USER_DATA);
+                        String key =  Utils.NotNullString(loginResponse.getString(AppConstant.KEY_USER));
+                        String user_data =  Utils.NotNullString(loginResponse.getString(AppConstant.USER_DATA));
                         String decryptedKey = Utils.decrypt(prefManager.getEncryptPass(), key);
                         String userDataDecrypt = Utils.decrypt(decryptedKey, user_data);
                         Log.d("userdatadecry", "" + userDataDecrypt);
                         jsonObject = new JSONObject(userDataDecrypt);
-                        prefManager.setStateCode(jsonObject.getString(AppConstant.STATE_CODE));
-                        prefManager.setDistrictCode("20"/*jsonObject.get(AppConstant.DISTRICT_CODE)*/);
-                        prefManager.setLbType(jsonObject.getString(AppConstant.LB_TYPE));
-                        prefManager.setTpCode("200292"/*jsonObject.getString(AppConstant.TP_CODE)*/);
-                        prefManager.setLbodyNameEn(jsonObject.getString(AppConstant.LBODY_NAME_EN));
-                        prefManager.setRoleCode(jsonObject.getString(AppConstant.ROLE_CODE));
-                        prefManager.setRoleName(jsonObject.getString(AppConstant.ROLE_NAME));
-                        prefManager.setUserFname(jsonObject.getString(AppConstant.USER_FNAME));
-                        prefManager.setUserLname(jsonObject.getString(AppConstant.USER_LNAME));
+                        prefManager.setStateCode( Utils.NotNullString(jsonObject.getString(AppConstant.STATE_CODE)));
+                        prefManager.setDistrictCode("20"/* Utils.NotNullString(jsonObject.get(AppConstant.DISTRICT_CODE))*/);
+                        prefManager.setLbType( Utils.NotNullString(jsonObject.getString(AppConstant.LB_TYPE)));
+                        prefManager.setTpCode("200292"/* Utils.NotNullString(jsonObject.getString(AppConstant.TP_CODE))*/);
+                        prefManager.setLbodyNameEn( Utils.NotNullString(jsonObject.getString(AppConstant.LBODY_NAME_EN)));
+                        prefManager.setRoleCode( Utils.NotNullString(jsonObject.getString(AppConstant.ROLE_CODE)));
+                        prefManager.setRoleName( Utils.NotNullString(jsonObject.getString(AppConstant.ROLE_NAME)));
+                        prefManager.setUserFname( Utils.NotNullString(jsonObject.getString(AppConstant.USER_FNAME)));
+                        prefManager.setUserLname( Utils.NotNullString(jsonObject.getString(AppConstant.USER_LNAME)));
 
                         Log.d("userdata", "" + prefManager.getStateCode() + prefManager.getDistrictCode() +
                                 prefManager.getLbType() + prefManager.getTpCode() + prefManager.getLbodyNameEn() +
