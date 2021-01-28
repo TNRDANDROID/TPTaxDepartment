@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -395,10 +396,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("WardList".equals(urlType) && responseObj != null) {
                 status = responseObj.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.WARD_LIST);
                     JSONArray jsonarray = new JSONArray();
                     jsonarray=responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.WARD_LIST);
+                        System.out.println("DAta: "+ Toast.makeText(Dashboard.this,"Deleted",Toast.LENGTH_SHORT));
                         prefManager.setWardList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -427,10 +429,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("StreetList".equals(urlType) && responseObj != null) {
                 status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS")) {
+                    db.execSQL("delete from "+ DBHelper.STREET_LIST);
                     JSONArray jsonarray = new JSONArray();
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.STREET_LIST);
                         prefManager.setStreetList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -467,10 +469,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("TaxTypeList".equals(urlType) && responseObj != null) {
                 status = responseObj.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.TAX_TYPE_LIST);
                     JSONArray jsonarray = new JSONArray();
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.TAX_TYPE_LIST);
+
                         prefManager.setTaxTypeList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -498,10 +501,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("TaxTypeListFieldVisit".equals(urlType) && responseObj != null) {
                 status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.TAX_TYPE_FIELD_VISIT_LIST);
                     JSONArray jsonarray = new JSONArray();
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.TAX_TYPE_FIELD_VISIT_LIST);
+
                         prefManager.setTaxTypeList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -529,10 +533,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("LicenceValidityList".equals(urlType) && responseObj != null) {
                 status = responseObj.getString(AppConstant.KEY_STATUS);
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.LICENCE_VALIDITY_LIST);
                     JSONArray jsonarray = new JSONArray();
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.LICENCE_VALIDITY_LIST);
+
                         prefManager.setTaxTypeList(jsonarray.toString());
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -580,10 +585,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
                 status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.TRADE_CODE_LIST);
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     Log.d("TraderLicenseTradeList", "" + jsonObject);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.TRADE_CODE_LIST);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
 
@@ -608,9 +614,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("Gender".equals(urlType) && responseObj != null) {
                  status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.GENDER_LIST);
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.GENDER_LIST);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             String gender_code = Utils.NotNullString(jsonobject.getString("gender_code"));
@@ -630,9 +637,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("FieldVisitStatus".equals(urlType) && responseObj != null) {
                 status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.FIELD_VISIT_STATUS);
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.FIELD_VISIT_STATUS);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             String field_visit_status_id = Utils.NotNullString(jsonobject.getString("field_visit_status_id"));
@@ -652,9 +660,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             if ("ServiceFieldVisitTypes".equals(urlType) && responseObj != null) {
                 status = Utils.NotNullString(responseObj.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES);
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        db.execSQL("delete from "+ DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             String service_list_field_visit_taxtype_id = Utils.NotNullString(jsonobject.getString("taxtypeid"));

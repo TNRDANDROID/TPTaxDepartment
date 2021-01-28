@@ -42,6 +42,7 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
         try {
             holder.name.setText(traders.get(position).traderName);
             holder.code.setText(traders.get(position).traderCode);
+
             holder.payment.setText(traders.get(position).traderPayment);
             holder.mobileValue.setText(traders.get(position).mobileno);
             holder.paymentDateValue.setText(traders.get(position).paymentdate);
@@ -51,6 +52,10 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
                 holder.payment.setBackground(activity.getResources().getDrawable(R.drawable.round_green_bg));
             }else if(traders.get(position).traderPayment .equals("UnPaid")){
                 holder.payment.setBackground(activity.getResources().getDrawable(R.drawable.round_red_bg));
+            }
+            else {
+                holder.payment.setBackground(activity.getResources().getDrawable(R.drawable.round_corner_button));
+                holder.payment.setText("-");
             }
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
