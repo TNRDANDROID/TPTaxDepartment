@@ -472,5 +472,13 @@ public class Utils {
     }
 
 
+    public static String notNullString(String text){
+        if(text.equals("")&& (text==null)){
+            return "";
+        }
+        else {
+            return text;
+        }
+    }
 
 }

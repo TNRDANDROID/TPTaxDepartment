@@ -89,7 +89,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     HashMap<String,String> spinnerMapWard;
     HashMap<String,String> spinnerMapFinYear;
     HashMap<String,String> spinnerMapLicenceType;
-    HashMap<String,String> spinnerTradeCode;
+    HashMap<Integer,String> spinnerTradeCode;
     String selectedGenderId;
     String selectedGender="";
     String selectedWardId;
@@ -234,16 +234,21 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String tradeCode = parent.getSelectedItem().toString();
-                selectedTradeCode=tradeCode;
+                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+              /*  String tradeID ="";
+                System.out.println("tradeCode>> "+ tradeCode);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
                     // if give value is equal to value from entry
                     // print the corresponding key
-                    if(entry.getValue() == selectedTradeCode) {
-                        selectedTrdeCodeDetailsID=entry.getKey();
+                    if(entry.getValue() == tradeCode) {
+                        tradeID=entry.getKey();
                         break;
                     }
-                }
+                }*/
+                selectedTrdeCodeDetailsID=tradeID;
+                System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
+                selectedTradeCode=tradeCode;
 
             }
             public void onNothingSelected(AdapterView<?> parent)
@@ -760,12 +765,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
 
-            spinnerTradeCode = new HashMap<String, String>();
-            spinnerTradeCode.put(null, null);
+            spinnerTradeCode = new HashMap<Integer, String>();
+            spinnerTradeCode.put(0, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(loadTradeCodeList.get(i).getTRADE_DETAILS_ID(), loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN());
+                spinnerTradeCode.put(i+1, loadTradeCodeList.get(i).getLB_TRADE_CODE());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }

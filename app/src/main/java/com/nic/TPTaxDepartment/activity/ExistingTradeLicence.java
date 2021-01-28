@@ -171,7 +171,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 selectedTrdeCodeDetailsID=tradeID;
                 System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
                 selectedTradeCode=tradeCode;
-               /* if(selectedTrdeCodeDetailsID != null && !selectedTrdeCodeDetailsID.isEmpty()){
+                if(selectedTrdeCodeDetailsID != null && !selectedTrdeCodeDetailsID.isEmpty()){
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);
                     existingTradeLicenceBinding.wardNo.setEnabled(false);
                 }else {
@@ -179,7 +179,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                     selectedTradeCode="";
                     existingTradeLicenceBinding.mobileNo.setEnabled(true);
                     existingTradeLicenceBinding.wardNo.setEnabled(true);
-                }*/
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -407,8 +407,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      String tradersperiod= jsonobject.getString("tradersperiod");
                      String tradedesct= jsonobject.getString("tradedesct");
                      String tradedesce= jsonobject.getString("tradedesce");
-                     String wardid= jsonobject.getString("wardid");
-                     String streetid= jsonobject.getString("streetid");
+                     String wardid= Utils.notNullString(jsonobject.getString("wardid"));
+                     String streetid= Utils.notNullString(jsonobject.getString("streetid"));
                      String doorno= jsonobject.getString("doorno");
                      String licencefor= jsonobject.getString("licencefor");
                      String fin_year= jsonobject.getString("from_fin_year");
@@ -417,7 +417,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      String onlineapplicationno= jsonobject.getString("onlineapplicationno");
                      String mobileno= jsonobject.getString("mobileno");
                      String email= jsonobject.getString("email");
-                     String paymentstatus= jsonobject.getString("paymentstatus");
+                     String paymentstatus=Utils.notNullString(jsonobject.getString("paymentstatus"));
                      String licencetypeid= jsonobject.getString("licencetypeid");
                      String traders_license_type_name= jsonobject.getString("traders_license_type_name");
                      String apgender= jsonobject.getString("apgender");
@@ -584,7 +584,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         System.out.println("size >>"+ tradersList.size());
 
         if(tradersList != null  && tradersList.size() == 1) {
-            Intent intent = new Intent( this, ExistingTradeSubmit.class);
+            Intent intent = new Intent( this, ExistTradeViewClass.class);
             intent.putExtra("position", 0);
             intent.putExtra("tradersList", tradersList);
             startActivity(intent);
