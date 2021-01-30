@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 
 import java.util.List;
@@ -17,13 +18,13 @@ import java.util.List;
  * Created by shanmugapriyan on 25/05/16.
  */
 public class CommonAdapter extends BaseAdapter {
-    private List<TPtaxModel> vPtaxModels;
+    private List<CommonModel> vPtaxModels;
     private Context mContext;
     private String type;
 
 
-    public CommonAdapter(Context mContext, List<TPtaxModel> ODFMonitoringListValue, String type) {
-        this.vPtaxModels = ODFMonitoringListValue;
+    public CommonAdapter(Context mContext, List<CommonModel> searchRequestId) {
+        this.vPtaxModels = searchRequestId;
         this.mContext = mContext;
         this.type = type;
     }
@@ -50,13 +51,7 @@ public class CommonAdapter extends BaseAdapter {
 //        TextView tv_type = (TextView) view.findViewById(R.id.tv_spinner_item);
         View view = inflater.inflate(R.layout.spinner_value, parent, false);
         TextView tv_type = (TextView) view.findViewById(R.id.spinner_list_value);
-        TPtaxModel ODFMonitoringList = vPtaxModels.get(position);
-        if (type.equalsIgnoreCase("DistrictList")) {
-            tv_type.setText(ODFMonitoringList.getDistrictName());
-
-        } else if (type.equalsIgnoreCase("GenderList")) {
-            tv_type.setText(ODFMonitoringList.getGender());
-        }
+        tv_type.setText(vPtaxModels.get(position).getRequest_id());
         return view;
     }
 }

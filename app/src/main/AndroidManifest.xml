@@ -142,7 +142,9 @@
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
-        <activity android:name=".activity.ExistTradeViewClass" />
+        <activity android:name=".activity.ExistTradeViewClass"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="locked"/>
 
 
         <provider

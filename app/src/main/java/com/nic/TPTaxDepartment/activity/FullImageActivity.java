@@ -90,7 +90,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             dbData.open();
             activityImage = new ArrayList<>();
             if(status.equals("pending")) {
-                activityImage = dbData.selectPendingImage(mobileNo);
+                //activityImage = dbData.selectPendingImage(mobileNo);
             }else {
                 activityImage = dbData.selectImage(mobileNo,status);
             }

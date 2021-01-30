@@ -11,6 +11,7 @@ import android.util.Base64;
 import android.util.Log;
 
 import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 
 import java.util.ArrayList;
@@ -243,12 +244,12 @@ public class dbData {
         return cards;
     }
 
-    public ArrayList<TPtaxModel> selectPendingImage(String taxtypeid) {
+    public ArrayList<CommonModel> selectPendingImage(String request_id) {
         db.isOpen();
-        ArrayList<TPtaxModel> cards = new ArrayList<>();
+        ArrayList<CommonModel> cards = new ArrayList<>();
         Cursor cursor = null;
-        String selection = "taxtypeid = ?";
-        String[] selectionArgs = new String[]{taxtypeid}; ;
+        String selection = "request_id = ?";
+        String[] selectionArgs = new String[]{request_id}; ;
 //        if (status.equalsIgnoreCase("new")) {
 //            selection = "tradecode = ? and screen_status = ?";
 //            selectionArgs = new String[]{tradecode,status};
@@ -269,9 +270,9 @@ public class dbData {
                         byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
-                        TPtaxModel card = new TPtaxModel();
-                        card.setTaxTypeId(cursor.getString(cursor
-                                .getColumnIndexOrThrow(AppConstant.TAX_TYPE_ID)));
+                        CommonModel card = new CommonModel();
+                        card.setRequest_id(cursor.getString(cursor
+                                .getColumnIndexOrThrow("request_id")));
                         card.setLatitude(cursor.getString(cursor
                                 .getColumnIndexOrThrow(AppConstant.LATITUDE)));
                         card.setLongitude(cursor.getString(cursor

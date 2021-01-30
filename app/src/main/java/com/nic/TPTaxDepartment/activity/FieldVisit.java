@@ -22,6 +22,7 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -43,12 +44,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.VolleyError;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.nic.TPTaxDepartment.Adapter.CommonAdapter;
+import com.nic.TPTaxDepartment.Adapter.FieldVisitRquestListAdapter;
+import com.nic.TPTaxDepartment.Api.Api;
+import com.nic.TPTaxDepartment.Api.ApiService;
+import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.Support.MyLocationListener;
@@ -56,12 +66,15 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.FieldVisitBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
+import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
 import com.nic.TPTaxDepartment.utils.FontCache;
+import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -78,7 +91,7 @@ import java.util.Map;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 
-public class FieldVisit extends AppCompatActivity implements View.OnClickListener {
+public class FieldVisit extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener  {
 
     private FieldVisitBinding fieldVisitBinding;
     private ArrayList<String> Current_Status = new ArrayList<>();
@@ -123,11 +136,18 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     String selectedServiceFieldVisitTypesId;
     String selectedServiceFieldVisitTypesName="";
 
+    //SearchRequestIDLIST
+    ArrayList<CommonModel> searchRequestList;
+    private PrefManager prefManager;
+    FieldVisitRquestListAdapter fieldVisitRquestListAdapter;
+    String request_id,data_ref_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fieldVisitBinding = DataBindingUtil.setContentView(this, R.layout.field_visit);
         fieldVisitBinding.setActivity(this);
+        prefManager = new PrefManager(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         //loadCurrentStatus();
@@ -138,7 +158,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             e.printStackTrace();
         }
         getTaxTypeFieldVisitList();
-
         getFieldVisitStatusList();
 
 
@@ -160,8 +179,9 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 }
                 selectedTaxTypeId = TaxTypeId;
                 selectedTaxTypeName = TaxTypeName;
-
-                getServiceListFieldVisitTypes(selectedTaxTypeId);
+                if(selectedTaxTypeId!=null&&position>0) {
+                    getServiceListFieldVisitTypes(selectedTaxTypeId);
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -184,8 +204,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     }
                 }
 
+
                 selectedServiceFieldVisitTypesId=serviceListFieldTaxTypeId;
                 selectedServiceFieldVisitTypesName=serviceListFieldDesc;
+                if(selectedServiceFieldVisitTypesId!=null&&position>0){
+                    getServiceRequestList();
+                }
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -216,6 +240,15 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             }
         });
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        fieldVisitBinding.fieldVisitLists.setLayoutManager(layoutManager);
+        fieldVisitBinding.fieldVisitLists.setItemAnimator(new DefaultItemAnimator());
+        fieldVisitBinding.fieldVisitLists.setHasFixedSize(true);
+        fieldVisitBinding.fieldVisitLists.setNestedScrollingEnabled(false);
+        fieldVisitBinding.fieldVisitLists.setFocusable(false);
+
+        fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
+
 
     }
 
@@ -240,7 +273,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void image() {
         imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
     }
-
     public void imageWithDescription(TextView action_tv, final String type) {
         imageboolean = true;
         dataset = new JSONObject();
@@ -312,8 +344,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 JSONArray imageJson = new JSONArray();
-
-
 //                Cursor inpection_Cursor = getRawEvents("SELECT MAX(inspection_id) FROM " + DBHelper.INSPECTION_PENDING, null);
 //                Log.d("cursor_count", String.valueOf(inpection_Cursor.getCount()));
 //                if (inpection_Cursor.getCount() > 0) {
@@ -327,7 +357,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 int childCount = mobileNumberLayout.getChildCount();
                 if (childCount > 0) {
                     for (int i = 0; i < childCount; i++) {
-                        JSONArray imageArray = new JSONArray();
+                        JSONObject imageArray = new JSONObject();
 
                         View vv = mobileNumberLayout.getChildAt(i);
                         EditText myEditTextView = (EditText) vv.findViewById(R.id.description);
@@ -358,61 +388,61 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             offlanTextValue = MyLocationListener.longitude;
                         }
 
-                        // Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
 
                         ContentValues imageValue = new ContentValues();
 
-                        imageValue.put(AppConstant.TAX_TYPE_ID, fieldVisitBinding.taxType.getSelectedItem().toString());
+                        imageValue.put("request_id", request_id);
                         imageValue.put(AppConstant.LATITUDE, offlatTextValue);
                         imageValue.put(AppConstant.LONGITUDE, offlanTextValue);
                         imageValue.put(AppConstant.FIELD_IMAGE, image_str.trim());
                         imageValue.put(AppConstant.DESCRIPTION, myEditTextView.getText().toString());
                         imageValue.put("pending_flag", 1);
-//                        if(prefManager.getLevels().equalsIgnoreCase("D")) {
-//                            imageValue.put("level", "D");
-//                        }else if(prefManager.getLevels().equalsIgnoreCase("S")) {
-//                            imageValue.put("level", "S");
-//                        }
 
+                        if (!Utils.isOnline()) {
+                           // long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO, null, imageValue);
+                            long rowUpdated1 = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, imageValue, "request_id  = ? ", new String[]{request_id });
 
-                    //    if (!Utils.isOnline()) {
-                            long rowInserted = db.insert(DBHelper.CAPTURED_PHOTO, null, imageValue);
-
-                            if (rowInserted != -1) {
+                            if (rowUpdated1 != -1) {
                                 Utils.showAlert(FieldVisit.this, "Image Saved");
                                 dialog.dismiss();
                             }
-                            //else {
-//                                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-//                            }
-//                        } else {
-//                            imageArray.put(i);
-//                         //   imageArray.put(work_id);
-//                            imageArray.put(offlatTextValue);
-//                            imageArray.put(offlanTextValue);
-//                            imageArray.put(image_str.trim());
-//                            imageArray.put(description);
-//                            imageJson.put(imageArray);
-//                        }
 
-                        //  long localImageInserted = LoginScreen.db.insert(DBHelper.LOCAL_IMAGE, null, imageValue);
+                            else {
+                                Utils.showAlert(FieldVisit.this, "Something Wrong");
+                                dialog.dismiss();
+                            }
+
+                        } else {
+                            try {
+                                //imageArray.put(i);
+                                imageArray.put("lat",offlatTextValue);
+                                imageArray.put("long",offlanTextValue);
+                                imageArray.put("photo",image_str.trim());
+                                //imageArray.put(description);
+                                imageJson.put(imageArray);
+                            }
+                            catch (Exception e){
+
+                            }
+
+                        }
+
+
                     }
-//                    try {
-//                        //dataset.put("image_details", imageJson);
-//
-//                        Log.d("post_dataset_inspection", dataset.toString());
-//                        //   String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
-////                        String authKey = dataset.toString();
-////                        int maxLogSize = 1000;
-////                        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
-////                            int start = i * maxLogSize;
-////                            int end = (i+1) * maxLogSize;
-////                            end = end > authKey.length() ? authKey.length() : end;
-////                            Log.v("to_send", authKey.substring(start, end));
-////                     }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
+                   try {
+                       dataset.put("image_details", imageJson);
+                       Log.d("post_dataset_inspection", dataset.toString());
+                       String authKey = dataset.toString();
+                       int maxLogSize = 1000;
+                        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
+                            int start = i * maxLogSize;
+                            int end = (i+1) * maxLogSize;
+                            end = end > authKey.length() ? authKey.length() : end;
+                            Log.v("to_send", authKey.substring(start, end));
+                     }
+                   } catch (JSONException e) {
+                        e.printStackTrace();
+                   }
                 }
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 dialog.dismiss();
@@ -426,7 +456,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         btnAddMobile.setTypeface(FontCache.getInstance(this).getFont(FontCache.Font.MEDIUM));
 
 
-        if(fieldVisitBinding.currentStatus.getSelectedItem().equals("Need Improvement")){
+        if(fieldVisitBinding.currentStatus.getSelectedItem().equals("Need improvement")){
             btnAddMobile.setVisibility(View.VISIBLE);
         }else {
             btnAddMobile.setVisibility(View.GONE);
@@ -537,34 +567,61 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //        } catch (Exception e)
 //            e.printStackTrace();
 //        }
-
-        String tax_type_id = fieldVisitBinding.taxType.getSelectedItem().toString();
-        String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
+        String tax_type_id = selectedTaxTypeId;
+        //String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
         String applicant_name = fieldVisitBinding.applicantName.getText().toString();
-        String build_type = fieldVisitBinding.buildType.getText().toString();
-        String current_status = fieldVisitBinding.currentStatus.getSelectedItem().toString();
+        //String build_type = fieldVisitBinding.buildType.getText().toString();
+        String current_status = selectedFieldVisitStatusId;
         String remarks = fieldVisitBinding.remarks.getText().toString();
 
-        ContentValues fieldValue = new ContentValues();
-        fieldValue.put(AppConstant.TAX_TYPE_ID, tax_type_id);
-        fieldValue.put(AppConstant.ASSESSMENT_ID, assessment_id);
-//        fieldValue.put(AppConstant.APPLICANT_NAME, applicant_name);
-//        fieldValue.put(AppConstant.BUILD_TYPE, build_type);
-        fieldValue.put(AppConstant.CURRENT_STATUS, current_status);
-      //  fieldValue.put(AppConstant.REMARKS, remarks);
+        if(!Utils.isOnline()) {
+            ContentValues fieldValue = new ContentValues();
+            fieldValue.put("taxtypeid", tax_type_id);
+            fieldValue.put("serviceid", selectedServiceFieldVisitTypesId);
+            fieldValue.put("request_id", request_id);
+            fieldValue.put("data_ref_id", data_ref_id);
+            fieldValue.put("field_visit_status", selectedFieldVisitStatusId);
+            fieldValue.put("remark", remarks);
+            fieldValue.put("owner_name", remarks);
+            //fieldValue.put("photo", remarks);
+            //fieldValue.put("lat", remarks);
+            //fieldValue.put("long", remarks);
 
-          //  long rowUpdated = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "taxtypeid//  = ? AND delete_flag = ?", new String[]{tax_type_id,"0" });
-            long rowUpdated = db.insert(DBHelper.SAVE_FIELD_VISIT, null, fieldValue);
 
-            if (rowUpdated != -1) {
-               // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                Utils.showAlert(FieldVisit.this,"Saved");
+            //  long rowUpdated = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "taxtypeid//  = ? AND delete_flag = ?", new String[]{tax_type_id,"0" });
+            //long rowUpdated = db.insert(DBHelper.SAVE_FIELD_VISIT, null, fieldValue);
+            long rowUpdated1 = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "request_id  = ? ", new String[]{request_id });
+
+
+            if (rowUpdated1 != -1) {
+                // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                Utils.showAlert(FieldVisit.this, "New Field-Visit added");
                 Dashboard.syncvisiblity();
                 //finish();
                 dashboard();
             } else {
                 Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
             }
+        }
+
+        else {
+
+            try {
+                dataset.put(AppConstant.KEY_SERVICE_ID,"FieldVisitStatusUpdate");
+                dataset.put("taxtypeid", tax_type_id);
+                dataset.put("serviceid", selectedServiceFieldVisitTypesId);
+                dataset.put("request_id", request_id);
+                dataset.put("data_ref_id", data_ref_id);
+                dataset.put("field_visit_status", selectedFieldVisitStatusId);
+                dataset.put("remark", remarks);
+
+                sync_data();
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        }
 
             // db.rawQuery("UPDATE "+DBHelper.INSPECTION_PENDING+" SET (stage_of_work_on_inspection, stage_of_work_on_inspection_name, observation,inspection_remark) = ('"+stage_of_work_on_inspection+"', '"+stage_of_work_on_inspection_name+"', '"+observation+"', '"+inspection_remark+"')  WHERE delete_flag=0 and inspection_id = "+inspectionID+" and work_id ="+work_id, null);
 
@@ -586,6 +643,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //            Log.v("to_send_encryt", authKey1.substring(start, end));
 //        }
         //sync_data();
+
     }
 
 
@@ -598,7 +656,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             }
         });
     }
-
     //Method for update single view based on email or mobile type
     public View updateView(final Activity activity, final LinearLayout emailOrMobileLayout, final String values, final String type) {
         final View hiddenInfo = activity.getLayoutInflater().inflate(R.layout.image_with_description, emailOrMobileLayout, false);
@@ -675,12 +732,9 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         viewArrayList.add(hiddenInfo);
         return hiddenInfo;
     }
-
     private void getLatLong() {
         mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         mlocListener = new MyLocationListener();
-
-
         // permission was granted, yay! Do the
         // location-related task you need to do.
         if (ContextCompat.checkSelfPermission(FieldVisit.this,
@@ -720,7 +774,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             Utils.showAlert(FieldVisit.this, "GPS is not turned on...");
         }
     }
-
     private void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -769,8 +822,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     }
                 }).check();
     }
-
-
     private void showPermissionsAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Permissions required!")
@@ -786,7 +837,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     }
                 }).show();
     }
-
     public void previewCapturedImage() {
         try {
             // hide video preview
@@ -828,14 +878,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             e.printStackTrace();
         }
     }
-
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
                 matrix, true);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // if the result is capturing Image
@@ -889,7 +937,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -901,6 +948,32 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void onClick(View v) {
 
     }
+
+    public void getServiceRequestList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("ServiceRequestList", Api.Method.POST, UrlGenerator.TradersUrl(), encryptJsonParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public JSONObject encryptJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), ServiceRequestListJsonParams().toString());
+        JSONObject data = new JSONObject();
+        data.put("user_name",prefManager.getUserName());
+        data.put(AppConstant.DATA_CONTENT,authKey);
+        return data;
+    }
+    public JSONObject ServiceRequestListJsonParams() throws JSONException {
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"ServiceRequestList");
+        data.put("taxtypeid",selectedTaxTypeId);
+        data.put("serviceid",selectedServiceFieldVisitTypesId);
+
+        Log.d("params", "" + data);
+        return data;
+    }
+
+
 
     public void getTaxTypeFieldVisitList() {
         taxType = new ArrayList<CommonModel>();
@@ -1055,5 +1128,160 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
 
+    @Override
+    public void OnMyResponse(ServerResponse serverResponse) {
+
+        try {
+            JSONObject responseObj = serverResponse.getJsonResponse();
+            String urlType = serverResponse.getApi();
+            String status;
+            String request_id;
+            String data_ref_id;
+            String ward_code;
+            String ward_name_en;
+            String ward_name_ta;
+            String street_code;
+            String street_name_en;
+            String street_name_ta;
+            String ownername;
+            String door_no;
+            String plotarea;
+            String buildage;
+            String buildusage;
+            String buildstructure;
+            String taxlocation;
+
+            if ("ServiceRequestList".equals(urlType)) {
+                try{
+                    searchRequestList=new ArrayList<CommonModel>();
+                    String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                    String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("userdatadecry", "" + userDataDecrypt);
+                    JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                    status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status.equalsIgnoreCase("SUCCESS") ) {
+                        JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                        if(jsonarray != null && jsonarray.length() >0) {
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                CommonModel commonModel = new CommonModel();
+                                request_id = Utils.NotNullString(jsonobject.getString("request_id"));
+                                data_ref_id = Utils.NotNullString(jsonobject.getString("data_ref_id"));
+                                ward_code = Utils.NotNullString(jsonobject.getString("ward_code"));
+                                ward_name_en = Utils.NotNullString(jsonobject.getString("ward_name_en"));
+                                ward_name_ta = Utils.NotNullString(jsonobject.getString("ward_name_ta"));
+                                street_code = Utils.NotNullString(jsonobject.getString("street_code"));
+                                street_name_en = Utils.NotNullString(jsonobject.getString("street_name_en"));
+                                street_name_ta = Utils.NotNullString(jsonobject.getString("street_name_ta"));
+                                ownername = Utils.NotNullString(jsonobject.getString("ownername"));
+
+                                if (selectedTaxTypeName.equals("Property Tax")){
+                                door_no = Utils.NotNullString(jsonobject.getString("door_no"));
+                                plotarea = Utils.NotNullString(jsonobject.getString("plotarea"));
+                                buildage = Utils.NotNullString(jsonobject.getString("buildage"));
+                                buildstructure = Utils.NotNullString(jsonobject.getString("buildstructure"));
+                                buildusage = Utils.NotNullString(jsonobject.getString("buildusage"));
+                                taxlocation = Utils.NotNullString(jsonobject.getString("taxlocation"));
+                                    commonModel.setDoor_no(door_no);
+                                    commonModel.setPlotarea(plotarea);
+                                    commonModel.setBuildage(buildage);
+                                    commonModel.setBuildstructure(buildstructure);
+                                    commonModel.setBuildusage(buildusage);
+                                    commonModel.setTaxlocation(taxlocation);
+                            }
+
+                                commonModel.setRequest_id(request_id);
+                                commonModel.setData_ref_id(data_ref_id);
+                                commonModel.setWard_code(ward_code);
+                                commonModel.setWard_name_en(ward_name_en);
+                                commonModel.setWard_name_ta(ward_name_ta);
+                                commonModel.setStreet_code(street_code);
+                                commonModel.setStreet_name_en(street_name_en);
+                                commonModel.setStreet_name_ta(street_name_ta);
+                                commonModel.setOwnername(ownername);
+
+
+                                searchRequestList.add(commonModel);
+
+                            }
+
+                            if(searchRequestList.size()>0){
+                                if(selectedTaxTypeName.equals("Property Tax")) {
+                                    fieldVisitRquestListAdapter = new FieldVisitRquestListAdapter(FieldVisit.this, searchRequestList,"Property");
+                                    fieldVisitBinding.fieldVisitLists.setAdapter(fieldVisitRquestListAdapter);
+                                    fieldVisitBinding.fieldVisitLists.setVisibility(View.VISIBLE);
+                                    fieldVisitBinding.detailsView.setVisibility(View.GONE);
+                                }
+                                else {
+                                    fieldVisitRquestListAdapter = new FieldVisitRquestListAdapter(FieldVisit.this, searchRequestList,"Water Charges");
+                                    fieldVisitBinding.fieldVisitLists.setAdapter(fieldVisitRquestListAdapter);
+                                    fieldVisitBinding.fieldVisitLists.setVisibility(View.VISIBLE);
+                                    fieldVisitBinding.detailsView.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+
+                    }
+                }catch (Exception e){
+
+                }
+
+            }
+            if("save_data".equals(urlType)){
+                try {
+                    String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                    String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("userdatadecry", "" + userDataDecrypt);
+                    JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                    status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status.equalsIgnoreCase("SUCCESS") ){
+                        Utils.showAlert(FieldVisit.this, jsonObject.getString("MESSAGE"));
+                    }
+                    else if(status.equalsIgnoreCase("FAILD")){
+                        Utils.showAlert(FieldVisit.this, jsonObject.getString("MESSAGE"));
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void OnError(VolleyError volleyError) {
+        Utils.showAlert(FieldVisit.this, "Try after some time!");
+    }
+
+    public void fieldRequestListClickedItemProcess(int pos){
+        request_id=searchRequestList.get(pos).getRequest_id();
+        data_ref_id=searchRequestList.get(pos).getData_ref_id();
+        fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
+        fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
+        fieldVisitBinding.applicantName.setText(searchRequestList.get(pos).getOwnername());
+        fieldVisitBinding.requestIdTextField.setText(searchRequestList.get(pos).getRequest_id());
+
+    }
+
+    public void sync_data() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("save_data", Api.Method.POST, UrlGenerator.TradersUrl(), dataTobeSavedJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject dataTobeSavedJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("saving", "" + authKey);
+        return dataSet;
+    }
 
 }

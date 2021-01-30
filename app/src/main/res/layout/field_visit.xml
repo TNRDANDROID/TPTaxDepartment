@@ -11,8 +11,6 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -148,13 +146,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
 
                 <LinearLayout
+                    android:id="@+id/details_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -271,8 +270,66 @@
 
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/search_request_id_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:text="Request ID"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/header"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:background="@drawable/rectangle_box"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:id="@+id/request_id_text_field"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_15sdp"
+                                android:visibility="visible"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                customfontdemo:fontName="@string/font_circular_book" />
+                            <Spinner
+                                android:visibility="gone"
+                                android:id="@+id/search_reuest_id"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginRight="10dp"
+                                android:gravity="center" />
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/name_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -365,6 +422,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/details_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -489,7 +547,7 @@
                             android:layout_marginRight="@dimen/margin_left_20dp"
                             android:background="@drawable/rectangle_box"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/remarks"
@@ -509,6 +567,52 @@
 
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Remarks">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/remarks_text"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:inputType="textPersonName"/>
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:id="@+id/field_img1"
+                            android:src="@drawable/no_data_icon"
+                            android:scaleType="fitCenter"></ImageView>
+                        <ImageView
+                            android:layout_marginTop="10dp"
+                            android:layout_width="200dp"
+                            android:layout_height="100dp"
+                            android:id="@+id/field_img2"
+                            android:src="@drawable/no_data_icon"
+                            android:scaleType="fitCenter"></ImageView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -559,10 +663,23 @@
 
 
                 </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:elevation="6dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/field_visit_lists"></androidx.recyclerview.widget.RecyclerView>
 
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
+
+
         </androidx.core.widget.NestedScrollView>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

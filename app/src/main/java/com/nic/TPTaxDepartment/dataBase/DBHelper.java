@@ -28,6 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String TRADE_CODE_LIST="trade_code_list";
     public static final String FIELD_VISIT_STATUS="field_visit_status";
     public static final String SERVICE_LIST_FIELD_VISIT_TYPES="service_list_field_visit_types";
+    public static final String FIELD_VISIT_STATUS_IMAGES="field_visit_status_images";
 
 
     private Context context;
@@ -96,7 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + "id INTEGER," +
                 "loc_lat TEXT," +
                 "loc_long TEXT," +
-                "taxtypeid TEXT," +
+                "request_id TEXT," +
                 "field_image blob,"+
                 "pending_flag INTEGER,"+
                 "description TEXT)");
@@ -104,10 +105,15 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + SAVE_FIELD_VISIT + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "taxtypeid TEXT," +
-                "assessment_id TEXT," +
-                "build_type TEXT," +
-                "current_status TEXT," +
-                "remarks TEXT," +
+                "serviceid TEXT," +
+                "request_id TEXT," +
+                "data_ref_id TEXT," +
+                "field_visit_status TEXT," +
+                "owner_name TEXT," +
+                "remark TEXT," +
+                "photo BLOB," +
+                "lat TEXT," +
+                "long TEXT," +
                 "delete_flag TEXT)");
         db.execSQL("CREATE TABLE " + TAX_TYPE_LIST + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT," +

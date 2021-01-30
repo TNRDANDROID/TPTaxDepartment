@@ -61,6 +61,11 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
 
 
     @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
     public int getItemCount() {
 
         return traders.size();
