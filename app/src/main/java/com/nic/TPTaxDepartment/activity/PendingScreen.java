@@ -54,6 +54,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     ArrayList<TPtaxModel> newTraderList = new ArrayList<>();
     ArrayList<TPtaxModel> fieldVisitList = new ArrayList<>();
+    ArrayList<CommonModel> fieldVisitPendingList = new ArrayList<>();
     private ImageView back_img, home_img;
     private TextView newTrader, fieldVisit;
     private RelativeLayout left, right;
@@ -197,10 +198,31 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             //Utils.showAlert(this, "No Data Found!");
         }
     }
+    private void loadFieldVisitListPending(){
+        String select_query= "SELECT *FROM " + DBHelper.SAVE_FIELD_VISIT;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0) {
+            if (cursor.moveToFirst()) {
+                do {
+                    CommonModel Detail = new CommonModel();
+                    Detail.setRequest_id(cursor.getString(cursor.getColumnIndexOrThrow("request_id")));
+                    Detail.setService_list_field_visit_service_id(cursor.getString(cursor.getColumnIndexOrThrow("serviceid")));
+                    Detail.setOwnername(cursor.getString(cursor.getColumnIndexOrThrow("owner_name")));
+                    Detail.setTaxtypeid(cursor.getString(cursor.getColumnIndexOrThrow("taxtypeid")));
+                    Detail.setData_ref_id(cursor.getString(cursor.getColumnIndexOrThrow("data_ref_id")));
+                    Detail.setFIELD_VISIT_STATUS_ID(cursor.getString(cursor.getColumnIndexOrThrow("field_visit_status")));
+                    Detail.setRemark(cursor.getString(cursor.getColumnIndexOrThrow("remark")));
+
+                    fieldVisitPendingList.add(Detail);
+                } while (cursor.moveToNext());
+            }
+        }
+
+    }
+
     private void loadNewTraderList() {
         newTraderList = new ArrayList<TPtaxModel>();
-/*
-        for (int i = 0; i < 5; i++) {
+       /* for (int i = 0; i < 5; i++) {
             if(i==2){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTraderName("raj");
@@ -246,8 +268,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 Detail.setMobileno("12233445");
                 Detail.setPaymentdate("20/05/2020");
                 newTraderList.add(Detail);}
-        }
-*/
+        }*/
         String select_query= "SELECT *FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS;
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
@@ -288,7 +309,6 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 }while (cursor.moveToNext());
             }
         }
-
         Collections.sort(newTraderList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
         if(newTraderList != null && newTraderList.size() >0) {
             no_data_fond_layout.setVisibility(View.GONE);

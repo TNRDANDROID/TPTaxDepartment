@@ -132,8 +132,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
      private void LoadDailyCollectionList() throws JSONException {
          collectionList = new ArrayList<TPtaxModel>();
-/*
-        for (int i = 0; i < 6; i++) {
+      /*  for (int i = 0; i < 6; i++) {
             if(i==0){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("1");
@@ -171,8 +170,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection("36050.00");
                 collectionList.add(Detail);
             }
-        }
-*/
+        }*/
         JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
         if(jsonarray != null && jsonarray.length() >0) {
             for (int i = 0; i < jsonarray.length(); i++) {

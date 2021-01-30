@@ -14,8 +14,12 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.SnapHelper;
 
 import com.android.volley.VolleyError;
+import com.nic.TPTaxDepartment.Adapter.AssessmentAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -45,9 +49,11 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
     private AssessmentStatusNewBinding assessmentStatusBinding;
     private PrefManager prefManager;
-    private List<TPtaxModel> Block = new ArrayList<>();
-
     ArrayList<CommonModel> taxType ;
+    ArrayList<CommonModel> professionalTax ;
+    ArrayList<CommonModel> propertyTax ;
+    ArrayList<CommonModel> tradeLicense ;
+    ArrayList<CommonModel> waterTax ;
     HashMap<String,String> spinnerMapTaxType;
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
@@ -60,6 +66,15 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
+
+        assessmentStatusBinding.recycler.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        assessmentStatusBinding.recycler.setLayoutManager(layoutManager);
+
+        /*LinearLayoutManager layoutManager = new LinearLayoutManager(AssessmentStatus.this, LinearLayoutManager.VERTICAL, false);
+        SnapHelper snapHelper = new PagerSnapHelper();
+        assessmentStatusBinding.recycler.setLayoutManager(layoutManager);
+        snapHelper.attachToRecyclerView(assessmentStatusBinding.recycler);*/
 
         assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
         assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
@@ -226,22 +241,125 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
-                        for (int i = 0; i < jsonarray.length(); i++) {
-                            JSONObject jsonobject = jsonarray.getJSONObject(i);
-                            String assessment_no = Utils.NotNullString(jsonobject.getString("assessment_no"));
-                            String owner_name = Utils.NotNullString(jsonobject.getString("owner_name"));
-                            String father_name = Utils.NotNullString(jsonobject.getString("father_name"));
-                            String permanent_address = Utils.NotNullString(jsonobject.getString("permanent_address"));
-                            String area_in_sq_feet = Utils.NotNullString(jsonobject.getString("area_in_sq_feet"));
-                            assessmentStatusBinding.assessmentIdTv.setText(assessment_no);
-                            assessmentStatusBinding.applicantNameTv.setText(owner_name);
-                            assessmentStatusBinding.fatherNameTv.setText(father_name);
-                            assessmentStatusBinding.addressTv.setText(permanent_address);
-                            assessmentStatusBinding.areaTv.setText(area_in_sq_feet);
+                        if (selectedTaxTypeName.equals("Professional Tax") || selectedTaxTypeId.equals("4")){
+                            professionalTax=new ArrayList<CommonModel>();
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String lb_assessmentno = Utils.NotNullString(jsonobject.getString("lb_assessmentno"));
+                                String assessmentnameeng = Utils.NotNullString(jsonobject.getString("assessmentnameeng"));
+                                String organizationtype = Utils.NotNullString(jsonobject.getString("organizationtype"));
+                                  /*  String assessment_no = Utils.NotNullString(jsonobject.getString("assessment_no"));
+                                String owner_name = Utils.NotNullString(jsonobject.getString("owner_name"));
+                                String father_name = Utils.NotNullString(jsonobject.getString("father_name"));
+                                String permanent_address = Utils.NotNullString(jsonobject.getString("permanent_address"));
+                                String area_in_sq_feet = Utils.NotNullString(jsonobject.getString("area_in_sq_feet"));*/
+                                CommonModel commonModel=new CommonModel();
+                                commonModel.setLb_assessmentno(lb_assessmentno);
+                                commonModel.setAssessmentnameeng(assessmentnameeng);
+                                commonModel.setOrganizationtype(organizationtype);
+                                professionalTax.add(commonModel);
+
+                            }
+                        Collections.sort(professionalTax, (lhs, rhs) -> lhs.getAssessmentnameeng().compareTo(rhs.getAssessmentnameeng()));
+                        if (professionalTax != null && professionalTax.size() > 0) {
+                            AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, professionalTax,selectedTaxTypeName,selectedTaxTypeId);
+                            assessmentAdapter.notifyDataSetChanged();
+                            assessmentStatusBinding.recycler.setAdapter(assessmentAdapter);
+                            assessmentStatusBinding.header.setText(selectedTaxTypeName);
+                            assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                            assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                            assessmentStatusBinding.submit.setVisibility(View.GONE);
                         }
-                        assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
-                        assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
-                        assessmentStatusBinding.submit.setVisibility(View.GONE);
+                    }
+                        if (selectedTaxTypeName.equals("Property Tax") || selectedTaxTypeId.equals("1")){
+                            propertyTax=new ArrayList<CommonModel>();
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String assessment_no = Utils.NotNullString(jsonobject.getString("assessment_no"));
+                                String owner_name = Utils.NotNullString(jsonobject.getString("owner_name"));
+                                String father_name = Utils.NotNullString(jsonobject.getString("father_name"));
+                                String permanent_address = Utils.NotNullString(jsonobject.getString("permanent_address"));
+                                String area_in_sq_feet = Utils.NotNullString(jsonobject.getString("area_in_sq_feet"));
+                                CommonModel commonModel=new CommonModel();
+                                commonModel.setAssessment_no(assessment_no);
+                                commonModel.setOwner_name(owner_name);
+                                commonModel.setFather_name(father_name);
+                                commonModel.setPermanent_address(permanent_address);
+                                commonModel.setArea_in_sq_feet(area_in_sq_feet);
+                                propertyTax.add(commonModel);
+
+                            }
+                        Collections.sort(propertyTax, (lhs, rhs) -> lhs.getOwner_name().compareTo(rhs.getOwner_name()));
+                        if (propertyTax != null && propertyTax.size() > 0) {
+                            AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, propertyTax,selectedTaxTypeName,selectedTaxTypeId);
+                            assessmentAdapter.notifyDataSetChanged();
+                            assessmentStatusBinding.recycler.setAdapter(assessmentAdapter);
+                            assessmentStatusBinding.header.setText(selectedTaxTypeName);
+                            assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                            assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                            assessmentStatusBinding.submit.setVisibility(View.GONE);
+                        }
+                    }
+                        if (selectedTaxTypeName.equals("Trade License") || selectedTaxTypeId.equals("6")){
+                            tradeLicense=new ArrayList<CommonModel>();
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String lb_traderscode = Utils.NotNullString(jsonobject.getString("lb_traderscode"));
+                                String apfathername_ta = Utils.NotNullString(jsonobject.getString("apfathername_ta"));
+                                String apfathername_en = Utils.NotNullString(jsonobject.getString("apfathername_en"));
+                                String doorno = Utils.NotNullString(jsonobject.getString("doorno"));
+                                String traders_rate = Utils.NotNullString(jsonobject.getString("traders_rate"));
+                                String from_fin_year = Utils.NotNullString(jsonobject.getString("from_fin_year"));
+                                String to_fin_year = Utils.NotNullString(jsonobject.getString("to_fin_year"));
+                                String trade_description_en = Utils.NotNullString(jsonobject.getString("trade_description_en"));
+                                CommonModel commonModel=new CommonModel();
+                                commonModel.setLb_traderscode(lb_traderscode);
+                                commonModel.setApfathername_ta(apfathername_ta);
+                                commonModel.setApfathername_en(apfathername_en);
+                                commonModel.setDoorno(doorno);
+                                commonModel.setTraders_rate(traders_rate);
+                                commonModel.setFrom_fin_year(from_fin_year);
+                                commonModel.setTo_fin_year(to_fin_year);
+                                commonModel.setTrade_description_en(trade_description_en);
+                                tradeLicense.add(commonModel);
+
+                            }
+                        Collections.sort(tradeLicense, (lhs, rhs) -> lhs.getApfathername_en().compareTo(rhs.getApfathername_en()));
+                        if (tradeLicense != null && tradeLicense.size() > 0) {
+                            AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, tradeLicense,selectedTaxTypeName,selectedTaxTypeId);
+                            assessmentAdapter.notifyDataSetChanged();
+                            assessmentStatusBinding.recycler.setAdapter(assessmentAdapter);
+                            assessmentStatusBinding.header.setText(selectedTaxTypeName);
+                            assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                            assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                            assessmentStatusBinding.submit.setVisibility(View.GONE);
+                        }
+                    }
+                        if (selectedTaxTypeName.equals("Water Charges") || selectedTaxTypeId.equals("2")){
+                            waterTax=new ArrayList<CommonModel>();
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String lb_connectionno = Utils.NotNullString(jsonobject.getString("lb_connectionno"));
+                                String connectionname = Utils.NotNullString(jsonobject.getString("connectionname"));
+                                String water_charges = Utils.NotNullString(jsonobject.getString("water_charges"));
+                                 CommonModel commonModel=new CommonModel();
+                                commonModel.setLb_connectionno(lb_connectionno);
+                                commonModel.setConnectionname(connectionname);
+                                commonModel.setWater_charges(water_charges);
+                                waterTax.add(commonModel);
+
+                            }
+                        Collections.sort(waterTax, (lhs, rhs) -> lhs.getConnectionname().compareTo(rhs.getConnectionname()));
+                        if (waterTax != null && waterTax.size() > 0) {
+                            AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, waterTax,selectedTaxTypeName,selectedTaxTypeId);
+                            assessmentAdapter.notifyDataSetChanged();
+                            assessmentStatusBinding.recycler.setAdapter(assessmentAdapter);
+                            assessmentStatusBinding.header.setText(selectedTaxTypeName);
+                            assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                            assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                            assessmentStatusBinding.submit.setVisibility(View.GONE);
+                        }
+                    }
                     }
 
                 } else {

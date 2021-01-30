@@ -300,7 +300,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     }
     public JSONObject taxTpeJsonParam() throws JSONException {
         JSONObject data = new JSONObject();
-        data.put(AppConstant.KEY_SERVICE_ID,"OS_TaxTypes");
+        data.put(AppConstant.KEY_SERVICE_ID,"OS_TaxTypes_Assessment_Status");
         Log.d("params", "" + data);
         return data;
     }

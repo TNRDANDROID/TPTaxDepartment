@@ -157,11 +157,13 @@
                         android:id="@+id/no_data_found_layout">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/no_data_icon"
+                            android:layout_width="250dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/no_data_ic"
                             android:id="@+id/no_data_img"
-                            android:scaleType="center"></ImageView>
+                            android:scaleType="centerCrop">
+
+                        </ImageView>
 
                         <TextView
                             android:visibility="gone"

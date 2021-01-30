@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/cornered_border_bg"
+    android:layout_marginBottom="10dp"
+    android:elevation="@dimen/_6sdp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/professionalTax"
+        android:padding="5dp"
+        android:layout_marginBottom="@dimen/margin_left_20dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Assessment No"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Assessment No">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/assessment_no"
+                        android:layout_width="match_parent"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Assessment Name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Assessment Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/assessment_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Organization Type"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Organization Type">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/organization_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/propertyTax"
+        android:padding="5dp"
+        android:layout_marginBottom="@dimen/margin_left_20dp"
+        android:visibility="visible"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Assessment No"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Assessment No">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/property_assessment_no"
+                        android:layout_width="match_parent"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Owner Name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Owner Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/owner_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Father Name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Father Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/father_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Permanent Address"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Permanent Address">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/permanent_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Area In Square Feet"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Area In Square Feet">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/area_in_sq_feet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tradeLicenceTax"
+        android:padding="5dp"
+        android:layout_marginBottom="@dimen/margin_left_20dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Trader Code"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Trader Code">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lb_traderscode"
+                        android:layout_width="match_parent"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Father Name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Father Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/apfathername_en"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Father Name in Tamil"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Father Name in Tamil">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/apfathername_ta"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Door No"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Door No">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/doorno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Trader Rate"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Trader Rate">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/traders_rate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Financial Year"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Financial Year">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/fin_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Trade Description"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Trade Description">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/trade_description_en"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/waterTax"
+        android:padding="5dp"
+        android:layout_marginBottom="@dimen/margin_left_20dp"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Connection No"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Connection No">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lb_connectionno"
+                        android:layout_width="match_parent"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Connection Name"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Connection Name">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/connectionname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Water Charges"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hintEnabled="false"
+                    android:hint="Water Charges">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/water_charges"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:textColor="@color/black"
+                        android:inputType="textPersonName" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
+

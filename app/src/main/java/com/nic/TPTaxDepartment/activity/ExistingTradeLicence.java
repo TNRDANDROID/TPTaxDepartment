@@ -90,13 +90,16 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 selectedWardName=ward;
                 selectedWardId=wardId;
                 System.out.println("selectedWardId >> "+selectedWardId);
-                if(selectedWardId != null  && !selectedWardId.isEmpty() && !selectedWardId.equals("Select Ward")){
+                System.out.println("selectedWardName >> "+selectedWardName);
+                if(selectedWardId != null  && !selectedWardId.isEmpty() && !selectedWardName.equals("Select Ward")){
 
                     LoadStreetSpinner(selectedWardId);
                     existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(false);
                     existingTradeLicenceBinding.mobileNo.setEnabled(false);
                 }else {
                     existingTradeLicenceBinding.streetsName.setAdapter(null);
+                    selectedStreetId="0";
+                    selectedStreetName="";
                     existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(true);
                     existingTradeLicenceBinding.mobileNo.setEnabled(true);
                 }
@@ -603,7 +606,18 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         intent.putExtra("tradersList", (Serializable)tradersList);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);*/
     }
-
+    public void clearDetails() {
+        existingTradeLicenceBinding.streetsName.setAdapter(null);
+        selectedStreetId="0";
+        selectedStreetName="";
+        existingTradeLicenceBinding.wardNo.setSelection(0);
+        selectedWardId="0";
+        selectedWardName="";
+        existingTradeLicenceBinding.mobileNo.setText("");
+        existingTradeLicenceBinding.tradeCodeSpinner.setSelection(0);
+        selectedTrdeCodeDetailsID = "0";
+        selectedTradeCode = "";
+    }
     public void validateDetails() {
 
         if ((!selectedTradeCode.isEmpty()&& !selectedTradeCode.equals("Select TradeCode")) || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || (!selectedWardName.isEmpty()&& !selectedWardName.equals("Select Ward")) || ( !selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street"))) {

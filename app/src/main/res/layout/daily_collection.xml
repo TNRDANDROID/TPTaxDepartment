@@ -243,19 +243,18 @@
                             android:id="@+id/dailyCollection_recycler"
                             android:scrollbarSize="1dp"
                             android:padding="@dimen/margin_left_20dp"
-                            android:visibility="visible"
-                            android:scrollbars="vertical"/>
-                        <TextView
                             android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:text="No Data Found"
-                            android:id="@+id/no_data_found"
-                            android:layout_marginTop="120dp"
-                            android:textSize="@dimen/_18sdp"
-                            android:layout_below="@+id/no_data_img">
-
-                        </TextView>
+                            android:scrollbars="vertical"/>
+                        <ImageView
+                            android:layout_width="250dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/no_data_ic"
+                            android:scaleType="centerCrop"
+                            android:padding="15dp"
+                            android:visibility="gone"
+                            android:layout_marginTop="60dp"
+                            android:layout_centerInParent="true"
+                            android:id="@+id/no_data_found"></ImageView>
 
 
                     </RelativeLayout>

@@ -150,6 +150,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+       /* loginScreenBinding.username.setText("tpbc1@gmail.com");
+        loginScreenBinding.password.setText("test123#$");*/
         loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200297");
     }

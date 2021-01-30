@@ -1,5 +1,7 @@
 package com.nic.TPTaxDepartment.model;
 
+import android.graphics.Bitmap;
+
 public class CommonModel {
     public String statecode;
     public String dcode;
@@ -49,8 +51,335 @@ public class CommonModel {
     public String service_list_field_visit_service_id;
     public String service_list_field_visit_types_desc;
 
+
+  /// Assessment Status Fields
+    public String lb_assessmentno;
+    public String assessmentnameeng;
+    public String organizationtype;
+
+    public String assessment_no;
+    public String owner_name;
+    public String father_name;
+    public String permanent_address;
+    public String area_in_sq_feet;
+
+    public String lb_traderscode;
+    public String apfathername_ta;
+    public String apfathername_en;
+    public String doorno;
+    public String traders_rate;
+    public String from_fin_year;
+    public String to_fin_year;
+    public String trade_description_en;
+
+    public String lb_connectionno;
+    public String connectionname;
+    public String water_charges;
+
+    String request_id;
+    String data_ref_id;
+    String ownername;
+    String door_no;
+    String plotarea;
+    String buildage;
+    String buildusage;
+    String buildstructure;
+    String taxlocation;
+    private Bitmap Image;
+    private String Latitude;
+    private String Longitude;
+    private String remark;
+
     /////............../////
 
+
+    public String getRequest_id() {
+        return request_id;
+    }
+
+    public CommonModel setRequest_id(String request_id) {
+        this.request_id = request_id;
+        return this;
+    }
+
+    public String getData_ref_id() {
+        return data_ref_id;
+    }
+
+    public CommonModel setData_ref_id(String data_ref_id) {
+        this.data_ref_id = data_ref_id;
+        return this;
+    }
+
+    public String getOwnername() {
+        return ownername;
+    }
+
+    public CommonModel setOwnername(String ownername) {
+        this.ownername = ownername;
+        return this;
+    }
+
+    public String getDoor_no() {
+        return door_no;
+    }
+
+    public CommonModel setDoor_no(String door_no) {
+        this.door_no = door_no;
+        return this;
+    }
+
+    public String getPlotarea() {
+        return plotarea;
+    }
+
+    public CommonModel setPlotarea(String plotarea) {
+        this.plotarea = plotarea;
+        return this;
+    }
+
+    public String getBuildage() {
+        return buildage;
+    }
+
+    public CommonModel setBuildage(String buildage) {
+        this.buildage = buildage;
+        return this;
+    }
+
+    public String getBuildusage() {
+        return buildusage;
+    }
+
+    public CommonModel setBuildusage(String buildusage) {
+        this.buildusage = buildusage;
+        return this;
+    }
+
+    public String getBuildstructure() {
+        return buildstructure;
+    }
+
+    public CommonModel setBuildstructure(String buildstructure) {
+        this.buildstructure = buildstructure;
+        return this;
+    }
+
+    public String getTaxlocation() {
+        return taxlocation;
+    }
+
+    public CommonModel setTaxlocation(String taxlocation) {
+        this.taxlocation = taxlocation;
+        return this;
+    }
+
+    public Bitmap getImage() {
+        return Image;
+    }
+
+    public CommonModel setImage(Bitmap image) {
+        Image = image;
+        return this;
+    }
+
+    public String getLatitude() {
+        return Latitude;
+    }
+
+    public CommonModel setLatitude(String latitude) {
+        Latitude = latitude;
+        return this;
+    }
+
+    public String getLongitude() {
+        return Longitude;
+    }
+
+    public CommonModel setLongitude(String longitude) {
+        Longitude = longitude;
+        return this;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public CommonModel setRemark(String remark) {
+        this.remark = remark;
+        return this;
+    }
+
+    public String getLb_connectionno() {
+        return lb_connectionno;
+    }
+
+    public CommonModel setLb_connectionno(String lb_connectionno) {
+        this.lb_connectionno = lb_connectionno;
+        return this;
+    }
+
+    public String getConnectionname() {
+        return connectionname;
+    }
+
+    public CommonModel setConnectionname(String connectionname) {
+        this.connectionname = connectionname;
+        return this;
+    }
+
+    public String getWater_charges() {
+        return water_charges;
+    }
+
+    public CommonModel setWater_charges(String water_charges) {
+        this.water_charges = water_charges;
+        return this;
+    }
+
+    public String getLb_traderscode() {
+        return lb_traderscode;
+    }
+
+    public CommonModel setLb_traderscode(String lb_traderscode) {
+        this.lb_traderscode = lb_traderscode;
+        return this;
+    }
+
+    public String getApfathername_ta() {
+        return apfathername_ta;
+    }
+
+    public CommonModel setApfathername_ta(String apfathername_ta) {
+        this.apfathername_ta = apfathername_ta;
+        return this;
+    }
+
+    public String getApfathername_en() {
+        return apfathername_en;
+    }
+
+    public CommonModel setApfathername_en(String apfathername_en) {
+        this.apfathername_en = apfathername_en;
+        return this;
+    }
+
+    public String getDoorno() {
+        return doorno;
+    }
+
+    public CommonModel setDoorno(String doorno) {
+        this.doorno = doorno;
+        return this;
+    }
+
+    public String getTraders_rate() {
+        return traders_rate;
+    }
+
+    public CommonModel setTraders_rate(String traders_rate) {
+        this.traders_rate = traders_rate;
+        return this;
+    }
+
+    public String getFrom_fin_year() {
+        return from_fin_year;
+    }
+
+    public CommonModel setFrom_fin_year(String from_fin_year) {
+        this.from_fin_year = from_fin_year;
+        return this;
+    }
+
+    public String getTo_fin_year() {
+        return to_fin_year;
+    }
+
+    public CommonModel setTo_fin_year(String to_fin_year) {
+        this.to_fin_year = to_fin_year;
+        return this;
+    }
+
+    public String getTrade_description_en() {
+        return trade_description_en;
+    }
+
+    public CommonModel setTrade_description_en(String trade_description_en) {
+        this.trade_description_en = trade_description_en;
+        return this;
+    }
+
+    public String getAssessment_no() {
+        return assessment_no;
+    }
+
+    public CommonModel setAssessment_no(String assessment_no) {
+        this.assessment_no = assessment_no;
+        return this;
+    }
+
+    public String getOwner_name() {
+        return owner_name;
+    }
+
+    public CommonModel setOwner_name(String owner_name) {
+        this.owner_name = owner_name;
+        return this;
+    }
+
+    public String getFather_name() {
+        return father_name;
+    }
+
+    public CommonModel setFather_name(String father_name) {
+        this.father_name = father_name;
+        return this;
+    }
+
+    public String getPermanent_address() {
+        return permanent_address;
+    }
+
+    public CommonModel setPermanent_address(String permanent_address) {
+        this.permanent_address = permanent_address;
+        return this;
+    }
+
+    public String getArea_in_sq_feet() {
+        return area_in_sq_feet;
+    }
+
+    public CommonModel setArea_in_sq_feet(String area_in_sq_feet) {
+        this.area_in_sq_feet = area_in_sq_feet;
+        return this;
+    }
+
+    public String getLb_assessmentno() {
+        return lb_assessmentno;
+    }
+
+    public CommonModel setLb_assessmentno(String lb_assessmentno) {
+        this.lb_assessmentno = lb_assessmentno;
+        return this;
+    }
+
+    public String getAssessmentnameeng() {
+        return assessmentnameeng;
+    }
+
+    public CommonModel setAssessmentnameeng(String assessmentnameeng) {
+        this.assessmentnameeng = assessmentnameeng;
+        return this;
+    }
+
+    public String getOrganizationtype() {
+        return organizationtype;
+    }
+
+    public CommonModel setOrganizationtype(String organizationtype) {
+        this.organizationtype = organizationtype;
+        return this;
+    }
 
     public String getService_list_field_visit_taxtype_id() {
         return service_list_field_visit_taxtype_id;
