@@ -109,6 +109,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     ArrayList< TPtaxModel > traders ;
 
     String image="",lat="",lan="";
+    String mobileNumber="";
 
     ArrayList<CommonModel> loadTradeCodeList;
     ArrayAdapter<String> tradeCodeSpArray;
@@ -459,6 +460,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     //JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
 //                    String Motivatorid =  Utils.NotNullString(jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID));
 //                    Log.d("motivatorid",""+Motivatorid);
+                    db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
+
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
                     Runnable runnable = new Runnable() {
@@ -1022,7 +1025,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         date.setText(newDateString);
 
     }
+    public boolean isrequestIDexixt(String mobileno) {
+        Cursor cursor = null;
+        String query = " SELECT  mobileno  FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS + " WHERE  mobileno  =?";
+        cursor = db.rawQuery(query,  new String[]{mobileno});
 
+        if (cursor != null && cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
     public void savenewTraderINLocal(){
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTrdeCodeDetailsID;
         Cursor cursor = db.rawQuery(sql, null);
@@ -1083,9 +1095,23 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 paymentStatus="UnPaid";
             }
             values.put(AppConstant.PAYMENT_STATUS,paymentStatus);
+            if (isrequestIDexixt(newTradeLicenceScreenBinding.mobileNo.getText().toString())){
+                long rowUpdated1 = db.update(DBHelper.SAVE_FIELD_VISIT, values, "mobileno  = ? ", new String[]{newTradeLicenceScreenBinding.mobileNo.getText().toString()});
+                if (rowUpdated1 != -1) {
+                    // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                    Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details updated");
+                    //Dashboard.syncvisiblity();
+                    //finish();
+                    //dashboard();
+                }
+            }else {
+                long rowUpdated1 =  db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
+                if (rowUpdated1 != -1) {
+                    Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details Added Successfully!");
+                    Log.d("InsertNewTrader",""+values);
+                }
+            }
 
-            db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
-            Log.d("InsertNewTrader",""+values);
         }
 
         else {
@@ -1176,7 +1202,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public JSONObject dataTobeSavedJsonParams() throws JSONException {
-
+        mobileNumber=newTradeLicenceScreenBinding.mobileNo.getText().toString();
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
         dataSet.put(AppConstant.MODE, "NEW");
@@ -1190,7 +1216,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         dataSet.put(AppConstant.AGE, newTradeLicenceScreenBinding.age.getText().toString());
         dataSet.put(AppConstant.FATHER_HUSBAND_NAME_EN, newTradeLicenceScreenBinding.fatherHusName.getText().toString());
         dataSet.put(AppConstant.FATHER_HUSBAND_NAME_TA, newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString());
-        dataSet.put(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
+        dataSet.put(AppConstant.MOBILE, mobileNumber);
         dataSet.put(AppConstant.E_MAIL, newTradeLicenceScreenBinding.emailId.getText().toString());
         dataSet.put(AppConstant.ESTABLISHMENT_NAME_EN, newTradeLicenceScreenBinding.establishName.getText().toString());
         dataSet.put(AppConstant.ESTABLISHMENT_NAME_TA, newTradeLicenceScreenBinding.establishName.getText().toString());

@@ -832,6 +832,7 @@
                                     android:id="@+id/mobile_no"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:maxLength="10"
                                     android:inputType="number" />
 
                             </com.google.android.material.textfield.TextInputLayout>
@@ -1176,7 +1177,6 @@
                                     android:gravity="top|left"
                                     android:inputType="textMultiLine"
                                     android:lines="3"
-
                                     android:maxLength="130"
 
                                     />

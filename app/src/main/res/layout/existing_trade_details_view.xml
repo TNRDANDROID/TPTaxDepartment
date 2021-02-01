@@ -14,8 +14,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-   >
+    android:layout_marginBottom="10dp">
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -63,7 +62,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/traders_code_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Traders Code">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -72,6 +72,7 @@
                                 android:layout_height="wrap_content"
                                 android:inputType="textPersonName"
                                 android:imeOptions="actionNext"
+                                android:textColor="@android:color/black"
                                 android:nextFocusDown="@id/trade_description"/>
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -107,6 +108,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"
+                            android:textColor="@android:color/black"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:gravity="center" />
@@ -249,6 +251,7 @@
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
+                            android:textColor="@android:color/black"
                             android:gravity="center" />
 
                     </RelativeLayout>
@@ -285,13 +288,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/trade_description_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Trade Description">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/trade_description"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -327,6 +332,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            app:hintEnabled="false"
+                            android:id="@+id/description_english_tx_inp"
 
                             android:hint="Trade Description">
 
@@ -334,6 +341,7 @@
                                 android:id="@+id/description_english"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -370,13 +378,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/description_tamil_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Trade Description">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/description_tamil"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -414,13 +424,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/applicant_name_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Applicant Name">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/applicant_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -458,12 +470,14 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/applicant_name_tamil_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Applicant Name In Tamil ">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/applicant_name_tamil"
                                 android:layout_width="match_parent"
+                                android:textColor="@android:color/black"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPersonName" />
 
@@ -521,6 +535,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="10dp"
+                            android:textColor="@android:color/black"
                             android:layout_marginRight="10dp"
                             android:overlapAnchor="false"
                             android:gravity="center" />
@@ -561,12 +576,14 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/age_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Age">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/age"
                                 android:layout_width="match_parent"
+                                android:textColor="@android:color/black"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPersonName" />
 
@@ -607,13 +624,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/father_hus_name_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Father/Husband Name">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/father_hus_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -651,13 +670,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/father_hus_name_tamil_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Father/Husband Name In Tamil">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/father_hus_name_tamil"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -699,13 +720,16 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/mobile_no_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Mobile No">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/mobile_no"
+                                android:maxLength="10"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="number" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -744,13 +768,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/email_id_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Email Id">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/email_id"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -790,13 +816,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/establish_name_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Establishment Name">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/establish_name"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -943,6 +971,7 @@
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
+                            android:textColor="@android:color/black"
                             android:gravity="center" />
 
                     </RelativeLayout>
@@ -996,6 +1025,7 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
+                            android:textColor="@android:color/black"
                             android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"
                             android:layout_marginLeft="10dp"
@@ -1040,7 +1070,8 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/street_name_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Street Name">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -1048,6 +1079,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="top|left"
+                                android:textColor="@android:color/black"
                                 android:inputType="textMultiLine"
                                 android:lines="3"
 
@@ -1091,13 +1123,15 @@
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-
+                            android:id="@+id/door_no_tx_inp"
+                            app:hintEnabled="false"
                             android:hint="Door No">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/door_no"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:textColor="@android:color/black"
                                 android:inputType="textPersonName" />
 
                         </com.google.android.material.textfield.TextInputLayout>
@@ -1151,6 +1185,7 @@
                             android:id="@+id/licence_validity"
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
                             android:layout_alignParentStart="true"
                             android:layout_alignParentEnd="true"
                             android:layout_centerInParent="true"

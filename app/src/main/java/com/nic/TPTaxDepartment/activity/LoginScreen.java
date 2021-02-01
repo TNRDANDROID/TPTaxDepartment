@@ -150,10 +150,12 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-       /* loginScreenBinding.username.setText("tpbc1@gmail.com");
-        loginScreenBinding.password.setText("test123#$");*/
-        loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
-        loginScreenBinding.password.setText("tpbc1.200297");
+        loginScreenBinding.username.setText("tpbc1@gmail.com");
+        loginScreenBinding.password.setText("test123#$");
+       /* loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
+        loginScreenBinding.password.setText("tpbc1.200297");*/
+       /* loginScreenBinding.username.setText("tpeo200279@gmail.com");
+        loginScreenBinding.password.setText("tpeo200279");*/
     }
 
 
@@ -284,9 +286,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         Log.d("userdatadecry", "" + userDataDecrypt);
                         jsonObject = new JSONObject(userDataDecrypt);
                         prefManager.setStateCode( Utils.NotNullString(jsonObject.getString(AppConstant.STATE_CODE)));
-                        prefManager.setDistrictCode(/*"20"*/ Utils.NotNullString(jsonObject.getString(AppConstant.DISTRICT_CODE)));
                         prefManager.setLbType( Utils.NotNullString(jsonObject.getString(AppConstant.LB_TYPE)));
-                        prefManager.setTpCode(/*"200292"*/ Utils.NotNullString(jsonObject.getString(AppConstant.TP_CODE)));
+                       /* prefManager.setDistrictCode( Utils.NotNullString(jsonObject.getString(AppConstant.DISTRICT_CODE)));
+                        prefManager.setTpCode( Utils.NotNullString(jsonObject.getString(AppConstant.TP_CODE)));*/
+                        prefManager.setDistrictCode("20");
+                        prefManager.setTpCode("200292");
                         prefManager.setLbodyNameEn( Utils.NotNullString(jsonObject.getString(AppConstant.LBODY_NAME_EN)));
                         prefManager.setRoleCode( Utils.NotNullString(jsonObject.getString(AppConstant.ROLE_CODE)));
                         prefManager.setRoleName( Utils.NotNullString(jsonObject.getString(AppConstant.ROLE_NAME)));

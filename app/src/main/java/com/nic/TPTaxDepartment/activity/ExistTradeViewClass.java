@@ -88,7 +88,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     HashMap<String,String> spinnerMapWard;
     HashMap<String,String> spinnerMapFinYear;
     HashMap<String,String> spinnerMapLicenceType;
-    HashMap<String,String> spinnerTradeCode;
+    HashMap<Integer,String> spinnerTradeCode;
     String selectedGenderId;
     String selectedGender="";
     String selectedWardId;
@@ -194,7 +194,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             {
                 String gender = parent.getSelectedItem().toString();
                 selectedGender=gender;
-
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerMap.entrySet()) {
                     // if give value is equal to value from entry
@@ -215,6 +215,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             {
                 String finYear = parent.getSelectedItem().toString();
                 selectedFinName=finYear;
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
                     // if give value is equal to value from entry
@@ -236,6 +237,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             {
                 String tradeCode = parent.getSelectedItem().toString();
                 String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+                selectedTradeCode=tradeCode;
+                selectedTrdeCodeDetailsID=tradeID;
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
               /*  String tradeID ="";
                 System.out.println("tradeCode>> "+ tradeCode);
                 // iterate each entry of hashmap
@@ -247,7 +251,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                         break;
                     }
                 }*/
-                selectedTrdeCodeDetailsID=tradeID;
+
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
@@ -260,6 +264,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             {
                 String LicenceTypeName = parent.getSelectedItem().toString();
                 selectedLicenceTypeName=LicenceTypeName;
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerMapLicenceType.entrySet()) {
                     // if give value is equal to value from entry
@@ -281,7 +286,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             {
                 String ward = parent.getSelectedItem().toString();
                 selectedWardName=ward;
-
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
                     // if give value is equal to value from entry
@@ -325,7 +330,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             {
                 String street = parent.getSelectedItem().toString();
                 selectedStreetName=street;
-
+                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
                     // if give value is equal to value from entry
@@ -352,7 +357,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         // iterate each entry of hashmap
 
 
-        existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(spinnerTradeCode.get(traders.get(position).getTradecode())));
+        existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()+" - " +"Testing"/*traders.get(position).getDescription_en()*/));
         existingTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
         existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition((traders.get(position).getTraders_license_type_name())));
         existingTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
@@ -385,14 +390,67 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
         }
         existingTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
+        existingTradeDetailsViewBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
+        existingTradeDetailsViewBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
         existingTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(spinnerMapFinYear.get(traders.get(position).getLicenceValidity())));
 
-       /* if(traders.get(position).getPaymentStatus().equals("Paid")){
-            existingTradeDetailsViewBinding.isPaid.setChecked(true);
-        }else {
-            existingTradeDetailsViewBinding.isPaid.setChecked(false);
-        }*/
+        setDisableToFields();
+    }
 
+    private void setDisableToFields() {
+        existingTradeDetailsViewBinding.tradeCodeSpinner.setEnabled(false);
+        existingTradeDetailsViewBinding.date.setEnabled(false);
+        existingTradeDetailsViewBinding.licenceType.setEnabled(false);
+        existingTradeDetailsViewBinding.tradeDescription.setEnabled(false);
+        existingTradeDetailsViewBinding.applicantName.setEnabled(false);
+        existingTradeDetailsViewBinding.applicantNameTamil.setEnabled(false);
+        existingTradeDetailsViewBinding.gender.setEnabled(false);
+        existingTradeDetailsViewBinding.age.setEnabled(false);
+        existingTradeDetailsViewBinding.fatherHusName.setEnabled(false);
+        existingTradeDetailsViewBinding.fatherHusNameTamil.setEnabled(false);
+        existingTradeDetailsViewBinding.mobileNo.setEnabled(false);
+        existingTradeDetailsViewBinding.emailId.setEnabled(false);
+        existingTradeDetailsViewBinding.establishName.setEnabled(false);
+        existingTradeDetailsViewBinding.wardNo.setEnabled(false);
+        existingTradeDetailsViewBinding.streetsName.setEnabled(false);
+        existingTradeDetailsViewBinding.doorNo.setEnabled(false);
+        existingTradeDetailsViewBinding.licenceValidity.setEnabled(false);
+        existingTradeDetailsViewBinding.descriptionEnglish.setEnabled(false);
+        existingTradeDetailsViewBinding.descriptionTamil.setEnabled(false);
+
+        existingTradeDetailsViewBinding.tradersCodeTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.tradeDescriptionTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.descriptionEnglishTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.descriptionTamilTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.applicantNameTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.applicantNameTamilTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.ageTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.fatherHusNameTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.fatherHusNameTamilTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.mobileNoTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.emailIdTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.establishNameTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.doorNoTxInp.setHintEnabled(false);
+
+        existingTradeDetailsViewBinding.tradersCodeTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.tradeDescriptionTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.descriptionEnglishTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.descriptionTamilTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.applicantNameTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.applicantNameTamilTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.ageTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.fatherHusNameTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.fatherHusNameTamilTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.mobileNoTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.emailIdTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.establishNameTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.doorNoTxInp.setHintAnimationEnabled(false);
+
+        existingTradeDetailsViewBinding.btnRegister.setVisibility(View.GONE);
+        existingTradeDetailsViewBinding.fab.setVisibility(View.GONE);
+        existingTradeDetailsViewBinding.isPaid.setEnabled(false);
+        existingTradeDetailsViewBinding.calendarIcon.setEnabled(false);
+        existingTradeDetailsViewBinding.calendarIcon.setClickable(false);
     }
 
 
@@ -780,12 +838,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
 
-            spinnerTradeCode = new HashMap<String, String>();
-            spinnerTradeCode.put(null, null);
+            spinnerTradeCode = new HashMap<Integer, String>();
+            spinnerTradeCode.put(0, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(loadTradeCodeList.get(i).getTRADE_DETAILS_ID(), loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN());
+                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
