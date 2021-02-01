@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telecom.Call;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,6 +48,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -69,7 +73,9 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     int recyclerClickedPosition;
 
     NewTradersListAdapter newTradersListAdapter;
-
+    JSONObject dataset;
+    FieldVisitListAdapter adapter;
+    int pos;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,6 +83,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         setContentView(R.layout.pending_screen);
         mContext = this;
         activity = this;
+        dataset = new JSONObject();
         intializeUI();
     }
 
@@ -118,7 +125,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         left.setOnClickListener(this);
         right.setOnClickListener(this);
         loadNewTraderList();
-        loadFieldVisitList();
+        //loadFieldVisitList();
 
         left.setBackground(activity.getResources().getDrawable(R.drawable.left_selected_bg));
         right.setBackground(activity.getResources().getDrawable(R.drawable.right_bg));
@@ -155,7 +162,8 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 fieldVisit.setTextColor(activity.getResources().getColor(R.color.white));
                 newTraderRecycler.setVisibility(View.GONE);
                 fieldVisitRecycler.setVisibility(View.VISIBLE);
-                loadFieldVisitList();
+                //loadFieldVisitList();
+                loadFieldVisitListPending();
                 break;
         }
     }
@@ -188,7 +196,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         Collections.sort(fieldVisitList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
         if(fieldVisitList != null && fieldVisitList.size() >0) {
             no_data_fond_layout.setVisibility(View.GONE);
-            FieldVisitListAdapter adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitList);
+            FieldVisitListAdapter adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitPendingList);
             adapter.notifyDataSetChanged();
             fieldVisitRecycler.setAdapter(adapter);
             fieldVisitRecycler.setVisibility(View.VISIBLE);
@@ -212,10 +220,24 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     Detail.setData_ref_id(cursor.getString(cursor.getColumnIndexOrThrow("data_ref_id")));
                     Detail.setFIELD_VISIT_STATUS_ID(cursor.getString(cursor.getColumnIndexOrThrow("field_visit_status")));
                     Detail.setRemark(cursor.getString(cursor.getColumnIndexOrThrow("remark")));
+                    Detail.setTaxtypedesc_en(cursor.getString(cursor.getColumnIndexOrThrow("tax_type_name")));
+                    Detail.setFIELD_VISIT_STATUS(cursor.getString(cursor.getColumnIndexOrThrow("field_visit_status_name")));
 
                     fieldVisitPendingList.add(Detail);
                 } while (cursor.moveToNext());
             }
+        }
+
+        if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {
+            no_data_fond_layout.setVisibility(View.GONE);
+             adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitPendingList);
+            adapter.notifyDataSetChanged();
+            fieldVisitRecycler.setAdapter(adapter);
+            fieldVisitRecycler.setVisibility(View.VISIBLE);
+        }else {
+            no_data_fond_layout.setVisibility(View.VISIBLE);
+            fieldVisitRecycler.setVisibility(View.GONE);
+            //Utils.showAlert(this, "No Data Found!");
         }
 
     }
@@ -358,6 +380,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             Runtime.getRuntime().gc();
             String urlType = serverResponse.getApi();
             JSONObject responseObj = serverResponse.getJsonResponse();
+            String status1;
             if ("saveActivityImage".equals(urlType) && responseObj != null) {
                 String key =  Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
@@ -388,6 +411,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
                     db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
+                    db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
                     loadNewTraderList();
                     /*Runnable runnable = new Runnable() {
                         @Override
@@ -403,6 +427,26 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                 }
             }
+            if("save_data".equals(urlType)){
+                try {
+                    String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                    String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("userdatadecry", "" + userDataDecrypt);
+                    JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                    status1 = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status1.equalsIgnoreCase("SUCCESS") ){
+                        Utils.showAlert(PendingScreen.this, jsonObject.getString("MESSAGE"));
+                        adapter.deleteRow(pos);
+                    }
+                    else if(status1.equalsIgnoreCase("FAILD")){
+                        Utils.showAlert(PendingScreen.this, jsonObject.getString("MESSAGE"));
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -427,7 +471,6 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         } catch (JSONException e) {
             e.printStackTrace();
         } }
-
     public JSONObject dataSavedEncryptJsonParams() throws JSONException {
         JSONArray imageArray = new JSONArray();
 
@@ -447,7 +490,6 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         Log.d("DataSetS__:",""+dataSet);
         return dataSet;
     }
-
     public JSONObject dataTobeSavedJsonParams() throws JSONException {
 
         JSONObject dataSet = new JSONObject();
@@ -512,5 +554,85 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         fieldVisitRecycler.setVisibility(View.GONE);
         newTraderRecycler.setVisibility(View.GONE);
     }
+
+    public void sync_data() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("save_data", Api.Method.POST, UrlGenerator.TradersUrl(), pendingFieldJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject pendingFieldJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("saving", "" + authKey);
+        return dataSet;
+    }
+
+    public void jsonDatasetValues(String request_id,int pos1){
+        pos=pos;
+        no_data_fond_layout.setVisibility(View.GONE);
+        newTraderRecycler.setVisibility(View.GONE);
+        ArrayList<CommonModel> commonModels=new ArrayList<>();
+        JSONArray jsonArray=new JSONArray();
+        dbData.open();
+        commonModels.addAll(dbData.selectPendingImage(request_id));
+
+
+        for (int i=0;i<commonModels.size();i++){
+            JSONObject imageArray = new JSONObject();
+            try {
+                if(request_id.equals(commonModels.get(i).getRequest_id())) {
+                    //imageArray.put(i);
+                    imageArray.put("lat", commonModels.get(i).getLatitude());
+                    imageArray.put("long", commonModels.get(i).getLongitude());
+                    imageArray.put("photo", bitmapToString(commonModels.get(i).getImage()));
+                    //imageArray.put(description);
+                    jsonArray.put(imageArray);
+                }
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+            try {
+                dataset.put("image_details",jsonArray);
+                dataset.put(AppConstant.KEY_SERVICE_ID,"FieldVisitStatusUpdate");
+                dataset.put("taxtypeid", fieldVisitPendingList.get(pos1).getTaxtypeid());
+                dataset.put("serviceid", fieldVisitPendingList.get(pos1).getService_list_field_visit_service_id());
+                dataset.put("request_id", request_id);
+                dataset.put("data_ref_id", fieldVisitPendingList.get(pos1).getData_ref_id());
+                dataset.put("field_visit_status", fieldVisitPendingList.get(pos1).getFIELD_VISIT_STATUS());
+                dataset.put("remark", fieldVisitPendingList.get(pos1).getRemark());
+            }
+            catch (JSONException e){
+                e.printStackTrace();
+            }
+
+        }
+
+        if(Utils.isOnline()){
+            sync_data();
+        }
+        else {
+            Utils.showAlert(PendingScreen.this,"No Internet Connection ");
+        }
+
+    }
+
+    public String bitmapToString(Bitmap bitmap1){
+        byte[] imageInByte = new byte[0];
+        String image_str = "";
+        Bitmap bitmap = bitmap1;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        imageInByte = baos.toByteArray();
+        image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+        return image_str;
+    }
+
 
 }

@@ -105,11 +105,13 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + SAVE_FIELD_VISIT + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "taxtypeid TEXT," +
+                "tax_type_name TEXT," +
                 "serviceid TEXT," +
                 "request_id TEXT," +
                 "data_ref_id TEXT," +
                 "field_visit_status TEXT," +
                 "owner_name TEXT," +
+                "field_visit_status_name TEXT," +
                 "remark TEXT," +
                 "photo BLOB," +
                 "lat TEXT," +

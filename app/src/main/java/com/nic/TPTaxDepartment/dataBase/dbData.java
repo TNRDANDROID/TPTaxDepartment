@@ -248,8 +248,14 @@ public class dbData {
         db.isOpen();
         ArrayList<CommonModel> cards = new ArrayList<>();
         Cursor cursor = null;
+        Cursor res = null;
         String selection = "request_id = ?";
         String[] selectionArgs = new String[]{request_id}; ;
+        String query="SELECT * FROM (\n" +
+                "SELECT * FROM captured_photo ORDER BY id DESC LIMIT 10 where request_id=" +request_id+
+                ")\n" +
+                "ORDER BY id ASC;";
+        String  quy="SELECT * FROM captured_photo";
 //        if (status.equalsIgnoreCase("new")) {
 //            selection = "tradecode = ? and screen_status = ?";
 //            selectionArgs = new String[]{tradecode,status};
@@ -259,8 +265,11 @@ public class dbData {
 //        }
 
         try {
-            cursor = db.query(DBHelper.CAPTURED_PHOTO,
-                    new String[]{"*"}, selection,selectionArgs, null, null, null);
+          /*  cursor = db.query(DBHelper.CAPTURED_PHOTO,
+                    new String[]{"*"}, selection,selectionArgs, null, null, null);*/
+            cursor=db.rawQuery(quy,null,null);
+
+
 
             if (cursor.getCount() > 0) {
                 if (cursor.moveToFirst()) {
@@ -280,7 +289,7 @@ public class dbData {
                         card.setImage(decodedByte);
 
                         cards.add(card);
-                    }while(cursor.moveToNext());
+                    }while(res.moveToNext());
                 }
             }
         } catch (Exception e){

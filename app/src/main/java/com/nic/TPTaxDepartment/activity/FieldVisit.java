@@ -271,7 +271,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
     public void image() {
-        imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
+        if(!selectedTaxTypeName.equals("Select TaxType")) {
+            imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
+        }
+        else {
+            Utils.showAlert(FieldVisit.this,"Select Tax Type first!");
+        }
     }
     public void imageWithDescription(TextView action_tv, final String type) {
         imageboolean = true;
@@ -398,20 +403,38 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                         imageValue.put(AppConstant.DESCRIPTION, myEditTextView.getText().toString());
                         imageValue.put("pending_flag", 1);
 
-                        if (!Utils.isOnline()) {
-                           // long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO, null, imageValue);
-                            long rowUpdated1 = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, imageValue, "request_id  = ? ", new String[]{request_id });
+                        if (Utils.isOnline()) {
+                         /*  if(isrequestIDexixt(request_id)) {
+                               long rowUpdated1 = LoginScreen.db.update(DBHelper.CAPTURED_PHOTO, imageValue, "request_id  = ? ", new String[]{request_id});
+                               if (rowUpdated1 != -1) {
+                                   // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                                   Utils.showAlert(FieldVisit.this, " Capture-Photo updated");
 
-                            if (rowUpdated1 != -1) {
-                                Utils.showAlert(FieldVisit.this, "Image Saved");
-                                dialog.dismiss();
+                               }
+                           }
+                           else {
+                                long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
+                                //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                                if (rowInserted != -1) {
+                                    // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                                    Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
+
+                                }
+                                else {
+                                    Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                                }
                             }
+*/
+                            long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
+                            //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                            if (rowInserted != -1) {
+                                // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                                Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
 
+                            }
                             else {
-                                Utils.showAlert(FieldVisit.this, "Something Wrong");
-                                dialog.dismiss();
+                                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                             }
-
                         } else {
                             try {
                                 //imageArray.put(i);
@@ -572,17 +595,19 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String applicant_name = fieldVisitBinding.applicantName.getText().toString();
         //String build_type = fieldVisitBinding.buildType.getText().toString();
         String current_status = selectedFieldVisitStatusId;
-        String remarks = fieldVisitBinding.remarks.getText().toString();
+        String remarks = fieldVisitBinding.remarksText.getText().toString();
 
-        if(!Utils.isOnline()) {
+        if(Utils.isOnline()) {
             ContentValues fieldValue = new ContentValues();
             fieldValue.put("taxtypeid", tax_type_id);
+            fieldValue.put("tax_type_name", selectedTaxTypeName);
             fieldValue.put("serviceid", selectedServiceFieldVisitTypesId);
             fieldValue.put("request_id", request_id);
             fieldValue.put("data_ref_id", data_ref_id);
             fieldValue.put("field_visit_status", selectedFieldVisitStatusId);
+            fieldValue.put("field_visit_status_name", selectedFieldVisitStatusName);
             fieldValue.put("remark", remarks);
-            fieldValue.put("owner_name", remarks);
+            fieldValue.put("owner_name", fieldVisitBinding.applicantName.getText().toString());
             //fieldValue.put("photo", remarks);
             //fieldValue.put("lat", remarks);
             //fieldValue.put("long", remarks);
@@ -590,17 +615,29 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
             //  long rowUpdated = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "taxtypeid//  = ? AND delete_flag = ?", new String[]{tax_type_id,"0" });
             //long rowUpdated = db.insert(DBHelper.SAVE_FIELD_VISIT, null, fieldValue);
-            long rowUpdated1 = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "request_id  = ? ", new String[]{request_id });
 
-
+            if (isrequestIDexixt(request_id)){
+                long rowUpdated1 = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "request_id  = ? ", new String[]{request_id});
             if (rowUpdated1 != -1) {
                 // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                Utils.showAlert(FieldVisit.this, "New Field-Visit added");
-                Dashboard.syncvisiblity();
+                Utils.showAlert(FieldVisit.this, " Field-Visit updated");
+                //Dashboard.syncvisiblity();
                 //finish();
-                dashboard();
-            } else {
-                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                //dashboard();
+            }
+        }
+            else {
+                long rowInserted = LoginScreen.db.insert(DBHelper.SAVE_FIELD_VISIT,null,fieldValue);
+                //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                if (rowInserted != -1) {
+                    // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
+                    Utils.showAlert(FieldVisit.this, " Field-Visit added");
+                    //Dashboard.syncvisiblity();
+                    //finish();
+                    //dashboard();
+                } else {
+                    Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                }
             }
         }
 
@@ -623,7 +660,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
         }
 
-            // db.rawQuery("UPDATE "+DBHelper.INSPECTION_PENDING+" SET (stage_of_work_on_inspection, stage_of_work_on_inspection_name, observation,inspection_remark) = ('"+stage_of_work_on_inspection+"', '"+stage_of_work_on_inspection_name+"', '"+observation+"', '"+inspection_remark+"')  WHERE delete_flag=0 and inspection_id = "+inspectionID+" and work_id ="+work_id, null);
+
 
         String authKey = dataset.toString();
         int maxLogSize = 2000;
@@ -1284,4 +1321,15 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         return dataSet;
     }
 
+
+    public boolean isrequestIDexixt(String request_id) {
+        Cursor cursor = null;
+        String query = " SELECT  request_id  FROM " + DBHelper.SAVE_FIELD_VISIT + " WHERE  request_id  =?";
+        cursor = db.rawQuery(query,  new String[]{request_id});
+
+        if (cursor != null && cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
 }
