@@ -291,7 +291,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
         Cursor cursor = null;
         String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+fieldVisitBinding.requestIdTextField.getText().toString();
-        cursor=db.rawQuery(sql,null,null);
+        cursor=Dashboard.db.rawQuery(sql,null,null);
         if (cursor.getCount() > 0) {
             return 1;
         } else {
@@ -453,7 +453,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 }
                             }
 */
-                            long rowInserted = db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
+                            long rowInserted = Dashboard.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
                             //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                             if (rowInserted != -1) {
                                 // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
@@ -645,7 +645,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             //long rowUpdated = db.insert(DBHelper.SAVE_FIELD_VISIT, null, fieldValue);
 
             if (isrequestIDexixt(request_id)){
-                long rowUpdated1 = LoginScreen.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "request_id  = ? ", new String[]{request_id});
+                long rowUpdated1 = Dashboard.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "request_id  = ? ", new String[]{request_id});
             if (rowUpdated1 != -1) {
                 // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                 Utils.showAlert(FieldVisit.this, " Field-Visit updated");
@@ -655,7 +655,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             }
         }
             else {
-                long rowInserted = LoginScreen.db.insert(DBHelper.SAVE_FIELD_VISIT,null,fieldValue);
+                long rowInserted = Dashboard.db.insert(DBHelper.SAVE_FIELD_VISIT,null,fieldValue);
                 //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                 if (rowInserted != -1) {
                     // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
@@ -1043,7 +1043,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void getTaxTypeFieldVisitList() {
         taxType = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.TAX_TYPE_FIELD_VISIT_LIST;
-        Cursor cursor = db.rawQuery(select_query, null);
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
 
             if(cursor.moveToFirst()){
@@ -1092,7 +1092,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void getFieldVisitStatusList() {
         fieldVisitStatus = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.FIELD_VISIT_STATUS;
-        Cursor cursor = db.rawQuery(select_query, null);
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
 
             if(cursor.moveToFirst()){
@@ -1139,7 +1139,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void getServiceListFieldVisitTypes(String id) {
         serviceFieldVisitTypes = new ArrayList<CommonModel>();
         String select_query= "SELECT * FROM " + DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES;
-        Cursor cursor = db.rawQuery(select_query, null);
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
 
             if(cursor.moveToFirst()){
@@ -1353,7 +1353,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public boolean isrequestIDexixt(String request_id) {
         Cursor cursor = null;
         String query = " SELECT  request_id  FROM " + DBHelper.SAVE_FIELD_VISIT + " WHERE  request_id  =?";
-        cursor = db.rawQuery(query,  new String[]{request_id});
+        cursor = Dashboard.db.rawQuery(query,  new String[]{request_id});
 
         if (cursor != null && cursor.getCount() > 0) {
             return true;

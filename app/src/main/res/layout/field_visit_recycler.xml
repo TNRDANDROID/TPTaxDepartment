@@ -223,7 +223,7 @@
                 android:layout_width="@dimen/_30sdp"
                 android:layout_height="@dimen/_30sdp"
                 android:id="@+id/imge_list"
-                android:src="@drawable/gallery_icon"></ImageView>
+                android:src="@drawable/ic_gallery"></ImageView>
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"

@@ -15,6 +15,7 @@ import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Interface.AdapterInterface;
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.activity.Dashboard;
 import com.nic.TPTaxDepartment.activity.ExistingTradeList;
 import com.nic.TPTaxDepartment.activity.NewTradeLicenceScreen;
 import com.nic.TPTaxDepartment.activity.PendingScreen;
@@ -95,7 +96,7 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
+                    Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
                     traders.remove(position);
                     notifyDataSetChanged();
                 }

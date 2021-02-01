@@ -1,6 +1,7 @@
 package com.nic.TPTaxDepartment.Adapter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.activity.Dashboard;
 import com.nic.TPTaxDepartment.activity.ExistingTradeList;
 import com.nic.TPTaxDepartment.activity.FieldVisit;
+import com.nic.TPTaxDepartment.activity.FullImageActivity;
 import com.nic.TPTaxDepartment.activity.PendingScreen;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
@@ -75,6 +77,13 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
                 }
             });
 
+            holder.image_list_icon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((PendingScreen)activity).showImageList(traders.get(position).getRequest_id());
+                }
+            });
+
         } catch (Exception exp){
             exp.printStackTrace();
         }
@@ -94,7 +103,7 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
     class SummaryViewHolder extends RecyclerView.ViewHolder {
         TextView name,code,taxType,current_status;
         RelativeLayout delete,upload;
-
+        RelativeLayout image_list_icon;
         SummaryViewHolder(View view) {
             super(view);
             name=(TextView)view.findViewById(R.id.nameValue);
@@ -103,6 +112,7 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             delete=(RelativeLayout)view.findViewById(R.id.left);
             upload=(RelativeLayout)view.findViewById(R.id.right);
             current_status=(TextView) view.findViewById(R.id.status_filed);
+            image_list_icon=(RelativeLayout) view.findViewById(R.id.image_list_layout);
         }
     }
 

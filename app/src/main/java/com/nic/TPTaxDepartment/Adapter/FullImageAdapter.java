@@ -20,6 +20,7 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.activity.Dashboard;
 import com.nic.TPTaxDepartment.activity.FieldVisit;
 import com.nic.TPTaxDepartment.activity.FullImageActivity;
+import com.nic.TPTaxDepartment.activity.LoginScreen;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
 import com.nic.TPTaxDepartment.databinding.GalleryThumbnailBinding;
@@ -78,7 +79,7 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
         holder.galleryThumbnailBinding.closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.delete(DBHelper.CAPTURED_PHOTO, "id" + "=?", new String[]{imagePreviewlistvalues.get(position).getField_visit_img_id()});
+                Dashboard.db.delete(DBHelper.CAPTURED_PHOTO, "id" + "=?", new String[]{imagePreviewlistvalues.get(position).getField_visit_img_id()});
                 imagePreviewlistvalues.remove(position);
                 notifyDataSetChanged();
             }

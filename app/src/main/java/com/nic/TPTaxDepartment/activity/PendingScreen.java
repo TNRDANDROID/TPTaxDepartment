@@ -411,8 +411,8 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 //                    Log.d("motivatorid",""+Motivatorid);
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
-                    db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
-                    db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
+                    Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
+                    Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{newTraderList.get(recyclerClickedPosition).getMobileno()});
                     loadNewTraderList();
                     /*Runnable runnable = new Runnable() {
                         @Override
@@ -636,5 +636,11 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         return image_str;
     }
 
-
+    public void showImageList(String requestid){
+        Intent intent = new Intent(PendingScreen.this, FullImageActivity.class);
+        intent.putExtra("request_id",requestid );
+        intent.putExtra("key", "FieldVisit");
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
 }
