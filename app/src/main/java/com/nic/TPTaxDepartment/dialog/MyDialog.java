@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.dataBase.dbData;
 import com.nic.TPTaxDepartment.session.PrefManager;
+import com.nic.TPTaxDepartment.utils.Utils;
 
 
 /**
@@ -65,6 +66,7 @@ public class MyDialog {
                 if(type.equals("Logout")) {
                     dbData.open();
                     dbData.deleteAll();
+                    Utils.clearApplicationData(activity);
                     prefManager.clearSession();
                 }
 

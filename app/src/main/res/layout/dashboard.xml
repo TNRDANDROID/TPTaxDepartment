@@ -75,7 +75,7 @@
                     android:adjustViewBounds="true"
                     android:background="@drawable/logout_variant"
                     android:backgroundTint="@android:color/white"
-                    android:onClick="@{()-> activity.closeApplication()}"
+                    android:onClick="@{()-> activity.logout()}"
                     android:scaleType="centerInside" />
 
 

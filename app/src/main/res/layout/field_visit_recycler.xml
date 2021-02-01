@@ -211,6 +211,20 @@
         android:id="@+id/rl1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/image_list_layout"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:id="@+id/imge_list"
+                android:src="@drawable/gallery_icon"></ImageView>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -231,7 +245,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Owner Name"
-                    android:textAlignment="viewEnd"
+                    android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -299,7 +313,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Request ID"
-                    android:textAlignment="viewEnd"
+                    android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -367,7 +381,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Tax Type"
-                    android:textAlignment="viewEnd"
+                    android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="18sp" />
 
@@ -434,7 +448,7 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Current Status"
-                    android:textAlignment="viewEnd"
+                    android:textAlignment="center"
                     android:textColor="#000"
                     android:textSize="18sp" />
 

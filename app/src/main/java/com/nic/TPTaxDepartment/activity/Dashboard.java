@@ -124,16 +124,18 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         dashboardBinding.pendingTv.startAnimation(anim);
 
         syncvisiblity();
-        getTaxTypeList();
-        getTaxTypeListFieldVisit();
-        getWardList();
-        getStreetList();
-        getLicenceValidityList();
-        getLicenceTypeList();
-        getGenderList();
-        getTradeList();
-        getFieldVisitStatus();
-        getServiceFieldVisitTypes();
+        if(Utils.isOnline()) {
+            getTaxTypeList();
+            getTaxTypeListFieldVisit();
+            getWardList();
+            getStreetList();
+            getLicenceValidityList();
+            getLicenceTypeList();
+            getGenderList();
+            getTradeList();
+            getFieldVisitStatus();
+            getServiceFieldVisitTypes();
+        }
        /* if(getTaxTypeCount()<= 0){
             getTaxTypeList();
         }
@@ -714,4 +716,32 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         cursor.close();
         return count;
     }
+
+    public void logout() {
+        int count=0;
+        int count1=0;
+        dbData.open();
+        ArrayList<TPtaxModel> activityCount = dbData.getPendingActivity();
+        String select_query= "SELECT * FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS;
+        String select_query1= "SELECT * FROM " + DBHelper.SAVE_FIELD_VISIT;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        Cursor cursor1 = Dashboard.db.rawQuery(select_query1, null);
+        if(cursor.getCount()>0) {
+            count=cursor.getCount();
+        }
+        if(cursor1.getCount()>0){
+            count1=cursor1.getCount();
+        }
+            if (!Utils.isOnline()) {
+            Utils.showAlert(this, "Logging out while offline may leads to loss of data!");
+        } else {
+            if (count1>0 ||count>0) {
+                Utils.showAlert(this,"Sync all the data before logout!");
+
+            }else{
+                closeApplication();
+            }
+        }
+    }
+
 }
