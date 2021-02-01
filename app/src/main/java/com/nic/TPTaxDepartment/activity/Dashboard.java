@@ -217,7 +217,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         int count = pendingList.getCount();
         Log.d("pending_count",String.valueOf(count));
         if (count > 0) {
-            sync_layout.setVisibility(View.VISIBLE);
+            sync_layout.setVisibility(View.GONE);
            // count_tv.setText(String.valueOf(count));
         }else {
             sync_layout.setVisibility(View.GONE);

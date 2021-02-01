@@ -10,16 +10,24 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.activity.Dashboard;
 import com.nic.TPTaxDepartment.activity.ExistingTradeList;
+import com.nic.TPTaxDepartment.activity.FieldVisit;
+import com.nic.TPTaxDepartment.activity.PendingScreen;
+import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import java.util.ArrayList;
 
+import static com.nic.TPTaxDepartment.Adapter.PendingScreenAdapter.db;
+
 public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAdapter.SummaryViewHolder>{
     private Activity activity;
-    private ArrayList<TPtaxModel> traders;
+    private ArrayList<CommonModel> traders;
     LayoutInflater mInflater;
 
-    public FieldVisitListAdapter( Activity activity, ArrayList<TPtaxModel> traders) {
+    public FieldVisitListAdapter( Activity activity, ArrayList<CommonModel> traders) {
         this.activity=activity;
         this.traders=traders;
         mInflater = LayoutInflater.from(activity);
@@ -42,9 +50,10 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
     public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
-            holder.name.setText(traders.get(position).getTraderName());
-            holder.code.setText(traders.get(position).getAssessmentId());
-            holder.taxType.setText(traders.get(position).getTaxTypeName());
+            holder.name.setText(traders.get(position).getOwnername());
+            holder.code.setText(traders.get(position).getRequest_id());
+            holder.taxType.setText(traders.get(position).getTaxtypedesc_en());
+            holder.current_status.setText(traders.get(position).getFIELD_VISIT_STATUS());
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -52,6 +61,18 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
 
                 }
 
+            });
+            holder.delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    deleteRow(position);
+                }
+            });
+            holder.upload.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((PendingScreen)activity).jsonDatasetValues(traders.get(position).getRequest_id(),position);
+                }
             });
 
         } catch (Exception exp){
@@ -71,7 +92,7 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
         return traders.size();
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
-        TextView name,code,taxType;
+        TextView name,code,taxType,current_status;
         RelativeLayout delete,upload;
 
         SummaryViewHolder(View view) {
@@ -81,6 +102,19 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             taxType=(TextView)view.findViewById(R.id.taxTypeValue);
             delete=(RelativeLayout)view.findViewById(R.id.left);
             upload=(RelativeLayout)view.findViewById(R.id.right);
+            current_status=(TextView) view.findViewById(R.id.status_filed);
+        }
+    }
+
+    public void deleteRow(int position){
+        Dashboard.db.delete(DBHelper.SAVE_FIELD_VISIT, "request_id" + "=?", new String[]{traders.get(position).getRequest_id()});
+        Dashboard.db.delete(DBHelper.CAPTURED_PHOTO, "request_id" + "=?", new String[]{traders.get(position).getRequest_id()});
+        traders.remove(position);
+        notifyDataSetChanged();
+        if(traders.size()>0){
+        }
+        else {
+            ((PendingScreen)activity).noDataLayout();
         }
     }
 }
