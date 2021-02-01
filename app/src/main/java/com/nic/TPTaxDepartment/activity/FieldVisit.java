@@ -1043,7 +1043,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void getTaxTypeFieldVisitList() {
         taxType = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.TAX_TYPE_FIELD_VISIT_LIST;
-        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        Cursor cursor = db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
 
             if(cursor.moveToFirst()){
@@ -1092,7 +1092,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void getFieldVisitStatusList() {
         fieldVisitStatus = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.FIELD_VISIT_STATUS;
-        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        Cursor cursor = db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
 
             if(cursor.moveToFirst()){
@@ -1139,7 +1139,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void getServiceListFieldVisitTypes(String id) {
         serviceFieldVisitTypes = new ArrayList<CommonModel>();
         String select_query= "SELECT * FROM " + DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES;
-        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        Cursor cursor = db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
 
             if(cursor.moveToFirst()){

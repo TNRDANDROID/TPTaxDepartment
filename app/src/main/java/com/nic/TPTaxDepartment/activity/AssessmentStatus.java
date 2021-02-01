@@ -211,7 +211,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
         Log.d("AssessmentStatusReq", "" + authKey);
-        Log.d("AssessmentStatusReq", "" + dataSet);
+
         return dataSet;
     }
 
@@ -221,6 +221,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         data.put(AppConstant.KEY_SERVICE_ID,"CheckAssessmentStatus");
         data.put(AppConstant.TAX_TYPE_ID,selectedTaxTypeId);
         data.put(AppConstant.ASSESSMENT_NO,assessmentStatusBinding.assessmentId.getText().toString());
+        Log.d("AssessmentStatusRequest", "" + data);
         return data;
     }
 

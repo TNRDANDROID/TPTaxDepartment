@@ -284,6 +284,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         JSONObject data = new JSONObject();
         data.put(AppConstant.KEY_SERVICE_ID,"TaxDailyCollection");
         data.put(AppConstant.COLLECTION_DATE,date.getText().toString());
+        Log.d("DailyCollectionRequest", "" + data);
         return data;
     }
 

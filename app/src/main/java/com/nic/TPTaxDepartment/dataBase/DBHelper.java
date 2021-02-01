@@ -94,7 +94,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "loc_long TEXT)");
 
         db.execSQL("CREATE TABLE "+ CAPTURED_PHOTO + "("
-                + "id INTEGER," +
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "loc_lat TEXT," +
                 "loc_long TEXT," +
                 "request_id TEXT," +

@@ -237,9 +237,16 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             setAdapter();
         }
     }
+    public void slideShow( Bundle bundle){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        SlideshowDialogFragment newFragment = SlideshowDialogFragment.newInstance();
+        newFragment.setArguments(bundle);
+        newFragment.show(ft, "slideshow");
+    }
     public void setAdapter(){
         fullImageAdapter = new FullImageAdapter(FullImageActivity.this,
                 activityImage, dbData);
+/*
         fullImageRecyclerBinding.imagePreviewRecyclerview.addOnItemTouchListener(new FullImageAdapter.RecyclerTouchListener(getApplicationContext(), fullImageRecyclerBinding.imagePreviewRecyclerview, new FullImageAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
@@ -258,6 +265,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
 
             }
         }));
+*/
         fullImageRecyclerBinding.imagePreviewRecyclerview.setAdapter(fullImageAdapter);
     }
     @Override

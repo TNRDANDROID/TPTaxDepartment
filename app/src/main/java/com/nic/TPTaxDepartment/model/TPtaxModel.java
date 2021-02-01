@@ -98,6 +98,16 @@ public class TPtaxModel  implements Serializable {
     public String paymentdate;
     public String paymentStatus;
     public String request_id;
+    public String field_visit_img_id;
+
+    public String getField_visit_img_id() {
+        return field_visit_img_id;
+    }
+
+    public TPtaxModel setField_visit_img_id(String field_visit_img_id) {
+        this.field_visit_img_id = field_visit_img_id;
+        return this;
+    }
 
     public String getRequest_id() {
         return request_id;

@@ -281,6 +281,8 @@ public class dbData {
                         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
                         TPtaxModel card = new TPtaxModel();
+                        card.setField_visit_img_id(cursor.getString(cursor
+                                .getColumnIndexOrThrow("id")));
                         card.setRequest_id(cursor.getString(cursor
                                 .getColumnIndexOrThrow("request_id")));
                         card.setLatitude(cursor.getString(cursor
