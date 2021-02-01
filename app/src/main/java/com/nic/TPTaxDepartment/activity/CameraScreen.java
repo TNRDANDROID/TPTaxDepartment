@@ -89,8 +89,6 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
 
     Button btn_save;
 
-    public static DBHelper dbHelper;
-    public static SQLiteDatabase db;
     private com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     String  pref_stage;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -107,13 +105,6 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         cameraScreenBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
-        try {
-            dbHelper = new DBHelper(this);
-            db = dbHelper.getWritableDatabase();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
 
         intializeUI();
     }
@@ -172,7 +163,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
             values.put(AppConstant.TRADE_CODE,trader_code);
             values.put(AppConstant.MOBILE,MOBILE);
             values.put("screen_status",screen_status);
-            id = db.insert(DBHelper.SAVE_TRADE_IMAGE, null, values);
+            id = Dashboard.db.insert(DBHelper.SAVE_TRADE_IMAGE, null, values);
 //            values.put(AppConstant.WORK_ID,work_id );
 //            values.put(AppConstant.WORK_GROUP_ID, getIntent().getStringExtra(AppConstant.WORK_GROUP_ID));
 //            values.put(AppConstant.WORK_TYPE_ID, getIntent().getStringExtra(AppConstant.WORK_TYPE_ID));

@@ -79,8 +79,6 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     String pref_district;
     private Handler handler = new Handler();
     private static TextView date;
-    private SQLiteDatabase db;
-    public static DBHelper dbHelper;
     private List<TPtaxModel> LicenceType = new ArrayList<>();
     private List<TPtaxModel> LicenceValidity = new ArrayList<>();
     HashMap<String,String> spinnerMap;
@@ -125,12 +123,6 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding = DataBindingUtil.setContentView(this, R.layout.existing_trade_details_view);
         existingTradeDetailsViewBinding.setActivity(this);
         prefManager = new PrefManager(this);
-        try {
-            dbHelper = new DBHelper(this);
-            db = dbHelper.getWritableDatabase();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
        /* ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mApps);
         existingTradeDetailsViewBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
@@ -1098,7 +1090,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     public void savenewTraderINLocal(){
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTrdeCodeDetailsID;
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {
@@ -1157,7 +1149,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
             values.put(AppConstant.PAYMENT_STATUS,paymentStatus);
 
-            db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
+            Dashboard.db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
             Log.d("InsertNewTrader",""+values);
         }
 
@@ -1170,7 +1162,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     public int getProfilesCount() {
         String countQuery = "SELECT  * FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS;
-        Cursor cursor = db.rawQuery(countQuery, null);
+        Cursor cursor = Dashboard.db.rawQuery(countQuery, null);
         int count = cursor.getCount();
         cursor.close();
         return count;
@@ -1180,7 +1172,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         image="";lat="";lan="";
 
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+existingTradeDetailsViewBinding.mobileNo.getText().toString();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {
@@ -1206,7 +1198,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     public JSONObject dataSavedEncryptJsonParams() throws JSONException {
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+existingTradeDetailsViewBinding.mobileNo.getText().toString();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
         JSONArray imageArray = new JSONArray();
         if (cursor.getCount() > 0) {
@@ -1296,7 +1288,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 //        dataSet.put(AppConstant.LICENCE_VALIDITY, existingTradeDetailsViewBinding.licenceValidity.getSelectedItemPosition());
 
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+existingTradeDetailsViewBinding.mobileNo.getText().toString();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {

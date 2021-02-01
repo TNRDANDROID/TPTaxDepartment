@@ -23,7 +23,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin"
                 android:text="View Image"
-                android:textColor="@android:color/black"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <ImageView

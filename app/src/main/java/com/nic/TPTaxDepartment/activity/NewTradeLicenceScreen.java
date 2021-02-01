@@ -80,8 +80,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String pref_district;
     private Handler handler = new Handler();
     private static TextView date;
-    private SQLiteDatabase db;
-    public static DBHelper dbHelper;
     private List<TPtaxModel> LicenceType = new ArrayList<>();
     private List<TPtaxModel> LicenceValidity = new ArrayList<>();
     HashMap<String,String> spinnerMap;
@@ -125,12 +123,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding = DataBindingUtil.setContentView(this, R.layout.new_trade_licence_screen);
         newTradeLicenceScreenBinding.setActivity(this);
         prefManager = new PrefManager(this);
-        try {
-            dbHelper = new DBHelper(this);
-            db = dbHelper.getWritableDatabase();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
        /* ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mApps);
         newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
@@ -460,7 +452,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     //JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
 //                    String Motivatorid =  Utils.NotNullString(jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID));
 //                    Log.d("motivatorid",""+Motivatorid);
-                    db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
+                    Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
 
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
@@ -1028,7 +1020,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public boolean isrequestIDexixt(String mobileno) {
         Cursor cursor = null;
         String query = " SELECT  mobileno  FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS + " WHERE  mobileno  =?";
-        cursor = db.rawQuery(query,  new String[]{mobileno});
+        cursor = Dashboard.db.rawQuery(query,  new String[]{mobileno});
 
         if (cursor != null && cursor.getCount() > 0) {
             return true;
@@ -1037,7 +1029,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
     public void savenewTraderINLocal(){
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and tradecode ="+selectedTrdeCodeDetailsID;
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {
@@ -1096,7 +1088,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             values.put(AppConstant.PAYMENT_STATUS,paymentStatus);
             if (isrequestIDexixt(newTradeLicenceScreenBinding.mobileNo.getText().toString())){
-                long rowUpdated1 = db.update(DBHelper.SAVE_FIELD_VISIT, values, "mobileno  = ? ", new String[]{newTradeLicenceScreenBinding.mobileNo.getText().toString()});
+                long rowUpdated1 = Dashboard.db.update(DBHelper.SAVE_FIELD_VISIT, values, "mobileno  = ? ", new String[]{newTradeLicenceScreenBinding.mobileNo.getText().toString()});
                 if (rowUpdated1 != -1) {
                     // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                     Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details updated");
@@ -1105,7 +1097,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     //dashboard();
                 }
             }else {
-                long rowUpdated1 =  db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
+                long rowUpdated1 =  Dashboard.db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
                 if (rowUpdated1 != -1) {
                     Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details Added Successfully!");
                     Log.d("InsertNewTrader",""+values);
@@ -1123,7 +1115,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public int getProfilesCount() {
         String countQuery = "SELECT  * FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS;
-        Cursor cursor = db.rawQuery(countQuery, null);
+        Cursor cursor = Dashboard.db.rawQuery(countQuery, null);
         int count = cursor.getCount();
         cursor.close();
         return count;
@@ -1133,7 +1125,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         image="";lat="";lan="";
 
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+newTradeLicenceScreenBinding.mobileNo.getText().toString();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {
@@ -1159,7 +1151,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public JSONObject dataSavedEncryptJsonParams() throws JSONException {
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+newTradeLicenceScreenBinding.mobileNo.getText().toString();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
         JSONArray imageArray = new JSONArray();
         if (cursor.getCount() > 0) {
@@ -1249,7 +1241,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        dataSet.put(AppConstant.LICENCE_VALIDITY, newTradeLicenceScreenBinding.licenceValidity.getSelectedItemPosition());
 
         String sql = "SELECT * FROM " + DBHelper.SAVE_TRADE_IMAGE + " WHERE screen_status = 'new' and mobileno ="+newTradeLicenceScreenBinding.mobileNo.getText().toString();
-        Cursor cursor = db.rawQuery(sql, null);
+        Cursor cursor = Dashboard.db.rawQuery(sql, null);
         Log.d("cursor_count", String.valueOf(cursor.getCount()));
 
         if (cursor.getCount() > 0) {
