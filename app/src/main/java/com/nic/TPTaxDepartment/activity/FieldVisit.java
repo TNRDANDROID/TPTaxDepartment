@@ -141,7 +141,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     private PrefManager prefManager;
     FieldVisitRquestListAdapter fieldVisitRquestListAdapter;
     String request_id,data_ref_id;
-
+    Dialog dialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,6 +270,35 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
+    public void viewImage() {
+        if(fieldVisitBinding.requestIdTextField.getText()!= null && !fieldVisitBinding.requestIdTextField.getText().equals("")){
+            if (getSaveTradeImageTable() > 0) {
+                Intent intent = new Intent(this, FullImageActivity.class);
+                intent.putExtra("request_id", fieldVisitBinding.requestIdTextField.getText().toString());
+                intent.putExtra("key", "FieldVisit");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            } else {
+                Utils.showAlert(FieldVisit.this, "No image Saved in Local");
+            }
+        }else {
+            Utils.showAlert(FieldVisit.this, "Select TaxType To Get Request Id");
+        }
+
+    }
+
+    public int getSaveTradeImageTable(){
+
+        Cursor cursor = null;
+        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+fieldVisitBinding.requestIdTextField.getText().toString();
+        cursor=db.rawQuery(sql,null,null);
+        if (cursor.getCount() > 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public void image() {
         if(!selectedTaxTypeName.equals("Select TaxType")) {
             imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
@@ -304,8 +333,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //
 //            LoginScreen.db.insert(DBHelper.SAVE_TRADE_IMAGE, null, fieldValue);
 
-        final Dialog dialog = new Dialog(this,
-                R.style.AppTheme);
+        dialog = new Dialog(this, R.style.AppTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.add_photo);
         dialog.setCanceledOnTouchOutside(false);
@@ -335,7 +363,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onBackPressed();
+                dialog.dismiss();
             }
         });
         home.setOnClickListener(new View.OnClickListener() {
@@ -425,7 +453,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 }
                             }
 */
-                            long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
+                            long rowInserted = db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
                             //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                             if (rowInserted != -1) {
                                 // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();

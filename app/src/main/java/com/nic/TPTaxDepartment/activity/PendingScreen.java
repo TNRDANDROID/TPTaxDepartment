@@ -58,7 +58,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     ArrayList<TPtaxModel> newTraderList = new ArrayList<>();
     ArrayList<TPtaxModel> fieldVisitList = new ArrayList<>();
-    ArrayList<CommonModel> fieldVisitPendingList = new ArrayList<>();
+    ArrayList<CommonModel> fieldVisitPendingList ;
     private ImageView back_img, home_img;
     private TextView newTrader, fieldVisit;
     private RelativeLayout left, right;
@@ -207,6 +207,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         }
     }
     private void loadFieldVisitListPending(){
+        fieldVisitPendingList = new ArrayList<>();
         String select_query= "SELECT *FROM " + DBHelper.SAVE_FIELD_VISIT;
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0) {
@@ -573,14 +574,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     }
 
     public void jsonDatasetValues(String request_id,int pos1){
-        pos=pos;
+        pos=pos1;
         no_data_fond_layout.setVisibility(View.GONE);
         newTraderRecycler.setVisibility(View.GONE);
         ArrayList<CommonModel> commonModels=new ArrayList<>();
         JSONArray jsonArray=new JSONArray();
         dbData.open();
-        commonModels.addAll(dbData.selectPendingImage(request_id));
 
+//        commonModels.addAll(dbData.selectPendingImage(request_id));
+        commonModels = new ArrayList<>(dbData.selectPendingImage(request_id) );
 
         for (int i=0;i<commonModels.size();i++){
             JSONObject imageArray = new JSONObject();
@@ -598,20 +600,20 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             catch (Exception e){
                 e.printStackTrace();
             }
-            try {
-                dataset.put("image_details",jsonArray);
-                dataset.put(AppConstant.KEY_SERVICE_ID,"FieldVisitStatusUpdate");
-                dataset.put("taxtypeid", fieldVisitPendingList.get(pos1).getTaxtypeid());
-                dataset.put("serviceid", fieldVisitPendingList.get(pos1).getService_list_field_visit_service_id());
-                dataset.put("request_id", request_id);
-                dataset.put("data_ref_id", fieldVisitPendingList.get(pos1).getData_ref_id());
-                dataset.put("field_visit_status", fieldVisitPendingList.get(pos1).getFIELD_VISIT_STATUS());
-                dataset.put("remark", fieldVisitPendingList.get(pos1).getRemark());
-            }
-            catch (JSONException e){
-                e.printStackTrace();
-            }
-
+        }
+        System.out.println("jsonArray"+ jsonArray.toString());
+        try {
+            dataset.put("image_details",jsonArray);
+            dataset.put(AppConstant.KEY_SERVICE_ID,"FieldVisitStatusUpdate");
+            dataset.put("taxtypeid", fieldVisitPendingList.get(pos1).getTaxtypeid());
+            dataset.put("serviceid", fieldVisitPendingList.get(pos1).getService_list_field_visit_service_id());
+            dataset.put("request_id", request_id);
+            dataset.put("data_ref_id", fieldVisitPendingList.get(pos1).getData_ref_id());
+            dataset.put("field_visit_status", fieldVisitPendingList.get(pos1).getFIELD_VISIT_STATUS());
+            dataset.put("remark", fieldVisitPendingList.get(pos1).getRemark());
+        }
+        catch (JSONException e){
+            e.printStackTrace();
         }
 
         if(Utils.isOnline()){

@@ -640,6 +640,31 @@
                             style="@string/font_normal" />
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/view_pic_layout"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                         android:layout_gravity="right"
+                        android:onClick="@{()-> activity.viewImage()}"
+                        android:layout_marginTop="@dimen/_25sdp"
+                        android:background="@drawable/white_background_left_two_corners"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/_8sdp">
+
+                        <TextView
+                            android:id="@+id/view_photo_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="left"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:text="View Image"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            android:textStyle="normal"
+                            style="@string/font_normal" />
+
+                    </LinearLayout>
 
 
 

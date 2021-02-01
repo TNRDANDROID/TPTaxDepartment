@@ -97,7 +97,16 @@ public class TPtaxModel  implements Serializable {
     public String establishment_name_en;
     public String paymentdate;
     public String paymentStatus;
+    public String request_id;
 
+    public String getRequest_id() {
+        return request_id;
+    }
+
+    public TPtaxModel setRequest_id(String request_id) {
+        this.request_id = request_id;
+        return this;
+    }
 
     public String getApgenderId() {
         return apgenderId;

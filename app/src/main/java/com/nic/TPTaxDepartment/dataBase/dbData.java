@@ -243,6 +243,69 @@ public class dbData {
         }
         return cards;
     }
+    public ArrayList<TPtaxModel> selectFieldVisitImage(String request_id) {
+        db.isOpen();
+        ArrayList<TPtaxModel> cards = new ArrayList<>();
+        Cursor cursor = null;
+        Cursor res = null;
+        String selection = "request_id = ?";
+        String[] selectionArgs = new String[]{request_id}; ;
+        String query="SELECT * FROM (\n" +
+                "SELECT * FROM captured_photo ORDER BY id DESC LIMIT 10 where request_id=" +request_id+
+                ")\n" +
+                "ORDER BY id ASC;";
+        String  quy="SELECT * FROM captured_photo";
+        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id;
+
+//        if (status.equalsIgnoreCase("new")) {
+//            selection = "tradecode = ? and screen_status = ?";
+//            selectionArgs = new String[]{tradecode,status};
+//        }else {
+//            selection = "dcode = ? and bcode = ? and pvcode = ? and work_id = ? and type_of_work = ?";
+//            selectionArgs = new String[]{dcode,bcode,pvcode,work_id,type_of_work};
+//        }
+
+        try {
+          /*  cursor = db.query(DBHelper.CAPTURED_PHOTO,
+                    new String[]{"*"}, selection,selectionArgs, null, null, null);*/
+            cursor=db.rawQuery(sql,null,null);
+            int count = cursor.getCount();
+
+
+            if (cursor.getCount() > 0) {
+                if (cursor.moveToFirst()) {
+                    do {
+
+                        byte[] photo = cursor.getBlob(cursor.getColumnIndexOrThrow(AppConstant.FIELD_IMAGE));
+                        byte[] decodedString = Base64.decode(photo, Base64.DEFAULT);
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
+                        TPtaxModel card = new TPtaxModel();
+                        card.setRequest_id(cursor.getString(cursor
+                                .getColumnIndexOrThrow("request_id")));
+                        card.setLatitude(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.LATITUDE)));
+                        card.setLongitude(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.LONGITUDE)));
+                        card.setImage(decodedByte);
+
+                        cards.add(card);
+                    }while(cursor.moveToNext());
+                }
+            }
+
+        } catch (Exception e){
+            e.printStackTrace();
+            //   Log.d(DEBUG_TAG, "Exception raised with a value of " + e);
+        } finally{
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+
+        return cards;
+    }
+
 
     public ArrayList<CommonModel> selectPendingImage(String request_id) {
         db.isOpen();
@@ -256,6 +319,8 @@ public class dbData {
                 ")\n" +
                 "ORDER BY id ASC;";
         String  quy="SELECT * FROM captured_photo";
+        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id;
+
 //        if (status.equalsIgnoreCase("new")) {
 //            selection = "tradecode = ? and screen_status = ?";
 //            selectionArgs = new String[]{tradecode,status};
@@ -267,8 +332,8 @@ public class dbData {
         try {
           /*  cursor = db.query(DBHelper.CAPTURED_PHOTO,
                     new String[]{"*"}, selection,selectionArgs, null, null, null);*/
-            cursor=db.rawQuery(quy,null,null);
-
+            cursor=db.rawQuery(sql,null,null);
+            int count = cursor.getCount();
 
 
             if (cursor.getCount() > 0) {
@@ -289,16 +354,19 @@ public class dbData {
                         card.setImage(decodedByte);
 
                         cards.add(card);
-                    }while(res.moveToNext());
+                    }while(cursor.moveToNext());
                 }
             }
+
         } catch (Exception e){
+            e.printStackTrace();
             //   Log.d(DEBUG_TAG, "Exception raised with a value of " + e);
         } finally{
             if (cursor != null) {
                 cursor.close();
             }
         }
+
         return cards;
     }
 

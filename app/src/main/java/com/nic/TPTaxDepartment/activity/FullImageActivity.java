@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 public class FullImageActivity extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     private FullImageRecyclerBinding fullImageRecyclerBinding;
-    public String tradecode,status,taxtypeid,mobileNo;
+    public String tradecode,status,taxtypeid,mobileNo,request_id,key="";
     private FullImageAdapter fullImageAdapter;
     private PrefManager prefManager;
     private static  ArrayList<TPtaxModel> activityImage = new ArrayList<>();
@@ -56,6 +56,8 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
         status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
         taxtypeid = getIntent().getStringExtra(AppConstant.TAX_TYPE_ID);
+        request_id = getIntent().getStringExtra("request_id");
+        key = getIntent().getStringExtra("key");
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         fullImageRecyclerBinding.imagePreviewRecyclerview.setLayoutManager(mLayoutManager);
@@ -65,7 +67,13 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         fullImageRecyclerBinding.imagePreviewRecyclerview.setFocusable(false);
         fullImageRecyclerBinding.imagePreviewRecyclerview.setAdapter(fullImageAdapter);
 
-        new fetchImagetask().execute();
+
+
+        if(key.equals("FieldVisit")){
+            new fetchFieldVisitImagetask().execute();
+        }else {
+            new fetchImagetask().execute();
+        }
 
 //        if(OnOffType.equalsIgnoreCase("Online")) {
 //            if (Utils.isOnline()) {
@@ -106,6 +114,25 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             setAdapter();
         }
     }
+    public class fetchFieldVisitImagetask extends AsyncTask<Void, Void,
+            ArrayList<TPtaxModel>> {
+        @Override
+        protected ArrayList<TPtaxModel> doInBackground(Void... params) {
+
+            dbData.open();
+            activityImage = new ArrayList<>();
+            activityImage = dbData.selectFieldVisitImage(request_id);
+            Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
+            return activityImage;
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<TPtaxModel> imageList) {
+            super.onPostExecute(imageList);
+            setAdapter();
+        }
+    }
+
     public void homePage() {
 //        Intent intent = new Intent(this, HomePage.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
