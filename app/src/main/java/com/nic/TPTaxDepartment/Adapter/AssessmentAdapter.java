@@ -53,6 +53,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.propertyTax.setVisibility(View.GONE);
                 holder.tradeLicenceTax.setVisibility(View.GONE);
                 holder.waterTax.setVisibility(View.GONE);
+                holder.nonTax.setVisibility(View.GONE);
                 holder.assessment_no.setText(commonModelArrayList.get(position).lb_assessmentno);
                 holder.assessment_name.setText(commonModelArrayList.get(position).assessmentnameeng);
                 holder.organization_type.setText(commonModelArrayList.get(position).organizationtype);
@@ -61,6 +62,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.propertyTax.setVisibility(View.VISIBLE);
                 holder.tradeLicenceTax.setVisibility(View.GONE);
                 holder.waterTax.setVisibility(View.GONE);
+                holder.nonTax.setVisibility(View.GONE);
                 holder.property_assessment_no.setText(commonModelArrayList.get(position).assessment_no);
                 holder.owner_name.setText(commonModelArrayList.get(position).owner_name);
                 holder.father_name.setText(commonModelArrayList.get(position).father_name);
@@ -71,6 +73,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.propertyTax.setVisibility(View.GONE);
                 holder.tradeLicenceTax.setVisibility(View.VISIBLE);
                 holder.waterTax.setVisibility(View.GONE);
+                holder.nonTax.setVisibility(View.GONE);
                 holder.lb_traderscode.setText(commonModelArrayList.get(position).lb_traderscode);
                 holder.apfathername_en.setText(commonModelArrayList.get(position).apfathername_en);
                 holder.apfathername_ta.setText(commonModelArrayList.get(position).apfathername_ta);
@@ -84,14 +87,29 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.propertyTax.setVisibility(View.GONE);
                 holder.tradeLicenceTax.setVisibility(View.GONE);
                 holder.waterTax.setVisibility(View.VISIBLE);
+                holder.nonTax.setVisibility(View.GONE);
                 holder.lb_connectionno.setText(commonModelArrayList.get(position).lb_connectionno);
                 holder.connectionname.setText(commonModelArrayList.get(position).connectionname);
                 holder.water_charges.setText(commonModelArrayList.get(position).water_charges);
+            }else if(selectedTaxTypeName.equals("Non Tax") || selectedTaxTypeId.equals("5")) {
+                holder.professionalTax.setVisibility(View.GONE);
+                holder.propertyTax.setVisibility(View.GONE);
+                holder.tradeLicenceTax.setVisibility(View.GONE);
+                holder.waterTax.setVisibility(View.GONE);
+                holder.nonTax.setVisibility(View.VISIBLE);
+                holder.lb_leaseassessmentno.setText(commonModelArrayList.get(position).lb_leaseassessmentno);
+                holder.leasee_name_en.setText(commonModelArrayList.get(position).leasee_name_en);
+                holder.leasee_name_ta.setText(commonModelArrayList.get(position).leasee_name_ta);
+                holder.lease_type_code.setText(commonModelArrayList.get(position).lease_type_code);
+                holder.lease_type_description_en.setText(commonModelArrayList.get(position).lease_type_description_en);
+                holder.lease_payment_due_type.setText(commonModelArrayList.get(position).lease_payment_due_type);
+                holder.annuallease_amount.setText(commonModelArrayList.get(position).annuallease_amount);
             }else {
                 holder.professionalTax.setVisibility(View.GONE);
                 holder.propertyTax.setVisibility(View.GONE);
                 holder.tradeLicenceTax.setVisibility(View.GONE);
                 holder.waterTax.setVisibility(View.GONE);
+                holder.nonTax.setVisibility(View.GONE);
             }
 
         } catch (Exception exp){
@@ -114,6 +132,9 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
         LinearLayout tradeLicenceTax;
         TextView lb_connectionno,connectionname,water_charges;
         LinearLayout waterTax;
+        TextView lb_leaseassessmentno,leasee_name_en,leasee_name_ta,lease_type_code,lease_type_description_en,
+                lease_payment_due_type,annuallease_amount;
+        LinearLayout nonTax;
 
         SummaryViewHolder(View view) {
             super(view);
@@ -142,6 +163,15 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
             lb_connectionno=(TextView)view.findViewById(R.id.lb_connectionno);
             connectionname=(TextView)view.findViewById(R.id.connectionname);
             water_charges=(TextView)view.findViewById(R.id.water_charges);
+
+            nonTax=(LinearLayout)view.findViewById(R.id.non_tax);
+            lb_leaseassessmentno=(TextView)view.findViewById(R.id.lb_leaseassessmentno);
+            leasee_name_en=(TextView)view.findViewById(R.id.leasee_name_en);
+            leasee_name_ta=(TextView)view.findViewById(R.id.leasee_name_ta);
+            lease_type_code=(TextView)view.findViewById(R.id.lease_type_code);
+            lease_type_description_en=(TextView)view.findViewById(R.id.lease_type_description_en);
+            lease_payment_due_type=(TextView)view.findViewById(R.id.lease_payment_due_type);
+            annuallease_amount=(TextView)view.findViewById(R.id.annuallease_amount);
 
         }
     }

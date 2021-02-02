@@ -507,7 +507,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
 
         if(fieldVisitBinding.currentStatus.getSelectedItem().equals("Need improvement")){
-            btnAddMobile.setVisibility(View.VISIBLE);
+            btnAddMobile.setVisibility(View.GONE);
         }else {
             btnAddMobile.setVisibility(View.GONE);
         }

@@ -92,7 +92,7 @@
                     android:layout_height="match_parent"
                     android:id="@+id/trade_recycler"
                     android:scrollbarSize="1dp"
-                    android:padding="@dimen/margin_left_20dp"
+                    android:padding="10dp"
                     android:visibility="visible"
                     android:scrollbars="vertical"/>
 

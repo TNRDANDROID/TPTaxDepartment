@@ -76,6 +76,17 @@ public class CommonModel {
     public String connectionname;
     public String water_charges;
 
+    public String lb_leaseassessmentno;
+    public String leasee_name_en;
+    public String leasee_name_ta;
+    public String lease_type_code;
+    public String lease_type_description_en;
+    public String lease_payment_due_type;
+    public String annuallease_amount;
+
+
+
+
     String request_id;
     String data_ref_id;
     String ownername;
@@ -92,6 +103,69 @@ public class CommonModel {
 
     /////............../////
 
+
+    public String getLb_leaseassessmentno() {
+        return lb_leaseassessmentno;
+    }
+
+    public CommonModel setLb_leaseassessmentno(String lb_leaseassessmentno) {
+        this.lb_leaseassessmentno = lb_leaseassessmentno;
+        return this;
+    }
+
+    public String getLeasee_name_en() {
+        return leasee_name_en;
+    }
+
+    public CommonModel setLeasee_name_en(String leasee_name_en) {
+        this.leasee_name_en = leasee_name_en;
+        return this;
+    }
+
+    public String getLeasee_name_ta() {
+        return leasee_name_ta;
+    }
+
+    public CommonModel setLeasee_name_ta(String leasee_name_ta) {
+        this.leasee_name_ta = leasee_name_ta;
+        return this;
+    }
+
+    public String getLease_type_code() {
+        return lease_type_code;
+    }
+
+    public CommonModel setLease_type_code(String lease_type_code) {
+        this.lease_type_code = lease_type_code;
+        return this;
+    }
+
+    public String getLease_type_description_en() {
+        return lease_type_description_en;
+    }
+
+    public CommonModel setLease_type_description_en(String lease_type_description_en) {
+        this.lease_type_description_en = lease_type_description_en;
+        return this;
+    }
+
+    public String getLease_payment_due_type() {
+        return lease_payment_due_type;
+    }
+
+    public CommonModel setLease_payment_due_type(String lease_payment_due_type) {
+        this.lease_payment_due_type = lease_payment_due_type;
+        return this;
+    }
+
+    public String getAnnuallease_amount() {
+        return annuallease_amount;
+    }
+
+    public CommonModel setAnnuallease_amount(String annuallease_amount) {
+        this.annuallease_amount = annuallease_amount;
+        return this;
+    }
 
     public String getRequest_id() {
         return request_id;

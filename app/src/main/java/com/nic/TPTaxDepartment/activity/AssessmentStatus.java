@@ -54,6 +54,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     ArrayList<CommonModel> propertyTax ;
     ArrayList<CommonModel> tradeLicense ;
     ArrayList<CommonModel> waterTax ;
+    ArrayList<CommonModel> nonTax ;
     HashMap<String,String> spinnerMapTaxType;
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
@@ -353,6 +354,40 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                         Collections.sort(waterTax, (lhs, rhs) -> lhs.getConnectionname().compareTo(rhs.getConnectionname()));
                         if (waterTax != null && waterTax.size() > 0) {
                             AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, waterTax,selectedTaxTypeName,selectedTaxTypeId);
+                            assessmentAdapter.notifyDataSetChanged();
+                            assessmentStatusBinding.recycler.setAdapter(assessmentAdapter);
+                            assessmentStatusBinding.header.setText(selectedTaxTypeName);
+                            assessmentStatusBinding.detailsLayout.setVisibility(View.VISIBLE);
+                            assessmentStatusBinding.submitLayout.setVisibility(View.GONE);
+                            assessmentStatusBinding.submit.setVisibility(View.GONE);
+                        }
+                    }
+                        if (selectedTaxTypeName.equals("Non Tax") || selectedTaxTypeId.equals("5")){
+                            nonTax=new ArrayList<CommonModel>();
+                            for (int i = 0; i < jsonarray.length(); i++) {
+                                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                                String lb_leaseassessmentno = Utils.NotNullString(jsonobject.getString("lb_leaseassessmentno"));
+                                String leasee_name_en = Utils.NotNullString(jsonobject.getString("leasee_name_en"));
+                                String leasee_name_ta = Utils.NotNullString(jsonobject.getString("leasee_name_ta"));
+                                String lease_type_code = Utils.NotNullString(jsonobject.getString("lease_type_code"));
+                                String lease_type_description_en = Utils.NotNullString(jsonobject.getString("lease_type_description_en"));
+                                String lease_payment_due_type = Utils.NotNullString(jsonobject.getString("lease_payment_due_type"));
+                                String annuallease_amount = Utils.NotNullString(jsonobject.getString("annuallease_amount"));
+
+                                CommonModel commonModel=new CommonModel();
+                                commonModel.setLb_leaseassessmentno(lb_leaseassessmentno);
+                                commonModel.setLeasee_name_en(leasee_name_en);
+                                commonModel.setLeasee_name_ta(leasee_name_ta);
+                                commonModel.setLease_type_code(lease_type_code);
+                                commonModel.setLease_type_description_en(lease_type_description_en);
+                                commonModel.setLease_payment_due_type(lease_payment_due_type);
+                                commonModel.setAnnuallease_amount(annuallease_amount);
+                                nonTax.add(commonModel);
+
+                            }
+                        Collections.sort(nonTax, (lhs, rhs) -> lhs.getLeasee_name_en().compareTo(rhs.getLeasee_name_en()));
+                        if (nonTax != null && nonTax.size() > 0) {
+                            AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, nonTax,selectedTaxTypeName,selectedTaxTypeId);
                             assessmentAdapter.notifyDataSetChanged();
                             assessmentStatusBinding.recycler.setAdapter(assessmentAdapter);
                             assessmentStatusBinding.header.setText(selectedTaxTypeName);
