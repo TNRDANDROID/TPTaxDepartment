@@ -13,6 +13,7 @@
         android:layout_height="match_parent">
 
         <ScrollView
+            android:visibility="visible"
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -262,6 +263,41 @@
             </LinearLayout>
 
         </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:background="@drawable/progress_bg"
+                android:layout_centerInParent="true"
+                android:layout_width="75dp"
+                android:layout_height="85dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp">
+                <ImageView
+                    android:id="@+id/spinnerImageView"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="20dp"
+                    android:layout_centerInParent="true"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/spinner" />
+
+                <TextView
+                    android:id="@+id/message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:text="Loading..."
+                    android:textSize="12sp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"
+                    />
+            </RelativeLayout>
+        </RelativeLayout>
 
 
     </RelativeLayout>

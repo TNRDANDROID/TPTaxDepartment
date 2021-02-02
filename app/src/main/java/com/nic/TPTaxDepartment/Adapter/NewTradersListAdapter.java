@@ -74,13 +74,14 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent( activity, NewTradeLicenceScreen.class);
+                    /*Intent intent = new Intent( activity, NewTradeLicenceScreen.class);
                     intent.putExtra("flag",true);
                     intent.putExtra("position",position);
                     intent.putExtra("tradersList", (Serializable) traders);
                     activity.startActivity(intent);
-                    activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out);*/
 
+                    ((PendingScreen)activity).gotoNewTradeLicenseScreen(position);
 
                 }
 

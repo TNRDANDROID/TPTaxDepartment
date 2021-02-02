@@ -67,16 +67,28 @@ public class SplashScreen extends AppCompatActivity implements
         splashScreenBinding.ivSubtitle.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
         splashScreenBinding.ivBtn.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
 
-        splashScreenBinding.ivBtn.setOnClickListener(new View.OnClickListener() {
+       /* if((prefManager.getUserName()!=null) &&(!prefManager.getUserName().equals(""))
+                &&(prefManager.getUserPassword()!=null)&&(!prefManager.getUserPassword().equals(""))){
+            Intent i = new Intent(SplashScreen.this, LoginScreen.class);
+            startActivity(i);
+            finish();
+            overridePendingTransition(R.anim.fleft, R.anim.fhelper);
+        }*/
+
+
+            splashScreenBinding.ivBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSignInScreen();
             }
         });
+
+
     }
 
 
     private void showSignInScreen() {
+
         Intent i = new Intent(SplashScreen.this, LoginScreen.class);
         startActivity(i);
         finish();

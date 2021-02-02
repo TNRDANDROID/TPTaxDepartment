@@ -49,6 +49,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -444,6 +445,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     }
                 }catch (Exception e){
                     e.printStackTrace();
+                    Utils.showAlert(PendingScreen.this, "Not Saved");
                 }
 
             }
@@ -460,11 +462,11 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     }
 
 
-    @Override
+   /* @Override
     protected void onResume() {
         super.onResume();
         loadNewTraderList();
-    }
+    }*/
     public void SaveLicenseTraders(int pos) {
         recyclerClickedPosition=pos;
         try {
@@ -474,8 +476,6 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         } }
     public JSONObject dataSavedEncryptJsonParams() throws JSONException {
         JSONArray imageArray = new JSONArray();
-
-
         String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataTobeSavedJsonParams().toString());
         JSONObject dataSet = new JSONObject();
         JSONObject dataSet1 = new JSONObject();
@@ -544,12 +544,12 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
     }
 
-    @Override
+   /* @Override
     protected void onRestart() {
         super.onRestart();
         newTradersListAdapter.notifyDataSetChanged();
     }
-
+*/
     public void noDataLayout(){
         no_data_fond_layout.setVisibility(View.VISIBLE);
         fieldVisitRecycler.setVisibility(View.GONE);
@@ -577,12 +577,12 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         pos=pos1;
         no_data_fond_layout.setVisibility(View.GONE);
         newTraderRecycler.setVisibility(View.GONE);
-        ArrayList<CommonModel> commonModels=new ArrayList<>();
+        ArrayList<TPtaxModel> commonModels=new ArrayList<>();
         JSONArray jsonArray=new JSONArray();
         dbData.open();
 
 //        commonModels.addAll(dbData.selectPendingImage(request_id));
-        commonModels = new ArrayList<>(dbData.selectPendingImage(request_id) );
+        commonModels = new ArrayList<>(dbData.selectFieldVisitImage(request_id) );
 
         for (int i=0;i<commonModels.size();i++){
             JSONObject imageArray = new JSONObject();
@@ -640,7 +640,40 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         Intent intent = new Intent(PendingScreen.this, FullImageActivity.class);
         intent.putExtra("request_id",requestid );
         intent.putExtra("key", "FieldVisit");
-        startActivity(intent);
+        startActivityForResult(intent,1);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+
+    public void gotoNewTradeLicenseScreen(int pos){
+        Intent intent = new Intent( activity, NewTradeLicenceScreen.class);
+        intent.putExtra("flag",true);
+        intent.putExtra("position",pos);
+        intent.putExtra("tradersList", (Serializable) newTraderList);
+        startActivityForResult(intent,2);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1&&requestCode==RESULT_OK){
+            if(data!=null){
+                String datafield=data.getStringExtra("Data");
+                if(datafield.equals("FieldVisit")){
+                loadFieldVisitListPending();
+                }
+            }
+        }
+       else if(requestCode==2&&requestCode==RESULT_OK){
+            if(data!=null){
+                String datafield=data.getStringExtra("Data");
+                if(datafield.equals("NewTrade")){
+                    loadNewTraderList();
+                }
+            }
+        }
+
     }
 }

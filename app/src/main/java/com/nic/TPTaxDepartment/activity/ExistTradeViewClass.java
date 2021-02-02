@@ -890,7 +890,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     public void validateUserDetails() {
-        if (!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)){
+        if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)){
             if (!existingTradeDetailsViewBinding.date.getText().toString().isEmpty()) {
                 if (!existingTradeDetailsViewBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
                     if (!existingTradeDetailsViewBinding.tradeDescription.getText().toString().isEmpty()) {
@@ -1004,7 +1004,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     public void openCameraScreen() {
-        if (!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
+        if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
                 && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode) && !existingTradeDetailsViewBinding.mobileNo.getText().toString().equals("")) {
             Intent intent = new Intent(this, CameraScreen.class);
             intent.putExtra(AppConstant.TRADE_CODE, existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItemPosition());
@@ -1028,7 +1028,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     public void viewImageScreen() {
         if(!flag){
-            if (!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
+            if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
                     !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
                     !existingTradeDetailsViewBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
@@ -1037,6 +1037,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
                     intent.putExtra(AppConstant.MOBILE, existingTradeDetailsViewBinding.mobileNo.getText().toString());
                     intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                    intent.putExtra("key", "ExistTradeViewClass");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
@@ -1047,7 +1048,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 Utils.showAlert(ExistTradeViewClass.this,"Select Trade Code and Mobile Number");
             }
         }else {
-            if (!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
+            if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
                     !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
                     !existingTradeDetailsViewBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
@@ -1055,6 +1056,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     intent.putExtra(AppConstant.TRADE_CODE, existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItemPosition());
                     intent.putExtra(AppConstant.MOBILE, existingTradeDetailsViewBinding.mobileNo.getText().toString());
                     intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                    intent.putExtra("key", "ExistTradeViewClass");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
