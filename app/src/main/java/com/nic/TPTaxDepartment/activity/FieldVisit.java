@@ -300,7 +300,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public void image() {
-        if(!selectedTaxTypeName.equals("Select TaxType")) {
+        if(!fieldVisitBinding.requestIdTextField.getText().toString().isEmpty() && !selectedTaxTypeName.equals("Select TaxType")) {
             imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
         }
         else {
@@ -432,11 +432,11 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                         imageValue.put("pending_flag", 1);
 
                         if (Utils.isOnline()) {
-                         /*  if(isrequestIDexixt(request_id)) {
+                           if(iscaptureImgExist(request_id)) {
                                long rowUpdated1 = LoginScreen.db.update(DBHelper.CAPTURED_PHOTO, imageValue, "request_id  = ? ", new String[]{request_id});
                                if (rowUpdated1 != -1) {
-                                   // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                                   Utils.showAlert(FieldVisit.this, " Capture-Photo updated");
+                                    Toast.makeText(FieldVisit.this, "Image Updated!", Toast.LENGTH_SHORT).show();
+//                                   Utils.showAlert(FieldVisit.this, " Capture-Photo updated");
 
                                }
                            }
@@ -444,25 +444,24 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
                                 //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                                 if (rowInserted != -1) {
-                                    // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                                    Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
+                                     Toast.makeText(FieldVisit.this, "Image added", Toast.LENGTH_SHORT).show();
+//                                    Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
 
                                 }
                                 else {
                                     Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                                 }
                             }
-*/
-                            long rowInserted = Dashboard.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
+//                            long rowInserted = Dashboard.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
                             //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            if (rowInserted != -1) {
+                            /*if (rowInserted != -1) {
                                 // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                                 Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
 
                             }
                             else {
                                 Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            }
+                            }*/
                         } else {
                             try {
                                 //imageArray.put(i);
@@ -1349,6 +1348,17 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         return dataSet;
     }
 
+    public boolean iscaptureImgExist(String request_id) {
+        Cursor cursor = null;
+        String query = " SELECT  request_id  FROM " + DBHelper.CAPTURED_PHOTO+ " WHERE  request_id  =?";
+
+        cursor = Dashboard.db.rawQuery(query,  new String[]{request_id});
+
+        if (cursor != null && cursor.getCount() > 0) {
+            return true;
+        }
+        return false;
+    }
 
     public boolean isrequestIDexixt(String request_id) {
         Cursor cursor = null;

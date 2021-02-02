@@ -7,14 +7,23 @@
             <size
                 android:width="80dp"
                 android:height="80dp" />
+<!--
             <gradient
                 android:angle="270"
                 android:startColor="@color/subscription_type_red_color"
                 android:endColor="@color/subscription_type_red_color"/>
+-->
+            <gradient
+                android:angle="270"
+                android:startColor="#e9eced"
+                android:endColor="#e9eced"/>
+
             <corners android:bottomLeftRadius="6dp" />
-            <stroke
+
+           <!-- <stroke
                 android:width="1dip"
-                android:color="@color/subscription_type_red_color" />
+                android:color="#e9eced" />-->
+
 
         </shape>
     </item>

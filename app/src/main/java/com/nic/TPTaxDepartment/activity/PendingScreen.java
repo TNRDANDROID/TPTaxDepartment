@@ -654,26 +654,36 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
 
     }
+    public void  restart(int value){
+        if(value==1){
+            loadNewTraderList();
+            left.setBackground(activity.getResources().getDrawable(R.drawable.left_selected_bg));
+            right.setBackground(activity.getResources().getDrawable(R.drawable.right_bg));
+            newTrader.setTextColor(activity.getResources().getColor(R.color.white));
+            fieldVisit.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            fieldVisitRecycler.setVisibility(View.GONE);
+            newTraderRecycler.setVisibility(View.VISIBLE);
+        }
+        else {
+            loadFieldVisitListPending();
+            left.setBackground(activity.getResources().getDrawable(R.drawable.left_bg));
+            right.setBackground(activity.getResources().getDrawable(R.drawable.right_selected_bg));
+            newTrader.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
+            fieldVisit.setTextColor(activity.getResources().getColor(R.color.white));
+            newTraderRecycler.setVisibility(View.GONE);
+            fieldVisitRecycler.setVisibility(View.VISIBLE);
+
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==1&&requestCode==RESULT_OK){
-            if(data!=null){
-                String datafield=data.getStringExtra("Data");
-                if(datafield.equals("FieldVisit")){
-                loadFieldVisitListPending();
-                }
-            }
+        if(requestCode==1){
+            restart(2);
         }
-       else if(requestCode==2&&requestCode==RESULT_OK){
-            if(data!=null){
-                String datafield=data.getStringExtra("Data");
-                if(datafield.equals("NewTrade")){
-                    loadNewTraderList();
-                }
-            }
+        else if(requestCode==2){
+            restart(1);
         }
-
     }
 }

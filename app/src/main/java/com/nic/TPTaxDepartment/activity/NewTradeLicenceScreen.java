@@ -463,6 +463,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
+                            onBackPressed();
                             finish();
                         }
                     };
@@ -930,7 +931,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
         else {
-            setResult(Activity.RESULT_OK,new Intent().putExtra("Data","NewTrade"));
+            setResult(2,new Intent().putExtra("Data","NewTrade"));
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
 
@@ -1105,6 +1106,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 if (rowUpdated1 != -1) {
                     // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                     Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details updated");
+                    onBackPressed();
                     //Dashboard.syncvisiblity();
                     //finish();
                     //dashboard();
@@ -1114,6 +1116,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 if (rowUpdated1 != -1) {
                     Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details Added Successfully!");
                     Log.d("InsertNewTrader",""+values);
+                    onBackPressed();
                 }
             }
 

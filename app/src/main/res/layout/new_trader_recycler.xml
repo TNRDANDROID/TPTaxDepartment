@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/cornered_border_bg"
+    android:background="@drawable/cornered_rect_lite_bg"
     android:layout_margin="5dp"
     android:elevation="@dimen/_6sdp">
 
@@ -29,13 +29,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textColor="@color/subscription_type_red_color"
+                    android:textSize="17sp"
+                    android:padding="3dp"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@drawable/ic_trash"
                     android:id="@+id/delete"
                     android:text="Delete"
                     android:fontFamily="sans-serif" />
 
             </RelativeLayout>
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/dashboard_line_dark"/>
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -47,9 +54,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/white"
-                    android:textSize="15sp"
+                    android:textColor="@color/account_status_green_color"
+                    android:textSize="17sp"
+                    android:padding="3dp"
                     android:id="@+id/upload"
+                    android:drawablePadding="8dp"
+                    android:drawableLeft="@drawable/ic_upload"
                     android:text="Upload"
                     android:fontFamily="sans-serif" />
 
@@ -59,94 +69,126 @@
 
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/content2"
         android:padding="10dp"
         >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:padding="3dp"
+            android:id="@+id/rel1">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/border_line"
+                android:id="@+id/code"
+                android:text="Code"
+                android:fontFamily="sans-serif" />
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/codec"
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:textColor="@color/border_line"
+                android:layout_toRightOf="@+id/code"
+                android:fontFamily="sans-serif"
+                android:gravity="start"
+                android:text=" : "
+                android:textSize="16sp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.9"
+                android:layout_marginLeft="5dp"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textColor="@color/border_line"
+                android:textSize="16sp"
+                android:layout_toRightOf="@+id/codec"
+                android:id="@+id/codeValue"
+                android:text="Trader code"
+                android:fontFamily="sans-serif" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:textSize="13sp"
-            android:textColor="@color/border_line"
-            android:id="@+id/code"
-            android:text="Code"
-            android:fontFamily="sans-serif" />
-
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel1"
+            android:weightSum="3"
+            android:padding="3dp"
+            android:id="@+id/rel2">
         <TextView
-            android:id="@+id/codec"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/border_line"
-            android:layout_toRightOf="@+id/name"
-            android:fontFamily="sans-serif"
-            android:gravity="start"
-            android:text=" : "
-            android:textSize="13sp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:textColor="@color/border_line"
-            android:textSize="13sp"
-            android:layout_toRightOf="@+id/codec"
-            android:id="@+id/codeValue"
-            android:text="Trader code"
-            android:fontFamily="sans-serif" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="start"
             android:layout_marginTop="5dp"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="@color/border_line"
             android:id="@+id/name"
-            android:layout_below="@+id/code"
             android:text="TraderName"
             android:fontFamily="sans-serif" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
             android:gravity="start"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="@color/border_line"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/name"
-            android:layout_below="@+id/code"
+            android:layout_below="@+id/rel1"
             android:id="@+id/namec"
             android:text=" : "
             android:fontFamily="sans-serif" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.9"
+            android:layout_height="match_parent"
             android:gravity="start"
             android:textColor="@color/border_line"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/namec"
-            android:layout_below="@+id/code"
+            android:layout_below="@+id/rel1"
             android:id="@+id/nameValue"
             android:text="Mobile No"
             android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel2"
+            android:weightSum="3"
+            android:padding="3dp"
+            android:id="@+id/rel3">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="start"
             android:layout_marginTop="5dp"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="@color/border_line"
             android:id="@+id/mobile"
             android:layout_below="@+id/name"
             android:text="Mobile"
             android:fontFamily="sans-serif" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
             android:gravity="start"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="@color/border_line"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/name"
@@ -155,23 +197,34 @@
             android:text=" : "
             android:fontFamily="sans-serif" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.9"
+            android:layout_height="match_parent"
             android:gravity="start"
             android:textColor="@color/border_line"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_toRightOf="@+id/mobilec"
             android:layout_below="@+id/name"
             android:id="@+id/mobileValue"
             android:text="Mobile No"
             android:fontFamily="sans-serif" />
-
-        <TextView
-            android:layout_width="wrap_content"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel3"
+            android:weightSum="3"
+            android:padding="3dp"
+            android:id="@+id/rel4">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
             android:gravity="start"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:textColor="@color/border_line"
             android:layout_marginTop="5dp"
             android:id="@+id/paymentDate"
@@ -179,10 +232,11 @@
             android:text="Date"
             android:fontFamily="sans-serif" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="0.1"
+            android:layout_height="match_parent"
             android:gravity="start"
-            android:textSize="13sp"
+            android:textSize="16sp"
             android:layout_marginTop="5dp"
             android:textColor="@color/border_line"
             android:layout_toRightOf="@+id/name"
@@ -191,10 +245,12 @@
             android:text=" : "
             android:fontFamily="sans-serif" />
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1.9"
+            android:layout_height="match_parent"
             android:gravity="start"
-            android:textSize="13sp"
+            android:textSize="16sp"
+            android:layout_marginLeft="5dp"
             android:textColor="@color/border_line"
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/paymentdatec"
@@ -202,6 +258,11 @@
             android:id="@+id/date"
             android:text="Date"
             android:fontFamily="sans-serif" />
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     </RelativeLayout>
 </RelativeLayout>

@@ -7,6 +7,9 @@
             <size
                 android:width="80dp"
                 android:height="80dp" />
+            <stroke android:width="0.5dp"
+                android:color="@color/colorPrimary"/>
+
             <gradient
                 android:angle="270"
                 android:startColor="#e9eced"
