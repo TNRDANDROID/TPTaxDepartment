@@ -224,6 +224,8 @@ public class dbData {
                         TPtaxModel card = new TPtaxModel();
                         card.setTradecode(cursor.getInt(cursor
                                 .getColumnIndexOrThrow(AppConstant.TRADE_CODE)));
+                        card.setMobileno(cursor.getString(cursor
+                                .getColumnIndexOrThrow(AppConstant.MOBILE)));
                         card.setLatitude(cursor.getString(cursor
                                 .getColumnIndexOrThrow(AppConstant.LATITUDE)));
                         card.setLongitude(cursor.getString(cursor

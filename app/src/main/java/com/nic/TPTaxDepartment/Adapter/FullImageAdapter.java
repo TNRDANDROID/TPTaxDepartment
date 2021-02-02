@@ -21,6 +21,7 @@ import com.nic.TPTaxDepartment.activity.Dashboard;
 import com.nic.TPTaxDepartment.activity.FieldVisit;
 import com.nic.TPTaxDepartment.activity.FullImageActivity;
 import com.nic.TPTaxDepartment.activity.LoginScreen;
+import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
 import com.nic.TPTaxDepartment.databinding.GalleryThumbnailBinding;
@@ -39,12 +40,14 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
     private ArrayList<TPtaxModel> imagePreviewlistvalues = new ArrayList<TPtaxModel>();
     private final dbData dbData;
     private LayoutInflater layoutInflater;
+    String key="";
 
-    public FullImageAdapter( Context context, ArrayList<TPtaxModel> imagePreviewlistvalues, dbData dbData) {
+    public FullImageAdapter( Context context, ArrayList<TPtaxModel> imagePreviewlistvalues, dbData dbData, String key) {
 
         this.context = context;
         prefManager = new PrefManager(context);
         this.dbData = dbData;
+        this.key = key;
         this.imagePreviewlistvalues = imagePreviewlistvalues;
     }
 
@@ -79,9 +82,16 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
         holder.galleryThumbnailBinding.closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Dashboard.db.delete(DBHelper.CAPTURED_PHOTO, "id" + "=?", new String[]{imagePreviewlistvalues.get(position).getField_visit_img_id()});
-                imagePreviewlistvalues.remove(position);
-                notifyDataSetChanged();
+                if(key.equals("FieldVisit")){
+                    Dashboard.db.delete(DBHelper.CAPTURED_PHOTO, "id" + "=?", new String[]{imagePreviewlistvalues.get(position).getField_visit_img_id()});
+                    imagePreviewlistvalues.remove(position);
+                    notifyDataSetChanged();
+                }else if(key.equals("NewTradeLicence")){
+                    Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{imagePreviewlistvalues.get(position).getMobileno()});
+                    imagePreviewlistvalues.remove(position);
+                    notifyDataSetChanged();
+                }
+
             }
         });
 

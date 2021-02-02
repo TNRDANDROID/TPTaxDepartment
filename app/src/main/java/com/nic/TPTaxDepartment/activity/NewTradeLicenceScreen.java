@@ -147,6 +147,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         if(flag){
             position=getIntent().getIntExtra("position",0);
             traders = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
+            LoadStreetSpinner(traders.get(position).getWardId(),"");
             LoadPendingTraderDetails();
 
         }else {
@@ -286,7 +287,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     }
                 }
 
-                if(selectedWardId != null){
+                if(selectedWardId != null && !selectedWardName.equals("Select Ward")){
                     if(wardFlag){
                         LoadStreetSpinner(selectedWardId, "");
                     }else {
@@ -357,6 +358,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.mobileNo.setText(traders.get(position).getMobileno());
         newTradeLicenceScreenBinding.emailId.setText(traders.get(position).getEmail());
         newTradeLicenceScreenBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
+        newTradeLicenceScreenBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
+        newTradeLicenceScreenBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
 
         newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
 
@@ -453,6 +456,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //                    String Motivatorid =  Utils.NotNullString(jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID));
 //                    Log.d("motivatorid",""+Motivatorid);
                     Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
+                    Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
 
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
@@ -820,7 +824,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void validateUserDetails() {
-        if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)){
+        if (selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)){
             if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
                 if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
                     if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
@@ -842,8 +846,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                                                     if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
                                                                                         if (getSaveTradeImageTable()==1) {
                                                                                             if (Utils.isOnline()) {
-//                                                                                                savenewTraderINLocal();
-                                                                                                  SaveLicenseTraders();
+                                                                                                savenewTraderINLocal();
+//                                                                                                  SaveLicenseTraders();
                                                                                             } else {
                                                                                                 savenewTraderINLocal();
                                                                                                 Utils.showAlert(this, getResources().getString(R.string.no_internet));
@@ -921,8 +925,15 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        if(!flag) {
+            setResult(Activity.RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
+        else {
+            setResult(Activity.RESULT_OK,new Intent().putExtra("Data","NewTrade"));
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
+
     }
 
     public void dashboard() {
@@ -934,7 +945,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void openCameraScreen() {
-        if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
+        if (selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
                 && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode) && !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
             Intent intent = new Intent(this, CameraScreen.class);
             intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItemPosition());
@@ -958,7 +969,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void viewImageScreen() {
         if(!flag){
-            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
+            if (selectedTradeCode != null &&!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
                     !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
                     !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
@@ -967,6 +978,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
                     intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
                     intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                    intent.putExtra("key", "NewTradeLicence");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
@@ -977,7 +989,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
             }
         }else {
-            if (!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
+            if (selectedTradeCode != null &&!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
                     !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
                     !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
@@ -985,6 +997,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     intent.putExtra(AppConstant.TRADE_CODE, newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItemPosition());
                     intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
                     intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                    intent.putExtra("key", "NewTradeLicence");
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
@@ -1088,7 +1101,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             values.put(AppConstant.PAYMENT_STATUS,paymentStatus);
             if (isrequestIDexixt(newTradeLicenceScreenBinding.mobileNo.getText().toString())){
-                long rowUpdated1 = Dashboard.db.update(DBHelper.SAVE_FIELD_VISIT, values, "mobileno  = ? ", new String[]{newTradeLicenceScreenBinding.mobileNo.getText().toString()});
+                long rowUpdated1 = Dashboard.db.update(DBHelper.SAVE_NEW_TRADER_DETAILS, values, "mobileno  = ? ", new String[]{newTradeLicenceScreenBinding.mobileNo.getText().toString()});
                 if (rowUpdated1 != -1) {
                     // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                     Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details updated");

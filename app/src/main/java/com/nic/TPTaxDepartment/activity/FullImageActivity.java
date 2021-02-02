@@ -41,7 +41,7 @@ import java.util.ArrayList;
 
 public class FullImageActivity extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     private FullImageRecyclerBinding fullImageRecyclerBinding;
-    public String tradecode,status,taxtypeid,mobileNo,request_id,key="";
+    public String tradecode="",status="",mobileNo="",request_id="",key="";
     private FullImageAdapter fullImageAdapter;
     private PrefManager prefManager;
     private static  ArrayList<TPtaxModel> activityImage = new ArrayList<>();
@@ -52,11 +52,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         fullImageRecyclerBinding = DataBindingUtil.setContentView(this, R.layout.full_image_recycler);
         fullImageRecyclerBinding.setActivity(this);
         prefManager = new PrefManager(this);
-        tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
-        mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
-        status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
-        taxtypeid = getIntent().getStringExtra(AppConstant.TAX_TYPE_ID);
-        request_id = getIntent().getStringExtra("request_id");
+
         key = getIntent().getStringExtra("key");
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
@@ -68,11 +64,25 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         fullImageRecyclerBinding.imagePreviewRecyclerview.setAdapter(fullImageAdapter);
 
 
-
         if(key.equals("FieldVisit")){
+            request_id = getIntent().getStringExtra("request_id");
             new fetchFieldVisitImagetask().execute();
-        }else {
+        }else  if(key.equals("ExistTradeViewClass")){
+            tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
+            mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
+            status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
             new fetchImagetask().execute();
+        }else  if(key.equals("ExistingTradeSubmit")){
+            tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
+            mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
+            status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
+            new fetchImagetask().execute();
+        }else  if(key.equals("NewTradeLicence")){
+            tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
+            mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
+            status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
+            new fetchImagetask().execute();
+        }else {
         }
 
 //        if(OnOffType.equalsIgnoreCase("Online")) {
@@ -145,13 +155,26 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
-    }
+        if (!key.equals("FieldVisit")){
+            setResult(Activity.RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
+        else {
+            setResult(Activity.RESULT_OK,new Intent().putExtra("Data","FieldVisit"));
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }    }
 
     public void onBackPress() {
         super.onBackPressed();
-        setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        if (!key.equals("FieldVisit")){
+            setResult(Activity.RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
+        else {
+            setResult(Activity.RESULT_OK,new Intent().putExtra("Data","FieldVisit"));
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
+
     }
 
     @Override
@@ -245,7 +268,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
     }
     public void setAdapter(){
         fullImageAdapter = new FullImageAdapter(FullImageActivity.this,
-                activityImage, dbData);
+                activityImage, dbData,key);
 /*
         fullImageRecyclerBinding.imagePreviewRecyclerview.addOnItemTouchListener(new FullImageAdapter.RecyclerTouchListener(getApplicationContext(), fullImageRecyclerBinding.imagePreviewRecyclerview, new FullImageAdapter.ClickListener() {
             @Override

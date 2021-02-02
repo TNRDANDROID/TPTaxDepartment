@@ -121,7 +121,9 @@ public class ExistingTradeSubmit extends AppCompatActivity {
     public void viewImageScreen() {
         Intent intent = new Intent(this, FullImageActivity.class);
         intent.putExtra(AppConstant.TRADE_CODE,"");
+        intent.putExtra(AppConstant.MOBILE, "");
         intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"exist");
+        intent.putExtra("key", "ExistingTradeSubmit");
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
