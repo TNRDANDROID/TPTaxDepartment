@@ -1010,7 +1010,7 @@
                 android:layout_marginLeft="@dimen/margin_left_20dp"
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
-                android:text="Lease Type Description English"
+                android:text="Lease Type Description"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />

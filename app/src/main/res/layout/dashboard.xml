@@ -21,6 +21,8 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:translationZ="0.1dp"
         android:background="@android:color/transparent">
 
         <androidx.appcompat.widget.Toolbar
@@ -29,6 +31,7 @@
             android:layout_height="wrap_content"
             app:contentInsetLeft="0dp"
             app:contentInsetStart="0dp"
+            android:elevation="0dp"
             app:layout_scrollFlags="scroll|enterAlways|snap">
 
             <RelativeLayout

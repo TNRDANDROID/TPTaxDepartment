@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -153,6 +154,19 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }else {
             LoadWardSpinner();
         }
+        newTradeLicenceScreenBinding.tradeDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    System.out.println("InputLang"+Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD));
+                    InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+
+                    //imeManager.showInputMethodPicker(); //This is to see available keyboards.
+                    imeManager.setInputMethod(null,"com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME/.OpenWnnJAJP");
+                }
+
+            }
+        });
 
         newTradeLicenceScreenBinding.isPaid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -608,7 +622,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_name_ta().compareTo(rhs.getWard_name_ta()));
+        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_code().compareTo(rhs.getWard_code()));
 
         if(wards != null && wards.size() >0) {
 
@@ -617,8 +631,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_name_ta);
-                String Class = wards.get(i).ward_name_ta;
+                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_code);
+                String Class = wards.get(i).ward_code;
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
