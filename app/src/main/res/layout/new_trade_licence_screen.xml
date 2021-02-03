@@ -21,6 +21,8 @@
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
+            app:elevation="0dp"
+            android:translationZ="0.1dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent">
 
@@ -159,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    //Trade Code
                     <LinearLayout
                         android:id="@+id/traders_code_layout"
                         android:layout_width="match_parent"
@@ -241,6 +244,7 @@
 
                     </LinearLayout>
 
+                    //Date
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -325,6 +329,7 @@
                     </LinearLayout>
 
 
+                    //License Type
                     <LinearLayout
                         android:id="@+id/licence_type_layout"
                         android:layout_width="match_parent"
@@ -382,6 +387,7 @@
 
                     </LinearLayout>
 
+                    //Trade Description
                     <LinearLayout
                         android:id="@+id/name_layout"
                         android:layout_width="match_parent"
@@ -424,6 +430,8 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+
+                    //Description In English
                     <LinearLayout
                         android:id="@+id/discreption_layout"
                         android:layout_width="match_parent"
@@ -467,6 +475,7 @@
                         </RelativeLayout>
                     </LinearLayout>
 
+                    //Description In Tamil
                     <LinearLayout
                         android:id="@+id/discreption_ta_layout"
                         android:layout_width="match_parent"
@@ -509,6 +518,8 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+
+                    //Applicant Name
                     <LinearLayout
                         android:id="@+id/applicant_layout"
                         android:layout_width="match_parent"
@@ -553,6 +564,8 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+
+                    //Applicant Name In Tamil
                     <LinearLayout
                         android:id="@+id/applicant_tamil_layout"
                         android:layout_width="match_parent"
@@ -598,6 +611,7 @@
                         </RelativeLayout>
                     </LinearLayout>
 
+                    //Gender
                     <LinearLayout
                         android:id="@+id/gender_layout"
                         android:layout_width="match_parent"
@@ -656,6 +670,7 @@
 
                     </LinearLayout>
 
+                    //Age
                     <LinearLayout
                         android:id="@+id/age_layout"
                         android:layout_width="match_parent"
@@ -702,6 +717,7 @@
                     </LinearLayout>
 
 
+                    //Father/Husband Name
                     <LinearLayout
                         android:id="@+id/father_layout"
                         android:layout_width="match_parent"
@@ -746,6 +762,8 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+
+                    //Father/Husband Name In Tamil
                     <LinearLayout
                         android:id="@+id/father_tamil_layout"
                         android:layout_width="match_parent"
@@ -792,6 +810,7 @@
                     </LinearLayout>
 
 
+                    //Mobile No
                     <LinearLayout
                         android:id="@+id/mobile_layout"
                         android:layout_width="match_parent"
@@ -840,6 +859,7 @@
                         </RelativeLayout>
                     </LinearLayout>
 
+                    //Email Id
                     <LinearLayout
                         android:id="@+id/email_layout"
                         android:layout_width="match_parent"
@@ -886,6 +906,8 @@
                     </LinearLayout>
 
 
+
+                    //Establishment Name
                     <LinearLayout
                         android:id="@+id/establishment_layout"
                         android:layout_width="match_parent"
@@ -932,6 +954,7 @@
                     </LinearLayout>
 
 
+                    //Licence Type
                     <LinearLayout
 
                         android:layout_width="match_parent"
@@ -1018,6 +1041,7 @@
                     </LinearLayout>
 
 
+                    //Ward No
                     <LinearLayout
                         android:id="@+id/ward_layout"
                         android:layout_width="match_parent"
@@ -1075,6 +1099,8 @@
                         </RelativeLayout>
 
                     </LinearLayout>
+
+                    //Street Name
                     <LinearLayout
                         android:id="@+id/streets_layout"
                         android:layout_width="match_parent"
@@ -1133,6 +1159,7 @@
 
                     </LinearLayout>
 
+                    //Street Name
                     <LinearLayout
                         android:id="@+id/street_layout"
                         android:layout_width="match_parent"
@@ -1186,6 +1213,7 @@
 
                     </LinearLayout>
 
+                    //Door No
                     <LinearLayout
                         android:id="@+id/door_no_layout"
                         android:layout_width="match_parent"
@@ -1232,6 +1260,7 @@
                     </LinearLayout>
 
 
+                    //Licence Validity
                     <LinearLayout
                         android:id="@+id/licence_validity_layout"
                         android:layout_width="match_parent"
@@ -1289,6 +1318,141 @@
 
                     </LinearLayout>
 
+                    //Motor is Available
+                    <LinearLayout
+                        android:id="@+id/moter_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/gender_layout"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/moter_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:text="Motor Available"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:textSize="@dimen/_13sdp"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/motor_avilable_status_yes"
+                                android:text="Yes"></RadioButton>
+                            <RadioButton
+                                android:textSize="@dimen/_13sdp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_toRightOf="@+id/motor_avilable_status_yes"
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/motor_avilable_status_no"
+                                android:text="No"></RadioButton>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:visibility="gone"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:hint="Mobile No">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/motor_available"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:maxLength="10"
+                                    android:inputType="number" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    //Generator is available
+                    <LinearLayout
+                        android:id="@+id/genarator_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/gender_layout"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/genarator_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:text="Generator Available"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:textSize="@dimen/_13sdp"
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_alignParentLeft="true"
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/geneartor_avilable_status_yes"
+                                android:text="Yes"></RadioButton>
+                            <RadioButton
+                                android:textSize="@dimen/_13sdp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_toRightOf="@+id/geneartor_avilable_status_yes"
+                                android:layout_width="@dimen/_100sdp"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/generator_avilable_status_no"
+                                android:text="No"></RadioButton>
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:visibility="gone"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:hint="Mobile No">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/generator_available"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:maxLength="10"
+                                    android:inputType="number" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/tv"
@@ -1305,6 +1469,7 @@
                         android:visibility="gone" />
 
 
+                    //Amount to pay 550
                     <RelativeLayout
                         android:id="@+id/beneficiary_alive_layout"
                         android:layout_width="match_parent"
