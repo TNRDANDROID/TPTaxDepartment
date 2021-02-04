@@ -161,6 +161,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         getFieldVisitStatusList();
 
 
+        Utils.setLanguage(fieldVisitBinding.remarksText,"en","USA");
+
 
         fieldVisitBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
@@ -357,6 +359,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         Button done = (Button) dialog.findViewById(R.id.btn_save_inspection);
         ImageView back = (ImageView) dialog.findViewById(R.id.back_arrow);
         ImageView home = (ImageView) dialog.findViewById(R.id.home);
+
         done.setGravity(Gravity.CENTER);
         done.setVisibility(View.VISIBLE);
         done.setTypeface(FontCache.getInstance(this).getFont(FontCache.Font.HEAVY));
@@ -394,7 +397,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
                         View vv = mobileNumberLayout.getChildAt(i);
                         EditText myEditTextView = (EditText) vv.findViewById(R.id.description);
-
+                        Utils.setLanguage(myEditTextView,"en","USA");
                         ImageView imageView = (ImageView) vv.findViewById(R.id.image_view);
                         byte[] imageInByte = new byte[0];
                         String image_str = "";

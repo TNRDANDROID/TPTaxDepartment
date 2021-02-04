@@ -5,12 +5,14 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -23,6 +25,8 @@ import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -56,6 +60,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
@@ -133,6 +138,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         date.setText("Select Date");
 
 
+        Utils.setLanguage(newTradeLicenceScreenBinding.tradeDescription,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.descriptionEnglish,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.applicantName,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusName,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.emailId,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.establishName,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.doorNo,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
+        Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
+        Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
+
         LoadFinYearSpinner();
         LoadGenderSpinner();
         LoadTradeCodeListSpinner();
@@ -154,19 +170,30 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }else {
             LoadWardSpinner();
         }
-        newTradeLicenceScreenBinding.tradeDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+       /* newTradeLicenceScreenBinding.tradeDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onFocusChange(View view, boolean b) {
-                if(b){
-                    System.out.println("InputLang"+Settings.Secure.getString(getContentResolver(), Settings.Secure.DEFAULT_INPUT_METHOD));
-                    InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-
-                    //imeManager.showInputMethodPicker(); //This is to see available keyboards.
-                    imeManager.setInputMethod(null,"com.google.android.inputmethod.latin/com.android.inputmethod.latin.LatinIME/.OpenWnnJAJP");
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    newTradeLicenceScreenBinding.tradeDescription.setImeHintLocales(new LocaleList(new Locale("en", "USA")));
                 }
 
             }
         });
+        newTradeLicenceScreenBinding.descriptionTamil.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (hasFocus) {
+                    Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
+                }else {
+//                    newTradeLicenceScreenBinding.tradeDescription.setImeHintLocales(new LocaleList(new Locale("en", "USA")));
+                   *//* InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+                    imeManager.restartInput(NewTradeLicenceScreen.this.getCurrentFocus());*//*
+                    Toast.makeText(NewTradeLicenceScreen.this, "toast", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+        });*/
 
         newTradeLicenceScreenBinding.isPaid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

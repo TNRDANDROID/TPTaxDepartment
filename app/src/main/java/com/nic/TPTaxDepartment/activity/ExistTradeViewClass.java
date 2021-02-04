@@ -342,51 +342,63 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     private void LoadPendingTraderDetails() {
-        wardFlag=false;
-        int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
-        String stre = traders.get(position).getStreetname();
-        LoadWardSpinner();
-        // iterate each entry of hashmap
+        try {
+            wardFlag = false;
+            LoadWardSpinner();
+            // iterate each entry of hashmap
 
-
-        existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()+" - " +"Testing"/*traders.get(position).getDescription_en()*/));
-        existingTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
-        existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition((traders.get(position).getTraders_license_type_name())));
-        existingTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
-        existingTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
-        existingTradeDetailsViewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
-        existingTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
-        existingTradeDetailsViewBinding.age.setText(traders.get(position).getApage());
-        existingTradeDetailsViewBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
-        existingTradeDetailsViewBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
-        existingTradeDetailsViewBinding.mobileNo.setText(traders.get(position).getMobileno());
-        existingTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
-        existingTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
-
-        if(!traders.get(position).getWardId().equals("0")) {
             try {
-                existingTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
-                LoadStreetSpinner(traders.get(position).getWardId(),"");
-            }catch (Exception e){
+            existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode() + " - " + "Testing"/*traders.get(position).getDescription_en()*/));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
-        }
-
-        if(!traders.get(position).getStreetId().equals("0")) {
+            existingTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
             try {
-                existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
-            }
-            catch (Exception e){
+                existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition((traders.get(position).getTraders_license_type_name())));
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-        existingTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
-        existingTradeDetailsViewBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
-        existingTradeDetailsViewBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
-        existingTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(spinnerMapFinYear.get(traders.get(position).getLicenceValidity())));
+            try {
+                existingTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            existingTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
+            existingTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
+            existingTradeDetailsViewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
+            existingTradeDetailsViewBinding.age.setText(traders.get(position).getApage());
+            existingTradeDetailsViewBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
+            existingTradeDetailsViewBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
+            existingTradeDetailsViewBinding.mobileNo.setText(traders.get(position).getMobileno());
+            existingTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
+            existingTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
 
-        setDisableToFields();
+            if (!traders.get(position).getWardId().equals("0")) {
+                try {
+                    existingTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+                    LoadStreetSpinner(traders.get(position).getWardId(), "");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            if (!traders.get(position).getStreetId().equals("0")) {
+                try {
+                    existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            existingTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
+            existingTradeDetailsViewBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
+            existingTradeDetailsViewBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
+            existingTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(spinnerMapFinYear.get(traders.get(position).getLicenceValidity())));
+
+            setDisableToFields();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void setDisableToFields() {

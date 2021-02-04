@@ -85,6 +85,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         loginScreenBinding.scrollView.setVerticalScrollBarEnabled(false);
         loginScreenBinding.scrollView.isSmoothScrollingEnabled();
+        Utils.setLanguage(loginScreenBinding.username,"en","USA");
+        Utils.setLanguage(loginScreenBinding.password,"en","USA");
         intializeUI();
 
 

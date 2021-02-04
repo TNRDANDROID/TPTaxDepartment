@@ -590,6 +590,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             Intent intent = new Intent( this, ExistTradeViewClass.class);
             intent.putExtra("position", 0);
             intent.putExtra("tradersList", tradersList);
+            intent.putExtra("flag",true);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }else if(tradersList != null && tradersList.size() >1 ) {

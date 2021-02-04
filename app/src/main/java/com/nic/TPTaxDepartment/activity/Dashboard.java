@@ -116,7 +116,6 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         anim.setRepeatMode(Animation.INFINITE);
         anim.setRepeatCount(Animation.INFINITE);
 
-
         dashboardBinding.tradeTv.startAnimation(anim);
         dashboardBinding.fieldTv.startAnimation(anim);
         dashboardBinding.assessTv.startAnimation(anim);

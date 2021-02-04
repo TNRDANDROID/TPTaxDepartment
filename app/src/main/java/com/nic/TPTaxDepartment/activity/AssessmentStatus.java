@@ -77,6 +77,8 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         assessmentStatusBinding.recycler.setLayoutManager(layoutManager);
         snapHelper.attachToRecyclerView(assessmentStatusBinding.recycler);*/
 
+        Utils.setLanguage(assessmentStatusBinding.assessmentId,"en","USA");
+
         assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
         assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
         assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
