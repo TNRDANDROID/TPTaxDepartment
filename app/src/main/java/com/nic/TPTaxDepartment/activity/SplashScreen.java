@@ -1,5 +1,6 @@
 package com.nic.TPTaxDepartment.activity;
 
+import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -79,6 +81,7 @@ public class SplashScreen extends AppCompatActivity implements
             splashScreenBinding.ivBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //screenLockPermission();
                 showSignInScreen();
             }
         });
@@ -106,9 +109,37 @@ public class SplashScreen extends AppCompatActivity implements
             finish();
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         } else {
+            //screenLockPermission();
             showSignInScreen();
         }
 
     }
 
+
+   /* public void screenLockPermission(){
+        KeyguardManager km = (KeyguardManager)getSystemService(KEYGUARD_SERVICE);
+        if(km.isKeyguardSecure()) {
+
+            Intent i = km.createConfirmDeviceCredentialIntent("Authentication required", "password");
+            startActivityForResult(i, 2);
+        }
+        else
+            //Toast.makeText(this, "No any security setup done by user(pattern or password or pin or fingerprint", Toast.LENGTH_SHORT).show();
+        showSignInScreen();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK && requestCode==2)
+        {
+            //Toast.makeText(this, "Success: Verified user's identity", Toast.LENGTH_SHORT).show();
+            showSignInScreen();
+        }
+        else
+        {
+            //Toast.makeText(this, "Failure: Unable to verify user's identity", Toast.LENGTH_SHORT).show();
+        }
+    }
+*/
 }
