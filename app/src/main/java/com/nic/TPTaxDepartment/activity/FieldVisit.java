@@ -651,6 +651,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             if (rowUpdated1 != -1) {
                 // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                 Utils.showAlert(FieldVisit.this, " Field-Visit updated");
+                onBackPressed();
                 //Dashboard.syncvisiblity();
                 //finish();
                 //dashboard();
@@ -662,6 +663,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 if (rowInserted != -1) {
                     // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
                     Utils.showAlert(FieldVisit.this, " Field-Visit added");
+                    onBackPressed();
                     //Dashboard.syncvisiblity();
                     //finish();
                     //dashboard();
@@ -1303,6 +1305,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                     if (status.equalsIgnoreCase("SUCCESS") ){
                         Utils.showAlert(FieldVisit.this, jsonObject.getString("MESSAGE"));
+                        onBackPressed();
                     }
                     else if(status.equalsIgnoreCase("FAILD")){
                         Utils.showAlert(FieldVisit.this, jsonObject.getString("MESSAGE"));

@@ -247,7 +247,7 @@
                         android:layout_marginTop="@dimen/padding"
                         android:layout_marginRight="@dimen/margin_left_20dp"
                         android:text="Or"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/dashboard_line_dark"
                         android:textSize="@dimen/_15sdp"
                         android:visibility="visible" />
 
@@ -307,7 +307,7 @@
                         android:layout_marginTop="@dimen/padding"
                         android:layout_marginRight="@dimen/margin_left_20dp"
                         android:text="Or"
-                        android:textColor="@android:color/black"
+                        android:textColor="@color/dashboard_line_dark"
                         android:textSize="@dimen/_15sdp"
                         android:visibility="visible" />
 

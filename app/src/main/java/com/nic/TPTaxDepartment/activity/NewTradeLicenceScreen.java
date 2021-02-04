@@ -18,7 +18,10 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -122,7 +125,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     ArrayAdapter<String> wardArray;
     ArrayAdapter<String> streetArray;
     ArrayAdapter<String> licenceValidityArray;
-
+    private int visible_count;
+    Animation animation;
+    Animation animationOut;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,10 +138,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
-        newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
+//        newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
         date = newTradeLicenceScreenBinding.date;
         date.setText("Select Date");
-
+        animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
+        animationOut   =    AnimationUtils.loadAnimation(this, R.anim.slide_enter);
+        visible_count=0;
+        newTradeLicenceScreenBinding.first.setVisibility(View.VISIBLE);
+        newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.previous.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.next.setText("Next");
 
         Utils.setLanguage(newTradeLicenceScreenBinding.tradeDescription,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionEnglish,"en","USA");
@@ -170,30 +182,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }else {
             LoadWardSpinner();
         }
-       /* newTradeLicenceScreenBinding.tradeDescription.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+/*
+        newTradeLicenceScreenBinding.next.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    newTradeLicenceScreenBinding.tradeDescription.setImeHintLocales(new LocaleList(new Locale("en", "USA")));
-                }
+            public void onClick(View view) {
+                Toast.makeText(NewTradeLicenceScreen.this, "clicked!", Toast.LENGTH_SHORT).show();
 
+                newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
+                newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
             }
         });
-        newTradeLicenceScreenBinding.descriptionTamil.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean hasFocus) {
-                if (hasFocus) {
-                    Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
-                }else {
-//                    newTradeLicenceScreenBinding.tradeDescription.setImeHintLocales(new LocaleList(new Locale("en", "USA")));
-                   *//* InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-                    imeManager.restartInput(NewTradeLicenceScreen.this.getCurrentFocus());*//*
-                    Toast.makeText(NewTradeLicenceScreen.this, "toast", Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        });*/
+*/
 
         newTradeLicenceScreenBinding.isPaid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -315,6 +314,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
+                System.out.println("checkflag >> "+flag);
                 String ward = parent.getSelectedItem().toString();
                 selectedWardName=ward;
 
@@ -337,6 +337,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
                     System.out.println("selectedWardId >> "+selectedWardId);
                     if (!flag ) {
+
                         wardFlag=false;
                         LoadStreetSpinner(selectedWardId, "");
                     }else {
@@ -353,6 +354,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
+
             }
         });
         newTradeLicenceScreenBinding.streetsName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -867,7 +869,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void validateUserDetails() {
         if (selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)){
-            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty()) {
+            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty() && !newTradeLicenceScreenBinding.date.getText().toString().equals("Select Date")) {
                 if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
                     if (!newTradeLicenceScreenBinding.tradeDescription.getText().toString().isEmpty()) {
                         if (!newTradeLicenceScreenBinding.descriptionEnglish.getText().toString().isEmpty()) {
@@ -888,8 +890,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                                                     if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
                                                                                         if (getSaveTradeImageTable()==1) {
                                                                                             if (Utils.isOnline()) {
-                                                                                                savenewTraderINLocal();
-//                                                                                                  SaveLicenseTraders();
+//                                                                                                savenewTraderINLocal();
+                                                                                                  SaveLicenseTraders();
                                                                                             } else {
                                                                                                 savenewTraderINLocal();
                                                                                                 Utils.showAlert(this, getResources().getString(R.string.no_internet));
@@ -1330,6 +1332,57 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         return dataSet;
     }
 
+    public  void next()
+    {
+        newTradeLicenceScreenBinding.scrollView.scrollTo(0,0);
+        if(visible_count==0) {
+            visible_count=1;
+            newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.next.setText("Next");
+            newTradeLicenceScreenBinding.second.setAnimation(animation);
+            animation.start();
+        }
+        else if(visible_count==1){
+            visible_count=2;
+            newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.third.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.next.setText("Submit");
+            newTradeLicenceScreenBinding.third.setAnimation(animation);
+            animation.start();
+        }else if (newTradeLicenceScreenBinding.next.getText().toString().equals("Submit")){
+
+        }
+    }
+    public  void previous()
+    {
+        newTradeLicenceScreenBinding.scrollView.scrollTo(0,0);
+
+        if(visible_count==2) {
+            visible_count=1;
+            newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.next.setText("Next");
+            newTradeLicenceScreenBinding.second.setAnimation(animationOut);
+            animationOut.start();
+        }
+        else if(visible_count==1){
+            visible_count=0;
+            newTradeLicenceScreenBinding.first.setVisibility(View.VISIBLE);
+            newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.previous.setVisibility(View.GONE);
+            newTradeLicenceScreenBinding.next.setText("Next");
+            newTradeLicenceScreenBinding.first.setAnimation(animationOut);
+            animationOut.start();
+        }
+    }
 
 
 }

@@ -9,22 +9,18 @@
             name="activity"
             type="com.nic.TPTaxDepartment.activity.NewTradeLicenceScreen" />
     </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
-
-
-        android:id="@+id/activity_main"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical">
-
-
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             app:elevation="0dp"
             android:translationZ="0.1dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent">
+            android:id="@+id/appBarLayout"
+            android:background="@drawable/background">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -37,8 +33,8 @@
                 <RelativeLayout
                     android:id="@+id/header_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    android:background="@drawable/header_login">
+                    android:layout_height="40dp"
+                    android:background="@drawable/background">
 
 
                     <ImageView
@@ -47,9 +43,9 @@
                         android:layout_height="@dimen/_30sdp"
                         android:layout_alignParentStart="true"
                         android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
                         android:layout_gravity="start"
                         android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="10dp"
                         android:background="@drawable/back"
                         android:backgroundTint="@android:color/white"
                         android:onClick="@{()-> activity.onBackPressed()}" />
@@ -60,10 +56,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
+                        android:layout_centerVertical="true"
                         android:text="New Trade Licence"
                         android:textAlignment="center"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/white"
                         android:textSize="@dimen/_15sdp"
                         android:textStyle="bold" />
 
@@ -73,7 +69,7 @@
                         android:layout_height="30dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
+                        android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
                         android:adjustViewBounds="true"
                         android:background="@drawable/ic_home_black_24dp"
@@ -93,1526 +89,1949 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <ImageView
-                    android:id="@+id/circle1"
-                    android:layout_width="134dp"
-                    android:layout_height="134dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="@dimen/_125sdp"
-                    android:layout_marginRight="-100dp"
-                    android:src="@drawable/circletransparant" />
-
-                <ImageView
-                    android:id="@+id/circle2"
-                    android:layout_width="134dp"
-                    android:layout_height="134dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="-100dp"
-                    android:layout_marginBottom="50dp"
-                    android:src="@drawable/circletransparant" />
-
-                <ImageView
-                    android:id="@+id/circle3"
-                    android:layout_width="162dp"
-                    android:layout_height="162dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="-80dp"
-                    android:layout_marginBottom="-30dp"
-                    android:src="@drawable/circle" />
-
-                <ImageView
-                    android:id="@+id/circle4"
-                    android:layout_width="124dp"
-                    android:layout_height="124dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="-50dp"
-                    android:layout_marginBottom="-50dp"
-                    android:layout_toLeftOf="@+id/circle3"
-                    android:src="@drawable/circletransparant" />
-
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
+       <ScrollView
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/scroll_view"
+           android:layout_marginBottom="45dp"
+           android:layout_below="@+id/appBarLayout">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="vertical">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <RelativeLayout
+            android:id="@+id/first"
+            android:visibility="gone"
+            android:layout_marginBottom="@dimen/padding"
+            android:orientation="vertical">
+            //Applicant Name
+            <LinearLayout
+                android:id="@+id/applicant_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
 
-
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Applicant Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
                     android:orientation="vertical">
 
-                    //Trade Code
-                    <LinearLayout
-                        android:id="@+id/traders_code_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Applicant Name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/applicant_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Trade Code"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:visibility="gone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Traders Code">
+            //Applicant Name In Tamil
+            <LinearLayout
+                android:id="@+id/applicant_tamil_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/applicant_layout"
+                android:orientation="vertical">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/traders_code"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName"
-                                    android:imeOptions="actionNext"
-                                    android:nextFocusDown="@id/trade_description"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Applicant Name In Tamil"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                        </RelativeLayout>
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
-
-                            <Spinner
-                                android:id="@+id/trade_code_spinner"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    //Date
-                    <LinearLayout
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Applicant Name In Tamil ">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/applicant_name_tamil"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Date"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:id="@+id/date_layout"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
+                    </com.google.android.material.textfield.TextInputLayout>
 
+                </RelativeLayout>
+            </LinearLayout>
 
-                            <TextView
-                                android:id="@+id/date"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_toLeftOf="@+id/calendar_icon"
-                                android:ellipsize="marquee"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
-                                android:hint=""
-                                android:textAlignment="viewStart"
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                customfontdemo:fontName="@string/font_circular_book" />
+            //Gender
+            <LinearLayout
+                android:id="@+id/gender_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            <TextView
-                                android:id="@+id/calendar_icon"
-                                android:onClick="@{()-> activity.showDatePickerDialog()}"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_centerHorizontal="true"
-                                android:layout_marginRight="@dimen/_6sdp"
-                                android:background="@drawable/datepicker_icon"
-                                android:focusable="true"
-                                android:focusableInTouchMode="true"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Gender"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                                android:gravity="center" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
 
 
-                            <!--<TextView-->
-                            <!--android:id="@+id/motivator_dob_tv"-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_alignParentStart="true"-->
-                            <!--android:layout_centerInParent="true"-->
-                            <!--android:layout_marginLeft="15dp"-->
-                            <!--android:background="@android:color/transparent"-->
-                            <!--android:inputType="textPersonName"-->
-                            <!--android:textColor="@android:color/black"-->
-                            <!--android:textSize="@dimen/_15sdp"-->
-                            <!--android:visibility="visible"-->
-                            <!--customfontdemo:fontName="@string/font_circular_book" />-->
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/gender"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:overlapAnchor="false"
+                        android:gravity="center" />
+
+                </RelativeLayout>
 
 
-                        </RelativeLayout>
+            </LinearLayout>
 
+            //Age
+            <LinearLayout
+                android:id="@+id/age_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
 
-                    </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Age"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                    //License Type
-                    <LinearLayout
-                        android:id="@+id/licence_type_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Age">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/age"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Licence Type"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:inputType="number" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
+                </RelativeLayout>
+            </LinearLayout>
 
 
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
+            //Father/Husband Name
+            <LinearLayout
+                android:id="@+id/father_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
 
-                            <Spinner
-                                android:id="@+id/licence_type"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Father/Husband Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                        </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-
-                    </LinearLayout>
-
-                    //Trade Description
-                    <LinearLayout
-                        android:id="@+id/name_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Father/Husband Name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/father_hus_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Trade Description"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Trade Description">
+            //Father/Husband Name In Tamil
+            <LinearLayout
+                android:id="@+id/father_tamil_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/father_layout"
+                android:orientation="vertical">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/trade_description"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Father/Husband Name In Tamil"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    //Description In English
-                    <LinearLayout
-                        android:id="@+id/discreption_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Father/Husband Name In Tamil">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/father_hus_name_tamil"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Description In English"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Trade Description">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/description_english"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+            //Mobile No
+            <LinearLayout
+                android:id="@+id/mobile_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_layout"
+                android:orientation="vertical">
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:id="@+id/mobile_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Mobile No"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                        </RelativeLayout>
-                    </LinearLayout>
 
-                    //Description In Tamil
-                    <LinearLayout
-                        android:id="@+id/discreption_ta_layout"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Mobile No">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/mobile_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Description In Tamil"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible" />
+                            android:maxLength="10"
+                            android:inputType="number" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Trade Description">
+            //Email Id
+            <LinearLayout
+                android:id="@+id/email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/description_tamil"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Email Id"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    //Applicant Name
-                    <LinearLayout
-                        android:id="@+id/applicant_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Email Id">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/email_id"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Applicant Name"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Applicant Name">
+            //Description In English
+            <LinearLayout
+                android:id="@+id/discreption_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/applicant_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Description In English"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    //Applicant Name In Tamil
-                    <LinearLayout
-                        android:id="@+id/applicant_tamil_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/applicant_layout"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Trade Description">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/description_english"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Applicant Name In Tamil"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Applicant Name In Tamil ">
+            //Description In Tamil
+            <LinearLayout
+                android:id="@+id/discreption_ta_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/applicant_name_tamil"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Description In Tamil"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    //Gender
-                    <LinearLayout
-                        android:id="@+id/gender_layout"
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Trade Description">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/description_tamil"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Gender"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <TextView
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/appBarLayout"
+            android:id="@+id/second"
+            android:layout_marginBottom="@dimen/padding"
+            android:visibility="gone"
+            android:orientation="vertical">
+            //Ward No
+            <LinearLayout
+                android:id="@+id/ward_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/mobile_layout"
+                android:orientation="vertical">
 
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
-
-                            <Spinner
-                                android:id="@+id/gender"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:overlapAnchor="false"
-                                android:gravity="center" />
-
-                        </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Ward No"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
 
-                    </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                    //Age
-                    <LinearLayout
-                        android:id="@+id/age_layout"
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/ward_no"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            //Street Name
+            <LinearLayout
+                android:id="@+id/streets_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ward_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Street Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/streets_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            //Street Name
+            <LinearLayout
+                android:id="@+id/street_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Street Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Street Name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/street_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Age"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:gravity="top|left"
+                            android:inputType="textMultiLine"
+                            android:lines="3"
+                            android:maxLength="130"
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Age">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/age"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </RelativeLayout>
 
 
-                    //Father/Husband Name
-                    <LinearLayout
-                        android:id="@+id/father_layout"
+            </LinearLayout>
+
+            //Door No
+            <LinearLayout
+                android:id="@+id/door_no_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Door No"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
 
-                        <TextView
+                        android:hint="Door No">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/door_no"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Father/Husband Name"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                            android:inputType="textPersonName" />
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                </RelativeLayout>
+            </LinearLayout>
 
-                                android:hint="Father/Husband Name">
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/father_hus_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
+            //Licence Validity
+            <LinearLayout
+                android:id="@+id/licence_validity_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Licence Validity"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                        </RelativeLayout>
-                    </LinearLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
-                    //Father/Husband Name In Tamil
-                    <LinearLayout
-                        android:id="@+id/father_tamil_layout"
-                        android:layout_width="match_parent"
+                    <TextView
+
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/father_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Father/Husband Name In Tamil"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Father/Husband Name In Tamil">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/father_hus_name_tamil"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
 
 
-                    //Mobile No
-                    <LinearLayout
-                        android:id="@+id/mobile_layout"
-                        android:layout_width="match_parent"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/licence_validity"
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/gender_layout"
-                        android:orientation="vertical">
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
 
-                        <TextView
-                            android:id="@+id/mobile_hint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Mobile No"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
+                </RelativeLayout>
 
 
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
+            </LinearLayout>
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+            //Are you the Owner
+            <LinearLayout
+                android:id="@+id/are_you_owner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_layout"
+                android:orientation="vertical">
 
-                                android:hint="Mobile No">
+                <TextView
+                    android:id="@+id/owner_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Are you the Owner"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/mobile_no"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:maxLength="10"
-                                    android:inputType="number" />
 
-                            </com.google.android.material.textfield.TextInputLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
 
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    //Email Id
-                    <LinearLayout
-                        android:id="@+id/email_layout"
-                        android:layout_width="match_parent"
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Email Id"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Email Id">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/email_id"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
-
-
-
-                    //Establishment Name
-                    <LinearLayout
-                        android:id="@+id/establishment_layout"
-                        android:layout_width="match_parent"
+                        android:id="@+id/owner_status_yes"
+                        android:text="Yes"></RadioButton>
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/owner_status_yes"
+                        android:layout_width="@dimen/_100sdp"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Establishment Name"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Establishment Name">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/establish_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
-
-
-                    //Licence Type
-                    <LinearLayout
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Licence Type"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible" />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_below="@+id/tv"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="horizontal">
-
-                            <RelativeLayout
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/header"
-                                android:layout_gravity="center"
-
-                                android:background="@drawable/rectangle_box"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-
-                                <CheckBox
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginRight="@dimen/_40sdp"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:text="Temporary"
-                                    android:textColor="@android:color/black"
-                                    android:textSize="13sp" />
-
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="@dimen/header"
-                                android:layout_alignParentEnd="true"
-                                android:layout_gravity="center"
-                                android:background="@drawable/rectangle_box"
-                                android:gravity="center"
-                                android:orientation="horizontal">
-
-
-                                <CheckBox
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerInParent="true"
-                                    android:layout_marginRight="@dimen/_40sdp"
-                                    android:checked="false"
-                                    android:gravity="center"
-                                    android:text="Commercial"
-                                    android:textColor="@android:color/black"
-                                    android:textSize="13sp" />
-
-
-                            </RelativeLayout>
-                        </RelativeLayout>
-
-
-                    </LinearLayout>
-
-
-                    //Ward No
-                    <LinearLayout
-                        android:id="@+id/ward_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/mobile_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Ward No"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
-
-                            <Spinner
-                                android:id="@+id/ward_no"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    //Street Name
-                    <LinearLayout
-                        android:id="@+id/streets_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/ward_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Street Name"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
-
-                            <Spinner
-                                android:id="@+id/streets_name"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                    //Street Name
-                    <LinearLayout
-                        android:id="@+id/street_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Street Name"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Street Name">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/street_name"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="top|left"
-                                    android:inputType="textMultiLine"
-                                    android:lines="3"
-                                    android:maxLength="130"
-
-                                    />
-                            </com.google.android.material.textfield.TextInputLayout>
-                        </RelativeLayout>
-
-
-                    </LinearLayout>
-
-                    //Door No
-                    <LinearLayout
-                        android:id="@+id/door_no_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Door No"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Door No">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/door_no"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="textPersonName" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
-
-
-                    //Licence Validity
-                    <LinearLayout
-                        android:id="@+id/licence_validity_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Licence Validity"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/header"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:background="@drawable/rectangle_box"
-                            android:orientation="vertical"
-                            android:visibility="visible">
-
-                            <TextView
-
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
-                                android:visibility="visible"
-                                customfontdemo:fontName="@string/font_circular_book" />
-
-                            <Spinner
-                                android:id="@+id/licence_validity"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_alignParentEnd="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
-
-                        </RelativeLayout>
-
-
-                    </LinearLayout>
-
-                    //Motor is Available
-                    <LinearLayout
-                        android:id="@+id/moter_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/gender_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/moter_hint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Motor Available"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <RadioButton
-                                android:textSize="@dimen/_13sdp"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:layout_alignParentLeft="true"
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/motor_avilable_status_yes"
-                                android:text="Yes"></RadioButton>
-                            <RadioButton
-                                android:textSize="@dimen/_13sdp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_toRightOf="@+id/motor_avilable_status_yes"
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/motor_avilable_status_no"
-                                android:text="No"></RadioButton>
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:visibility="gone"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Mobile No">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/motor_available"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:maxLength="10"
-                                    android:inputType="number" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    //Generator is available
-                    <LinearLayout
-                        android:id="@+id/genarator_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/gender_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/genarator_hint"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Generator Available"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <RadioButton
-                                android:textSize="@dimen/_13sdp"
-                                android:layout_marginLeft="@dimen/_10sdp"
-                                android:layout_alignParentLeft="true"
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/geneartor_avilable_status_yes"
-                                android:text="Yes"></RadioButton>
-                            <RadioButton
-                                android:textSize="@dimen/_13sdp"
-                                android:layout_centerHorizontal="true"
-                                android:layout_toRightOf="@+id/geneartor_avilable_status_yes"
-                                android:layout_width="@dimen/_100sdp"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/generator_avilable_status_no"
-                                android:text="No"></RadioButton>
-
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                android:visibility="gone"
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-
-                                android:hint="Mobile No">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/generator_available"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:maxLength="10"
-                                    android:inputType="number" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
+                        android:id="@+id/owner_status_no"
+                        android:text="No"></RadioButton>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            //Date
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Date"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:id="@+id/date_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
 
 
                     <TextView
-                        android:id="@+id/tv"
-                        style="@string/font_circular_bold"
+                        android:id="@+id/date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/seec_id_layout"
-                        android:layout_marginLeft="@dimen/margin_left_20dp"
-                        android:layout_marginTop="@dimen/padding"
-                        android:layout_marginRight="@dimen/margin_left_20dp"
-                        android:text="Amount to pay 550"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toLeftOf="@+id/calendar_icon"
+                        android:ellipsize="marquee"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint=""
+                        android:textAlignment="viewStart"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15sdp"
-                        android:visibility="gone" />
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <TextView
+                        android:id="@+id/calendar_icon"
+                        android:onClick="@{()-> activity.showDatePickerDialog()}"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="@dimen/_6sdp"
+                        android:background="@drawable/datepicker_icon"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+
+                        android:gravity="center" />
 
 
-                    //Amount to pay 550
-                    <RelativeLayout
-                        android:id="@+id/beneficiary_alive_layout"
+                    <!--<TextView-->
+                    <!--android:id="@+id/motivator_dob_tv"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentStart="true"-->
+                    <!--android:layout_centerInParent="true"-->
+                    <!--android:layout_marginLeft="15dp"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:inputType="textPersonName"-->
+                    <!--android:textColor="@android:color/black"-->
+                    <!--android:textSize="@dimen/_15sdp"-->
+                    <!--android:visibility="visible"-->
+                    <!--customfontdemo:fontName="@string/font_circular_book" />-->
+
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            //Trade Code
+            <LinearLayout
+                android:id="@+id/traders_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Trade Code"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/tv"
+                        android:layout_height="wrap_content"
+
+                        android:hint="Traders Code">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/traders_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/trade_description"/>
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/trade_code_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            //License Type
+            <LinearLayout
+                android:id="@+id/licence_type_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Licence Type"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/licence_type"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            //Annual Sale
+            <LinearLayout
+                android:id="@+id/annual_sale_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Annual Sale"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/annual_sale"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            //Licence Type
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Licence Type"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/tv"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/header"
                         android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/margin_left_20dp"
-                        android:layout_marginTop="@dimen/_25sdp"
-                        android:layout_marginRight="@dimen/margin_left_20dp"
+
+                        android:background="@drawable/rectangle_box"
+                        android:gravity="center"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/tv1"
-                            style="@string/font_circular_bold"
-                            android:layout_width="match_parent"
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
-
+                            android:layout_alignParentStart="true"
                             android:layout_centerInParent="true"
-                            android:text="Amount to pay 550"
+                            android:layout_marginRight="@dimen/_40sdp"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="Temporary"
                             android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp" />
-
-                        <RelativeLayout
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/header"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerInParent="true"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rectangle_box"
-                            android:gravity="center"
-                            android:orientation="horizontal">
+                            android:textSize="13sp" />
 
 
-                            <CheckBox
-                                android:id="@+id/is_paid"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginRight="@dimen/_40sdp"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:text="Paid"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp" />
-
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/header"
-                            android:layout_alignParentEnd="true"
-                            android:layout_gravity="center"
-                            android:background="@drawable/rectangle_box"
-                            android:gravity="center"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
-
-
-                            <CheckBox
-                                android:id="@+id/alive_no"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentStart="true"
-                                android:layout_centerInParent="true"
-                                android:layout_marginRight="@dimen/_40sdp"
-                                android:checked="false"
-                                android:gravity="center"
-                                android:text="Street"
-                                android:textColor="@android:color/black"
-                                android:textSize="13sp" />
-
-
-                        </RelativeLayout>
                     </RelativeLayout>
 
-                    <FrameLayout
-                        android:id="@+id/frame"
+                    <RelativeLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/header"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/rectangle_box"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginRight="@dimen/_40sdp"
+                            android:checked="false"
+                            android:gravity="center"
+                            android:text="Commercial"
+                            android:textColor="@android:color/black"
+                            android:textSize="13sp" />
+
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/second"
+            android:id="@+id/third"
+            android:layout_marginBottom="10dp"
+            android:visibility="visible"
+            android:orientation="vertical">
+            //Trade Description
+            <LinearLayout
+                android:id="@+id/name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Trade Description"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
-
-                    <com.google.android.material.floatingactionbutton.FloatingActionButton
-                        android:id="@+id/fab"
-                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom|end"
-                        android:layout_margin="@dimen/fab_margin"
-                        app:backgroundTint="@color/colorPrimary"
-                        android:onClick="@{()-> activity.openCameraScreen()}"
-                        app:srcCompat="@drawable/camera_icon" />
 
-                    <LinearLayout
-                        android:id="@+id/take_pic_layout"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right"
-                        android:onClick="@{()-> activity.viewImageScreen()}"
-                        android:layout_marginTop="@dimen/_25sdp"
-                        android:background="@drawable/white_background_left_two_corners"
-                        android:orientation="horizontal"
-                        android:padding="@dimen/_8sdp">
+                        android:hint="Trade Description">
 
-                        <TextView
-                            android:id="@+id/take_photo_tv"
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/trade_description"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="left"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:text="View Image"
-                            android:textColor="@android:color/black"
-                            android:textSize="18sp"
-                            android:textStyle="normal"
-                            style="@string/font_normal" />
+                            android:inputType="textPersonName" />
 
-                    </LinearLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btn_register"
+                </RelativeLayout>
+            </LinearLayout>
+
+            //Establishment Name
+            <LinearLayout
+                android:id="@+id/establishment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Establishment Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="Establishment Name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/establish_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            //Motor is Available
+            <LinearLayout
+                android:id="@+id/moter_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/moter_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Motor Available"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/motor_avilable_status_yes"
+                        android:text="Yes"></RadioButton>
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/motor_avilable_status_yes"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/motor_avilable_status_no"
+                        android:text="No"></RadioButton>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="Mobile No">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/motor_available"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+            //Motor SPinner
+            <LinearLayout
+                android:id="@+id/motor_spinner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Motor Range(in Horse Power)"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/_40sdp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginLeft="@dimen/margin"
-                        android:layout_marginTop="@dimen/_40sdp"
-                        android:layout_marginRight="@dimen/margin"
-                        android:layout_marginBottom="@dimen/_40sdp"
-                        android:background="@drawable/click_here"
-                        android:clickable="true"
-                        android:foreground="?attr/selectableItemBackground"
-                        android:onClick="@{()-> activity.validateUserDetails()}"
-                        android:text="Submit"
-                        android:textAllCaps="false"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
                         android:textColor="@android:color/black"
-                        android:textSize="@dimen/_15sdp" />
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
 
-                </LinearLayout>
+                    <Spinner
+                        android:id="@+id/motor_range_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+            //Generator is available
+            <LinearLayout
+                android:id="@+id/genarator_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/genarator_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Generator Available"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/geneartor_avilable_status_yes"
+                        android:text="Yes"></RadioButton>
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/geneartor_avilable_status_yes"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/generator_avilable_status_no"
+                        android:text="No"></RadioButton>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:visibility="gone"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="Mobile No">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/generator_available"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLength="10"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+            //Generater Range Spinner
+            <LinearLayout
+                android:id="@+id/generator_spinner_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Generator Range(in Kilowatt)"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <TextView
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+
+
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:visibility="visible"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <Spinner
+                        android:id="@+id/generator_spinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+            //Proffessional Tax type
+            <LinearLayout
+                android:id="@+id/professional_tax_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/professional_tax_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Professional Tax Paid"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/professional_tax_yes"
+                        android:text="Yes"></RadioButton>
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/professional_tax_yes"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/professional_tax_no"
+                        android:text="No"></RadioButton>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            ///Remarks
+            <LinearLayout
+                android:id="@+id/remarks_no_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Remarks"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="Remarks">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/remarks_field"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            //Property Tax Type
+            <LinearLayout
+                android:id="@+id/property_tax_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gender_layout"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/property_tax_hint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Property Tax Paid"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical">
+
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/property_tax_yes"
+                        android:text="Yes"></RadioButton>
+                    <RadioButton
+                        android:textSize="@dimen/_13sdp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_toRightOf="@+id/property_tax_yes"
+                        android:layout_width="@dimen/_100sdp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/property_tax_no"
+                        android:text="No"></RadioButton>
+
+
+                </RelativeLayout>
+            </LinearLayout>
+
+            //Property Tax assessment Number
+            <LinearLayout
+                android:id="@+id/property_tax_assessment_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="property Tax Assessment Number"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="property Tax Assessment Number">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/property_tax_assessment_number"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/tv"
+                style="@string/font_circular_bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/seec_id_layout"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/padding"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:text="Amount to pay 550"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp"
+                android:visibility="gone" />
+
+
+            //Amount to pay 550
+            <RelativeLayout
+                android:id="@+id/beneficiary_alive_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_left_20dp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/margin_left_20dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv1"
+                    style="@string/font_circular_bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_centerInParent="true"
+                    android:text="Amount to pay 550"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rectangle_box"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <CheckBox
+                        android:id="@+id/is_paid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="@dimen/_40sdp"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="Paid"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/header"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center"
+                    android:background="@drawable/rectangle_box"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <CheckBox
+                        android:id="@+id/alive_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginRight="@dimen/_40sdp"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="Street"
+                        android:textColor="@android:color/black"
+                        android:textSize="13sp" />
+
+
+                </RelativeLayout>
             </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
 
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <FrameLayout
+                android:id="@+id/frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"></FrameLayout>
+ <RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_margin="@dimen/fab_margin"
+                app:backgroundTint="@color/colorPrimary"
+                android:onClick="@{()-> activity.openCameraScreen()}"
+                app:srcCompat="@drawable/camera_icon" />
+
+            <LinearLayout
+                android:id="@+id/view_pic_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:onClick="@{()-> activity.viewImageScreen()}"
+                android:background="@drawable/white_background_left_two_corners"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <TextView
+                    android:id="@+id/view_photo_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="View Image"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    style="@string/font_normal" />
+
+            </LinearLayout>
+    </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/click_here"
+                android:clickable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:onClick="@{()-> activity.validateUserDetails()}"
+                android:text="Submit"
+                android:textAllCaps="false"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_15sdp" />
+
+        </LinearLayout>
+           </LinearLayout>
+       </ScrollView>
+        <RelativeLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_gravity="bottom"
+            android:layout_below="@+id/scroll_view"
+            android:paddingBottom="0dp"
+            android:layout_marginTop="-40dp"
+            android:background="@drawable/background">
+
+
+            <TextView
+                android:id="@+id/previous"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Previous"
+                android:layout_gravity="start"
+                android:textSize="16sp"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textColor="@android:color/white"
+                android:onClick="@{()-> activity.previous()}" />
+            <TextView
+                android:id="@+id/next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="Next"
+                android:textSize="16sp"
+                android:layout_gravity="end"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:textColor="@android:color/white"
+                android:onClick="@{()-> activity.next()}" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 </layout>
