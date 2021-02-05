@@ -56,14 +56,23 @@ import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
+import com.vincent.filepicker.Constant;
+import com.vincent.filepicker.activity.NormalFilePickActivity;
+import com.vincent.filepicker.filter.entity.NormalFile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -141,6 +150,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String docFilePath;
     int booleanValue=0;
     File file;
+    ArrayList<NormalFile> list;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -425,7 +435,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     private void LoadPendingTraderDetails() {
         wardFlag=false;
-        int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
+        int spinnerPosition = tradeCodeSpArray.getPosition(traders.get(position).getTraderCode());
+        String tradersrCode= traders.get(position).getTraderCode();
         String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
         try {
@@ -434,30 +445,56 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             e.printStackTrace();
         }
         try {
-            newTradeLicenceScreenBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
+            int tradePosition = tradeCodeSpArray.getPosition(spinnerTradeCode.get(traders.get(position).getTradedetails_id()));
+            if(tradePosition >= 0){
+                newTradeLicenceScreenBinding.tradeCodeSpinner.setSelection(tradePosition);
+            }else {
+                newTradeLicenceScreenBinding.tradeCodeSpinner.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            newTradeLicenceScreenBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
+            int licenceTypePosition = licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name());
+            if(licenceTypePosition >= 0){
+                newTradeLicenceScreenBinding.licenceType.setSelection(licenceTypePosition);
+            }else {
+                newTradeLicenceScreenBinding.licenceType.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            newTradeLicenceScreenBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
+            int genderPosition = genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId()));
+            if(genderPosition >= 0){
+                newTradeLicenceScreenBinding.gender.setSelection(genderPosition);
+            }else {
+                newTradeLicenceScreenBinding.gender.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+            int wardPosition = wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId()));
+            if(wardPosition >= 0){
+                newTradeLicenceScreenBinding.wardNo.setSelection(wardPosition);
+            }else {
+                newTradeLicenceScreenBinding.wardNo.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            newTradeLicenceScreenBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
+            int licencePosition = licenceValidityArray.getPosition(traders.get(position).getLicenceValidity());
+            if(licencePosition >= 0){
+                newTradeLicenceScreenBinding.licenceValidity.setSelection(licencePosition);
+            }else {
+                newTradeLicenceScreenBinding.licenceValidity.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
         newTradeLicenceScreenBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         newTradeLicenceScreenBinding.applicantName.setText(traders.get(position).getTraderName());
@@ -480,6 +517,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
     }
+
+
+
 
 
 
@@ -1142,16 +1182,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        if(!flag) {
-            //previous();
-            setResult(Activity.RESULT_CANCELED);
-            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
-        }
-        else {
-            setResult(2,new Intent().putExtra("Data","NewTrade"));
-            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
-        }
+        //super.onBackPressed();
+        previous();
 
     }
 
@@ -1507,30 +1539,36 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         return dataSet;
     }
 
-    public  void next()
-    {
-        newTradeLicenceScreenBinding.scrollView.scrollTo(0,0);
-        if(visible_count==0) {
-            visible_count=1;
-            newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
-            newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
-            newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
-            newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
-            newTradeLicenceScreenBinding.next.setText("Next");
-            newTradeLicenceScreenBinding.second.setAnimation(animation);
-            animation.start();
-        }
-        else if(visible_count==1){
-            visible_count=2;
-            newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
-            newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
-            newTradeLicenceScreenBinding.third.setVisibility(View.VISIBLE);
-            newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
-            newTradeLicenceScreenBinding.next.setText("Submit");
-            newTradeLicenceScreenBinding.third.setAnimation(animation);
-            animation.start();
-        }else if (newTradeLicenceScreenBinding.next.getText().toString().equals("Submit")){
+    public  void next() {
+        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
+            if (visible_count == 0) {
+                if (ValidationFirst()){
+                visible_count = 1;
+                newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
+                newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
+                newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
+                newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
+                newTradeLicenceScreenBinding.next.setText("Next");
+                newTradeLicenceScreenBinding.second.setAnimation(animation);
+                animation.start();
+                }
+            }
+
+        else if(visible_count==1){
+            if (ValidationSecond()) {
+                visible_count = 2;
+                newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
+                newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
+                newTradeLicenceScreenBinding.third.setVisibility(View.VISIBLE);
+                newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
+                newTradeLicenceScreenBinding.next.setText("Submit");
+                newTradeLicenceScreenBinding.third.setAnimation(animation);
+                animation.start();
+            }
+        }
+        else if (newTradeLicenceScreenBinding.next.getText().toString().equals("Submit")){
+                ValidationThird();
         }
     }
     public  void previous()
@@ -1558,7 +1596,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             animationOut.start();
         }
         else if(visible_count==0){
-            onBackPressed();
+            super.onBackPressed();
+            if(!flag) {
+                //previous();
+                setResult(Activity.RESULT_CANCELED);
+                overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            }
+            else {
+                setResult(2,new Intent().putExtra("Data","NewTrade"));
+                overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            }
         }
     }
 
@@ -1584,18 +1631,21 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         super.onActivityResult(req, result, data);
         if (result == RESULT_OK)
         {
-            Uri fileuri;
+            list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
+
+            //Uri fileuri;
             //Uri fileuri = data.getData();
             //docFilePath = getFileNameByUri(NewTradeLicenceScreen.this, fileuri);
             //newTradeLicenceScreenBinding.fileLocation.setText(docFilePath);
-            fileuri = data.getData();
-            docFilePath = fileuri.getPath();
-            newTradeLicenceScreenBinding.fileLocation.setText(docFilePath);
-            file = new File(fileuri.getPath());
+            //fileuri = data.getData();
+            //docFilePath = fileuri.getPath();
+            //file = new File(docFilePath);
+            newTradeLicenceScreenBinding.fileLocation.setText(list.get(0).getName());
+
         }
     }
 
-// get file path
+/*// get file path
 
     private String getFileNameByUri(Context context, Uri uri)
     {
@@ -1635,17 +1685,24 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             filepath = uri.getPath();
         }
         return filepath;
-    }
+    }*/
     public  boolean isReadStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
                 if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         == PackageManager.PERMISSION_GRANTED){
-                    Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                    chooseFile.setType("*/*");
-                    chooseFile = Intent.createChooser(chooseFile, "Choose a file");
-                    startActivityForResult(chooseFile, REQUEST_CODE_DOC);
+
+                   // Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+                    //chooseFile.setType("*/*");
+                    //chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+                    //startActivityForResult(chooseFile, REQUEST_CODE_DOC);
+
+                    Intent intent4 = new Intent(this, NormalFilePickActivity.class);
+                    intent4.putExtra(Constant.MAX_NUMBER, 1);
+                    intent4.putExtra(NormalFilePickActivity.SUFFIX, new String[] {"xlsx", "xls", "doc", "docx", "ppt", "pptx", "pdf"});
+                    startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
+
                     return true;
                 }
                 else {
@@ -1666,7 +1723,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
-    public  boolean isWriteStoragePermissionGranted() {
+  /*  public  boolean isWriteStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {
@@ -1683,6 +1740,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             return true;
         }
     }
+    */
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -1705,6 +1763,234 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
                 break;
         }
+    }
+
+
+    public boolean ValidationFirst(){
+        if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
+            if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
+                if (!"Select Gender".equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
+                    if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()){
+                        if(!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()){
+                            if(!newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString().isEmpty()){
+                                if(!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()){
+                                    if(!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()){
+                                        if(!newTradeLicenceScreenBinding.descriptionEnglish.getText().toString().isEmpty()){
+                                            if(!newTradeLicenceScreenBinding.descriptionTamil.getText().toString().isEmpty()){
+                                                return true;
+                                            }
+                                            else {
+                                                Utils.showAlert(this,"Enter Description Tamil");
+                                                newTradeLicenceScreenBinding.descriptionTamil.requestFocus();
+                                                return false;
+                                            }
+                                        }
+                                        else {
+                                            Utils.showAlert(this,"Enter Description English");
+                                            newTradeLicenceScreenBinding.descriptionEnglish.requestFocus();
+                                        }
+                                    }
+                                    else {
+                                        Utils.showAlert(this,"Enter Email ID");
+                                        newTradeLicenceScreenBinding.emailId.requestFocus();
+                                    }
+                                }
+                                else {
+                                    Utils.showAlert(this,"Enter Mobile Number");
+                                    newTradeLicenceScreenBinding.mobileNo.requestFocus();
+                                }
+                            }
+                            else {
+                                Utils.showAlert(this,"Enter Fathers/Husband Name Tamil");
+                                newTradeLicenceScreenBinding.fatherHusNameTamil.requestFocus();
+                            }
+                        }
+                        else {
+                            Utils.showAlert(this,"Enter Father/ Husband Name English");
+                            newTradeLicenceScreenBinding.fatherHusName.requestFocus();
+                        }
+                    }
+                    else {
+                        Utils.showAlert(this,"Enter Age");
+                        newTradeLicenceScreenBinding.age.requestFocus();
+                    }
+                }
+                else {
+                    Utils.showAlert(this,"Select Gender");
+                    newTradeLicenceScreenBinding.genderLayout.requestLayout();
+                }
+            }
+            else {
+                Utils.showAlert(this,"Enter Applicant Name Tamil");
+                newTradeLicenceScreenBinding.applicantNameTamil.requestFocus();
+            }
+        }
+        else {
+            Utils.showAlert(this,"Enter Applicant Name English");
+            newTradeLicenceScreenBinding.applicantName.requestFocus();
+        }
+        return false;
+    }
+    public boolean ValidationSecond(){
+        if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty() && !"Select Ward".equalsIgnoreCase(selectedWardName)) {
+            if (!newTradeLicenceScreenBinding.streetsName.getSelectedItem().toString().isEmpty() && !"Select Street".equalsIgnoreCase(selectedStreetName)) {
+                if (!newTradeLicenceScreenBinding.doorNo.toString().isEmpty()) {
+
+                    if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty() && !"Select Licence Validity".equalsIgnoreCase(selectedFinName)) {
+                        if(ownerDetailsCondition()){
+                            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty() && !newTradeLicenceScreenBinding.date.getText().toString().equals("Select Date")) {
+                                if (selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
+
+                                    if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
+                                       /* if (newTradeLicenceScreenBinding.annualSale.getSelectedItem().toString().isEmpty()) {
+                                           return true;
+                                        }
+                                        else {
+                                            Utils.showAlert(this, "Select Annual Sale");
+                                            newTradeLicenceScreenBinding.annualSaleLayout.requestLayout();
+                                            return false;
+                                        }*/
+                                        return true;
+                                    } else {
+                                        Utils.showAlert(this, "Select License Type ");
+                                        newTradeLicenceScreenBinding.licenceTypeLayout.requestLayout();
+                                        return false;
+                                    }
+                                } else {
+                                    Utils.showAlert(this, "Select Trade Code");
+                                    newTradeLicenceScreenBinding.tradersCodeLayout.requestLayout();
+                                }
+                            }
+                            else {
+                                Utils.showAlert(this,"Select Date");
+                                newTradeLicenceScreenBinding.dateLayout.requestFocus();
+                            }
+                        }
+                        else {
+                            Utils.showAlert(this,"Upload document");
+                            newTradeLicenceScreenBinding.areYouOwnerLayout.requestLayout();
+                        }
+                    }
+                    else {
+                        Utils.showAlert(this,"Select Licence Validity");
+                        newTradeLicenceScreenBinding.licenceValidityLayout.requestLayout();
+                    }
+
+                }
+                else {
+                    Utils.showAlert(this,"Enter Door Number");
+                    newTradeLicenceScreenBinding.doorNo.requestFocus();
+                }
+            }
+            else {
+                Utils.showAlert(this,"Select Street");
+                newTradeLicenceScreenBinding.streetLayout.requestLayout();
+            }
+        }
+        else {
+            Utils.showAlert(this,"Select Ward");
+            newTradeLicenceScreenBinding.wardLayout.requestLayout();
+        }
+        return false;
+    }
+    public boolean ValidationThird(){
+
+            if(newTradeLicenceScreenBinding.motorAvilableStatusYes.isChecked()||newTradeLicenceScreenBinding.motorAvilableStatusNo.isChecked()){
+                if(newTradeLicenceScreenBinding.geneartorAvilableStatusYes.isChecked()||newTradeLicenceScreenBinding.generatorAvilableStatusNo.isChecked()){
+                    if(newTradeLicenceScreenBinding.professionalTaxYes.isChecked()||newTradeLicenceScreenBinding.professionalTaxNo.isChecked()){
+                        if(newTradeLicenceScreenBinding.propertyTaxNo.isChecked()||newTradeLicenceScreenBinding.propertyTaxYes.isChecked()){
+                            if(!newTradeLicenceScreenBinding.remarksField.getText().toString().isEmpty()){
+                                if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
+                                    if (getSaveTradeImageTable()==1) {
+                                        if (Utils.isOnline()) {
+//                                                                                                savenewTraderINLocal();
+                                            SaveLicenseTraders();
+                                        } else {
+                                            savenewTraderINLocal();
+                                            Utils.showAlert(this, getResources().getString(R.string.no_internet));
+                                        }
+                                    } else {
+                                        Utils.showAlert(NewTradeLicenceScreen.this, "Capture One Image");
+                                    }
+                                }
+                                else {
+                                    Utils.showAlert(this,"Choose Payment Status");
+                                    newTradeLicenceScreenBinding.isPaid.requestLayout();
+                                }
+                            }
+                            else {
+                                Utils.showAlert(this,"Enter Remarks");
+                                newTradeLicenceScreenBinding.remarksField.requestFocus();
+                            }
+                        }
+                        else {
+                            Utils.showAlert(this,"Choose Property Tax Paid status");
+                            newTradeLicenceScreenBinding.propertyTaxLayout.requestLayout();
+                        }
+                    }
+                    else {
+                        Utils.showAlert(this,"Choose Professional Tax Paid status");
+                        newTradeLicenceScreenBinding.professionalTaxLayout.requestLayout();
+                    }
+                }
+                else {
+                    Utils.showAlert(this,"Choose Generator available status");
+                    newTradeLicenceScreenBinding.genderLayout.requestLayout();
+                }
+            }
+            else {
+                Utils.showAlert(this,"Choose motor available status");
+                newTradeLicenceScreenBinding.moterLayout.requestLayout();
+            }
+
+        return false;
+    }
+
+    public boolean ownerDetailsCondition(){
+        if(newTradeLicenceScreenBinding.ownerStatusYes.isChecked()||newTradeLicenceScreenBinding.ownerStatusNo.isChecked()){
+            if(newTradeLicenceScreenBinding.ownerStatusYes.isChecked()){
+                return true;
+            }
+            else {
+                BufferedReader br = null;
+                try {
+                    br = new BufferedReader(new FileReader(list.get(0).getPath()));
+                    try {
+                        if (br.readLine() == null) {
+                            System.out.println("No errors, and file empty");
+                            return false;
+                        }
+                        else {
+                            try {
+
+                                // default StandardCharsets.UTF_8
+                                List<String> content = null;
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    content = Files.readAllLines(Paths.get(list.get(0).getPath()));
+                                }
+                                System.out.println(content);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            return true;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                //return false;
+            }
+
+        }
+        else {
+            Utils.showAlert(this,"Choose Owner or Not");
+        }
+        return false;
     }
 
 }
