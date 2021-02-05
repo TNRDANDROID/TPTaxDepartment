@@ -41,11 +41,12 @@ import java.util.ArrayList;
 
 public class FullImageActivity extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     private FullImageRecyclerBinding fullImageRecyclerBinding;
-    public String tradecode="",status="",mobileNo="",request_id="",key="";
+    public String tradecode="",status="",mobileNo="",request_id="",key="",tradeImage="";
     private FullImageAdapter fullImageAdapter;
     private PrefManager prefManager;
     private static  ArrayList<TPtaxModel> activityImage = new ArrayList<>();
     private dbData dbData = new dbData(this);
+    Bitmap tradeBitmapImage;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +69,8 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             request_id = getIntent().getStringExtra("request_id");
             new fetchFieldVisitImagetask().execute();
         }else  if(key.equals("ExistTradeViewClass")){
-            tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
-            mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
-            status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
-            new fetchImagetask().execute();
+            tradeImage = getIntent().getStringExtra(AppConstant.TRADE_IMAGE);
+            new fetchTradeImagetask().execute();
         }else  if(key.equals("ExistingTradeSubmit")){
             tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
             mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
@@ -113,6 +112,39 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
                 activityImage = dbData.selectImage(mobileNo,status);
             }
 
+
+            Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
+            return activityImage;
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<TPtaxModel> imageList) {
+            super.onPostExecute(imageList);
+            setAdapter();
+        }
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+    public class fetchTradeImagetask extends AsyncTask<Void, Void,
+            ArrayList<TPtaxModel>> {
+        @Override
+        protected ArrayList<TPtaxModel> doInBackground(Void... params) {
+            dbData.open();
+            activityImage = new ArrayList<>();
+           if(tradeBitmapImage != null){
+               TPtaxModel card = new TPtaxModel();
+               card.setImage(StringToBitMap(tradeImage));
+               activityImage.add(card);
+           }
 
             Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
             return activityImage;

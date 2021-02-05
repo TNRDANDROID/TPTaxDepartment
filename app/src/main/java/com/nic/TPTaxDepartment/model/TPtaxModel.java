@@ -2,6 +2,7 @@ package com.nic.TPTaxDepartment.model;
 
 import android.graphics.Bitmap;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 
 /**
@@ -99,6 +100,27 @@ public class TPtaxModel  implements Serializable {
     public String paymentStatus;
     public String request_id;
     public String field_visit_img_id;
+    public Bitmap tradeBitmapImage;
+    public byte[] imageByte;
+
+
+    public byte[] getImageByte() {
+        return imageByte;
+    }
+
+    public TPtaxModel setImageByte(byte[] imageByte) {
+        this.imageByte = imageByte;
+        return this;
+    }
+
+    public Bitmap getTradeBitmapImage() {
+        return tradeBitmapImage;
+    }
+
+    public TPtaxModel setTradeBitmapImage(Bitmap tradeBitmapImage) {
+        this.tradeBitmapImage = tradeBitmapImage;
+        return this;
+    }
 
     public String getField_visit_img_id() {
         return field_visit_img_id;

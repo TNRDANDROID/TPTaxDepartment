@@ -7,12 +7,14 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -48,6 +50,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -88,7 +91,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     HashMap<String,String> spinnerMapWard;
     HashMap<String,String> spinnerMapFinYear;
     HashMap<String,String> spinnerMapLicenceType;
-    HashMap<Integer,String> spinnerTradeCode;
+    HashMap<String,String> spinnerTradeCode;
     String selectedGenderId;
     String selectedGender="";
     String selectedWardId;
@@ -246,21 +249,21 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String tradeCode = parent.getSelectedItem().toString();
-                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+//                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
                 selectedTradeCode=tradeCode;
-                selectedTrdeCodeDetailsID=tradeID;
+//                selectedTrdeCodeDetailsID=tradeID;
                 ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
-              /*  String tradeID ="";
+                String tradeID ="";
                 System.out.println("tradeCode>> "+ tradeCode);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
                     // if give value is equal to value from entry
                     // print the corresponding key
                     if(entry.getValue() == tradeCode) {
-                        tradeID=entry.getKey();
+                        selectedTrdeCodeDetailsID=entry.getKey();
                         break;
                     }
-                }*/
+                }
 
             }
             public void onNothingSelected(AdapterView<?> parent)
@@ -365,40 +368,63 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     private void LoadPendingTraderDetails() {
         wardFlag=false;
-        int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
-        String stre = traders.get(position).getStreetname();
-        String streId = traders.get(position).getStreetId();
-        String wardId = traders.get(position).getWardId();
         LoadWardSpinner();
         try {
             LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
         } catch (Exception e) {
             e.printStackTrace();
-        }try {
-            existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
+        }
+        try {
+            int tradePosition = tradeCodeSpArray.getPosition(spinnerTradeCode.get(traders.get(position).getTradedetails_id()));
+            if(tradePosition >= 0){
+                existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradePosition);
+            }else {
+                existingTradeDetailsViewBinding.tradeCodeSpinner.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
+            int licenceTypePosition = licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name());
+            if(licenceTypePosition >= 0){
+                existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypePosition);
+            }else {
+                existingTradeDetailsViewBinding.licenceType.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            existingTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
+            int genderPosition = genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId()));
+            if(genderPosition >= 0){
+                existingTradeDetailsViewBinding.gender.setSelection(genderPosition);
+            }else {
+                existingTradeDetailsViewBinding.gender.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            existingTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+            int wardPosition = wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId()));
+            if(wardPosition >= 0){
+                existingTradeDetailsViewBinding.wardNo.setSelection(wardPosition);
+            }else {
+                existingTradeDetailsViewBinding.wardNo.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         try {
-            existingTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
+            int licencePosition = licenceValidityArray.getPosition(traders.get(position).getLicenceValidity());
+            if(licencePosition >= 0){
+                existingTradeDetailsViewBinding.licenceValidity.setSelection(licencePosition);
+            }else {
+                existingTradeDetailsViewBinding.licenceValidity.setAdapter(null);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         existingTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
         existingTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         existingTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
@@ -682,7 +708,16 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     existingTradeDetailsViewBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
                     selectedStreetId="0";
                     selectedStreetName=streetName;
-                    existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
+                    try {
+                        int streetPosition =streetArray.getPosition(selectedStreetName);
+                        if(streetPosition >= 0){
+                            existingTradeDetailsViewBinding.streetsName.setSelection(streetPosition);
+                        }else {
+                            existingTradeDetailsViewBinding.streetsName.setAdapter(null);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
             } catch (Exception exp) {
@@ -869,12 +904,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         if(loadTradeCodeList != null && loadTradeCodeList.size() >0) {
 
-            spinnerTradeCode = new HashMap<Integer, String>();
-            spinnerTradeCode.put(0, null);
+            spinnerTradeCode = new HashMap<String, String>();
+            spinnerTradeCode.put(null, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN());
+                spinnerTradeCode.put(loadTradeCodeList.get(i).getTRADE_DETAILS_ID(), loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
@@ -1029,9 +1064,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        previous();
     }
 
     public void dashboard() {
@@ -1057,56 +1090,21 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         }
     }
 
-    /*public void viewImageScreen() {
-        Intent intent = new Intent(this, FullImageActivity.class);
-        intent.putExtra(AppConstant.TRADE_CODE,existingTradeDetailsViewBinding.tradersCode.getText().toString());
-        intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"new");
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    }*/
 
     public void viewImageScreen() {
-        if(!flag){
-            if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
-                    !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
-                    !existingTradeDetailsViewBinding.mobileNo.getText().toString().equals("")) {
-                if (getSaveTradeImageTable() == 1) {
+       /* if (traders.get(position).getTradeBitmapImage() != null ) {
 
-                    Intent intent = new Intent(this, FullImageActivity.class);
-                    intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
-                    intent.putExtra(AppConstant.MOBILE, existingTradeDetailsViewBinding.mobileNo.getText().toString());
-                    intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
-                    intent.putExtra("key", "ExistTradeViewClass");
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                } else {
-                    Utils.showAlert(ExistTradeViewClass.this, "No image Saved in Local");
-                }
-            }
-            else {
-                Utils.showAlert(ExistTradeViewClass.this,"Select Trade Code and Mobile Number");
-            }
-        }else {
-            if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
-                    !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
-                    !existingTradeDetailsViewBinding.mobileNo.getText().toString().equals("")) {
-                if (getSaveTradeImageTable() == 1) {
-                    Intent intent = new Intent(this, FullImageActivity.class);
-                    intent.putExtra(AppConstant.TRADE_CODE, existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItemPosition());
-                    intent.putExtra(AppConstant.MOBILE, existingTradeDetailsViewBinding.mobileNo.getText().toString());
-                    intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
-                    intent.putExtra("key", "ExistTradeViewClass");
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                } else {
-                    Utils.showAlert(ExistTradeViewClass.this, "No image Saved in Local");
-                }
-            }
-            else {
-                Utils.showAlert(ExistTradeViewClass.this,"Select Trade Code and Mobile Number");
-            }
-        }
-
+            Intent intent = new Intent(this, FullImageActivity.class);
+            intent.putExtra(AppConstant.TRADE_CODE, "");
+            intent.putExtra(AppConstant.MOBILE, "");
+            intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
+            intent.putExtra(AppConstant.TRADE_IMAGE, BitMapToString(traders.get(position).getTradeBitmapImage()));
+            intent.putExtra("key", "ExistTradeViewClass");
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        } else {
+            Utils.showAlert(ExistTradeViewClass.this, "No image Found");
+        }*/
 
     }
     public void decryptRegister(){
@@ -1412,8 +1410,18 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewBinding.next.setText("Next");
             existingTradeDetailsViewBinding.first.setAnimation(animationOut);
             animationOut.start();
+        }else if(visible_count==0){
+            super.onBackPressed();
+            setResult(Activity.RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
     }
 
-
+    public String BitMapToString(Bitmap bitmap){
+        ByteArrayOutputStream baos=new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
+        byte [] b=baos.toByteArray();
+        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+        return temp;
+    }
 }

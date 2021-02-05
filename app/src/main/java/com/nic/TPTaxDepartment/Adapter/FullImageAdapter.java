@@ -79,6 +79,15 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
         Glide.with(context).load(imagePreviewlistvalues.get(position).getImage())
                 .thumbnail(0.5f)
                 .into(holder.galleryThumbnailBinding.thumbnail);
+
+        if(key.equals("FieldVisit")){
+            holder.galleryThumbnailBinding.closeIcon.setVisibility(View.VISIBLE);
+        }else if(key.equals("NewTradeLicence")){
+            holder.galleryThumbnailBinding.closeIcon.setVisibility(View.VISIBLE);
+        }else if(key.equals("ExistTradeViewClass")){
+            holder.galleryThumbnailBinding.closeIcon.setVisibility(View.GONE);
+        }
+
         holder.galleryThumbnailBinding.closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
