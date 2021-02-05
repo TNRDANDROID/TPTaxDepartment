@@ -449,7 +449,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setEstablishment_name_ta(establishment_name_ta);
                                  Detail.setLicenceValidity(licence_validity);
                                  Detail.setTraders_license_type_name(traders_license_type_name);
-                                 Detail.setTraderPayment(paymentstatus);
+                                 Detail.setPaymentStatus(paymentstatus);
                                  Detail.setMobileno(mobileno);
                                  Detail.setPaymentdate(paymentdate);
                                  Detail.setTradersdetails_id(tradersdetails_id);
@@ -495,7 +495,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setEstablishment_name_ta(establishment_name_ta);
                                  Detail.setLicenceValidity(licence_validity);
                                  Detail.setTraders_license_type_name(traders_license_type_name);
-                                 Detail.setTraderPayment(paymentstatus);
+                                 Detail.setPaymentStatus(paymentstatus);
                                  Detail.setMobileno(mobileno);
                                  Detail.setPaymentdate(paymentdate);
                                  Detail.setTradersdetails_id(tradersdetails_id);
@@ -542,7 +542,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 Detail.setEstablishment_name_ta(establishment_name_ta);
                                 Detail.setLicenceValidity(licence_validity);
                                 Detail.setTraders_license_type_name(traders_license_type_name);
-                                Detail.setTraderPayment(paymentstatus);
+                                Detail.setPaymentStatus(paymentstatus);
                                 Detail.setMobileno(mobileno);
                                 Detail.setPaymentdate(paymentdate);
                                 Detail.setTradersdetails_id(tradersdetails_id);

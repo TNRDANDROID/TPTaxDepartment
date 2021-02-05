@@ -15,6 +15,8 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -115,7 +117,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     ArrayAdapter<String> streetArray;
     ArrayAdapter<String> licenceValidityArray;
     ExistingTradeDetailsViewBinding existingTradeDetailsViewBinding;
-    
+
+    private int visible_count;
+    Animation animation;
+    Animation animationOut;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,12 +135,20 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding.scrollView.setNestedScrollingEnabled(true);
         date = existingTradeDetailsViewBinding.date;
         date.setText("Select Date");
+        
+        animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
+        animationOut   =    AnimationUtils.loadAnimation(this, R.anim.slide_enter);
+        visible_count=0;
+        existingTradeDetailsViewBinding.first.setVisibility(View.VISIBLE);
+        existingTradeDetailsViewBinding.second.setVisibility(View.GONE);
+        existingTradeDetailsViewBinding.third.setVisibility(View.GONE);
+        existingTradeDetailsViewBinding.previous.setVisibility(View.GONE);
+        existingTradeDetailsViewBinding.next.setText("Next");
+        
 
-         spinnerMapStreets=new HashMap<>();
         LoadFinYearSpinner();
         LoadGenderSpinner();
         LoadTradeCodeListSpinner();
-        LoadWardSpinner();
         try {
             LoadLicenceTypeSpinner();
         } catch (JSONException e) {
@@ -148,6 +161,11 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         if(flag){
             position=getIntent().getIntExtra("position",0);
             traders = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
+            try {
+                LoadStreetSpinner(traders.get(position).getWardId(),"");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             LoadPendingTraderDetails();
 
         }else {
@@ -276,9 +294,11 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
             {
+                System.out.println("checkflag >> "+flag);
                 String ward = parent.getSelectedItem().toString();
                 selectedWardName=ward;
                 ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
+
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
                     // if give value is equal to value from entry
@@ -289,7 +309,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     }
                 }
 
-                if(selectedWardId != null){
+                if(selectedWardId != null && !selectedWardName.equals("Select Ward")){
                     if(wardFlag){
                         LoadStreetSpinner(selectedWardId, "");
                     }else {
@@ -298,6 +318,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
                     System.out.println("selectedWardId >> "+selectedWardId);
                     if (!flag ) {
+
                         wardFlag=false;
                         LoadStreetSpinner(selectedWardId, "");
                     }else {
@@ -314,6 +335,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
             public void onNothingSelected(AdapterView<?> parent)
             {
+
             }
         });
         existingTradeDetailsViewBinding.streetsName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -342,63 +364,62 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     private void LoadPendingTraderDetails() {
+        wardFlag=false;
+        int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
+        String stre = traders.get(position).getStreetname();
+        String streId = traders.get(position).getStreetId();
+        String wardId = traders.get(position).getWardId();
+        LoadWardSpinner();
         try {
-            wardFlag = false;
-            LoadWardSpinner();
-            // iterate each entry of hashmap
-
-            try {
-            existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode() + " - " + "Testing"/*traders.get(position).getDescription_en()*/));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            existingTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
-            try {
-                existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition((traders.get(position).getTraders_license_type_name())));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                existingTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            existingTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
-            existingTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
-            existingTradeDetailsViewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
-            existingTradeDetailsViewBinding.age.setText(traders.get(position).getApage());
-            existingTradeDetailsViewBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
-            existingTradeDetailsViewBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
-            existingTradeDetailsViewBinding.mobileNo.setText(traders.get(position).getMobileno());
-            existingTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
-            existingTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
-
-            if (!traders.get(position).getWardId().equals("0")) {
-                try {
-                    existingTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
-                    LoadStreetSpinner(traders.get(position).getWardId(), "");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            if (!traders.get(position).getStreetId().equals("0")) {
-                try {
-                    existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(spinnerMapStreets.get(traders.get(position).getStreetId())));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            existingTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
-            existingTradeDetailsViewBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
-            existingTradeDetailsViewBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
-            existingTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(spinnerMapFinYear.get(traders.get(position).getLicenceValidity())));
-
-            setDisableToFields();
-        }catch (Exception e){
+            LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }try {
+            existingTradeDetailsViewBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
+        } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            existingTradeDetailsViewBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            existingTradeDetailsViewBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            existingTradeDetailsViewBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            existingTradeDetailsViewBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        existingTradeDetailsViewBinding.date.setText(traders.get(position).getTrade_date());
+        existingTradeDetailsViewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
+        existingTradeDetailsViewBinding.applicantName.setText(traders.get(position).getTraderName());
+        existingTradeDetailsViewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
+        existingTradeDetailsViewBinding.age.setText(traders.get(position).getApage());
+        existingTradeDetailsViewBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
+        existingTradeDetailsViewBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
+        existingTradeDetailsViewBinding.mobileNo.setText(traders.get(position).getMobileno());
+        existingTradeDetailsViewBinding.emailId.setText(traders.get(position).getEmail());
+        existingTradeDetailsViewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
+        existingTradeDetailsViewBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
+        existingTradeDetailsViewBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
+
+        existingTradeDetailsViewBinding.doorNo.setText(traders.get(position).getDoorno());
+
+        if(traders.get(position).getPaymentStatus() != null && traders.get(position).getPaymentStatus().equals("Paid")){
+            existingTradeDetailsViewBinding.isPaid.setChecked(true);
+        }else {
+            existingTradeDetailsViewBinding.isPaid.setChecked(false);
+        }
+        setDisableToFields();
     }
 
     private void setDisableToFields() {
@@ -421,6 +442,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding.licenceValidity.setEnabled(false);
         existingTradeDetailsViewBinding.descriptionEnglish.setEnabled(false);
         existingTradeDetailsViewBinding.descriptionTamil.setEnabled(false);
+        existingTradeDetailsViewBinding.remarksTxInp.setEnabled(false);
+        existingTradeDetailsViewBinding.propertyAssessmentNoTxInp.setEnabled(false);
 
         existingTradeDetailsViewBinding.tradersCodeTxInp.setHintEnabled(false);
         existingTradeDetailsViewBinding.tradeDescriptionTxInp.setHintEnabled(false);
@@ -435,6 +458,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding.emailIdTxInp.setHintEnabled(false);
         existingTradeDetailsViewBinding.establishNameTxInp.setHintEnabled(false);
         existingTradeDetailsViewBinding.doorNoTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.remarksTxInp.setHintEnabled(false);
+        existingTradeDetailsViewBinding.propertyAssessmentNoTxInp.setHintEnabled(false);
 
         existingTradeDetailsViewBinding.tradersCodeTxInp.setHintAnimationEnabled(false);
         existingTradeDetailsViewBinding.tradeDescriptionTxInp.setHintAnimationEnabled(false);
@@ -449,6 +474,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding.emailIdTxInp.setHintAnimationEnabled(false);
         existingTradeDetailsViewBinding.establishNameTxInp.setHintAnimationEnabled(false);
         existingTradeDetailsViewBinding.doorNoTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.remarksTxInp.setHintAnimationEnabled(false);
+        existingTradeDetailsViewBinding.propertyAssessmentNoTxInp.setHintAnimationEnabled(false);
 
         existingTradeDetailsViewBinding.btnRegister.setVisibility(View.GONE);
         existingTradeDetailsViewBinding.fab.setVisibility(View.GONE);
@@ -655,7 +682,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     existingTradeDetailsViewBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
                     selectedStreetId="0";
                     selectedStreetName=streetName;
-                    //existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
+                    existingTradeDetailsViewBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
 
                 }
             } catch (Exception exp) {
@@ -685,7 +712,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_name_ta().compareTo(rhs.getWard_name_ta()));
+        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_code().compareTo(rhs.getWard_code()));
 
         if(wards != null && wards.size() >0) {
 
@@ -694,8 +721,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_name_ta);
-                String Class = wards.get(i).ward_name_ta;
+                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_code);
+                String Class = wards.get(i).ward_code;
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1334,6 +1361,59 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         return dataSet;
     }
 
+    public  void next()
+    {
+        existingTradeDetailsViewBinding.scrollView.scrollTo(0,0);
+        if(visible_count==0) {
+            visible_count=1;
+            existingTradeDetailsViewBinding.first.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.second.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.third.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.previous.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.next.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.next.setText("Next");
+            existingTradeDetailsViewBinding.second.setAnimation(animation);
+            animation.start();
+        }
+        else if(visible_count==1){
+            visible_count=2;
+            existingTradeDetailsViewBinding.first.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.second.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.third.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.previous.setVisibility(View.VISIBLE);
+//            existingTradeDetailsViewBinding.next.setText("Submit");
+            existingTradeDetailsViewBinding.next.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.third.setAnimation(animation);
+            animation.start();
+        }
+    }
+    public  void previous()
+    {
+        existingTradeDetailsViewBinding.scrollView.scrollTo(0,0);
+
+        if(visible_count==2) {
+            visible_count=1;
+            existingTradeDetailsViewBinding.first.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.second.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.third.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.previous.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.next.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.next.setText("Next");
+            existingTradeDetailsViewBinding.second.setAnimation(animationOut);
+            animationOut.start();
+        }
+        else if(visible_count==1){
+            visible_count=0;
+            existingTradeDetailsViewBinding.first.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.second.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.third.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.previous.setVisibility(View.GONE);
+            existingTradeDetailsViewBinding.next.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewBinding.next.setText("Next");
+            existingTradeDetailsViewBinding.first.setAnimation(animationOut);
+            animationOut.start();
+        }
+    }
 
 
 }

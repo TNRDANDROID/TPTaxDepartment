@@ -54,7 +54,7 @@ public class ExistingTradeSubmit extends AppCompatActivity {
         String establishment_name_ta="EstablishmentName : "+tradersList.get(position).getEstablishment_name_ta() + "\n"+ "\n";
         String licence_validity="LicenceValidity : "+tradersList.get(position).getLicenceValidity() + "\n"+ "\n";
         String traders_license_type_name="LicenseTypeName : "+tradersList.get(position).getTraders_license_type_name() + "\n"+ "\n";
-        String paymentstatus="PaymentStatus : "+tradersList.get(position).getTraderPayment() + "\n"+ "\n";
+        String paymentstatus="PaymentStatus : "+tradersList.get(position).getPaymentStatus() + "\n"+ "\n";
         String mobileno="MobileNo : "+tradersList.get(position).getMobileno() + "\n"+ "\n";
         String paymentdate="PaymentDate : "+tradersList.get(position).getPaymentdate() + "\n"+ "\n";
         String tradersdetails_id="TradersDetailsId : "+tradersList.get(position).getTradersdetails_id() + "\n"+ "\n";
