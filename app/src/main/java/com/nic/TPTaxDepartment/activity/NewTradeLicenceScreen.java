@@ -1,18 +1,23 @@
 package com.nic.TPTaxDepartment.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.LocaleList;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -32,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
@@ -55,6 +61,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,7 +75,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
+public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener {
+    private static final int REQUEST_CODE_DOC =101 ;
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
     ArrayList<Gender> genders ;
     ArrayList<CommonModel> wards ;
@@ -128,6 +138,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private int visible_count;
     Animation animation;
     Animation animationOut;
+    String docFilePath;
+    int booleanValue=0;
+    File file;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,6 +168,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.emailId,"en","USA");
+        Utils.setLanguage(newTradeLicenceScreenBinding.remarksField,"en","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.establishName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.doorNo,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
@@ -176,7 +190,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         if(flag){
             position=getIntent().getIntExtra("position",0);
             traders = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
-            LoadStreetSpinner(traders.get(position).getWardId(),"");
+            try {
+                LoadStreetSpinner(traders.get(position).getWardId(), "");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             LoadPendingTraderDetails();
 
         }else {
@@ -205,6 +223,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
         });
+        radioBtnFun();
 
 
         String colored = "*";
@@ -380,6 +399,28 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         });
 
 
+        //Owner Status
+        newTradeLicenceScreenBinding.ownerStatusNo.setOnCheckedChangeListener(this::onCheckedChanged);
+        newTradeLicenceScreenBinding.ownerStatusYes.setOnCheckedChangeListener(this::onCheckedChanged);
+
+       //Motor Available
+        newTradeLicenceScreenBinding.motorAvilableStatusYes.setOnCheckedChangeListener(this::onCheckedChanged);
+        newTradeLicenceScreenBinding.motorAvilableStatusNo.setOnCheckedChangeListener(this::onCheckedChanged);
+
+        //Generator Available
+        newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setOnCheckedChangeListener(this::onCheckedChanged);
+        newTradeLicenceScreenBinding.generatorAvilableStatusNo.setOnCheckedChangeListener(this::onCheckedChanged);
+
+       //Professional Tax
+        newTradeLicenceScreenBinding.professionalTaxYes.setOnCheckedChangeListener(this::onCheckedChanged);
+        newTradeLicenceScreenBinding.professionalTaxNo.setOnCheckedChangeListener(this::onCheckedChanged);
+
+        //Property Tax
+        newTradeLicenceScreenBinding.propertyTaxYes.setOnCheckedChangeListener(this::onCheckedChanged);
+        newTradeLicenceScreenBinding.propertyTaxNo.setOnCheckedChangeListener(this::onCheckedChanged);
+
+
+
     }
 
     private void LoadPendingTraderDetails() {
@@ -387,14 +428,40 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         int spinnerPosition = genderArray.getPosition(traders.get(position).getTraderCode());
         String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
-        LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
-        newTradeLicenceScreenBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
+        try {
+            LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            newTradeLicenceScreenBinding.tradeCodeSpinner.setSelection(tradeCodeSpArray.getPosition(traders.get(position).getTraderCode()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            newTradeLicenceScreenBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            newTradeLicenceScreenBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            newTradeLicenceScreenBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
-        newTradeLicenceScreenBinding.licenceType.setSelection(licenceTypeArray.getPosition(traders.get(position).getTraders_license_type_name()));
         newTradeLicenceScreenBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         newTradeLicenceScreenBinding.applicantName.setText(traders.get(position).getTraderName());
         newTradeLicenceScreenBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
-        newTradeLicenceScreenBinding.gender.setSelection(genderArray.getPosition(spinnerMap.get(traders.get(position).getApgenderId())));
         newTradeLicenceScreenBinding.age.setText(traders.get(position).getApage());
         newTradeLicenceScreenBinding.fatherHusName.setText(traders.get(position).getApfathername_en());
         newTradeLicenceScreenBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
@@ -404,20 +471,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
         newTradeLicenceScreenBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
 
-        newTradeLicenceScreenBinding.wardNo.setSelection(wardArray.getPosition(spinnerMapWard.get(traders.get(position).getWardId())));
-
-//        newTradeLicenceScreenBinding.streetsName.setSelection(streetArray.getPosition(traders.get(position).getStreetname()));
-//        newTradeLicenceScreenBinding.streetsName.setSelection(2);
         newTradeLicenceScreenBinding.doorNo.setText(traders.get(position).getDoorno());
-        newTradeLicenceScreenBinding.licenceValidity.setSelection(licenceValidityArray.getPosition(traders.get(position).getLicenceValidity()));
 
-        if(traders.get(position).getPaymentStatus().equals("Paid")){
+        if(traders.get(position).getPaymentStatus() != null &&traders.get(position).getPaymentStatus().equals("Paid")){
             newTradeLicenceScreenBinding.isPaid.setChecked(true);
         }else {
             newTradeLicenceScreenBinding.isPaid.setChecked(false);
         }
 
     }
+
 
 
     @Override
@@ -429,6 +492,117 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         DialogFragment newFragment = new datePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+        switch (compoundButton.getId()){
+            case R.id.owner_status_no:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.ownerStatusYes.setChecked(false);
+                    newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.ownerStatusYes.setChecked(true);
+                    newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
+                }
+                break;
+
+            case R.id.owner_status_yes:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.ownerStatusNo.setChecked(false);
+                    newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.ownerStatusNo.setChecked(true);
+                    newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
+                }
+                break;
+
+            case R.id.geneartor_avilable_status_yes:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(false);
+                    newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(true);
+                    newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+                }
+                break;
+
+            case R.id.generator_avilable_status_no:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
+                    newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(true);
+                    newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
+                }
+                break;
+
+            case R.id.motor_avilable_status_yes:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(false);
+                    newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(true);
+                    newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
+                }
+                break;
+
+            case R.id.motor_avilable_status_no:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
+                    newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(true);
+                    newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
+                }
+                break;
+
+            case R.id.professional_tax_yes:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.professionalTaxNo.setChecked(false);
+                }
+                else {
+                    newTradeLicenceScreenBinding.professionalTaxNo.setChecked(true);
+                }
+                break;
+
+            case R.id.professional_tax_no:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.professionalTaxYes.setChecked(false);
+                }
+                else {
+                    newTradeLicenceScreenBinding.professionalTaxYes.setChecked(true);
+                }
+                break;
+
+            case R.id.property_tax_yes:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.propertyTaxNo.setChecked(false);
+                    newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.propertyTaxNo.setChecked(true);
+                    newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+                }
+                break;
+
+            case R.id.property_tax_no:
+                if(compoundButton.isChecked()){
+                    newTradeLicenceScreenBinding.propertyTaxYes.setChecked(false);
+                    newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+                }
+                else {
+                    newTradeLicenceScreenBinding.propertyTaxYes.setChecked(true);
+                    newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
+                }
+                break;
+        }
     }
 
     public static class datePickerFragment extends DialogFragment implements
@@ -970,6 +1144,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public void onBackPressed() {
         super.onBackPressed();
         if(!flag) {
+            //previous();
             setResult(Activity.RESULT_CANCELED);
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
@@ -1382,8 +1557,155 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             newTradeLicenceScreenBinding.first.setAnimation(animationOut);
             animationOut.start();
         }
+        else if(visible_count==0){
+            onBackPressed();
+        }
     }
 
+    public void radioBtnFun(){
+        newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+
+    }
+
+    public void getDocument()
+    {
+        isReadStoragePermissionGranted();
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int req, int result, Intent data)
+    {
+        // TODO Auto-generated method stub
+        super.onActivityResult(req, result, data);
+        if (result == RESULT_OK)
+        {
+            Uri fileuri;
+            //Uri fileuri = data.getData();
+            //docFilePath = getFileNameByUri(NewTradeLicenceScreen.this, fileuri);
+            //newTradeLicenceScreenBinding.fileLocation.setText(docFilePath);
+            fileuri = data.getData();
+            docFilePath = fileuri.getPath();
+            newTradeLicenceScreenBinding.fileLocation.setText(docFilePath);
+            file = new File(fileuri.getPath());
+        }
+    }
+
+// get file path
+
+    private String getFileNameByUri(Context context, Uri uri)
+    {
+        String filepath = "";//default fileName
+        //Uri filePathUri = uri;
+        File file;
+        if (uri.getScheme().toString().compareTo("content") == 0)
+        {
+            Cursor cursor = context.getContentResolver().query(uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.ORIENTATION }, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+            cursor.moveToFirst();
+
+            String mImagePath = cursor.getString(column_index);
+            cursor.close();
+            filepath = mImagePath;
+
+        }
+        else
+        if (uri.getScheme().compareTo("file") == 0)
+        {
+            try
+            {
+                file = new File(new URI(uri.toString()));
+                if (file.exists())
+                    filepath = file.getAbsolutePath();
+
+            }
+            catch (URISyntaxException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            filepath = uri.getPath();
+        }
+        return filepath;
+    }
+    public  boolean isReadStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED){
+                    Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+                    chooseFile.setType("*/*");
+                    chooseFile = Intent.createChooser(chooseFile, "Choose a file");
+                    startActivityForResult(chooseFile, REQUEST_CODE_DOC);
+                    return true;
+                }
+                else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                    return false;
+                }
+                //Log.v(TAG,"Permission is granted1");
+
+            } else {
+                //Log.v(TAG,"Permission is revoked1");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            //Log.v(TAG,"Permission is granted1");
+            return true;
+        }
+    }
+
+    public  boolean isWriteStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                //Log.v(TAG,"Permission is granted2");
+                return true;
+            } else {
+               // Log.v(TAG,"Permission is revoked2");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            //Log.v(TAG,"Permission is granted2");
+            return true;
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 2:
+                //Log.d(TAG, "External storage2");
+                if(grantResults.length > 0&& grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                    booleanValue=1;
+                }else{
+                    booleanValue=0;
+                }
+                break;
+
+            case 3:
+                //Log.d(TAG, "External storage1");
+                if(grantResults.length > 0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
+                    booleanValue=1;
+                }else{
+                    booleanValue=0;
+                }
+                break;
+        }
+    }
 
 }
 

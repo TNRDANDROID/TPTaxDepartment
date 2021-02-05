@@ -48,7 +48,7 @@
                         android:layout_marginLeft="@dimen/_10sdp"
                         android:background="@drawable/back"
                         android:backgroundTint="@android:color/white"
-                        android:onClick="@{()-> activity.onBackPressed()}" />
+                        android:onClick="@{()-> activity.previous()}" />
 
 
                     <TextView
@@ -586,7 +586,7 @@
             android:layout_below="@+id/appBarLayout"
             android:id="@+id/second"
             android:layout_marginBottom="@dimen/padding"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
             //Ward No
             <LinearLayout
@@ -913,6 +913,76 @@
                         android:text="No"></RadioButton>
 
                 </RelativeLayout>
+            </LinearLayout>
+
+            //Rental Lease Agreement file choose Layout
+            <LinearLayout
+                android:id="@+id/choose_file_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Rental Lease Agreement"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                <RelativeLayout
+                    android:id="@+id/lease_aggrement_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/header"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="@dimen/padding"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:background="@drawable/rectangle_box"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+
+                    <TextView
+                        android:onClick="@{()-> activity.getDocument()}"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/choose_file"
+                        android:padding="@dimen/_5sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/round_corner_button"
+                        android:ellipsize="marquee"
+                        android:text="Choose File"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        customfontdemo:fontName="@string/font_circular_book" />
+
+                    <TextView
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_toRightOf="@+id/choose_file"
+                        android:textColor="@android:color/black"
+                        android:textSize="@dimen/_15sdp"
+                        android:text="C:\Users\NIC\Downloads"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/file_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginRight="@dimen/_6sdp"
+                        customfontdemo:fontName="@string/font_circular_book"/>
+
+
+
+                </RelativeLayout>
+
+
             </LinearLayout>
 
             //Date
@@ -1291,7 +1361,7 @@
             android:layout_below="@+id/second"
             android:id="@+id/third"
             android:layout_marginBottom="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical">
             //Trade Description
             <LinearLayout
@@ -1409,6 +1479,7 @@
 
 
                 <RelativeLayout
+                    android:background="@drawable/rectangle_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1433,22 +1504,6 @@
                         android:id="@+id/motor_avilable_status_no"
                         android:text="No"></RadioButton>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:visibility="gone"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:hint="Mobile No">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/motor_available"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLength="10"
-                            android:inputType="number" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
             </LinearLayout>
@@ -1534,6 +1589,7 @@
 
 
                 <RelativeLayout
+                    android:background="@drawable/rectangle_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1756,6 +1812,7 @@
 
 
                 <RelativeLayout
+                    android:background="@drawable/rectangle_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
