@@ -107,8 +107,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     String traderCode,tradeDate,licenseType,tradeDescription,traderName,traderNameTa,tradeImage, traderGender,traderAge,
             fatherName,fatherNameTa,mobileNo,email,establishmentName,ward,street,doorNo,licenseValidity,paymentStatus;
     int position;
+    int tradersImagePosition;
     Boolean flag,wardFlag=false;
     ArrayList< TPtaxModel > traders ;
+    ArrayList< TPtaxModel > tradersImageList ;
 
     String image="",lat="",lan="";
 
@@ -160,10 +162,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         //getIntent Data
         traders =new ArrayList<TPtaxModel>();
+        tradersImageList =new ArrayList<TPtaxModel>();
         flag=getIntent().getBooleanExtra("flag",false);
         if(flag){
             position=getIntent().getIntExtra("position",0);
+            tradersImagePosition=getIntent().getIntExtra("tradersImagePosition",0);
             traders = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersList");
+            tradersImageList = (ArrayList<TPtaxModel>)getIntent().getSerializableExtra("tradersImageList");
             try {
                 LoadStreetSpinner(traders.get(position).getWardId(),"");
             } catch (Exception e) {
@@ -259,7 +264,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
                     // if give value is equal to value from entry
                     // print the corresponding key
-                    if(entry.getValue() == tradeCode) {
+                    if(entry.getValue() == selectedTradeCode) {
                         selectedTrdeCodeDetailsID=entry.getKey();
                         break;
                     }
@@ -415,7 +420,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             e.printStackTrace();
         }
         try {
-            int licencePosition = licenceValidityArray.getPosition(traders.get(position).getLicenceValidity());
+            int licencePosition = licenceValidityArray.getPosition(spinnerMapFinYear.get(traders.get(position).getLicenceValidity()));
             if(licencePosition >= 0){
                 existingTradeDetailsViewBinding.licenceValidity.setSelection(licencePosition);
             }else {
@@ -444,6 +449,58 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewBinding.isPaid.setChecked(true);
         }else {
             existingTradeDetailsViewBinding.isPaid.setChecked(false);
+        }
+        if(traders.get(position).getOwnerStatus() != null && traders.get(position).getOwnerStatus().equals("Yes")){
+            existingTradeDetailsViewBinding.ownerStatusYes.setChecked(true);
+            existingTradeDetailsViewBinding.ownerStatusNo.setChecked(false);
+            existingTradeDetailsViewBinding.chooseFileLayout.setVisibility(View.VISIBLE);
+
+        }else {
+            existingTradeDetailsViewBinding.ownerStatusYes.setChecked(false);
+            existingTradeDetailsViewBinding.ownerStatusNo.setChecked(true);
+            existingTradeDetailsViewBinding.chooseFileLayout.setVisibility(View.GONE);
+        }
+
+        if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("Yes")){
+            existingTradeDetailsViewBinding.motorAvilableStatusYes.setChecked(true);
+            existingTradeDetailsViewBinding.motorAvilableStatusNo.setChecked(false);
+            existingTradeDetailsViewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
+
+        }else {
+            existingTradeDetailsViewBinding.motorAvilableStatusYes.setChecked(false);
+            existingTradeDetailsViewBinding.motorAvilableStatusNo.setChecked(true);
+            existingTradeDetailsViewBinding.motorSpinnerLayout.setVisibility(View.GONE);
+        }
+
+        if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("Yes")){
+            existingTradeDetailsViewBinding.geneartorAvilableStatusYes.setChecked(true);
+            existingTradeDetailsViewBinding.generatorAvilableStatusNo.setChecked(false);
+            existingTradeDetailsViewBinding.genaratorLayout.setVisibility(View.VISIBLE);
+
+        }else {
+            existingTradeDetailsViewBinding.geneartorAvilableStatusYes.setChecked(false);
+            existingTradeDetailsViewBinding.generatorAvilableStatusNo.setChecked(true);
+            existingTradeDetailsViewBinding.genaratorLayout.setVisibility(View.GONE);
+        }
+
+        if(traders.get(position).getPropertyStatus() != null && traders.get(position).getPropertyStatus().equals("Yes")){
+            existingTradeDetailsViewBinding.propertyTaxYes.setChecked(true);
+            existingTradeDetailsViewBinding.propertyTaxNo.setChecked(false);
+            existingTradeDetailsViewBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
+
+        }else {
+            existingTradeDetailsViewBinding.propertyTaxYes.setChecked(false);
+            existingTradeDetailsViewBinding.propertyTaxNo.setChecked(true);
+            existingTradeDetailsViewBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+        }
+
+        if(traders.get(position).getProfesstionlStatus() != null && traders.get(position).getProfesstionlStatus().equals("Yes")){
+            existingTradeDetailsViewBinding.professionalTaxYes.setChecked(true);
+            existingTradeDetailsViewBinding.professionalTaxNo.setChecked(false);
+
+        }else {
+            existingTradeDetailsViewBinding.professionalTaxYes.setChecked(false);
+            existingTradeDetailsViewBinding.professionalTaxNo.setChecked(true);
         }
         setDisableToFields();
     }
@@ -1074,6 +1131,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
+    public void openDocument() {
+
+    }
 
     public void openCameraScreen() {
         if (selectedTradeCode!=null&&!existingTradeDetailsViewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
@@ -1092,19 +1152,19 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
 
     public void viewImageScreen() {
-       /* if (traders.get(position).getTradeBitmapImage() != null ) {
-
+        if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {
+            String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
             Intent intent = new Intent(this, FullImageActivity.class);
             intent.putExtra(AppConstant.TRADE_CODE, "");
             intent.putExtra(AppConstant.MOBILE, "");
             intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
-            intent.putExtra(AppConstant.TRADE_IMAGE, BitMapToString(traders.get(position).getTradeBitmapImage()));
+            intent.putExtra(AppConstant.TRADE_IMAGE, value);
             intent.putExtra("key", "ExistTradeViewClass");
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         } else {
             Utils.showAlert(ExistTradeViewClass.this, "No image Found");
-        }*/
+        }
 
     }
     public void decryptRegister(){

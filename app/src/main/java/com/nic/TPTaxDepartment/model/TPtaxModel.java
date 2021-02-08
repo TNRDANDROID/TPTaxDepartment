@@ -102,7 +102,57 @@ public class TPtaxModel  implements Serializable {
     public String field_visit_img_id;
     public Bitmap tradeBitmapImage;
     public byte[] imageByte;
+    public String ownerStatus;
+    public String motorStatus;
+    public String generatorStatus;
+    public String professtionlStatus;
+    public String propertyStatus;
 
+
+    public String getOwnerStatus() {
+        return ownerStatus;
+    }
+
+    public TPtaxModel setOwnerStatus(String ownerStatus) {
+        this.ownerStatus = ownerStatus;
+        return this;
+    }
+
+    public String getMotorStatus() {
+        return motorStatus;
+    }
+
+    public TPtaxModel setMotorStatus(String motorStatus) {
+        this.motorStatus = motorStatus;
+        return this;
+    }
+
+    public String getGeneratorStatus() {
+        return generatorStatus;
+    }
+
+    public TPtaxModel setGeneratorStatus(String generatorStatus) {
+        this.generatorStatus = generatorStatus;
+        return this;
+    }
+
+    public String getProfesstionlStatus() {
+        return professtionlStatus;
+    }
+
+    public TPtaxModel setProfesstionlStatus(String professtionlStatus) {
+        this.professtionlStatus = professtionlStatus;
+        return this;
+    }
+
+    public String getPropertyStatus() {
+        return propertyStatus;
+    }
+
+    public TPtaxModel setPropertyStatus(String propertyStatus) {
+        this.propertyStatus = propertyStatus;
+        return this;
+    }
 
     public byte[] getImageByte() {
         return imageByte;

@@ -20,6 +20,7 @@ import com.nic.TPTaxDepartment.databinding.ExistingTraderListBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
+import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import org.json.JSONArray;
@@ -35,6 +36,7 @@ public class ExistingTradeList extends AppCompatActivity {
     private ExistingTraderListBinding existingTradeList;
     private PrefManager prefManager;
     ArrayList<TPtaxModel> tradersList;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,10 +121,30 @@ public class ExistingTradeList extends AppCompatActivity {
         }
     }
     public void showTraderDetails( int position , ArrayList<TPtaxModel> tradersList) {
-
+        ArrayList<TPtaxModel> selectedTradersImageList = new ArrayList<TPtaxModel>();
+        ArrayList<TPtaxModel> ImageList = new ArrayList<TPtaxModel>();
+        try {
+            JSONArray jsonarray = new JSONArray(prefManager.getTraderImageList());
+            System.out.println("json"+jsonarray.toString());
+            if(jsonarray != null && jsonarray.length() >0) {
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    JSONObject jsonobject = jsonarray.getJSONObject(i);
+                    String img = Utils.NotNullString(jsonobject.getString("img"));
+                    byte[] ByteArray = img.getBytes();
+                    TPtaxModel Detail = new TPtaxModel();
+                    Detail.setImageByte(ByteArray);
+                    selectedTradersImageList.add(Detail);
+                }
+            }
+            ImageList.add(selectedTradersImageList.get(position));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent( this, ExistTradeViewClass.class);
         intent.putExtra("position", position);
         intent.putExtra("tradersList", tradersList);
+        intent.putExtra("tradersImageList", ImageList);
+        intent.putExtra("tradersImagePosition", 0);
         intent.putExtra("flag",true);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);

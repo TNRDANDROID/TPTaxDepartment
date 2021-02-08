@@ -75,6 +75,7 @@ public class PrefManager {
     private static final String ROLE_NAME = "role_name";
     private static final String USER_FNAME = "user_first_name";
     private static final String USER_LNAME = "user_last_name";
+    private static final String TRADER_IMAGE_LIST = "trader_image_list";
 
 
 
@@ -100,6 +101,14 @@ public class PrefManager {
 
     public void setImei(String imei) {
         editor.putString(IMEI,imei);
+        editor.commit();
+    }
+    public String getTraderImageList() {
+        return pref.getString(TRADER_IMAGE_LIST,null);
+    }
+
+    public void setTraderImageList(String traderImageList) {
+        editor.putString(TRADER_IMAGE_LIST,traderImageList);
         editor.commit();
     }
 

@@ -604,7 +604,7 @@
                     android:layout_below="@+id/appBarLayout"
                     android:id="@+id/second"
                     android:layout_marginBottom="@dimen/padding"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:orientation="vertical">
                     //Ward No
                     <LinearLayout
@@ -936,7 +936,75 @@
 
                         </RelativeLayout>
                     </LinearLayout>
+                    //Rental Lease Agreement file choose Layout
+                    <LinearLayout
+                        android:id="@+id/choose_file_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:text="Rental Lease Agreement"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+                        <RelativeLayout
+                            android:id="@+id/lease_aggrement_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/header"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:background="@drawable/rectangle_box"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+
+                            <TextView
+                                android:onClick="@{()-> activity.openDocument()}"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/choose_file"
+                                android:padding="@dimen/_5sdp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginLeft="10dp"
+                                android:background="@drawable/round_corner_button"
+                                android:ellipsize="marquee"
+                                android:text="Choose File"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_15sdp"
+                                customfontdemo:fontName="@string/font_circular_book" />
+
+                            <TextView
+                                android:layout_marginLeft="@dimen/_10sdp"
+                                android:layout_toRightOf="@+id/choose_file"
+                                android:textColor="@android:color/black"
+                                android:textSize="@dimen/_15sdp"
+                                android:text="C:\Users\NIC\Downloads"
+                                android:layout_centerVertical="true"
+                                android:id="@+id/file_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginRight="@dimen/_6sdp"
+                                customfontdemo:fontName="@string/font_circular_book"/>
+
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
                     //Date
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -1302,7 +1370,7 @@
                     android:layout_below="@+id/second"
                     android:id="@+id/third"
                     android:layout_marginBottom="10dp"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:orientation="vertical">
                     //Trade Description
                     <LinearLayout
@@ -1674,54 +1742,6 @@
                         </RelativeLayout>
                     </LinearLayout>
 
-                    ///Remarks
-                    <LinearLayout
-                        android:id="@+id/remarks_no_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/name_layout"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Remarks"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp"
-                            android:visibility="visible"
-                            customfontdemo:fontName="@string/font_circular_medium" />
-
-                        <RelativeLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/padding"
-                            android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:orientation="vertical">
-
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:id="@+id/remarksTxInp"
-                                app:hintEnabled="false"
-                                android:hint="Remarks">
-
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/remarks_field"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textColor="@android:color/black"
-                                    android:inputType="textPersonName" />
-
-                            </com.google.android.material.textfield.TextInputLayout>
-
-                        </RelativeLayout>
-                    </LinearLayout>
-
                     //Property Tax Type
                     <LinearLayout
                         android:id="@+id/property_tax_layout"
@@ -1824,7 +1844,53 @@
                     </LinearLayout>
 
 
+                    ///Remarks
+                    <LinearLayout
+                        android:id="@+id/remarks_no_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/name_layout"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:text="Remarks"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp"
+                            android:visibility="visible"
+                            customfontdemo:fontName="@string/font_circular_medium" />
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_left_20dp"
+                            android:layout_marginTop="@dimen/padding"
+                            android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/remarksTxInp"
+                                app:hintEnabled="false"
+                                android:hint="Remarks">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/remarks_field"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@android:color/black"
+                                    android:inputType="textPersonName" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </RelativeLayout>
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv"

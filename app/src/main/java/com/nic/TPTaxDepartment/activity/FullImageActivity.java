@@ -140,7 +140,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         protected ArrayList<TPtaxModel> doInBackground(Void... params) {
             dbData.open();
             activityImage = new ArrayList<>();
-           if(tradeBitmapImage != null){
+           if(tradeImage != null){
                TPtaxModel card = new TPtaxModel();
                card.setImage(StringToBitMap(tradeImage));
                activityImage.add(card);
@@ -176,6 +176,11 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
     }
 
     public void homePage() {
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
 //        Intent intent = new Intent(this, HomePage.class);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //        intent.putExtra("Home", "Home");
