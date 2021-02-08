@@ -32,6 +32,7 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
 import com.nic.TPTaxDepartment.databinding.DashboardBinding;
+import com.nic.TPTaxDepartment.databinding.NewDashboardBinding;
 import com.nic.TPTaxDepartment.dialog.MyDialog;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.Gender;
@@ -55,6 +56,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     private BottomAppBar bar;
     private DashboardBinding dashboardBinding;
+    private NewDashboardBinding newDashboardBinding;
     ArrayList<TPtaxModel> pendingList = new ArrayList<>();
     final Handler handler = new Handler();
     public static DBHelper dbHelper;
@@ -64,8 +66,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dashboardBinding = DataBindingUtil.setContentView(this, R.layout.dashboard);
-        dashboardBinding.setActivity(this);
+        newDashboardBinding = DataBindingUtil.setContentView(this, R.layout.new_dashboard);
+        newDashboardBinding.setActivity(this);
         prefManager = new PrefManager(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
@@ -78,30 +80,30 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         sync_layout =(LinearLayout)  findViewById(R.id.sync_layout);
 
 
-        dashboardBinding.voteprogresscard.setTranslationX(800);
-        dashboardBinding.attendanecard.setTranslationX(800);
-        dashboardBinding.cameracard.setTranslationX(800);
-        dashboardBinding.votecountcard.setTranslationX(800);
-        dashboardBinding.viewPollingStationImage.setTranslationX(800);
-        dashboardBinding.pendingScreen.setTranslationX(800);
+        newDashboardBinding.voteprogresscard.setTranslationX(800);
+        newDashboardBinding.attendanecard.setTranslationX(800);
+        newDashboardBinding.cameracard.setTranslationX(800);
+        newDashboardBinding.votecountcard.setTranslationX(800);
+        newDashboardBinding.viewPollingStationImage.setTranslationX(800);
+        newDashboardBinding.pendingScreen.setTranslationX(800);
 
 
-        dashboardBinding.voteprogresscard.setAlpha(0);
-        dashboardBinding.attendanecard.setAlpha(0);
-        dashboardBinding.cameracard.setAlpha(0);
-        dashboardBinding.votecountcard.setAlpha(0);
-        dashboardBinding.viewPollingStationImage.setAlpha(0);
-        dashboardBinding.pendingScreen.setAlpha(0);
+        newDashboardBinding.voteprogresscard.setAlpha(0);
+        newDashboardBinding.attendanecard.setAlpha(0);
+        newDashboardBinding.cameracard.setAlpha(0);
+        newDashboardBinding.votecountcard.setAlpha(0);
+        newDashboardBinding.viewPollingStationImage.setAlpha(0);
+        newDashboardBinding.pendingScreen.setAlpha(0);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                dashboardBinding.voteprogresscard.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
-                dashboardBinding.attendanecard.animate().translationX(0).alpha(1).setDuration(1500).setStartDelay(600).start();
-                dashboardBinding.cameracard.animate().translationX(0).alpha(1).setDuration(1600).setStartDelay(800).start();
-                dashboardBinding.votecountcard.animate().translationX(0).alpha(1).setDuration(1700).setStartDelay(1000).start();
-                dashboardBinding.viewPollingStationImage.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
-                dashboardBinding.pendingScreen.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
+                newDashboardBinding.voteprogresscard.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
+                newDashboardBinding.attendanecard.animate().translationX(0).alpha(1).setDuration(1500).setStartDelay(600).start();
+                newDashboardBinding.cameracard.animate().translationX(0).alpha(1).setDuration(1600).setStartDelay(800).start();
+                newDashboardBinding.votecountcard.animate().translationX(0).alpha(1).setDuration(1700).setStartDelay(1000).start();
+                newDashboardBinding.viewPollingStationImage.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
+                newDashboardBinding.pendingScreen.animate().translationX(0).alpha(1).setDuration(1800).setStartDelay(1200).start();
             }
         }, 800);
 
@@ -116,11 +118,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         anim.setRepeatMode(Animation.INFINITE);
         anim.setRepeatCount(Animation.INFINITE);
 
-        dashboardBinding.tradeTv.startAnimation(anim);
-        dashboardBinding.fieldTv.startAnimation(anim);
-        dashboardBinding.assessTv.startAnimation(anim);
-        dashboardBinding.dailcollTv.startAnimation(anim);
-        dashboardBinding.pendingTv.startAnimation(anim);
+        newDashboardBinding.tradeTv.startAnimation(anim);
+        newDashboardBinding.fieldTv.startAnimation(anim);
+        newDashboardBinding.assessTv.startAnimation(anim);
+        newDashboardBinding.dailcollTv.startAnimation(anim);
+        newDashboardBinding.pendingTv.startAnimation(anim);
 
         syncvisiblity();
         if(Utils.isOnline()) {
