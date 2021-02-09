@@ -4,20 +4,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.PagerSnapHelper;
-import androidx.recyclerview.widget.SnapHelper;
-
 import com.android.volley.VolleyError;
 import com.nic.TPTaxDepartment.Adapter.AssessmentAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
@@ -28,21 +20,16 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.AssessmentStatusNewBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
-import com.nic.TPTaxDepartment.model.Gender;
-import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class  AssessmentStatus extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
@@ -72,47 +59,15 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         assessmentStatusBinding.recycler.setLayoutManager(layoutManager);
 
-        /*LinearLayoutManager layoutManager = new LinearLayoutManager(AssessmentStatus.this, LinearLayoutManager.VERTICAL, false);
-        SnapHelper snapHelper = new PagerSnapHelper();
-        assessmentStatusBinding.recycler.setLayoutManager(layoutManager);
-        snapHelper.attachToRecyclerView(assessmentStatusBinding.recycler);*/
-
         Utils.setLanguage(assessmentStatusBinding.assessmentId,"en","USA");
 
         assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
         assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
         assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
 
-
-/*
-        assessmentStatusBinding.assessmentId.setOnEditorActionListener(
-                new EditText.OnEditorActionListener() {
-                    @Override
-                    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                        if (actionId == EditorInfo.IME_ACTION_SEARCH ||
-                                actionId == EditorInfo.IME_ACTION_DONE ||
-                                event != null &&
-                                        event.getAction() == KeyEvent.ACTION_DOWN &&
-                                        event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-                            if (event == null || !event.isShiftPressed()) {
-                                // the user is done typing.
-                                if(Utils.isOnline()){
-                                    getAssessmentStatus();
-                                }
-                                else{
-                                    Utils.showAlert(AssessmentStatus.this,getResources().getString(R.string.no_internet));
-                                }
-                                return true; // consume.
-                            }
-                        }
-                        return false; // pass on to other listeners.
-                    }
-                }
-        );
-*/
         getTaxTypeList();
-        assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
+
+        assessmentStatusBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
                 String TaxTypeName = parent.getSelectedItem().toString();
@@ -150,7 +105,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                 assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
     }
 
-    void getTaxTypeList() {
+    public  void getTaxTypeList() {
         taxType = new ArrayList<CommonModel>();
         String select_query= "SELECT *FROM " + DBHelper.TAX_TYPE_LIST;
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
@@ -227,7 +182,6 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         Log.d("AssessmentStatusRequest", "" + data);
         return data;
     }
-
 
 
     public void OnMyResponse(ServerResponse serverResponse) {
@@ -430,6 +384,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     public void OnError(VolleyError volleyError) {
 
     }
+
     public void dashboard() {
         Intent intent = new Intent(this, Dashboard.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -565,8 +567,24 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewBinding.isPaid.setEnabled(false);
         existingTradeDetailsViewBinding.calendarIcon.setEnabled(false);
         existingTradeDetailsViewBinding.calendarIcon.setClickable(false);
+         closeKeyboard();
     }
 
+    private void closeKeyboard() {
+        try {
+            if(ExistTradeViewClass.this != null) {
+                // Check if no view has focus:
+                View view = this.getCurrentFocus();
+                if (view != null) {
+                    InputMethodManager imm = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    assert imm != null;
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
+        } catch (Exception exp){
+            exp.printStackTrace();
+        }
+    }
 
     @Override
     public void onClick(View v) {
@@ -615,17 +633,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     }
 
-
     public void SaveLicenseTraders() {
         try {
             new ApiService(this).makeJSONObjectRequest("SaveLicenseTraders", Api.Method.POST, UrlGenerator.TradersUrl(), dataSavedEncryptJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         } }
-
-
-
-
 
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
