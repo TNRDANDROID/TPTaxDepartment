@@ -63,6 +63,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public static SQLiteDatabase db;
     private PrefManager prefManager;
     ArrayList<CommonModel> traderLicenseTypeList;
+
+    ArrayList<CommonModel> annualSaleList;
+    ArrayList<CommonModel> motorRangePowerList;
+    ArrayList<CommonModel> generatorRangeList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +140,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             getTradeList();
             getFieldVisitStatus();
             getServiceFieldVisitTypes();
+
+            getMotorRangeList();
+            getGeneratorRangeList();
+            getAnnualeSaleList();
+
         }
        /* if(getTaxTypeCount()<= 0){
             getTaxTypeList();
@@ -377,16 +386,84 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
     public JSONObject licencelistJsonParams() throws JSONException{
 
-
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseTypeList");
         return dataSet;
     }
     public JSONObject licenceValidityListJsonParams() throws JSONException{
 
-
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "OS_Finyear");
+        return dataSet;
+    }
+
+    public void getMotorRangeList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("MotorRange", Api.Method.POST, UrlGenerator.TradersUrl(), motorEncryptParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void getGeneratorRangeList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("GeneratorRange", Api.Method.POST, UrlGenerator.TradersUrl(), generatorEncryptParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAnnualeSaleList() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("AnnualSaleList", Api.Method.POST, UrlGenerator.TradersUrl(), annualSaleEncryptParams(), "not cache", this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject motorEncryptParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), motorRangeJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("MotorRange", "" + authKey);
+        return dataSet;
+    }
+
+    public JSONObject motorRangeJsonParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseMotorRange");
+        return dataSet;
+    }
+
+    public JSONObject generatorEncryptParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), generatorRangeJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("GeneratorRange", "" + authKey);
+        return dataSet;
+    }
+    public JSONObject generatorRangeJsonParams() throws JSONException{
+
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseGeneratorRange");
+        return dataSet;
+    }
+
+    public JSONObject annualSaleEncryptParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), annualSaleJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("AnnualSaleList", "" + authKey);
+        return dataSet;
+    }
+
+    public JSONObject annualSaleJsonParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseAnnualSaleList");
         return dataSet;
     }
 
@@ -685,6 +762,116 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 }
                 Log.d("ServiceFieldVisitTypes", "" + responseObj);
             }
+            if ("MotorRange".equals(urlType) && responseObj != null) {
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("MotorRange", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.MOTOR_RANG_POWER);
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String motor_id = Utils.NotNullString(jsonobject.getString("motor_type_id"));
+                            String traders_license_type_id = Utils.NotNullString(jsonobject.getString("traders_license_type_id"));
+                            String motor_type_name = Utils.NotNullString(jsonobject.getString("motor_type_name"));
+                            String hp_from = Utils.NotNullString(jsonobject.getString("hp_from"));
+                            String hp_to = Utils.NotNullString(jsonobject.getString("hp_to"));
+                            String trade_slab_rate_id = Utils.NotNullString(jsonobject.getString("trade_slab_rate_id"));
+                            String slab_amount = Utils.NotNullString(jsonobject.getString("slab_amount"));
+
+
+
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put("motor_id", motor_id);
+                            fieldValue.put("traders_license_type_id", traders_license_type_id);
+                            fieldValue.put("motor_type_name", motor_type_name);
+                            fieldValue.put("hp_from", hp_from);
+                            fieldValue.put("hp_to", hp_to);
+                            fieldValue.put("trade_slab_rate_id", trade_slab_rate_id);
+                            fieldValue.put("slab_amount", slab_amount);
+
+                            db.insert(DBHelper.MOTOR_RANG_POWER, null, fieldValue);
+                        }
+                    }
+                }
+                Log.d("MotorRange", "" + responseObj);
+            }
+            if ("AnnualSaleList".equals(urlType) && responseObj != null) {
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("AnnualSaleList", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                //status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.ANNUAL_SALE_LIST);
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String trade_slab_rate_id = Utils.NotNullString(jsonobject.getString("trade_slab_rate_id"));
+                            String amount_range_id = Utils.NotNullString(jsonobject.getString("amount_range_id"));
+                            String amount_range = Utils.NotNullString(jsonobject.getString("amount_range"));
+                            String slab_amount = Utils.NotNullString(jsonobject.getString("slab_amount"));
+
+
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put("trade_slab_rate_id", trade_slab_rate_id);
+                            fieldValue.put("amount_range_id", amount_range_id);
+                            fieldValue.put("amount_range", amount_range);
+                            fieldValue.put("slab_amount", slab_amount);
+
+                            db.insert(DBHelper.ANNUAL_SALE_LIST, null, fieldValue);
+                        }
+                    }
+                }
+                Log.d("AnnualSaleList", "" + responseObj);
+            }
+            if ("GeneratorRange".equals(urlType) && responseObj != null) {
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("GeneratorRange", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+                //status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    db.execSQL("delete from "+ DBHelper.GENERATOR_RANGE_POWER);
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+
+                        for (int i = 0; i < jsonarray.length(); i++) {
+                            JSONObject jsonobject = jsonarray.getJSONObject(i);
+                            String traders_license_type_id = Utils.NotNullString(jsonobject.getString("traders_license_type_id"));
+                            String trade_slab_rate_id = Utils.NotNullString(jsonobject.getString("trade_slab_rate_id"));
+                            String generator_range_id = Utils.NotNullString(jsonobject.getString("generator_range_id"));
+                            String generator_range_name = Utils.NotNullString(jsonobject.getString("generator_range_name"));
+                            String generator_range_from = Utils.NotNullString(jsonobject.getString("generator_range_from"));
+                            String generator_range_to = Utils.NotNullString(jsonobject.getString("generator_range_to"));
+                            String slab_amount = Utils.NotNullString(jsonobject.getString("slab_amount"));
+
+                            ContentValues fieldValue = new ContentValues();
+                            fieldValue.put("traders_license_type_id", traders_license_type_id);
+                            fieldValue.put("trade_slab_rate_id", trade_slab_rate_id);
+                            fieldValue.put("generator_range_id", generator_range_id);
+                            fieldValue.put("generator_range_name", generator_range_name);
+                            fieldValue.put("generator_range_from", generator_range_from);
+                            fieldValue.put("generator_range_to", generator_range_to);
+                            fieldValue.put("slab_amount", slab_amount);
+
+
+                            db.insert(DBHelper.GENERATOR_RANGE_POWER, null, fieldValue);
+                        }
+                    }
+                }
+                Log.d("GeneratorRange", "" + responseObj);
+            }
+
+
 
 
 

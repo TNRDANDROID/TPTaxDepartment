@@ -29,6 +29,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String FIELD_VISIT_STATUS="field_visit_status";
     public static final String SERVICE_LIST_FIELD_VISIT_TYPES="service_list_field_visit_types";
     public static final String FIELD_VISIT_STATUS_IMAGES="field_visit_status_images";
+    public static final String ANNUAL_SALE_LIST="annual_sale_list";
+    public static final String MOTOR_RANG_POWER="motor_range_power";
+    public static final String GENERATOR_RANGE_POWER="field_visit_status_images";
 
 
     private Context context;
@@ -198,6 +201,36 @@ public class DBHelper extends SQLiteOpenHelper {
                 "service_list_field_visit_taxtype_id INTEGER," +
                 "service_list_field_visit_service_id INTEGER," +
                 "service_list_field_visit_types_desc TEXT)");
+
+        db.execSQL("CREATE TABLE " + ANNUAL_SALE_LIST + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "trade_slab_rate_id INTEGER," +
+                "amount_range_id INTEGER," +
+                "slab_amount TEXT," +
+                "amount_range Text)"
+                );
+
+        db.execSQL("CREATE TABLE " + MOTOR_RANG_POWER + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "motor_id INTEGER," +
+                "traders_license_type_id INTEGER," +
+                "motor_type_name TEXT," +
+                "hp_from INTEGER," +
+                "hp_to INTEGER," +
+                "trade_slab_rate_id INTEGER," +
+                "slab_amount TEXT)"
+                );
+
+        db.execSQL("CREATE TABLE " + GENERATOR_RANGE_POWER + " ("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "traders_license_type_id INTEGER," +
+                "trade_slab_rate_id INTEGER," +
+                "generator_range_id INTEGER," +
+                "generator_range_name TEXT," +
+                "generator_range_from INTEGER," +
+                "generator_range_to INTEGER," +
+                "slab_amount TEXT)");
+
 
     }
 

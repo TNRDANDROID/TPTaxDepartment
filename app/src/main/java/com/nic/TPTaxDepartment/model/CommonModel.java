@@ -85,7 +85,10 @@ public class CommonModel {
     public String annuallease_amount;
 
 
-
+////Motor,Generator,Annual List;
+    public String annual_id,motor_id,generator_id;
+    public String annual_sale,motor_range,generator_range;
+    ///////
 
     String request_id;
     String data_ref_id;
@@ -777,5 +780,53 @@ public class CommonModel {
     }
 
 
+   ////Motor Annaul and Generator List;
 
+    public String getAnnual_id() {
+        return annual_id;
+    }
+
+    public void setAnnual_id(String annual_id) {
+        this.annual_id = annual_id;
+    }
+
+    public String getMotor_id() {
+        return motor_id;
+    }
+
+    public void setMotor_id(String motor_id) {
+        this.motor_id = motor_id;
+    }
+
+    public String getGenerator_id() {
+        return generator_id;
+    }
+
+    public void setGenerator_id(String generator_id) {
+        this.generator_id = generator_id;
+    }
+
+    public String getAnnual_sale() {
+        return annual_sale;
+    }
+
+    public void setAnnual_sale(String annual_sale) {
+        this.annual_sale = annual_sale;
+    }
+
+    public String getMotor_range() {
+        return motor_range;
+    }
+
+    public void setMotor_range(String motor_range) {
+        this.motor_range = motor_range;
+    }
+
+    public String getGenerator_range() {
+        return generator_range;
+    }
+
+    public void setGenerator_range(String generator_range) {
+        this.generator_range = generator_range;
+    }
 }

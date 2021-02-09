@@ -15,6 +15,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.FileUtils;
 import android.os.Handler;
 import android.os.LocaleList;
 import android.provider.MediaStore;
@@ -84,7 +85,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener {
+public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener,AdapterView.OnItemSelectedListener{
     private static final int REQUEST_CODE_DOC =101 ;
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
     ArrayList<Gender> genders ;
@@ -150,7 +151,34 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     String docFilePath;
     int booleanValue=0;
     File file;
-    ArrayList<NormalFile> list;
+    ArrayList<NormalFile> list=new ArrayList<>();
+
+    ArrayAdapter<String> annualSaleArray;
+    ArrayAdapter<String> motorRangeArray;
+    ArrayAdapter<String> generatorRangeArray;
+    HashMap<String,String> spinnerMapAnnualSale;
+    HashMap<String,String> spinnerMapMotorRange;
+    HashMap<String,String> spinnerMapGeneratorRange;
+    ArrayList<CommonModel> AnnualSaleList ;
+    ArrayList<CommonModel> motorRangeList ;
+    ArrayList<CommonModel> generatorRangeList ;
+    String selectedAnnualId;
+    String selectedAnnualSale="";
+    String selectedMotorId;
+    String selectedMotorRange="";
+    String selectedGeneratorId;
+    String selectedGeneratorRange="";
+    String owner_status_text="";
+    String motor_available_status_text="";
+    String generator_available_status_text="";
+    String professional_tax_paid_status_text="";
+    String property_tax_paid_status_text="";
+
+    private static final int MY_REQUEST_CODE_PERMISSION = 1000;
+    private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
+
+    private static final String LOG_TAG = "AndroidExample";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -185,11 +213,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
 
-        LoadFinYearSpinner();
-        LoadGenderSpinner();
-        LoadTradeCodeListSpinner();
+
         try {
+            LoadFinYearSpinner();
+            LoadGenderSpinner();
+            LoadTradeCodeListSpinner();
             LoadLicenceTypeSpinner();
+            LoadAnnualSaleListSpinner();
+            LoadGeneratorRangeListSpinner();
+            LoadMotorRangeListSpinner();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -222,17 +255,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         });
 */
 
-        newTradeLicenceScreenBinding.isPaid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(compoundButton.isChecked()){
-                    paymentStatus="Paid";
-                }
-                else {
-                    paymentStatus="UnPaid";
-                }
-            }
-        });
+
         radioBtnFun();
 
 
@@ -249,183 +272,21 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         newTradeLicenceScreenBinding.mobileHint.setText(builder);
 
-        newTradeLicenceScreenBinding.gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String gender = parent.getSelectedItem().toString();
-                selectedGender=gender;
-                // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerMap.entrySet()) {
-                    // if give value is equal to value from entry
-                    // print the corresponding key
-                    if(entry.getValue() == selectedGender) {
-                        selectedGenderId=entry.getKey();
-                        break;
-                    }
-                }
-
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
-        newTradeLicenceScreenBinding.licenceValidity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String finYear = parent.getSelectedItem().toString();
-                selectedFinName=finYear;
-
-                // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
-                    // if give value is equal to value from entry
-                    // print the corresponding key
-                    if(entry.getValue() == selectedFinName) {
-                        selectedFinId=entry.getKey();
-                        break;
-                    }
-                }
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
-
-/*
-        newTradeLicenceScreenBinding.tradeCodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String tradeCode = parent.getSelectedItem().toString();
-//                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
-                selectedTradeCode=tradeCode;
-//                selectedTrdeCodeDetailsID=tradeID;
-                ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
-                String tradeID ="";
-                System.out.println("tradeCode>> "+ tradeCode);
-                // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
-                    // if give value is equal to value from entry
-                    // print the corresponding key
-                    if(entry.getValue() == selectedTradeCode) {
-                        selectedTrdeCodeDetailsID=entry.getKey();
-                        break;
-                    }
-                }
-                System.out.println("tradeCodeId>> "+ selectedTrdeCodeDetailsID);
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
-*/
-        newTradeLicenceScreenBinding.tradeCodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String tradeCode = parent.getSelectedItem().toString();
-                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
-                selectedTrdeCodeDetailsID=tradeID;
-                System.out.println("tradeCode>> "+ tradeCode);
-                System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
-                selectedTradeCode=tradeCode;
-
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
-
-        newTradeLicenceScreenBinding.licenceType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String LicenceTypeName = parent.getSelectedItem().toString();
-                selectedLicenceTypeName=LicenceTypeName;
-                // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerMapLicenceType.entrySet()) {
-                    // if give value is equal to value from entry
-                    // print the corresponding key
-                    if(entry.getValue() == selectedLicenceTypeName) {
-                        selectedLicenceTpeId=entry.getKey();
-                        break;
-                    }
-                }
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
-        newTradeLicenceScreenBinding.wardNo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
-            {
-                System.out.println("checkflag >> "+flag);
-                String ward = parent.getSelectedItem().toString();
-                selectedWardName=ward;
-
-                // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
-                    // if give value is equal to value from entry
-                    // print the corresponding key
-                    if(entry.getValue() == selectedWardName) {
-                        selectedWardId=entry.getKey();
-                        break;
-                    }
-                }
-
-                if(selectedWardId != null && !selectedWardName.equals("Select Ward")){
-                    if(wardFlag){
-                        LoadStreetSpinner(selectedWardId, "");
-                    }else {
-
-                    }
-
-                    System.out.println("selectedWardId >> "+selectedWardId);
-                    if (!flag ) {
-
-                        wardFlag=false;
-                        LoadStreetSpinner(selectedWardId, "");
-                    }else {
-                        wardFlag=true;
-//                        LoadStreetSpinner(selectedWardId, traders.get(position).getStreetname());
-                    }
+        //Spinners
+        newTradeLicenceScreenBinding.gender.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.licenceValidity.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.tradeCodeSpinner.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.licenceType.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.wardNo.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.streetsName.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.annualSale.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.motorRangeSpinner.setOnItemSelectedListener(this);
+        newTradeLicenceScreenBinding.generatorSpinner.setOnItemSelectedListener(this);
 
 
 
-                }else {
-                    newTradeLicenceScreenBinding.streetsName.setAdapter(null);                  }
-
-
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-
-            }
-        });
-        newTradeLicenceScreenBinding.streetsName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
-        {
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-            {
-                String street = parent.getSelectedItem().toString();
-                selectedStreetName=street;
-
-                // iterate each entry of hashmap
-                for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
-                    // if give value is equal to value from entry
-                    // print the corresponding key
-                    if(entry.getValue() == selectedStreetName) {
-                        selectedStreetId=entry.getKey();
-                        break;
-                    }
-                }
-            }
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-            }
-        });
-
+        //is paid
+        newTradeLicenceScreenBinding.isPaid.setOnCheckedChangeListener(this::onCheckedChanged);
 
         //Owner Status
         newTradeLicenceScreenBinding.ownerStatusNo.setOnCheckedChangeListener(this::onCheckedChanged);
@@ -558,10 +419,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         switch (compoundButton.getId()){
             case R.id.owner_status_no:
                 if(compoundButton.isChecked()){
+                    owner_status_text="No";
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
                 }
                 else {
+                    owner_status_text="Yes";
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
                 }
@@ -569,10 +432,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.owner_status_yes:
                 if(compoundButton.isChecked()){
+                    owner_status_text="Yes";
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
                 }
                 else {
+                    owner_status_text="No";
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
                 }
@@ -580,10 +445,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.geneartor_avilable_status_yes:
                 if(compoundButton.isChecked()){
+                    generator_available_status_text="Yes";
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
                 else {
+                    generator_available_status_text="No";
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                 }
@@ -591,10 +458,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.generator_avilable_status_no:
                 if(compoundButton.isChecked()){
+                    generator_available_status_text="No";
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                 }
                 else {
+                    generator_available_status_text="Yes";
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
@@ -602,10 +471,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.motor_avilable_status_yes:
                 if(compoundButton.isChecked()){
+                    motor_available_status_text="Yes";
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
                 else {
+                    motor_available_status_text="No";
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                 }
@@ -613,10 +484,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.motor_avilable_status_no:
                 if(compoundButton.isChecked()){
+                    motor_available_status_text="No";
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                 }
                 else {
+                    motor_available_status_text="Yes";
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
@@ -624,28 +497,34 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.professional_tax_yes:
                 if(compoundButton.isChecked()){
+                    professional_tax_paid_status_text="Yes";
                     newTradeLicenceScreenBinding.professionalTaxNo.setChecked(false);
                 }
                 else {
+                    professional_tax_paid_status_text="No";
                     newTradeLicenceScreenBinding.professionalTaxNo.setChecked(true);
                 }
                 break;
 
             case R.id.professional_tax_no:
                 if(compoundButton.isChecked()){
+                    professional_tax_paid_status_text="No";
                     newTradeLicenceScreenBinding.professionalTaxYes.setChecked(false);
                 }
                 else {
+                    professional_tax_paid_status_text="Yes";
                     newTradeLicenceScreenBinding.professionalTaxYes.setChecked(true);
                 }
                 break;
 
             case R.id.property_tax_yes:
                 if(compoundButton.isChecked()){
+                    property_tax_paid_status_text="Yes";
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
                 }
                 else {
+                    property_tax_paid_status_text="No";
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                 }
@@ -653,15 +532,155 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.property_tax_no:
                 if(compoundButton.isChecked()){
+                    property_tax_paid_status_text="No";
                     newTradeLicenceScreenBinding.propertyTaxYes.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                 }
                 else {
+                    professional_tax_paid_status_text="Yes";
                     newTradeLicenceScreenBinding.propertyTaxYes.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
                 }
                 break;
+            case R.id.is_paid:
+                if(compoundButton.isChecked()){
+                    paymentStatus="Paid";
+                }
+                else {
+                    paymentStatus="UnPaid";
+                }
+                break;
+
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+        if(parent == newTradeLicenceScreenBinding.gender){
+            String gender = parent.getSelectedItem().toString();
+            selectedGender=gender;
+            for(Map.Entry<String, String> entry: spinnerMap.entrySet()) {
+                if(entry.getValue() == selectedGender) {
+                    selectedGenderId=entry.getKey();
+                    break;
+                }
+            }
+            System.out.println("selectedGenderId >> "+selectedGenderId);
+            System.out.println("selectedGender >> "+selectedGender);
+
+        }
+        else if(parent == newTradeLicenceScreenBinding.licenceValidity){
+            String finYear = parent.getSelectedItem().toString();
+            selectedFinName=finYear;
+            for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
+                if(entry.getValue() == selectedFinName) {
+                    selectedFinId=entry.getKey();
+                    break;
+                }
+            }
+        }
+        else if(parent == newTradeLicenceScreenBinding.tradeCodeSpinner){
+            String tradeCode = parent.getSelectedItem().toString();
+            String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+            selectedTrdeCodeDetailsID=tradeID;
+            System.out.println("tradeCode>> "+ tradeCode);
+            System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
+            selectedTradeCode=tradeCode;
+
+        }
+        else if(parent == newTradeLicenceScreenBinding.licenceType){
+            String LicenceTypeName = parent.getSelectedItem().toString();
+            selectedLicenceTypeName=LicenceTypeName;
+            for(Map.Entry<String, String> entry: spinnerMapLicenceType.entrySet()) {
+                if(entry.getValue() == selectedLicenceTypeName) {
+                    selectedLicenceTpeId=entry.getKey();
+                    break;
+                }
+            }
+
+        }
+        else if(parent == newTradeLicenceScreenBinding.wardNo){
+            String ward = parent.getSelectedItem().toString();
+            selectedWardName=ward;
+            for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
+                if(entry.getValue() == selectedWardName) {
+                    selectedWardId=entry.getKey();
+                    break;
+                }
+            }
+
+            if(selectedWardId != null && !selectedWardName.equals("Select Ward")){
+                if(wardFlag){
+                    LoadStreetSpinner(selectedWardId, "");
+                }else { }
+                System.out.println("selectedWardId >> "+selectedWardId);
+                if (!flag ) {
+                    wardFlag=false;
+                    LoadStreetSpinner(selectedWardId, "");
+                }else {
+                    wardFlag=true;
+                }
+            }else {
+                newTradeLicenceScreenBinding.streetsName.setAdapter(null);
+            }
+
+        }
+        else if(parent == newTradeLicenceScreenBinding.streetsName){
+            String street = parent.getSelectedItem().toString();
+            selectedStreetName=street;
+            for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
+                if(entry.getValue() == selectedStreetName) {
+                    selectedStreetId=entry.getKey();
+                    break;
+                }
+            }
+
+        }
+
+        else if(parent == newTradeLicenceScreenBinding.annualSale){
+            String annual_sale = parent.getSelectedItem().toString();
+            selectedAnnualSale=annual_sale;
+            // iterate each entry of hashmap
+            for(Map.Entry<String, String> entry: spinnerMapAnnualSale.entrySet()) {
+                // if give value is equal to value from entry
+                // print the corresponding key
+                if(entry.getValue() == selectedAnnualSale) {
+                    selectedAnnualId=entry.getKey();
+                    break;
+                }
+            }
+        }
+        else if(parent == newTradeLicenceScreenBinding.motorRangeSpinner){
+            String motor_range = parent.getSelectedItem().toString();
+            selectedMotorRange=motor_range;
+            // iterate each entry of hashmap
+            for(Map.Entry<String, String> entry: spinnerMapMotorRange.entrySet()) {
+                // if give value is equal to value from entry
+                // print the corresponding key
+                if(entry.getValue() == selectedMotorRange) {
+                    selectedMotorId=entry.getKey();
+                    break;
+                }
+            }
+        }
+        else if(parent == newTradeLicenceScreenBinding.generatorSpinner){
+            String generator_range = parent.getSelectedItem().toString();
+            selectedGeneratorRange=generator_range;
+            // iterate each entry of hashmap
+            for(Map.Entry<String, String> entry: spinnerMapGeneratorRange.entrySet()) {
+                // if give value is equal to value from entry
+                // print the corresponding key
+                if(entry.getValue() == selectedGeneratorRange) {
+                    selectedGeneratorId=entry.getKey();
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     public static class datePickerFragment extends DialogFragment implements
@@ -1016,7 +1035,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     private void LoadTradeCodeListSpinner(){
         loadTradeCodeList = new ArrayList<>();
-        String select_query= "SELECT *FROM " + DBHelper.TRADE_CODE_LIST+ " WHERE lbcode="+"200046"/*prefManager.getTpCode()*/;
+        String select_query= "SELECT *FROM " + DBHelper.TRADE_CODE_LIST;
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
             if(cursor.moveToFirst()){
@@ -1067,6 +1086,144 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
     }
+
+    public void LoadAnnualSaleListSpinner(){
+        AnnualSaleList = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.ANNUAL_SALE_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setAnnual_id(cursor.getString(cursor.getColumnIndexOrThrow("amount_range_id")));
+                    commonModel.setAnnual_sale(cursor.getString(cursor.getColumnIndexOrThrow("amount_range")));
+
+                    AnnualSaleList.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(AnnualSaleList, (lhs, rhs) -> lhs.getAnnual_sale().compareTo(rhs.getAnnual_sale()));
+
+        if(AnnualSaleList != null && AnnualSaleList.size() >0) {
+
+            spinnerMapAnnualSale = new HashMap<String, String>();
+            spinnerMapAnnualSale.put(null, null);
+            final String[] items = new String[AnnualSaleList.size() + 1];
+            items[0] = "Select AnnualSale";
+            for (int i = 0; i < AnnualSaleList.size(); i++) {
+                spinnerMapAnnualSale.put(AnnualSaleList.get(i).annual_id, AnnualSaleList.get(i).annual_sale);
+                String Class = AnnualSaleList.get(i).annual_sale;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    annualSaleArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                    annualSaleArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.annualSale.setAdapter(annualSaleArray);
+                    newTradeLicenceScreenBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedAnnualId="0";
+                    selectedAnnualSale="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+    }
+    public void LoadMotorRangeListSpinner(){
+        motorRangeList = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.MOTOR_RANG_POWER;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setMotor_id(cursor.getString(cursor.getColumnIndexOrThrow("motor_id")));
+                    commonModel.setMotor_range(cursor.getString(cursor.getColumnIndexOrThrow("motor_type_name")));
+
+                    motorRangeList.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(motorRangeList, (lhs, rhs) -> lhs.getMotor_range().compareTo(rhs.getMotor_range()));
+
+        if(motorRangeList != null && motorRangeList.size() >0) {
+
+            spinnerMapMotorRange = new HashMap<String, String>();
+            spinnerMapMotorRange.put(null, null);
+            final String[] items = new String[motorRangeList.size() + 1];
+            items[0] = "Select Motor Range";
+            for (int i = 0; i < motorRangeList.size(); i++) {
+                spinnerMapMotorRange.put(motorRangeList.get(i).motor_id, motorRangeList.get(i).motor_range);
+                String Class = motorRangeList.get(i).motor_range;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    motorRangeArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                    motorRangeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(motorRangeArray);
+                    newTradeLicenceScreenBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedMotorId="0";
+                    selectedMotorRange="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+    }
+    public void LoadGeneratorRangeListSpinner(){
+        generatorRangeList = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.GENERATOR_RANGE_POWER;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setGenerator_id(cursor.getString(cursor.getColumnIndexOrThrow("generator_range_id")));
+                    commonModel.setGenerator_range(cursor.getString(cursor.getColumnIndexOrThrow("generator_range_name")));
+
+                    generatorRangeList.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(generatorRangeList, (lhs, rhs) -> lhs.getGenerator_range().compareTo(rhs.getGenerator_range()));
+
+        if(generatorRangeList != null && generatorRangeList.size() >0) {
+
+            spinnerMapGeneratorRange = new HashMap<String, String>();
+            spinnerMapGeneratorRange.put(null, null);
+            final String[] items = new String[generatorRangeList.size() + 1];
+            items[0] = "Select Generator Range";
+            for (int i = 0; i < generatorRangeList.size(); i++) {
+                spinnerMapGeneratorRange.put(generatorRangeList.get(i).getGenerator_id(), generatorRangeList.get(i).getGenerator_range());
+                String Class = generatorRangeList.get(i).getGenerator_range();
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    generatorRangeArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                    generatorRangeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    newTradeLicenceScreenBinding.generatorSpinner.setAdapter(generatorRangeArray);
+                    newTradeLicenceScreenBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedGeneratorId="0";
+                    selectedGeneratorRange="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
+    }
+
+
 
     @Override
     public void OnError(VolleyError volleyError) {
@@ -1521,15 +1678,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         dataSet.put("description_en", newTradeLicenceScreenBinding.descriptionEnglish.getText().toString());
         dataSet.put("description_ta", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
 
-        /*dataSet.put("motor_available_status", "");
-        dataSet.put("generator_available_status", "");
-        dataSet.put("motor_range", "");
-        dataSet.put("generator_range", "");
-        dataSet.put("professional_tax_paid_status", "");
-        dataSet.put("property_tax_paid_status", "");
+        dataSet.put("motor_available_status", motor_available_status_text);
+        dataSet.put("generator_available_status", generator_available_status_text);
+        dataSet.put("motor_range", selectedMotorId);
+        dataSet.put("generator_range", selectedGeneratorId);
+        dataSet.put("annual_sale", selectedAnnualId);
+        dataSet.put("professional_tax_paid_status", professional_tax_paid_status_text);
+        dataSet.put("property_tax_paid_status", property_tax_paid_status_text);
         dataSet.put("property_tax_assessment_number", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
-        dataSet.put("are_you_the_owner", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
-        dataSet.put("document", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());*/
+        dataSet.put("are_you_the_owner", owner_status_text);
+        dataSet.put("document", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
 
         //dataSet.put(AppConstant.LATITUDE, "10.3");
         //dataSet.put(AppConstant.LONGITUDE, "20.6");
@@ -1657,7 +1815,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void getDocument()
     {
-        isReadStoragePermissionGranted();
+        //isReadStoragePermissionGranted();
+        askPermissionAndBrowseFile();
     }
 
 
@@ -1757,7 +1916,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
     */
-    @Override
+   /* @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
@@ -1781,7 +1940,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
-
+*/
     public boolean ValidationFirst(){
         if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
             if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
@@ -1869,7 +2028,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 if (newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem() != null && selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
 
                                     if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
-                                        if (newTradeLicenceScreenBinding.annualSale.getSelectedItem() != null && newTradeLicenceScreenBinding.annualSale.getSelectedItem().toString().isEmpty()) {
+                                        if (newTradeLicenceScreenBinding.annualSale.getSelectedItem() != null && !newTradeLicenceScreenBinding.annualSale.getSelectedItem().toString().isEmpty()&&!"Select AnnualSale".equalsIgnoreCase(selectedAnnualSale)) {
                                            return true;
                                         }
                                         else {
@@ -1930,10 +2089,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
                                     if (getSaveTradeImageTable()==1) {
                                         if (Utils.isOnline()) {
-                                           savenewTraderINLocal();
-//                                            SaveLicenseTraders();
+                                           //savenewTraderINLocal();
+                                           SaveLicenseTraders();
                                         } else {
-                                            savenewTraderINLocal();
+                                            //savenewTraderINLocal();
                                             Utils.showAlert(this, getResources().getString(R.string.no_internet));
                                         }
                                     } else {
@@ -1967,10 +2126,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             if(newTradeLicenceScreenBinding.ownerStatusYes.isChecked()){
                 return true;
             }
-            else {return true;
-               /* BufferedReader br = null;
+            else {
+                BufferedReader br = null;
                 try {
-                    br = new BufferedReader(new FileReader(list.get(0).getPath()));
+
+                        br = new BufferedReader(new FileReader(file));
+
                     try {
                         if (br.readLine() == null) {
                             System.out.println("No errors, and file empty");
@@ -1981,7 +2142,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 // default StandardCharsets.UTF_8
                                 List<String> content = null;
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    content = Files.readAllLines(Paths.get(list.get(0).getPath()));
+                                    content = Files.readAllLines(Paths.get(String.valueOf(file)));
                                 }
                                 System.out.println(content);
 
@@ -1997,7 +2158,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-*/
                 //return false;
             }
 
@@ -2012,14 +2172,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             if(newTradeLicenceScreenBinding.motorAvilableStatusYes.isChecked()){
                 if(newTradeLicenceScreenBinding.motorRangeSpinner!= null &&
                         newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItem() !=null
-                &&  newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItem().toString().equals("Select Motor Range")) {
+                &&  !newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItem().toString().equals("Select Motor Range")) {
                     return true;
                 }
                 else {
-                    /*Utils.showAlert(this, "Select Motor Range");
+                    Utils.showAlert(this, "Select Motor Range");
                     newTradeLicenceScreenBinding.motorSpinnerLayout.requestLayout();
-                    return false;*/
-                    return true;
+                    return false;
+
                 }
             }
             else {
@@ -2037,14 +2197,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             if(newTradeLicenceScreenBinding.geneartorAvilableStatusYes.isChecked()){
                 if(newTradeLicenceScreenBinding.generatorSpinner!= null &&
                         newTradeLicenceScreenBinding.generatorSpinner.getSelectedItem() !=null
-                &&  newTradeLicenceScreenBinding.generatorSpinner.getSelectedItem().toString().equals("Select Generator Range")) {
+                &&  !newTradeLicenceScreenBinding.generatorSpinner.getSelectedItem().toString().equals("Select Generator Range")) {
                     return true;
                 }
                 else {
-                    /*Utils.showAlert(this, "Select Generator Range");
+                    Utils.showAlert(this, "Select Generator Range");
                     newTradeLicenceScreenBinding.genaratorLayout.requestLayout();
-                    return false;*/
-                    return true;
+                    return false;
                 }
             }
             else {
@@ -2080,6 +2239,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             return false;
         }
     }
+  /*
     @Override
     protected void onActivityResult(int req, int result, Intent data)
     {
@@ -2103,6 +2263,96 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
 
         }
+    }
+
+*/
+
+    private void askPermissionAndBrowseFile()  {
+        // With Android Level >= 23, you have to ask the user
+        // for permission to access External Storage.
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) { // Level 23
+
+            // Check if we have Call permission
+            int permisson = ActivityCompat.checkSelfPermission(this.getApplicationContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE);
+
+            if (permisson != PackageManager.PERMISSION_GRANTED) {
+                // If don't have permission so prompt the user.
+                this.requestPermissions(
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_REQUEST_CODE_PERMISSION
+                );
+                return;
+            }
+        }
+        this.doBrowseFile();
+    }
+
+    private void doBrowseFile()  {
+        Intent chooseFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFileIntent.setType("*/*");
+        // Only return URIs that can be opened with ContentResolver
+        chooseFileIntent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        chooseFileIntent = Intent.createChooser(chooseFileIntent, "Choose a file");
+        startActivityForResult(chooseFileIntent, MY_RESULT_CODE_FILECHOOSER);
+    }
+
+    // When you have the request results
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //
+        switch (requestCode) {
+            case MY_REQUEST_CODE_PERMISSION: {
+
+                // Note: If request is cancelled, the result arrays are empty.
+                // Permissions granted (CALL_PHONE).
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Log.i( LOG_TAG,"Permission granted!");
+                    Toast.makeText(this.getApplicationContext(), "Permission granted!", Toast.LENGTH_SHORT).show();
+
+                    this.doBrowseFile();
+                }
+                // Cancelled or denied.
+                else {
+                    Log.i(LOG_TAG,"Permission denied!");
+                    Toast.makeText(this.getApplicationContext(), "Permission denied!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case MY_RESULT_CODE_FILECHOOSER:
+                if (resultCode == Activity.RESULT_OK ) {
+                    if(data != null)  {
+                        Uri fileUri = data.getData();
+                        Log.i(LOG_TAG, "Uri: " + fileUri);
+
+                        String filePath = null;
+                        try {
+                            file = new File(fileUri.getPath());
+                        } catch (Exception e) {
+                            Log.e(LOG_TAG,"Error: " + e);
+                            Toast.makeText(this.getApplicationContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
+                        }
+                        newTradeLicenceScreenBinding.fileLocation.setText(file.toString());
+                    }
+                }
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public String getPath()  {
+        return newTradeLicenceScreenBinding.fileLocation.getText().toString();
     }
 
 }
