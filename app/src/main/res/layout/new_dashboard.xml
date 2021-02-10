@@ -12,93 +12,101 @@
     </data>
 
     <RelativeLayout
-        android:background="#F1EEEE"
+
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
 
-
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:elevation="0dp"
-            android:id="@+id/bar_rl"
-            android:translationZ="0.1dp"
-            android:background="@drawable/header_login">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
+        <RelativeLayout
+                android:background="@android:color/transparent"
+                android:id="@+id/img_rll"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentInsetLeft="0dp"
-                app:contentInsetStart="0dp"
-                android:elevation="0dp"
-                app:layout_scrollFlags="scroll|enterAlways|snap">
-
-                <RelativeLayout
-                    android:id="@+id/header_layout"
+                android:layout_height="@dimen/_120sdp"
+                >
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
-                    >
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitCenter"
+                    android:background="@drawable/header_login"
+                    ></ImageView>
 
-
-                    <ImageView
-                        android:id="@+id/refresh"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
-                        android:layout_alignParentStart="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="start"
-                        android:layout_marginLeft="@dimen/_10sdp"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/back"
-                        android:backgroundTint="@android:color/white"
-                        android:onClick="@{()-> activity.onBackPressed()}" />
-
-
-                    <TextView
-                        android:id="@+id/title_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:text="Dashboard"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/white"
-                        android:textSize="@dimen/_15sdp"
-                        android:textStyle="bold" />
-
-                    <ImageView
-                        android:id="@+id/log_out"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="15dp"
-                        android:adjustViewBounds="true"
-                        android:background="@drawable/logout_variant"
-                        android:backgroundTint="@android:color/white"
-                        android:onClick="@{()-> activity.logout()}"
-                        android:scaleType="centerInside" />
-
-
-                </RelativeLayout>
-
-                <View
-                    android:visibility="gone"
-                    android:id="@+id/horizontal_line"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/header_layout"
-                    android:background="#FFF" />
-            </androidx.appcompat.widget.Toolbar>
+                    android:layout_height="wrap_content"
+                    app:contentInsetLeft="0dp"
+                    app:contentInsetStart="0dp"
+                    android:elevation="0dp"
+                    app:layout_scrollFlags="scroll|enterAlways|snap">
 
-        </com.google.android.material.appbar.AppBarLayout>
+                    <RelativeLayout
+                        android:id="@+id/header_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="220dp"
+                        >
+
+
+                        <ImageView
+                            android:id="@+id/refresh"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="start"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/back"
+                            android:backgroundTint="@android:color/white"
+                            android:onClick="@{()-> activity.onBackPressed()}" />
+
+
+                        <TextView
+                            android:id="@+id/title_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:text="Dashboard"
+                            android:textAlignment="center"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/_15sdp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/log_out"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
+                            android:adjustViewBounds="true"
+                            android:background="@drawable/logout_variant"
+                            android:backgroundTint="@android:color/white"
+                            android:onClick="@{()-> activity.logout()}"
+                            android:scaleType="centerInside" />
+
+
+                    </RelativeLayout>
+
+                    <View
+                        android:visibility="gone"
+                        android:id="@+id/horizontal_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/header_layout"
+                        android:background="#FFF" />
+                </androidx.appcompat.widget.Toolbar>
+
+            </RelativeLayout>
+
+
+
 
         ///back ground drawable
         <RelativeLayout
+
             android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -155,57 +163,48 @@
 
 
         <ScrollView
-            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_above="@+id/below_bg"
+            android:layout_below="@+id/img_rll"
+            android:visibility="visible"
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/bar_rl">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
+            >
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:id="@+id/road_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/district_card"
-                    android:layout_centerInParent="true"
                     >
 
 
 
                         <RelativeLayout
-                            android:elevation="6dp"
+                            android:background="@drawable/dash_board_bg_rect"
                             android:id="@+id/voteprogresscard"
                             android:layout_width="wrap_content"
-                            android:layout_height="70dp"
+                            android:layout_height="50dp"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:onClick="@{()-> activity.tradeSilenceScreen()}">
 
                             <RelativeLayout
-                                android:background="@drawable/dash_board_bg_rect"
                                 android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_margin="8dp"
+                                    android:padding="8dp"
+                                    android:layout_centerVertical="true"
                                     android:id="@+id/image_voting_progress"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
-                                    android:layout_gravity="center"
                                     android:background="@drawable/cerclebackgroundpurple"
-                                    android:padding="12dp"
                                     android:src="@drawable/ic_stock_market"
                                      />
 
@@ -225,7 +224,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Trade Licence"
-                                    android:textSize="18sp"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
 
@@ -254,13 +253,12 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:elevation="6dp"
                             android:id="@+id/attendanecard"
                             android:layout_width="wrap_content"
-                            android:layout_height="70dp"
+                            android:layout_height="50dp"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:onClick="@{()-> activity.fieldVisitScreen()}"
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
@@ -274,13 +272,13 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_margin="8dp"
                                     android:id="@+id/image_attendance"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/cerclebackgroundpink"
                                     android:padding="8dp"
+                                    android:layout_centerVertical="true"
                                     android:src="@drawable/ic_crew"
                                     android:visibility="visible" />
 
@@ -300,7 +298,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:text="Field Visit"
-                                    android:textSize="18sp"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
 
@@ -329,33 +327,32 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:elevation="6dp"
+                            android:background="@drawable/dash_board_bg_rect"
                             android:id="@+id/cameracard"
                             android:layout_width="wrap_content"
-                            android:layout_height="70dp"
+                            android:layout_height="50dp"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:onClick="@{()-> activity.assessmentStatusScreen()}"
                             >
 
                             <RelativeLayout
-                                android:background="@drawable/dash_board_bg_rect"
+
                                 android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_margin="8dp"
                                     android:id="@+id/image_camera"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/cerclebackgroundgreen"
-                                    android:padding="7dp"
+                                    android:padding="5dp"
                                     android:src="@drawable/ic_camera_black_24dp"
                                     android:visibility="visible" />
 
@@ -375,7 +372,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:text="Assessment"
-                                    android:textSize="18sp"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
 
@@ -404,13 +401,13 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:elevation="6dp"
+                            android:background="@drawable/dash_board_bg_rect"
                             android:id="@+id/votecountcard"
                             android:layout_width="wrap_content"
-                            android:layout_height="70dp"
+                            android:layout_height="50dp"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:onClick="@{()-> activity.dailyCollectionScreen()}"
@@ -418,20 +415,19 @@
 
                             <RelativeLayout
 
-                                android:background="@drawable/dash_board_bg_rect"
                                 android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:layout_margin="8dp"
+
                                     android:id="@+id/image_voting_count"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/cerclebackgroundyello"
-                                    android:padding="12dp"
+                                    android:padding="8dp"
                                     android:src="@drawable/ic_counting"
                                     android:visibility="visible" />
 
@@ -452,7 +448,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:text="Daily Collection"
-                                    android:textSize="18sp"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
 
@@ -481,20 +477,20 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:elevation="6dp"
+                            android:background="@drawable/dash_board_bg_rect"
                             android:id="@+id/pendingScreen"
                             android:layout_width="wrap_content"
-                            android:layout_height="70dp"
+                            android:layout_height="50dp"
                             android:layout_marginLeft="40dp"
                             android:layout_marginRight="40dp"
-                            android:layout_marginTop="30dp"
+                            android:layout_marginTop="20dp"
                             android:clickable="true"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:onClick="@{()-> activity.pendingScreen()}"
                             >
 
                             <RelativeLayout
-                                android:background="@drawable/dash_board_bg_rect"
+
                                 android:layout_centerVertical="true"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -503,11 +499,10 @@
                                 <ImageView
                                     android:id="@+id/pending_count"
                                     android:layout_width="50dp"
-                                    android:layout_margin="8dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/circle"
-                                    android:padding="12dp"
+                                    android:padding="8dp"
                                     android:src="@drawable/ic_to_do_list"
                                     android:visibility="visible" />
 
@@ -528,7 +523,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
                                     android:text="Sync Data"
-                                    android:textSize="18sp"
+                                    android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
 
@@ -652,15 +647,23 @@
                     </LinearLayout>
 
                 </LinearLayout>
-
-
-            </RelativeLayout>
-
-
-
-
         </ScrollView>
-    </RelativeLayout>
 
+        <RelativeLayout
+            android:background="@android:color/transparent"
+            android:id="@+id/below_bg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_alignParentBottom="true"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:background="@drawable/header_login"
+                android:rotation="180"></ImageView>
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 </layout>

@@ -1,0 +1,1691 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="activity"
+            type="com.nic.TPTaxDepartment.activity.Dashboard" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:background="@android:color/transparent"
+            android:id="@+id/img_rll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:background="@drawable/header_login"
+                ></ImageView>
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                android:elevation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap">
+
+                <RelativeLayout
+                    android:id="@+id/header_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    >
+
+
+                    <ImageView
+                        android:id="@+id/refresh"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="start"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/back"
+                        android:backgroundTint="@android:color/white"
+                        android:onClick="@{()-> activity.onBackPressed()}" />
+
+
+                    <TextView
+                        android:id="@+id/title_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:text="Dashboard"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/log_out"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="15dp"
+                        android:adjustViewBounds="true"
+                        android:background="@drawable/logout_variant"
+                        android:backgroundTint="@android:color/white"
+                        android:onClick="@{()-> activity.logout()}"
+                        android:scaleType="centerInside" />
+
+
+                </RelativeLayout>
+
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/horizontal_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/header_layout"
+                    android:background="#FFF" />
+            </androidx.appcompat.widget.Toolbar>
+
+        </RelativeLayout>
+
+        //full background
+        <RelativeLayout
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/circle1"
+                    android:layout_width="134dp"
+                    android:layout_height="134dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/_125sdp"
+                    android:layout_marginRight="-100dp"
+                    android:src="@drawable/circletransparant" />
+
+                <ImageView
+                    android:id="@+id/circle2"
+                    android:layout_width="134dp"
+                    android:layout_height="134dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="-100dp"
+                    android:layout_marginBottom="50dp"
+                    android:src="@drawable/circletransparant" />
+
+                <ImageView
+                    android:visibility="gone"
+                    android:id="@+id/circle3"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/circle" />
+
+                <ImageView
+                    android:id="@+id/circle4"
+                    android:layout_width="124dp"
+                    android:layout_height="124dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="-50dp"
+                    android:layout_marginBottom="-50dp"
+                    android:src="@drawable/circletransparant" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_rll">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+
+
+                <RelativeLayout
+                    android:layout_margin="10dp"
+                    android:id="@+id/road_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/district_card"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:id="@+id/top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_margin="10dp"
+                            android:background="@drawable/new_dashboard_drwable_bg"
+                            android:id="@+id/voteprogresscard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.tradeSilenceScreen()}">
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:layout_gravity="center_horizontal"
+                                    android:padding="12dp"
+                                    android:layout_centerVertical="true"
+                                    android:id="@+id/image_voting_progress"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/cerclebackgroundpurple"
+                                    android:src="@drawable/ic_stock_market"
+                                    />
+
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/trade_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Trade Licence"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/background" />
+
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:id="@+id/forward_img_view"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+                                    />
+
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_margin="10dp"
+                            android:background="@drawable/new_dashboard_drwable_bg"
+                            android:id="@+id/attendanecard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:onClick="@{()-> activity.fieldVisitScreen()}"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_attendance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@drawable/cerclebackgroundpink"
+                                    android:padding="12dp"
+                                    android:layout_centerVertical="true"
+                                    android:src="@drawable/ic_crew"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:id="@+id/field_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:text="Field Visit"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_margin="8dp"
+                                    android:id="@+id/forward_img_view2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:id="@+id/bottom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/top"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_margin="10dp"
+                            android:background="@drawable/new_dashboard_drwable_bg"
+                            android:id="@+id/cameracard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.assessmentStatusScreen()}"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_camera"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/cerclebackgroundgreen"
+                                    android:padding="12dp"
+                                    android:src="@drawable/ic_camera_black_24dp"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/assess_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Assessment"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_margin="8dp"
+                                    android:id="@+id/forward_img_view3"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_margin="10dp"
+                            android:background="@drawable/new_dashboard_drwable_bg"
+                            android:id="@+id/votecountcard"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.dailyCollectionScreen()}"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+
+                                    android:id="@+id/image_voting_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/cerclebackgroundyello"
+                                    android:padding="12dp"
+                                    android:src="@drawable/ic_counting"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/dailcoll_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Daily Collection"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_margin="8dp"
+                                    android:id="@+id/forward_img_view4"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_margin="10dp"
+                        android:id="@+id/pending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bottom"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:weightSum="2"
+                        android:orientation="horizontal">
+
+                        <RelativeLayout
+                            android:layout_margin="10dp"
+                            android:background="@drawable/new_dashboard_drwable_bg"
+                            android:id="@+id/pendingScreen"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.pendingScreen()}"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/pending_count"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/circle"
+                                    android:padding="12dp"
+                                    android:src="@drawable/ic_to_do_list"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <TextView
+
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/pending_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Sync Data"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+                                <ImageView
+                                    android:visibility="gone"
+                                    android:layout_margin="8dp"
+                                    android:id="@+id/forward_img_view5"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+
+
+
+                    </LinearLayout>
+
+
+
+////////visibility Gone fields
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bottom"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/view_polling_station_image"
+                            android:layout_width="303dp"
+                            android:layout_height="150dp"
+                            android:layout_margin="10dp"
+                            android:clickable="true"
+                            android:focusable="true"
+
+
+                            android:foreground="?android:attr/selectableItemBackground"
+                            card_view:cardCornerRadius="8dp"
+                            card_view:cardElevation="3dp">
+
+                            <LinearLayout
+
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/polling_station_image"
+                                    android:layout_width="64dp"
+                                    android:layout_height="64dp"
+                                    android:background="@drawable/cerclebackgroundpurple"
+                                    android:contentDescription="TODO"
+                                    android:padding="10dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/_5sdp"
+                                    android:text="Add"
+                                    android:textStyle="bold" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Capture the polling station image"
+                                    android:textColor="@android:color/black" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/sync_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/bottom"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/sync"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/_40sdp"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="@dimen/margin"
+                            android:layout_marginTop="@dimen/_60sdp"
+                            android:layout_marginRight="@dimen/margin"
+                            android:layout_marginBottom="@dimen/_40sdp"
+                            android:background="@drawable/click_here"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:text="Sync"
+                            android:onClick="@{()-> activity.pendingScreen()}"
+                            android:textAllCaps="false"
+                            android:textColor="@android:color/black"
+                            android:textSize="@dimen/_15sdp" />
+
+
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </RelativeLayout>
+
+
+</layout>
+<!--
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:card_view="http://schemas.android.com/tools">
+
+<data>
+
+    <variable
+        name="activity"
+        type="com.nic.TPTaxDepartment.activity.Dashboard" />
+</data>
+
+<RelativeLayout
+    android:background="#eee"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+
+
+    <RelativeLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/login_background">
+
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back"
+            android:backgroundTint="@android:color/white"
+            android:onClick="@{()-> activity.onBackPressed()}" />
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Dashboard"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/log_out"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/logout_variant"
+            android:backgroundTint="@android:color/white"
+            android:onClick="@{()-> activity.logout()}"
+            android:scaleType="centerInside" />
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_centerInParent="true"
+        android:visibility="visible"
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/road_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:weightSum="3">
+
+
+                <LinearLayout
+                    android:layout_margin="15dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="5dp"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/voteprogresscard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.tradeSilenceScreen()}">
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_voting_progress"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/cerclebackgroundpurple"
+                                    android:padding="8dp"
+                                    android:src="@drawable/ic_stock_market"
+                                    />
+
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/trade_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Trade Licence"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:visibility="gone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:background="@drawable/background" />
+
+                                <ImageView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/forward_img_view"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+                                    />
+
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="5dp"
+                        >
+
+                        <RelativeLayout
+                            android:id="@+id/attendanecard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:onClick="@{()-> activity.fieldVisitScreen()}"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_attendance"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/cerclebackgroundpink"
+                                    android:padding="8dp"
+                                    android:src="@drawable/ic_crew"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/field_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:text="Field Visit"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+                                <ImageView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/forward_img_view2"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+
+
+
+
+
+
+                <LinearLayout
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="5dp"
+                        >
+                        <RelativeLayout
+                            android:id="@+id/cameracard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.assessmentStatusScreen()}"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_camera"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/cerclebackgroundgreen"
+                                    android:src="@drawable/ic_camera_black_24dp"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/assess_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="Assessment"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+                                <ImageView
+                                    android:id="@+id/forward_img_view3"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="5dp"
+                        >
+                        <RelativeLayout
+                            android:id="@+id/votecountcard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.dailyCollectionScreen()}"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_centerVertical="true"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/image_voting_count"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/cerclebackgroundyello"
+                                    android:padding="12dp"
+                                    android:src="@drawable/ic_counting"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/dailcoll_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="Daily Collection"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <ImageView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/forward_img_view4"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:elevation="@dimen/_6sdp"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_margin="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    >
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_margin="10dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        app:cardElevation="3dp"
+                        app:cardCornerRadius="5dp"
+                        >
+                        <RelativeLayout
+                            android:id="@+id/pendingScreen"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.pendingScreen()}"
+                            >
+
+                            <LinearLayout
+                                android:layout_margin="10dp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <ImageView
+                                    android:id="@+id/pending_count"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:background="@drawable/circle"
+                                    android:padding="8dp"
+                                    android:src="@drawable/ic_to_do_list"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:id="@+id/pending_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:text="Sync Data"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+                                    android:background="@drawable/background" />
+                                <ImageView
+                                    android:layout_gravity="center_horizontal"
+                                    android:id="@+id/forward_img_view5"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bottom"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/view_polling_station_image"
+                    android:layout_width="303dp"
+                    android:layout_height="150dp"
+                    android:layout_margin="10dp"
+                    android:clickable="true"
+                    android:focusable="true"
+
+
+                    android:foreground="?android:attr/selectableItemBackground"
+                    card_view:cardCornerRadius="8dp"
+                    card_view:cardElevation="3dp">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/polling_station_image"
+                            android:layout_width="64dp"
+                            android:layout_height="64dp"
+                            android:background="@drawable/cerclebackgroundpurple"
+                            android:contentDescription="TODO"
+                            android:padding="10dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="Add"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/background" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="Capture the polling station image"
+                            android:textColor="@android:color/black" />
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/sync_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/bottom"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/sync"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="@dimen/margin"
+                    android:layout_marginTop="@dimen/_60sdp"
+                    android:layout_marginRight="@dimen/margin"
+                    android:layout_marginBottom="@dimen/_40sdp"
+                    android:background="@drawable/click_here"
+                    android:clickable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:text="Sync"
+                    android:onClick="@{()-> activity.pendingScreen()}"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+    </ScrollView>
+
+    ///back ground drawable
+    <RelativeLayout
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <ImageView
+                android:id="@+id/circle1"
+                android:layout_width="134dp"
+                android:layout_height="134dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/_125sdp"
+                android:layout_marginRight="-100dp"
+                android:src="@drawable/circletransparant" />
+
+            <ImageView
+                android:id="@+id/circle2"
+                android:layout_width="134dp"
+                android:layout_height="134dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="-100dp"
+                android:layout_marginBottom="50dp"
+                android:src="@drawable/circletransparant" />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/circle3"
+                android:layout_width="162dp"
+                android:layout_height="162dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="-80dp"
+                android:layout_marginBottom="-30dp"
+                android:src="@drawable/circle" />
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:id="@+id/circle4"
+                android:layout_width="124dp"
+                android:layout_height="124dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="-50dp"
+                android:layout_marginBottom="-50dp"
+                android:layout_toLeftOf="@+id/circle3"
+                android:src="@drawable/circletransparant" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/below_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_70sdp"
+        android:layout_alignParentBottom="true"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:background="@drawable/login_background"
+            android:rotation="180"></ImageView>
+
+    </RelativeLayout>
+</RelativeLayout>
+
+
+</layout>
+
+-->
+<!--
+
+    <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:card_view="http://schemas.android.com/tools">
+
+<data>
+
+    <variable
+        name="activity"
+        type="com.nic.TPTaxDepartment.activity.Dashboard" />
+</data>
+<RelativeLayout
+    android:background="#EDECEC"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:id="@+id/bg_top_header"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <RelativeLayout
+        android:id="@+id/header_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/header_login"
+        card_view:ignore="MissingConstraints">
+
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="start"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/back"
+            android:backgroundTint="@android:color/white"
+            android:onClick="@{()-> activity.onBackPressed()}" />
+
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="Dashboard"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_15sdp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/log_out"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/logout_variant"
+            android:backgroundTint="@android:color/white"
+            android:onClick="@{()-> activity.logout()}"
+            android:scaleType="centerInside" />
+
+
+    </RelativeLayout>
+
+
+    <GridLayout
+        android:id="@+id/grid_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_300sdp"
+        android:layout_marginTop="110dp"
+        android:layout_marginBottom="60dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:rowCount="3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/bg_top_header"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_editor_absoluteX="0dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            app:cardCornerRadius="8dp"
+            android:id="@+id/voteprogresscard"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_stock_market"
+                    android:padding="14dp"
+                    android:background="@drawable/cerclebackgroundpurple"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trade Licence"
+                    android:layout_marginTop="8dp"
+                    android:id="@+id/trade_tv"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            android:id="@+id/attendanecard"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/cerclebackgroundpink"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_crew"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Field Visit"
+                    android:id="@+id/field_tv"
+
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:id="@+id/cameracard"
+            android:background="@color/white"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/cerclebackgroundgreen"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_camera_black_24dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assessment"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/assess_tv"
+
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/white"
+            android:id="@+id/votecountcard"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/cerclebackgroundyello"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_counting"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Daily Collection"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/colorPrimary"
+                    android:id="@+id/dailcoll_tv"
+
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grid_ll">
+        <androidx.cardview.widget.CardView
+            android:layout_centerHorizontal="true"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="180dp"
+            android:background="@drawable/cornered_rect_lite_bg"
+            android:layout_gravity="fill_horizontal"
+            android:id="@+id/pendingScreen"
+            android:clipToPadding="false"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="6dp"
+            >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_margin="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/circle"
+                    android:padding="14dp"
+                    android:src="@drawable/ic_to_do_list"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sync Data"
+                    android:id="@+id/pending_tv"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:layout_marginTop="8dp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>>
+
+</layout>
+
+-->
