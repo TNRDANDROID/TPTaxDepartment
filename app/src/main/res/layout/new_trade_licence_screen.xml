@@ -12,6 +12,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/main"
+        android:visibility="visible"
         android:layout_marginBottom="50dp"
         android:orientation="vertical">
         <com.google.android.material.appbar.AppBarLayout
@@ -89,6 +91,11 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:id="@+id/web"/>
        <ScrollView
            android:layout_width="match_parent"
            android:layout_height="wrap_content"
@@ -970,14 +977,16 @@
                         android:layout_toRightOf="@+id/choose_file"
                         android:textColor="@android:color/black"
                         android:textSize="@dimen/_15sdp"
-                        android:text="C:\Users\NIC\Downloads"
+                        android:text=""
                         android:layout_centerVertical="true"
                         android:id="@+id/file_location"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginRight="@dimen/_6sdp"
-                        customfontdemo:fontName="@string/font_circular_book"/>
+                        customfontdemo:fontName="@string/font_circular_book"
+                        android:onClick="@{()-> activity.openFile()}"
+                        />
 
 
 
@@ -1365,98 +1374,6 @@
             android:layout_marginBottom="10dp"
             android:visibility="gone"
             android:orientation="vertical">
-            //Trade Description
-            <LinearLayout
-                android:id="@+id/name_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_20dp"
-                    android:layout_marginTop="@dimen/padding"
-                    android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Trade Description"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/_15sdp"
-                    android:visibility="visible" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_20dp"
-                    android:layout_marginTop="@dimen/padding"
-                    android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:hint="Trade Description">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/trade_description"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </RelativeLayout>
-            </LinearLayout>
-
-            //Establishment Name
-            <LinearLayout
-                android:id="@+id/establishment_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_below="@id/name_layout"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_20dp"
-                    android:layout_marginTop="@dimen/padding"
-                    android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Establishment Name"
-                    android:textColor="@android:color/black"
-                    android:textSize="@dimen/_15sdp"
-                    android:visibility="visible"
-                    customfontdemo:fontName="@string/font_circular_medium" />
-
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left_20dp"
-                    android:layout_marginTop="@dimen/padding"
-                    android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:orientation="vertical">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:hint="Establishment Name">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/establish_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="textPersonName" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                </RelativeLayout>
-            </LinearLayout>
-
 
             //Motor is Available
             <LinearLayout

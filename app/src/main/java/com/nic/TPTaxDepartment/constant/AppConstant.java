@@ -86,6 +86,7 @@ public class AppConstant {
     public static String LATITUDE = "loc_lat";
     public static String LONGITUDE = "loc_long";
     public static String TRADE_IMAGE = "trade_image";
+    public static String TRADE_DOCUMENT = "rent_lease_agrement";
     public static String LICENCE_TYPE_ID="licencetypeid";
     public static String PAYMENT_STATUS="payment_status";
     public static String ATTACHMENT_FILES="attachment_files";

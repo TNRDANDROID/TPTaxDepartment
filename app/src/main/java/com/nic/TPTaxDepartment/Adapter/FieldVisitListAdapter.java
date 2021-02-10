@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -103,16 +104,16 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
     class SummaryViewHolder extends RecyclerView.ViewHolder {
         TextView name,code,taxType,current_status;
         RelativeLayout delete,upload;
-        RelativeLayout image_list_icon;
+        ImageView image_list_icon;
         SummaryViewHolder(View view) {
             super(view);
             name=(TextView)view.findViewById(R.id.nameValue);
             code=(TextView)view.findViewById(R.id.codeValue);
             taxType=(TextView)view.findViewById(R.id.taxTypeValue);
-            delete=(RelativeLayout)view.findViewById(R.id.left);
+            delete=(RelativeLayout)view.findViewById(R.id.delete_layout);
             upload=(RelativeLayout)view.findViewById(R.id.right);
             current_status=(TextView) view.findViewById(R.id.status_filed);
-            image_list_icon=(RelativeLayout) view.findViewById(R.id.image_list_layout);
+            image_list_icon=(ImageView) view.findViewById(R.id.image_list);
         }
     }
 

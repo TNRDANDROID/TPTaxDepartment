@@ -107,7 +107,46 @@ public class TPtaxModel  implements Serializable {
     public String generatorStatus;
     public String professtionlStatus;
     public String propertyStatus;
+    public String motor_type_id;
+    public String amount_range_id;
+    public String generator_range_id;
+    public String propertyTaxAssessmentNumber;
 
+    public String getPropertyTaxAssessmentNumber() {
+        return propertyTaxAssessmentNumber;
+    }
+
+    public TPtaxModel setPropertyTaxAssessmentNumber(String propertyTaxAssessmentNumber) {
+        this.propertyTaxAssessmentNumber = propertyTaxAssessmentNumber;
+        return this;
+    }
+
+    public String getMotor_type_id() {
+        return motor_type_id;
+    }
+
+    public TPtaxModel setMotor_type_id(String motor_type_id) {
+        this.motor_type_id = motor_type_id;
+        return this;
+    }
+
+    public String getAmount_range_id() {
+        return amount_range_id;
+    }
+
+    public TPtaxModel setAmount_range_id(String amount_range_id) {
+        this.amount_range_id = amount_range_id;
+        return this;
+    }
+
+    public String getGenerator_range_id() {
+        return generator_range_id;
+    }
+
+    public TPtaxModel setGenerator_range_id(String generator_range_id) {
+        this.generator_range_id = generator_range_id;
+        return this;
+    }
 
     public String getOwnerStatus() {
         return ownerStatus;

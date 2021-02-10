@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/cornered_rect_lite_bg"
-    android:layout_margin="5dp"
+    android:background="@drawable/cornered_border_bg"
+    android:layout_margin="10dp"
     android:elevation="@dimen/_6sdp">
 
     <RelativeLayout
@@ -12,54 +12,37 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/content2"
         android:id="@+id/content1">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:id="@+id/content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_vertical"
             android:baselineAligned="false">
             <RelativeLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:id="@+id/left"
-                android:background="@drawable/delete_bg"
-                android:layout_weight="1">
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/right">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textColor="@color/subscription_type_red_color"
-                    android:textSize="17sp"
-                    android:padding="3dp"
-                    android:drawablePadding="8dp"
-                    android:drawableLeft="@drawable/ic_trash"
-                    android:id="@+id/delete"
-                    android:text="Delete"
-                    android:fontFamily="sans-serif" />
-
-            </RelativeLayout>
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/dashboard_line_dark"/>
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/right"
-                android:background="@drawable/upload_bg"
-                android:layout_weight="1">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/account_status_green_color"
-                    android:textSize="17sp"
-                    android:padding="3dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/upload_bg"
+                    android:textSize="16sp"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    android:paddingRight="20dp"
+                    android:paddingLeft="20dp"
                     android:id="@+id/upload"
                     android:drawablePadding="8dp"
                     android:drawableLeft="@drawable/ic_upload"
+                    android:drawableTint="@color/white"
                     android:text="Upload"
                     android:fontFamily="sans-serif" />
 
@@ -67,10 +50,11 @@
         </LinearLayout>
     </RelativeLayout>
 
+<!--
     <RelativeLayout
         android:id="@+id/image_list_layout"
         android:layout_marginRight="@dimen/_5sdp"
-        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginTop="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_width="wrap_content"
@@ -82,18 +66,34 @@
             android:id="@+id/imge_list"
             android:src="@drawable/ic_gallery"></ImageView>
     </RelativeLayout>
+-->
+    <RelativeLayout
+        android:id="@+id/delete_layout"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="8dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:id="@+id/delete"
+            android:src="@drawable/ic_trash"></ImageView>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/content2"
-        android:padding="10dp"
-        >
+        android:id="@+id/content2">
+<!--
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:weightSum="3"
-            android:padding="3dp"
+            android:background="@drawable/new_round_cornered_bg"
+            android:padding="10dp"
             android:id="@+id/rel1">
             <TextView
                 android:layout_width="0dp"
@@ -101,7 +101,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start"
                 android:textSize="16sp"
-                android:textColor="@color/border_line"
+                android:textColor="@color/grey1"
                 android:id="@+id/code"
                 android:text="Owner Name"
                 android:fontFamily="sans-serif" />
@@ -111,7 +111,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="0.1"
                 android:layout_height="match_parent"
-                android:textColor="@color/border_line"
+                android:textColor="@color/grey1"
                 android:layout_toRightOf="@+id/code"
                 android:fontFamily="sans-serif"
                 android:gravity="start"
@@ -119,7 +119,7 @@
                 android:textSize="16sp" />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1.9"
+                android:layout_weight="3"
                 android:layout_marginLeft="5dp"
                 android:layout_height="match_parent"
                 android:gravity="start"
@@ -130,22 +130,59 @@
                 android:text="Owner Name"
                 android:fontFamily="sans-serif" />
         </LinearLayout>
+-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/new_round_cornered_bg"
+            android:id="@+id/rel1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:id="@+id/nameValue"
+                    android:text="Owner Name"
+                    android:fontFamily="sans-serif" />
+                <ImageView
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:id="@+id/image_list"
+                    android:tint="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_gallery"/>
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/rel1"
             android:weightSum="3"
-            android:padding="3dp"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
             android:id="@+id/rel2">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="start"
-                android:layout_marginTop="5dp"
                 android:textSize="16sp"
-                android:textColor="@color/border_line"
+                android:textColor="@color/grey1"
                 android:id="@+id/name"
                 android:text="Request ID"
                 android:fontFamily="sans-serif" />
@@ -155,8 +192,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start"
                 android:textSize="16sp"
-                android:textColor="@color/border_line"
-                android:layout_marginTop="5dp"
+                android:textColor="@color/grey1"
                 android:layout_toRightOf="@+id/name"
                 android:layout_below="@+id/rel1"
                 android:id="@+id/namec"
@@ -164,12 +200,11 @@
                 android:fontFamily="sans-serif" />
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="1.9"
+                android:layout_weight="1.5"
                 android:layout_height="match_parent"
                 android:gravity="start"
                 android:textColor="@color/border_line"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/namec"
                 android:layout_below="@+id/rel1"
@@ -183,16 +218,18 @@
             android:orientation="horizontal"
             android:layout_below="@+id/rel2"
             android:weightSum="3"
-            android:padding="3dp"
+            android:paddingTop="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
             android:id="@+id/rel3">
             <TextView
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:gravity="start"
-                android:layout_marginTop="5dp"
                 android:textSize="16sp"
-                android:textColor="@color/border_line"
+                android:textColor="@color/grey1"
                 android:id="@+id/mobile"
                 android:layout_below="@+id/name"
                 android:text="Tax Type"
@@ -203,8 +240,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start"
                 android:textSize="16sp"
-                android:textColor="@color/border_line"
-                android:layout_marginTop="5dp"
+                android:textColor="@color/grey1"
                 android:layout_toRightOf="@+id/name"
                 android:layout_below="@+id/name"
                 android:id="@+id/mobilec"
@@ -217,7 +253,6 @@
                 android:gravity="start"
                 android:textColor="@color/border_line"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/mobilec"
                 android:layout_below="@+id/name"
@@ -231,7 +266,10 @@
             android:orientation="horizontal"
             android:layout_below="@+id/rel3"
             android:weightSum="3"
-            android:padding="3dp"
+            android:paddingTop="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
             android:id="@+id/rel4">
             <TextView
                 android:layout_width="0dp"
@@ -239,8 +277,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start"
                 android:textSize="16sp"
-                android:textColor="@color/border_line"
-                android:layout_marginTop="5dp"
+                android:textColor="@color/grey1"
                 android:id="@+id/paymentDate"
                 android:layout_below="@+id/mobile"
                 android:text="Status"
@@ -251,8 +288,7 @@
                 android:layout_height="match_parent"
                 android:gravity="start"
                 android:textSize="16sp"
-                android:layout_marginTop="5dp"
-                android:textColor="@color/border_line"
+                android:textColor="@color/grey1"
                 android:layout_toRightOf="@+id/name"
                 android:layout_below="@+id/mobile"
                 android:id="@+id/paymentdatec"
@@ -266,7 +302,6 @@
                 android:textSize="16sp"
                 android:layout_marginLeft="5dp"
                 android:textColor="@color/border_line"
-                android:layout_marginTop="5dp"
                 android:layout_toRightOf="@+id/paymentdatec"
                 android:layout_below="@+id/mobile"
                 android:id="@+id/status_filed"

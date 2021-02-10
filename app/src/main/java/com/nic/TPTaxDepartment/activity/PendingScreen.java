@@ -100,7 +100,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         no_data_fond_layout=findViewById(R.id.no_data_found_layout);
         newTraderRecycler = (RecyclerView) findViewById(R.id.new_trader_recycler);
         fieldVisitRecycler = (RecyclerView) findViewById(R.id.field_visit_recycler);
-        back_img = (ImageView) findViewById(R.id.back_img);
+        back_img = (ImageView) findViewById(R.id.refresh);
         home_img = (ImageView) findViewById(R.id.home_img);
         newTrader = (TextView) findViewById(R.id.new_trader);
         fieldVisit = (TextView) findViewById(R.id.field_visit);
@@ -125,15 +125,16 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         home_img.setOnClickListener(this);
         left.setOnClickListener(this);
         right.setOnClickListener(this);
-        loadNewTraderList();
-        //loadFieldVisitList();
+        loadFieldVisitListPending();
+//        loadNewTraderList();
+//        loadFieldVisitList();
 
         left.setBackground(activity.getResources().getDrawable(R.drawable.left_selected_bg));
         right.setBackground(activity.getResources().getDrawable(R.drawable.right_bg));
         newTrader.setTextColor(activity.getResources().getColor(R.color.white));
         fieldVisit.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
-        fieldVisitRecycler.setVisibility(View.GONE);
-        newTraderRecycler.setVisibility(View.VISIBLE);
+        fieldVisitRecycler.setVisibility(View.VISIBLE);
+        newTraderRecycler.setVisibility(View.GONE);
 
 
     }
@@ -141,7 +142,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.back_img:
+            case R.id.refresh:
                 onBackPress();
                 break;
             case R.id.home_img:
@@ -229,7 +230,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 } while (cursor.moveToNext());
             }
         }
-
+        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().compareTo(rhs.getOwnername()));
         if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {
             no_data_fond_layout.setVisibility(View.GONE);
              adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitPendingList);
@@ -570,6 +571,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
         Log.d("saving", "" + authKey);
+        Log.d("dataSet", "" + dataSet);
         return dataSet;
     }
 

@@ -1,47 +1,45 @@
 package com.nic.TPTaxDepartment.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.FileUtils;
+import android.os.Environment;
 import android.os.Handler;
-import android.os.LocaleList;
 import android.provider.MediaStore;
-import android.provider.Settings;
+import android.provider.OpenableColumns;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
+import android.util.Base64;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-
 import com.android.volley.VolleyError;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
@@ -60,20 +58,21 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import com.vincent.filepicker.Constant;
 import com.vincent.filepicker.activity.NormalFilePickActivity;
 import com.vincent.filepicker.filter.entity.NormalFile;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -82,11 +81,10 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener,AdapterView.OnItemSelectedListener{
-    private static final int REQUEST_CODE_DOC =101 ;
+
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
     ArrayList<Gender> genders ;
     ArrayList<CommonModel> wards ;
@@ -94,23 +92,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     ArrayList<CommonModel> selectedStreets;
     ArrayList<CommonModel> finYear;
     ArrayList<CommonModel> traderLicenseTypeList;
-    private List<TPtaxModel> District = new ArrayList<>();
-    public static final String GALLERY_DIRECTORY_NAME = "Hello Camera";
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    public static final int MEDIA_TYPE_VIDEO = 2;
-
-    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 2500;
-    private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
-    private static final int PERMISSION_REQUEST_CODE = 200;
-    private static String imageStoragePath;
-    public static final int BITMAP_SAMPLE_SIZE = 8;
     String[] mApps = {"Male", "Female", "Others"};
     private PrefManager prefManager;
-    String pref_district;
     private Handler handler = new Handler();
     private static TextView date;
-    private List<TPtaxModel> LicenceType = new ArrayList<>();
-    private List<TPtaxModel> LicenceValidity = new ArrayList<>();
     HashMap<String,String> spinnerMap;
     HashMap<String,String> spinnerMapStreets;
     HashMap<String,String> spinnerMapWard;
@@ -148,10 +133,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private int visible_count;
     Animation animation;
     Animation animationOut;
-    String docFilePath;
-    int booleanValue=0;
-    File file;
-    ArrayList<NormalFile> list=new ArrayList<>();
 
     ArrayAdapter<String> annualSaleArray;
     ArrayAdapter<String> motorRangeArray;
@@ -178,18 +159,24 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private static final int MY_RESULT_CODE_FILECHOOSER = 2000;
 
     private static final String LOG_TAG = "AndroidExample";
-
+    private String uriString;
+    private String fileString="";
+    private byte[] bytes;
+    Context context;
+    Uri uri;
+    File myFile;
+    String displayName = "";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newTradeLicenceScreenBinding = DataBindingUtil.setContentView(this, R.layout.new_trade_licence_screen);
         newTradeLicenceScreenBinding.setActivity(this);
+        context=this;
         prefManager = new PrefManager(this);
        /* ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mApps);
         newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
-//        newTradeLicenceScreenBinding.scrollView.setNestedScrollingEnabled(true);
         date = newTradeLicenceScreenBinding.date;
         date.setText("Select Date");
         animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
@@ -201,13 +188,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.previous.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.next.setText("Next");
 
-        Utils.setLanguage(newTradeLicenceScreenBinding.tradeDescription,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionEnglish,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.emailId,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.remarksField,"en","IND");
-        Utils.setLanguage(newTradeLicenceScreenBinding.establishName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.doorNo,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
@@ -243,18 +228,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }else {
             LoadWardSpinner();
         }
-/*
-        newTradeLicenceScreenBinding.next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(NewTradeLicenceScreen.this, "clicked!", Toast.LENGTH_SHORT).show();
-
-                newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
-                newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
-            }
-        });
-*/
-
 
         radioBtnFun();
 
@@ -314,10 +287,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     private void LoadPendingTraderDetails() {
         wardFlag=false;
-        int spinnerPosition = tradeCodeSpArray.getPosition(traders.get(position).getTraderCode());
-        String tradersrCode= traders.get(position).getTraderCode();
-        String getTradecodeId= traders.get(position).getTradecodeId();
-        String stre = traders.get(position).getStreetname();
         LoadWardSpinner();
         try {
             LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
@@ -376,7 +345,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
         newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
-        newTradeLicenceScreenBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         newTradeLicenceScreenBinding.applicantName.setText(traders.get(position).getTraderName());
         newTradeLicenceScreenBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
         newTradeLicenceScreenBinding.age.setText(traders.get(position).getApage());
@@ -384,7 +352,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.fatherHusNameTamil.setText(traders.get(position).getApfathername_ta());
         newTradeLicenceScreenBinding.mobileNo.setText(traders.get(position).getMobileno());
         newTradeLicenceScreenBinding.emailId.setText(traders.get(position).getEmail());
-        newTradeLicenceScreenBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
         newTradeLicenceScreenBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
         newTradeLicenceScreenBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
 
@@ -397,11 +364,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
     }
-
-
-
-
-
 
     @Override
     public void onClick(View v) {
@@ -683,8 +645,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
-    public static class datePickerFragment extends DialogFragment implements
-            DatePickerDialog.OnDateSetListener {
+    public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         static Calendar cldr = Calendar.getInstance();
 
         @Override
@@ -728,28 +689,21 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         } }
 
 
-
-
-
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
             JSONObject responseObj = serverResponse.getJsonResponse();
-            String urlType = serverResponse.getApi();
+            String myFileType = serverResponse.getApi();
 
-            if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
+            if ("SaveLicenseTraders".equals(myFileType) && responseObj != null) {
                 String user_data = Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
                 String status = Utils.NotNullString( jsonObject.getString(AppConstant.KEY_STATUS));
                 Log.d("Response",""+userDataDecrypt);
-                //String status = Utils.NotNullString( responseObj.getString(AppConstant.KEY_STATUS));
-                //String response =  Utils.NotNullString(responseObj.getString(AppConstant.KEY_RESPONSE));
+
                 if (status.equalsIgnoreCase("SUCCESS") ){
-                    //JSONObject jsonObject = responseObj.getJSONObject(AppConstant.JSON_DATA);
-                    //JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
-//                    String Motivatorid =  Utils.NotNullString(jsonObject.getString(AppConstant.KEY_REGISTER_MOTIVATOR_ID));
-//                    Log.d("motivatorid",""+Motivatorid);
+
                     Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
                     Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
 
@@ -1066,7 +1020,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getLB_TRADE_CODE());
+                spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
@@ -1224,7 +1178,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
 
-
     @Override
     public void OnError(VolleyError volleyError) {
 
@@ -1234,7 +1187,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
          traderCode =newTradeLicenceScreenBinding.tradersCode.getText().toString();
          tradeDate =newTradeLicenceScreenBinding.date.getText().toString();
          licenseType =newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString();
-         tradeDescription =newTradeLicenceScreenBinding.tradeDescription.getText().toString();
          traderName =newTradeLicenceScreenBinding.applicantName.getText().toString();
          traderNameTa =newTradeLicenceScreenBinding.applicantNameTamil.getText().toString();
          tradeImage =newTradeLicenceScreenBinding.tradersCode.getText().toString();
@@ -1244,7 +1196,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
          fatherNameTa =newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString();
          mobileNo =newTradeLicenceScreenBinding.mobileNo.getText().toString();
          email =newTradeLicenceScreenBinding.emailId.getText().toString();
-         establishmentName =newTradeLicenceScreenBinding.establishName.getText().toString();
          ward =selectedWardName;
          street =selectedStreetName;
          doorNo =newTradeLicenceScreenBinding.doorNo.getText().toString();
@@ -1400,14 +1351,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
-    /*public void viewImageScreen() {
-        Intent intent = new Intent(this, FullImageActivity.class);
-        intent.putExtra(AppConstant.TRADE_CODE,newTradeLicenceScreenBinding.tradersCode.getText().toString());
-        intent.putExtra(AppConstant.KEY_SCREEN_STATUS,"new");
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    }*/
-
     public void viewImageScreen() {
         if(!flag){
             if (selectedTradeCode != null &&!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
@@ -1513,7 +1456,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             values.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
             values.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
             values.put(AppConstant.LICENCE_TYPE,selectedLicenceTypeName);
-            values.put(AppConstant.TRADE_DESCRIPTION,newTradeLicenceScreenBinding.tradeDescription.getText().toString());
             values.put(AppConstant.APPLICANT_NAME_EN, newTradeLicenceScreenBinding.applicantName.getText().toString());
             values.put(AppConstant.APPLICANT_NAME_TA, newTradeLicenceScreenBinding.applicantNameTamil.getText().toString());
             values.put(AppConstant.GENDER,selectedGender);
@@ -1523,8 +1465,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             values.put(AppConstant.FATHER_HUSBAND_NAME_TA, newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString());
             values.put(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
             values.put(AppConstant.E_MAIL, newTradeLicenceScreenBinding.emailId.getText().toString());
-            values.put(AppConstant.ESTABLISHMENT_NAME_EN, newTradeLicenceScreenBinding.establishName.getText().toString());
-            values.put(AppConstant.ESTABLISHMENT_NAME_TA, newTradeLicenceScreenBinding.establishName.getText().toString());
+            values.put(AppConstant.ESTABLISHMENT_NAME_EN, newTradeLicenceScreenBinding.descriptionEnglish.getText().toString());
+            values.put(AppConstant.ESTABLISHMENT_NAME_TA, newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
             values.put(AppConstant.WARD_ID, selectedWardId);
             values.put(AppConstant.WARD_NAME_EN, selectedWardName);
             values.put(AppConstant.STREET_ID, selectedStreetId);
@@ -1535,8 +1477,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             values.put(AppConstant.LATITUDE, lat);
             values.put(AppConstant.LONGITUDE, lan);
             values.put(AppConstant.TRADE_IMAGE, image);
-            values.put("description_en", newTradeLicenceScreenBinding.descriptionEnglish.getText().toString());
-            values.put("description_ta", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
             if(newTradeLicenceScreenBinding.isPaid.isChecked()){
                 paymentStatus="Paid";
             }else {
@@ -1644,8 +1584,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         //dataSet.put(AppConstant.LATITUDE, lat);
         //dataSet.put(AppConstant.LONGITUDE, lan);
         dataSet1.put(AppConstant.TRADE_IMAGE, image);
+        dataSet1.put(AppConstant.TRADE_DOCUMENT, fileString);
         imageArray.put(dataSet1);
         dataSet.put(AppConstant.ATTACHMENT_FILES,imageArray);
+
         Log.d("TraderLicenseTypeList", "" + authKey);
         Log.d("DataSetS__:",""+dataSet);
         return dataSet;
@@ -1656,10 +1598,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
         dataSet.put(AppConstant.MODE, "NEW");
-        dataSet.put(AppConstant.TRADE_CODE,selectedTrdeCodeDetailsID);
+        dataSet.put("tradedetails_id",selectedTrdeCodeDetailsID);
         dataSet.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
         dataSet.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
-        dataSet.put(AppConstant.TRADE_DESCRIPTION,newTradeLicenceScreenBinding.tradeDescription.getText().toString());
         dataSet.put(AppConstant.APPLICANT_NAME_EN, newTradeLicenceScreenBinding.applicantName.getText().toString());
         dataSet.put(AppConstant.APPLICANT_NAME_TA, newTradeLicenceScreenBinding.applicantNameTamil.getText().toString());
         dataSet.put(AppConstant.GENDER,selectedGenderId);
@@ -1668,26 +1609,23 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         dataSet.put(AppConstant.FATHER_HUSBAND_NAME_TA, newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString());
         dataSet.put(AppConstant.MOBILE, mobileNumber);
         dataSet.put(AppConstant.E_MAIL, newTradeLicenceScreenBinding.emailId.getText().toString());
-        dataSet.put(AppConstant.ESTABLISHMENT_NAME_EN, newTradeLicenceScreenBinding.establishName.getText().toString());
-        dataSet.put(AppConstant.ESTABLISHMENT_NAME_TA, newTradeLicenceScreenBinding.establishName.getText().toString());
+        dataSet.put(AppConstant.ESTABLISHMENT_NAME_EN, newTradeLicenceScreenBinding.descriptionEnglish.getText().toString());
+        dataSet.put(AppConstant.ESTABLISHMENT_NAME_TA, newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
 //        dataSet.put(AppConstant.WARD_ID, selectedWardId);
         dataSet.put(AppConstant.STREET_ID, selectedStreetId);
         dataSet.put(AppConstant.DOOR_NO, newTradeLicenceScreenBinding.doorNo.getText().toString());
         dataSet.put(AppConstant.LICENCE_VALIDITY,selectedFinId);
         dataSet.put("wardid", selectedWardId);
-        dataSet.put("description_en", newTradeLicenceScreenBinding.descriptionEnglish.getText().toString());
-        dataSet.put("description_ta", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
 
-        dataSet.put("motor_available_status", motor_available_status_text);
-        dataSet.put("generator_available_status", generator_available_status_text);
-        dataSet.put("motor_range", selectedMotorId);
-        dataSet.put("generator_range", selectedGeneratorId);
-        dataSet.put("annual_sale", selectedAnnualId);
-        dataSet.put("professional_tax_paid_status", professional_tax_paid_status_text);
-        dataSet.put("property_tax_paid_status", property_tax_paid_status_text);
-        dataSet.put("property_tax_assessment_number", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
-        dataSet.put("are_you_the_owner", owner_status_text);
-        dataSet.put("document", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
+        dataSet.put("motor_y_n", motor_available_status_text);
+        dataSet.put("generator_y_n", generator_available_status_text);
+        dataSet.put("motor_type_id", selectedMotorId);
+        dataSet.put("generator_range_id", selectedGeneratorId);
+        dataSet.put("amount_range_id", selectedAnnualId);
+        dataSet.put("profess_tax_pay", professional_tax_paid_status_text);
+        dataSet.put("property_tax_paid", property_tax_paid_status_text);
+        dataSet.put("property_tax_assessment_no", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
+        dataSet.put("owner_y_n", owner_status_text);
 
         //dataSet.put(AppConstant.LATITUDE, "10.3");
         //dataSet.put(AppConstant.LONGITUDE, "20.6");
@@ -1746,7 +1684,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
             if (visible_count == 0) {
-                if (ValidationFirst()){
+                if (!ValidationFirst()){
                     newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 1;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1776,8 +1714,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 ValidationThird();
         }
     }
-    public  void previous()
-    {
+    public  void previous() {
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0,0);
 
         if(visible_count==2) {
@@ -1815,132 +1752,110 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void getDocument()
     {
-        //isReadStoragePermissionGranted();
-        askPermissionAndBrowseFile();
+        showFileChooser();
     }
+    private static final int FILE_SELECT_CODE = 0;
 
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
 
-/*// get file path
-
-    private String getFileNameByUri(Context context, Uri uri)
-    {
-        String filepath = "";//default fileName
-        //Uri filePathUri = uri;
-        File file;
-        if (uri.getScheme().toString().compareTo("content") == 0)
-        {
-            Cursor cursor = context.getContentResolver().query(uri, new String[] { android.provider.MediaStore.Images.ImageColumns.DATA, MediaStore.Images.Media.ORIENTATION }, null, null, null);
-            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
-            cursor.moveToFirst();
-
-            String mImagePath = cursor.getString(column_index);
-            cursor.close();
-            filepath = mImagePath;
-
-        }
-        else
-        if (uri.getScheme().compareTo("file") == 0)
-        {
-            try
-            {
-                file = new File(new URI(uri.toString()));
-                if (file.exists())
-                    filepath = file.getAbsolutePath();
-
-            }
-            catch (URISyntaxException e)
-            {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        else
-        {
-            filepath = uri.getPath();
-        }
-        return filepath;
-    }*/
-    public  boolean isReadStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        == PackageManager.PERMISSION_GRANTED){
-
-                   // Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
-                    //chooseFile.setType("*/*");
-                    //chooseFile = Intent.createChooser(chooseFile, "Choose a file");
-                    //startActivityForResult(chooseFile, REQUEST_CODE_DOC);
-
-                    Intent intent4 = new Intent(this, NormalFilePickActivity.class);
-                    intent4.putExtra(Constant.MAX_NUMBER, 1);
-                    intent4.putExtra(NormalFilePickActivity.SUFFIX, new String[] {"xlsx", "xls", "doc", "docx", "ppt", "pptx", "pdf"});
-                    startActivityForResult(intent4, Constant.REQUEST_CODE_PICK_FILE);
-
-                    return true;
-                }
-                else {
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-                    return false;
-                }
-                //Log.v(TAG,"Permission is granted1");
-
-            } else {
-                //Log.v(TAG,"Permission is revoked1");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 3);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            //Log.v(TAG,"Permission is granted1");
-            return true;
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File to Upload"),
+                    FILE_SELECT_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
         }
     }
-
-  /*  public  boolean isWriteStoragePermissionGranted() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                //Log.v(TAG,"Permission is granted2");
-                return true;
-            } else {
-               // Log.v(TAG,"Permission is revoked2");
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-                return false;
-            }
-        }
-        else { //permission is automatically granted on sdk<23 upon installation
-            //Log.v(TAG,"Permission is granted2");
-            return true;
-        }
-    }
-    */
-   /* @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case 2:
-                //Log.d(TAG, "External storage2");
-                if(grantResults.length > 0&& grantResults[0]== PackageManager.PERMISSION_GRANTED){
-                    booleanValue=1;
-                }else{
-                    booleanValue=0;
-                }
-                break;
-
-            case 3:
-                //Log.d(TAG, "External storage1");
-                if(grantResults.length > 0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
-                    booleanValue=1;
-                }else{
-                    booleanValue=0;
+            case FILE_SELECT_CODE:
+                if (resultCode == RESULT_OK) {
+                    // Get the Uri of the selected file
+                    uri = data.getData();
+                    String uriString = uri.toString();
+                    myFile = new File(uriString);
+                    String path = myFile.getAbsolutePath();
+                    Log.d("uri", uriString);
+                    Log.d("myFile", myFile.toString());
+                    Log.d("path", path);
+                    if (uriString.startsWith("content://")) {
+                        Cursor cursor = null;
+                        try {
+                            cursor = this.getContentResolver().query(uri, null, null, null, null);
+                            if (cursor != null && cursor.moveToFirst()) {
+                                displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                                newTradeLicenceScreenBinding.fileLocation.setText(displayName);
+                                ConvertToString(uri);
+                                Log.d("fileString>>", fileString);
+                            }
+                        } finally {
+                            cursor.close();
+                        }
+                    } else if (uriString.startsWith("file://")) {
+                        displayName = myFile.getName();
+                        Log.d("displayName", displayName);
+                        newTradeLicenceScreenBinding.fileLocation.setText(getFilePath(this,uri));
+                    }
                 }
                 break;
         }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
-*/
+    public void ConvertToString(Uri uri){
+        uriString = uri.toString();
+        Log.d("data", "onActivityResult: uri"+uriString);
+        //            myFile = new File(uriString);
+        //            ret = myFile.getAbsolutePath();
+        //Fpath.setText(ret);
+        try {
+            InputStream in = getContentResolver().openInputStream(uri);
+            bytes=getBytes(in);
+            Log.d("data", "onActivityResult: bytes size="+bytes.length);
+            Log.d("data", "onActivityResult: Base64string="+Base64.encodeToString(bytes,Base64.DEFAULT));
+            fileString = Base64.encodeToString(bytes,Base64.DEFAULT);
+            System.out.println("Base64>>"+Base64.encodeToString(bytes,Base64.DEFAULT));
+            System.out.println("Base64fileString>>"+fileString);
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            Log.d("error", "onActivityResult: " + e.toString());
+        }
+    }
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
+
+    String getFilePath(Context cntx, Uri uri) {
+        Cursor cursor = null;
+        try {
+            String[] arr = { MediaStore.Images.Media.DATA };
+            cursor = cntx.getContentResolver().query(uri,  arr, null, null, null);
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            cursor.moveToFirst();
+            return cursor.getString(column_index);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
     public boolean ValidationFirst(){
         if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
             if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
@@ -2034,8 +1949,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                         else {
                                             Utils.showAlert(this, "Select Annual Sale");
                                             newTradeLicenceScreenBinding.annualSaleLayout.requestLayout();
-//                                            return false;
-                                            return true;
+                                            return false;
                                         }
 
                                     } else {
@@ -2052,10 +1966,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 Utils.showAlert(this,"Select Date");
                                 newTradeLicenceScreenBinding.dateLayout.requestFocus();
                             }
-                        }
-                        else {
-                            Utils.showAlert(this,"Upload document");
-                            newTradeLicenceScreenBinding.areYouOwnerLayout.requestLayout();
                         }
                     }
                     else {
@@ -2127,38 +2037,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 return true;
             }
             else {
-                BufferedReader br = null;
-                try {
-
-                        br = new BufferedReader(new FileReader(file));
-
-                    try {
-                        if (br.readLine() == null) {
-                            System.out.println("No errors, and file empty");
-                            return false;
-                        }
-                        else {
-                            try {
-                                // default StandardCharsets.UTF_8
-                                List<String> content = null;
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    content = Files.readAllLines(Paths.get(String.valueOf(file)));
-                                }
-                                System.out.println(content);
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-
-                            return true;
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                //return false;
+                if(fileString!=null && !fileString.isEmpty() && !fileString.equals("")){
+                    return true;
+                }else{
+                    Utils.showAlert(this,"Upload Document");
+                    newTradeLicenceScreenBinding.areYouOwnerLayout.requestFocus();
+                return false;}
             }
 
         }
@@ -2239,54 +2123,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             return false;
         }
     }
-  /*
-    @Override
-    protected void onActivityResult(int req, int result, Intent data)
-    {
-        // TODO Auto-generated method stub
-        super.onActivityResult(req, result, data);
-        if (result == RESULT_OK)
-        {
-            {
-                list = data.getParcelableArrayListExtra(Constant.RESULT_PICK_FILE);
 
-                //Uri fileuri;
-                //Uri fileuri = data.getData();
-                //docFilePath = getFileNameByUri(NewTradeLicenceScreen.this, fileuri);
-                //newTradeLicenceScreenBinding.fileLocation.setText(docFilePath);
-                //fileuri = data.getData();
-                //docFilePath = fileuri.getPath();
-                //file = new File(docFilePath);
-                if(list.size()>0) {
-                    newTradeLicenceScreenBinding.fileLocation.setText(list.get(0).getName());
-                }
-            }
-
-        }
-    }
-
-*/
-
-    private void askPermissionAndBrowseFile()  {
-        // With Android Level >= 23, you have to ask the user
-        // for permission to access External Storage.
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) { // Level 23
-
-            // Check if we have Call permission
-            int permisson = ActivityCompat.checkSelfPermission(this.getApplicationContext(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE);
-
-            if (permisson != PackageManager.PERMISSION_GRANTED) {
-                // If don't have permission so prompt the user.
-                this.requestPermissions(
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        MY_REQUEST_CODE_PERMISSION
-                );
-                return;
-            }
-        }
-        this.doBrowseFile();
-    }
 
     private void doBrowseFile()  {
         Intent chooseFileIntent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -2327,34 +2164,118 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
     }
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case MY_RESULT_CODE_FILECHOOSER:
-                if (resultCode == Activity.RESULT_OK ) {
-                    if(data != null)  {
-                        Uri fileUri = data.getData();
-                        Log.i(LOG_TAG, "Uri: " + fileUri);
+    public static String getFileContents(final File file) throws IOException {
+        final InputStream inputStream = new FileInputStream(file);
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
-                        String filePath = null;
-                        try {
-                            file = new File(fileUri.getPath());
-                        } catch (Exception e) {
-                            Log.e(LOG_TAG,"Error: " + e);
-                            Toast.makeText(this.getApplicationContext(), "Error: " + e, Toast.LENGTH_SHORT).show();
-                        }
-                        newTradeLicenceScreenBinding.fileLocation.setText(file.toString());
-                    }
-                }
-                break;
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        boolean done = false;
+
+        while (!done) {
+            final String line = reader.readLine();
+            done = (line == null);
+
+            if (line != null) {
+                stringBuilder.append(line);
+            }
         }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
-    public String getPath()  {
-        return newTradeLicenceScreenBinding.fileLocation.getText().toString();
-    }
+        reader.close();
+        inputStream.close();
 
+        return stringBuilder.toString();
+    }
+    public void openFile() {
+        File destination = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Test/TestTest/" + displayName);
+
+        try {
+            byte[] pdfAsBytes = Base64.decode(getFileContents(myFile), Base64.DEFAULT);
+            File dir = Environment.getExternalStorageDirectory();
+            File pdffile = new File(dir, myFile.getName());
+            if(!pdffile.exists())
+            {
+                pdffile.getParentFile().mkdirs();
+                pdffile.createNewFile();
+            }
+//            Files.write(pdfAsBytes, pdffile);
+            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+            pdfIntent.setDataAndType(Uri.fromFile(pdffile), "*/*");
+            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(pdfIntent);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openFile2() {
+
+        File file=myFile;
+        Uri uri = Uri.fromFile(file);
+
+        Intent pdfOpenintent = new Intent(Intent.ACTION_VIEW);
+        pdfOpenintent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        pdfOpenintent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        pdfOpenintent.setDataAndType(uri, "*/*");
+        try {
+            startActivity(pdfOpenintent);
+        }
+        catch (ActivityNotFoundException e) {
+
+        }
+    }
+    public void openFile1() {
+
+        try {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            if (displayName.toString().contains(".doc") || displayName.toString().contains(".docx")) {
+                // Word document
+                intent.setDataAndType(uri, "application/msword");
+            } else if (displayName.toString().contains(".pdf")) {
+                // PDF file
+                intent.setDataAndType(uri, "application/pdf");
+            } else if (displayName.toString().contains(".ppt") || displayName.toString().contains(".pptx")) {
+                // Powerpoint file
+                intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
+            } else if (displayName.toString().contains(".xls") || displayName.toString().contains(".xlsx")) {
+                // Excel file
+                intent.setDataAndType(uri, "application/vnd.ms-excel");
+            } else if (displayName.toString().contains(".zip")) {
+                // ZIP file
+                intent.setDataAndType(uri, "application/zip");
+            } else if (displayName.toString().contains(".rar")){
+                // RAR file
+                intent.setDataAndType(uri, "application/x-rar-compressed");
+            } else if (displayName.toString().contains(".rtf")) {
+                // RTF file
+                intent.setDataAndType(uri, "application/rtf");
+            } else if (displayName.toString().contains(".wav") || displayName.toString().contains(".mp3")) {
+                // WAV audio file
+                intent.setDataAndType(uri, "audio/x-wav");
+            } else if (displayName.toString().contains(".gif")) {
+                // GIF file
+                intent.setDataAndType(uri, "image/gif");
+            } else if (displayName.toString().contains(".jpg") || displayName.toString().contains(".jpeg") ||
+                    displayName.toString().contains(".png")) {
+                // JPG file
+                intent.setDataAndType(uri, "image/jpeg");
+            } else if (displayName.toString().contains(".txt")) {
+                // Text file
+                intent.setDataAndType(uri, "text/plain");
+            } else if (displayName.toString().contains(".3gp") || displayName.toString().contains(".mpg") ||
+                    displayName.toString().contains(".mpeg") || displayName.toString().contains(".mpe") ||
+                    displayName.toString().contains(".mp4") || displayName.toString().contains(".avi")) {
+                // Video files
+                intent.setDataAndType(uri, "video/*");
+            } else {
+                intent.setDataAndType(uri, "*/*");
+            }
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(context, "No application found which can open the file", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
 
