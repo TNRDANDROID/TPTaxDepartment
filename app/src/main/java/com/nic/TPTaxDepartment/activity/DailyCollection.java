@@ -4,60 +4,47 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.DatePicker;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.VolleyError;
 import com.nic.TPTaxDepartment.Adapter.DailyCollectionAdapter;
-import com.nic.TPTaxDepartment.Adapter.TraderListAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.databinding.DailyCollectionBinding;
-import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.Locale;
 
 
 public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
 
     private DailyCollectionBinding dailyCollectionBinding;
-    private Handler handler = new Handler();
     private PrefManager prefManager;
     private static TextView date;
-    static boolean callApi;
     ArrayList<TPtaxModel> collectionList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,10 +55,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         prefManager = new PrefManager(this);
         date = dailyCollectionBinding.date;
-
-        /*dailyCollectionBinding.date.setTranslationX(800);
-        dailyCollectionBinding.dateLayout.setTranslationX(800);
-        dailyCollectionBinding.recyLayout.setTranslationX(800);*/
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
         dailyCollectionBinding.dailyCollectionRecycler.setLayoutManager(mLayoutManager);
         dailyCollectionBinding.dailyCollectionRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -79,55 +62,11 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         dailyCollectionBinding.dailyCollectionRecycler.setNestedScrollingEnabled(false);
         dailyCollectionBinding.dailyCollectionRecycler.setFocusable(false);
 
-       /* dailyCollectionBinding.date.setAlpha(0);
-        dailyCollectionBinding.dateLayout.setAlpha(0);
-        dailyCollectionBinding.recyLayout.setAlpha(0);
-
-
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                dailyCollectionBinding.date.animate().translationX(0).alpha(1).setDuration(1400).setStartDelay(400).start();
-                dailyCollectionBinding.dateLayout.animate().translationX(0).alpha(1).setDuration(1450).setStartDelay(450).start();
-                dailyCollectionBinding.recyLayout.animate().translationX(0).alpha(1).setDuration(1450).setStartDelay(450).start();
-              }
-        }, 500);
-
-
-        Animation anim = new ScaleAnimation(
-                0.95f, 1f, // Start and end values for the X axis scaling
-                0.95f, 1f, // Start and end values for the Y axis scaling
-                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
-                Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
-        anim.setFillAfter(true); // Needed to keep the result of the animation
-        anim.setDuration(1000);
-        anim.setRepeatMode(Animation.INFINITE);
-        anim.setRepeatCount(Animation.INFINITE);*/
-
         Calendar cldr = Calendar.getInstance();
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
-       // updateLabel(day + "-" + (month + 1) + "-" + year);
         date.setText("Select Date");
-
-        date.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                getDailyCollection();
-            }
-        });
-
     }
 
      private void LoadDailyCollectionList() throws JSONException {
@@ -209,8 +148,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public static class datePickerFragment extends DialogFragment implements
-            DatePickerDialog.OnDateSetListener {
+    public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         Calendar cldr = Calendar.getInstance();
 
         @Override
@@ -243,6 +181,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
     public static String updateLabel(String olddate){
         final String OLD_FORMAT = "dd-MM-yyyy";
         final String NEW_FORMAT = "yyyy-MM-dd";
@@ -257,8 +196,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         sdf.applyPattern(NEW_FORMAT);
         newDateString = sdf.format(d);
         date.setText(newDateString);
-
-
         return  newDateString;
     }
 
@@ -289,7 +226,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     }
 
 
-
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
             String urlType = serverResponse.getApi();
@@ -312,15 +248,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                     dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
                     dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
                 }
-//                String authKey = responseDecryptedSchemeKey.toString();
-//                int maxLogSize = 4000;
-//                for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
-//                    int start = i * maxLogSize;
-//                    int end = (i+1) * maxLogSize;
-//                    end = end > authKey.length() ? authKey.length() : end;
-//                    Log.v("to_send", authKey.substring(start, end));
-//                }
-//                Log.d("WorkListResp", "" + responseDecryptedSchemeKey);
             }
         } catch (JSONException e) {
             e.printStackTrace();
