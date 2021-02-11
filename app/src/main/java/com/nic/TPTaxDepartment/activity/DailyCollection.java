@@ -55,7 +55,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         prefManager = new PrefManager(this);
         date = dailyCollectionBinding.date;
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),1);
         dailyCollectionBinding.dailyCollectionRecycler.setLayoutManager(mLayoutManager);
         dailyCollectionBinding.dailyCollectionRecycler.setItemAnimator(new DefaultItemAnimator());
         dailyCollectionBinding.dailyCollectionRecycler.setHasFixedSize(true);
@@ -67,11 +67,17 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
         date.setText("Select Date");
+
+        try {
+            LoadDailyCollectionList();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
      private void LoadDailyCollectionList() throws JSONException {
          collectionList = new ArrayList<TPtaxModel>();
-      /*  for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 8; i++) {
             if(i==0){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("1");
@@ -102,6 +108,18 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxTypeName("Non Tax");
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
+            }else if(i==5){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("4");
+                Detail.setTaxTypeName("Professional Tax");
+                Detail.setTaxCollection("780050.00");
+                collectionList.add(Detail);
+            }else if(i==6){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("5");
+                Detail.setTaxTypeName("Non Tax");
+                Detail.setTaxCollection("10050.00");
+                collectionList.add(Detail);
             }else {
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("6");
@@ -109,8 +127,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection("36050.00");
                 collectionList.add(Detail);
             }
-        }*/
-        JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
+        }
+       /* JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
         if(jsonarray != null && jsonarray.length() >0) {
             for (int i = 0; i < jsonarray.length(); i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -124,7 +142,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection(collectionreceived);
                 collectionList.add(Detail);
             }
-        }
+        }*/
 
          Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeName().compareTo(rhs.getTaxTypeName()));
          if(collectionList != null && collectionList.size() >0) {

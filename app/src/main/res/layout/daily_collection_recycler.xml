@@ -1,4 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@drawable/corner_bg_colorpri"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_centerVertical="true"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:weightSum="2"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:id="@+id/taxName"
+                android:gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:singleLine="true"
+                android:minWidth="100dp"
+                android:minLines="1"
+                android:text="Trade Licence"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary" />
+
+        </LinearLayout>
+
+        <TextView
+            android:background="@drawable/corner_bg_white"
+            android:id="@+id/taxAmount"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="0.8"
+            android:layout_height="match_parent"
+            android:text="00.00"
+            android:minLines="1"
+            android:textSize="18sp"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+</RelativeLayout>
+
+
+<!--old-->
+<!--
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -67,3 +121,4 @@
 
 
 </LinearLayout>
+-->

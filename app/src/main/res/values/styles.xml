@@ -91,4 +91,24 @@
     <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
 
     </style>
+
+
+    <style name="TextInputTheme" parent="Widget.Design.TextInputLayout">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/grey2</item>
+        <item name="android:textSize">16sp</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="colorControlNormal">@color/grey2</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <!--<item name="textColorError">@color/design_textinput_error_color_light</item>-->
+    </style>
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/subscription_type_red_color</item>
+        <item name="android:layout_gravity">right</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
 </resources>

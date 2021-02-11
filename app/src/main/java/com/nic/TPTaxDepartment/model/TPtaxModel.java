@@ -111,6 +111,16 @@ public class TPtaxModel  implements Serializable {
     public String amount_range_id;
     public String generator_range_id;
     public String propertyTaxAssessmentNumber;
+    public String document;
+
+    public String getDocument() {
+        return document;
+    }
+
+    public TPtaxModel setDocument(String document) {
+        this.document = document;
+        return this;
+    }
 
     public String getPropertyTaxAssessmentNumber() {
         return propertyTaxAssessmentNumber;

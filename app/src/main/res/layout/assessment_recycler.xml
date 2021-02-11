@@ -28,7 +28,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Assessment No"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -51,7 +51,7 @@
                         android:id="@+id/assessment_no"
                         android:layout_width="match_parent"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName" />
 
@@ -71,7 +71,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Assessment Name"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -114,7 +114,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Organization Type"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -138,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -166,7 +166,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Assessment No"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -189,7 +189,7 @@
                         android:id="@+id/property_assessment_no"
                         android:layout_width="match_parent"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName" />
 
@@ -209,7 +209,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Owner Name"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -233,7 +233,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -252,7 +252,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Father Name"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -276,7 +276,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -295,7 +295,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Permanent Address"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -319,7 +319,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -338,7 +338,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Area In Square Feet"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -362,7 +362,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -390,7 +390,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Trader Code"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -413,7 +413,7 @@
                         android:id="@+id/lb_traderscode"
                         android:layout_width="match_parent"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName" />
 
@@ -433,7 +433,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Father Name"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -457,7 +457,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -476,7 +476,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Father Name in Tamil"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -500,7 +500,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -519,7 +519,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Door No"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -543,7 +543,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -562,7 +562,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Trader Rate"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -586,7 +586,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -605,7 +605,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Financial Year"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -629,7 +629,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -648,7 +648,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Trade Description"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -672,7 +672,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -700,7 +700,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Connection No"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -723,7 +723,7 @@
                         android:id="@+id/lb_connectionno"
                         android:layout_width="match_parent"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName" />
 
@@ -743,7 +743,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Connection Name"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -767,7 +767,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -786,7 +786,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Water Charges"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -810,7 +810,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -838,7 +838,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Lease Assessment No"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -861,7 +861,7 @@
                         android:id="@+id/lb_leaseassessmentno"
                         android:layout_width="match_parent"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName" />
 
@@ -881,7 +881,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Name"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -905,7 +905,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -924,7 +924,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Name in Tamil"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -948,7 +948,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -967,7 +967,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Lease Type Code"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -991,7 +991,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -1011,7 +1011,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Lease Type Description"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -1035,7 +1035,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -1055,7 +1055,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Lease Payment Due Type"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -1079,7 +1079,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -1099,7 +1099,7 @@
                 android:layout_marginTop="@dimen/padding"
                 android:layout_marginRight="@dimen/margin_left_20dp"
                 android:text="Annual Lease Amount"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey1"
                 android:textSize="@dimen/_15sdp"
                 android:visibility="visible" />
 
@@ -1123,7 +1123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:enabled="false"
-                        android:textColor="@color/black"
+                        android:textColor="@color/grey2"
                         android:inputType="textPersonName" />
 
                 </com.google.android.material.textfield.TextInputLayout>

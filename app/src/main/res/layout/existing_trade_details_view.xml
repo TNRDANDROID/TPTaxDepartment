@@ -9,11 +9,78 @@
             name="activity"
             type="com.nic.TPTaxDepartment.activity.ExistTradeViewClass" />
     </data>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="50dp"
         android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/document_layout"
+            android:visibility="gone">
+            <RelativeLayout
+                android:id="@+id/header2_layout"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/background">
+
+
+                <ImageView
+                    android:id="@+id/refresh2"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="start"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:background="@drawable/back"
+                    android:backgroundTint="@android:color/white"
+                    android:onClick="@{()-> activity.closeDoc()}" />
+
+
+                <TextView
+                    android:id="@+id/title_tv2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="Document"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_15sdp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/log_out2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:adjustViewBounds="true"
+                    android:background="@drawable/ic_home_black_24dp"
+                    android:backgroundTint="@android:color/white"
+                    android:onClick="@{()-> activity.dashboard()}"
+                    android:scaleType="centerInside" />
+
+
+            </RelativeLayout>
+
+            <com.github.barteksc.pdfviewer.PDFView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+                android:layout_below="@+id/header2_layout"
+            android:id="@+id/documentViewer"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/main"
+            android:visibility="visible">
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             app:elevation="0dp"
@@ -89,6 +156,7 @@
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -948,7 +1016,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/margin_left_20dp"
                             android:layout_marginTop="@dimen/padding"
+                            android:id="@+id/viewDoc"
+                            android:onClick="@{()-> activity.viewDocument()}"
                             android:layout_marginRight="@dimen/margin_left_20dp"
+                            android:drawablePadding="10dp"
+                            android:drawableLeft="@drawable/ic_document"
                             android:text="Rental Lease Agreement"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_15sdp"
@@ -964,7 +1036,7 @@
                             android:layout_marginRight="@dimen/margin_left_20dp"
                             android:background="@drawable/rectangle_box"
                             android:orientation="vertical"
-                            android:visibility="visible">
+                            android:visibility="gone">
 
 
                             <TextView
@@ -990,7 +1062,7 @@
                                 android:layout_toRightOf="@+id/choose_file"
                                 android:textColor="@android:color/black"
                                 android:textSize="@dimen/_15sdp"
-                                android:text="C:\Users\NIC\Downloads"
+                                android:text="sample.doc"
                                 android:layout_centerVertical="true"
                                 android:id="@+id/file_location"
                                 android:layout_width="wrap_content"
@@ -1370,7 +1442,7 @@
                     android:layout_below="@+id/second"
                     android:id="@+id/third"
                     android:layout_marginBottom="10dp"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:orientation="vertical">
                     //Trade Description
                     <LinearLayout
@@ -2037,6 +2109,7 @@
                     </RelativeLayout>
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/btn_register"
+                        android:visibility="gone"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_40sdp"
                         android:layout_gravity="center_horizontal"
@@ -2091,6 +2164,6 @@
                 android:onClick="@{()-> activity.next()}" />
 
         </RelativeLayout>
-
+        </RelativeLayout>
     </RelativeLayout>
 </layout>
