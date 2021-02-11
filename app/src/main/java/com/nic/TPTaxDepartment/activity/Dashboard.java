@@ -122,11 +122,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         anim.setRepeatMode(Animation.INFINITE);
         anim.setRepeatCount(Animation.INFINITE);
 
-        newDashboardBinding.tradeTv.startAnimation(anim);
-        newDashboardBinding.fieldTv.startAnimation(anim);
-        newDashboardBinding.assessTv.startAnimation(anim);
-        newDashboardBinding.dailcollTv.startAnimation(anim);
-        newDashboardBinding.pendingTv.startAnimation(anim);
+        ////newDashboardBinding.tradeTv.startAnimation(anim);
+        //newDashboardBinding.fieldTv.startAnimation(anim);
+        //newDashboardBinding.assessTv.startAnimation(anim);
+        //newDashboardBinding.dailcollTv.startAnimation(anim);
+        //newDashboardBinding.pendingTv.startAnimation(anim);
 
         syncvisiblity();
         if(Utils.isOnline()) {

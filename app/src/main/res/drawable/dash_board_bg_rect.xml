@@ -52,7 +52,7 @@
     <!-- Background -->
     <item>
         <shape>
-            <solid android:color="#EFEBEB"/>
+            <solid android:color="#F8F8F8"/>
             <corners android:radius="30dp"/>
         </shape>
     </item>

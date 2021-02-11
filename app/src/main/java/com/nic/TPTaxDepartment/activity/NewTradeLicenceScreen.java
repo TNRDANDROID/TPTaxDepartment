@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Spannable;
@@ -35,12 +36,15 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import com.android.volley.VolleyError;
+import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -61,6 +65,7 @@ import com.vincent.filepicker.filter.entity.NormalFile;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -71,6 +76,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.text.ParseException;
@@ -83,7 +89,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener,AdapterView.OnItemSelectedListener{
+public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener,AdapterView.OnItemSelectedListener
+                                                                                , View.OnFocusChangeListener {
 
     NewTradeLicenceScreenBinding newTradeLicenceScreenBinding;
     ArrayList<Gender> genders ;
@@ -166,6 +173,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     Uri uri;
     File myFile;
     String displayName = "";
+    //PDFView pdfView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -281,6 +289,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.propertyTaxYes.setOnCheckedChangeListener(this::onCheckedChanged);
         newTradeLicenceScreenBinding.propertyTaxNo.setOnCheckedChangeListener(this::onCheckedChanged);
 
+        //Focus Change
+        newTradeLicenceScreenBinding.applicantName.setOnFocusChangeListener(this::onFocusChange);
+
 
 
     }
@@ -381,12 +392,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         switch (compoundButton.getId()){
             case R.id.owner_status_no:
                 if(compoundButton.isChecked()){
-                    owner_status_text="No";
+                    owner_status_text="N";
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
                 }
                 else {
-                    owner_status_text="Yes";
+                    owner_status_text="Y";
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
                 }
@@ -394,12 +405,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.owner_status_yes:
                 if(compoundButton.isChecked()){
-                    owner_status_text="Yes";
+                    owner_status_text="Y";
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
                 }
                 else {
-                    owner_status_text="No";
+                    owner_status_text="N";
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
                 }
@@ -407,12 +418,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.geneartor_avilable_status_yes:
                 if(compoundButton.isChecked()){
-                    generator_available_status_text="Yes";
+                    generator_available_status_text="Y";
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
                 else {
-                    generator_available_status_text="No";
+                    generator_available_status_text="N";
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                 }
@@ -420,12 +431,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.generator_avilable_status_no:
                 if(compoundButton.isChecked()){
-                    generator_available_status_text="No";
+                    generator_available_status_text="N";
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                 }
                 else {
-                    generator_available_status_text="Yes";
+                    generator_available_status_text="Y";
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
@@ -433,12 +444,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.motor_avilable_status_yes:
                 if(compoundButton.isChecked()){
-                    motor_available_status_text="Yes";
+                    motor_available_status_text="Y";
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
                 else {
-                    motor_available_status_text="No";
+                    motor_available_status_text="N";
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                 }
@@ -446,12 +457,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.motor_avilable_status_no:
                 if(compoundButton.isChecked()){
-                    motor_available_status_text="No";
+                    motor_available_status_text="N";
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                 }
                 else {
-                    motor_available_status_text="Yes";
+                    motor_available_status_text="Y";
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                 }
@@ -459,34 +470,34 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.professional_tax_yes:
                 if(compoundButton.isChecked()){
-                    professional_tax_paid_status_text="Yes";
+                    professional_tax_paid_status_text="Y";
                     newTradeLicenceScreenBinding.professionalTaxNo.setChecked(false);
                 }
                 else {
-                    professional_tax_paid_status_text="No";
+                    professional_tax_paid_status_text="N";
                     newTradeLicenceScreenBinding.professionalTaxNo.setChecked(true);
                 }
                 break;
 
             case R.id.professional_tax_no:
                 if(compoundButton.isChecked()){
-                    professional_tax_paid_status_text="No";
+                    professional_tax_paid_status_text="N";
                     newTradeLicenceScreenBinding.professionalTaxYes.setChecked(false);
                 }
                 else {
-                    professional_tax_paid_status_text="Yes";
+                    professional_tax_paid_status_text="Y";
                     newTradeLicenceScreenBinding.professionalTaxYes.setChecked(true);
                 }
                 break;
 
             case R.id.property_tax_yes:
                 if(compoundButton.isChecked()){
-                    property_tax_paid_status_text="Yes";
+                    property_tax_paid_status_text="Y";
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
                 }
                 else {
-                    property_tax_paid_status_text="No";
+                    property_tax_paid_status_text="N";
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                 }
@@ -494,12 +505,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.property_tax_no:
                 if(compoundButton.isChecked()){
-                    property_tax_paid_status_text="No";
+                    property_tax_paid_status_text="N";
                     newTradeLicenceScreenBinding.propertyTaxYes.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                 }
                 else {
-                    professional_tax_paid_status_text="Yes";
+                    professional_tax_paid_status_text="Y";
                     newTradeLicenceScreenBinding.propertyTaxYes.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
                 }
@@ -645,6 +656,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        /*switch (view.getId()){
+            case R.id.applicant_name:
+                if(newTradeLicenceScreenBinding.applicantName.getText().toString().trim().length() == 0){
+                    newTradeLicenceScreenBinding.applicantNameTxInp.setError("Please Enter Name");
+                }
+                else { newTradeLicenceScreenBinding.applicantNameTxInp.setError(null); }
+        }*/
+    }
+
     public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         static Calendar cldr = Calendar.getInstance();
 
@@ -705,7 +727,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 if (status.equalsIgnoreCase("SUCCESS") ){
 
                     Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
-                    Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
+                    //Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
 
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
@@ -722,6 +744,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
                 else if (status.equalsIgnoreCase("FAILD"))
                 {
+                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+                }
+                else {
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                 }
             }
@@ -1180,7 +1205,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     @Override
     public void OnError(VolleyError volleyError) {
-
+        Utils.showAlert(NewTradeLicenceScreen.this,"Something went wrong!");
     }
 
     public void getNewTraderDetails() {
@@ -1626,6 +1651,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         dataSet.put("property_tax_paid", property_tax_paid_status_text);
         dataSet.put("property_tax_assessment_no", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
         dataSet.put("owner_y_n", owner_status_text);
+        dataSet.put("edit_id", 0);
+        dataSet.put("del_id", 0);
+        dataSet.put("remark", newTradeLicenceScreenBinding.remarksField.getText().toString());
+
 
         //dataSet.put(AppConstant.LATITUDE, "10.3");
         //dataSet.put(AppConstant.LONGITUDE, "20.6");
@@ -1684,7 +1713,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
             if (visible_count == 0) {
-                if (!ValidationFirst()){
+                if (ValidationFirst()){
                     newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 1;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1816,6 +1845,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         //Fpath.setText(ret);
         try {
             InputStream in = getContentResolver().openInputStream(uri);
+
             bytes=getBytes(in);
             Log.d("data", "onActivityResult: bytes size="+bytes.length);
             Log.d("data", "onActivityResult: Base64string="+Base64.encodeToString(bytes,Base64.DEFAULT));
@@ -2186,27 +2216,52 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         return stringBuilder.toString();
     }
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void openFile() {
-        File destination = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Test/TestTest/" + displayName);
-
+        byte[] decodedString = new byte[0];
         try {
-            byte[] pdfAsBytes = Base64.decode(getFileContents(myFile), Base64.DEFAULT);
-            File dir = Environment.getExternalStorageDirectory();
-            File pdffile = new File(dir, myFile.getName());
-            if(!pdffile.exists())
-            {
-                pdffile.getParentFile().mkdirs();
-                pdffile.createNewFile();
-            }
-//            Files.write(pdfAsBytes, pdffile);
-            Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-            pdfIntent.setDataAndType(Uri.fromFile(pdffile), "*/*");
-            pdfIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            startActivity(pdfIntent);
-        } catch (IOException e) {
+            //byte[] name = java.util.Base64.getEncoder().encode(fileString.getBytes());
+            decodedString = Base64.decode(fileString.toString(), Base64.DEFAULT);
+            System.out.println(new String(decodedString));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
+        newTradeLicenceScreenBinding.pdfView.setVisibility(View.VISIBLE);
+        newTradeLicenceScreenBinding.scrollView.setVisibility(View.GONE);
+        //File destination = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Test/TestTest/" + displayName);
+        newTradeLicenceScreenBinding.pdfView.fromBytes(decodedString).onRender(new OnRenderListener() {
+            @Override
+            public void onInitiallyRendered(int nbPages, float pageWidth, float pageHeight) {
+                newTradeLicenceScreenBinding.pdfView.fitToWidth();
+            }
+        }).load();
+
+
+
+        //try {
+           // byte[] pdfAsBytes = Base64.decode(getFileContents(myFile), Base64.DEFAULT);
+           // File dir = Environment.getExternalStorageDirectory();
+          //  File pdffile = new File(dir, myFile.getName());
+          //  if(!pdffile.exists())
+           // {
+            //    pdffile.getParentFile().mkdirs();
+                //pdffile.createNewFile();
+           // }
+//            Files.write(pdfAsBytes, pdffile);
+            //Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
+           // pdfIntent.setDataAndType(Uri.fromFile(pdffile), "*/*");
+         //   pdfIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+         //   startActivity(pdfIntent);
+        //}
+       // catch (IOException e)
+       /// {
+        //    e.printStackTrace();
+        //}
     }
+
+
     public void openFile2() {
 
         File file=myFile;
@@ -2275,6 +2330,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "No application found which can open the file", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void convertdoctoPdf(){
+
+
+
+
     }
 }
 

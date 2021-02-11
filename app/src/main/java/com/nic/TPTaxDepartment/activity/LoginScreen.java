@@ -79,8 +79,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         } catch (Exception e) {
             e.printStackTrace();
         }
-        loginScreenBinding.progressBar.setVisibility(View.VISIBLE);
-        loginScreenBinding.scrollView.setVisibility(View.GONE);
+        //loginScreenBinding.progressBar.setVisibility(View.VISIBLE);
+        //loginScreenBinding.scrollView.setVisibility(View.GONE);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         loginScreenBinding.scrollView.setVerticalScrollBarEnabled(false);
@@ -98,16 +98,16 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         prefManager = new PrefManager(this);
 
 
-        if((prefManager.getUserName()!=null) &&(!prefManager.getUserName().equals(""))
+      /*  if((prefManager.getUserName()!=null) &&(!prefManager.getUserName().equals(""))
                 &&(prefManager.getUserPassword()!=null)&&(!prefManager.getUserPassword().equals(""))){
             loginScreenBinding.username.setText(prefManager.getUserName());
             loginScreenBinding.password.setText(prefManager.getUserPassword());
             checkLoginScreen();
         }
         else {
-            loginScreenBinding.progressBar.setVisibility(View.GONE);
-            loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
-        }
+            //loginScreenBinding.progressBar.setVisibility(View.GONE);
+            //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
+        }*/
         stb2 = AnimationUtils.loadAnimation(this, R.anim.stb2);
         loginScreenBinding.password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 
@@ -329,8 +329,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
                     } else {
                         if (response.equals("LOGIN_FAILED")) {
-                            loginScreenBinding.progressBar.setVisibility(View.GONE);
-                            loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
+                            //loginScreenBinding.progressBar.setVisibility(View.GONE);
+                            //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
                             Utils.showAlert(this, "Invalid UserName Or Password");
                         }
                     }
@@ -338,8 +338,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             }
 
         } catch (JSONException e) {
-            loginScreenBinding.progressBar.setVisibility(View.GONE);
-            loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
+            //loginScreenBinding.progressBar.setVisibility(View.GONE);
+            //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
             e.printStackTrace();
         }
     }
@@ -349,8 +349,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void OnError(VolleyError volleyError) {
-        loginScreenBinding.progressBar.setVisibility(View.GONE);
-        loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
+        //loginScreenBinding.progressBar.setVisibility(View.GONE);
+        //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
         Utils.showAlert(this, "Login Again");
     }
 

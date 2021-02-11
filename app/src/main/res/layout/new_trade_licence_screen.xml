@@ -110,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/first"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginBottom="@dimen/padding"
             android:orientation="vertical">
             //Applicant Name
@@ -145,7 +145,6 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:hint="Applicant Name">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -594,7 +593,7 @@
             android:layout_below="@+id/appBarLayout"
             android:id="@+id/second"
             android:layout_marginBottom="@dimen/padding"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical">
             //Ward No
             <LinearLayout
@@ -2007,6 +2006,12 @@
                 android:onClick="@{()-> activity.next()}" />
 
         </RelativeLayout>
+        <com.github.barteksc.pdfviewer.PDFView
+            android:id="@+id/pdfView"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
 
     </RelativeLayout>
 </layout>

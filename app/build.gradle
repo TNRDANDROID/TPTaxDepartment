@@ -117,4 +117,8 @@ dependencies {
     ///File picker
     implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.5'
     implementation 'commons-io:commons-io:2.4'
+
+    //PDF viewer
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
 }
