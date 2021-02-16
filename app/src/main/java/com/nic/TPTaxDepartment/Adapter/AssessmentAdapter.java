@@ -90,7 +90,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.nonTax.setVisibility(View.GONE);
                 holder.lb_connectionno.setText(commonModelArrayList.get(position).lb_connectionno);
                 holder.connectionname.setText(commonModelArrayList.get(position).connectionname);
-                holder.water_charges.setText(commonModelArrayList.get(position).water_charges);
+                holder.water_charges.setText("\u20b9"+" "+commonModelArrayList.get(position).water_charges);
             }else if(selectedTaxTypeName.equals("Non Tax") || selectedTaxTypeId.equals("5")) {
                 holder.professionalTax.setVisibility(View.GONE);
                 holder.propertyTax.setVisibility(View.GONE);
@@ -103,7 +103,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.lease_type_code.setText(commonModelArrayList.get(position).lease_type_code);
                 holder.lease_type_description_en.setText(commonModelArrayList.get(position).lease_type_description_en);
                 holder.lease_payment_due_type.setText(commonModelArrayList.get(position).lease_payment_due_type);
-                holder.annuallease_amount.setText(commonModelArrayList.get(position).annuallease_amount);
+                holder.annuallease_amount.setText("\u20b9"+" "+commonModelArrayList.get(position).annuallease_amount);
             }else {
                 holder.professionalTax.setVisibility(View.GONE);
                 holder.propertyTax.setVisibility(View.GONE);

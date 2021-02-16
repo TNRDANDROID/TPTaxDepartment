@@ -17,10 +17,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
@@ -351,7 +358,33 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     public void OnError(VolleyError volleyError) {
         //loginScreenBinding.progressBar.setVisibility(View.GONE);
         //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
-        Utils.showAlert(this, "Login Again");
+       /* if(Utils.isOnline()){
+            Utils.showAlert(this, "Login Again");
+        }
+        else {
+            Utils.showAlert(this, "Your internet  is slow");
+        }*/
+        String message = null;
+        if (volleyError instanceof NetworkError) {
+            message = "Cannot connect to Internet...Please check your connection!";
+            Utils.showAlert(this, message);
+
+        } else if (volleyError instanceof ServerError) {
+            message = "The server could not be found. Please try again after some time!!";
+            Utils.showAlert(this, message);
+        } else if (volleyError instanceof AuthFailureError) {
+            message = "Cannot connect to Internet...Please check your connection!";
+            Utils.showAlert(this, message);
+        } else if (volleyError instanceof ParseError) {
+            message = "Parsing error! Please try again after some time!!";
+            Utils.showAlert(this, message);
+        } else if (volleyError instanceof NoConnectionError) {
+            message = "Cannot connect to Internet...Please check your connection!";
+            Utils.showAlert(this, message);
+        } else if (volleyError instanceof TimeoutError) {
+            message = "Connection TimeOut! Please check your internet connection.";
+            Utils.showAlert(this, message);
+        }
     }
 
 //    @Override

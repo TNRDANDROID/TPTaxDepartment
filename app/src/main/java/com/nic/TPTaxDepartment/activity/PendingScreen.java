@@ -611,7 +611,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             dataset.put("serviceid", fieldVisitPendingList.get(pos1).getService_list_field_visit_service_id());
             dataset.put("request_id", request_id);
             dataset.put("data_ref_id", fieldVisitPendingList.get(pos1).getData_ref_id());
-            dataset.put("field_visit_status", fieldVisitPendingList.get(pos1).getFIELD_VISIT_STATUS());
+            dataset.put("field_visit_status", fieldVisitPendingList.get(pos1).getFIELD_VISIT_STATUS_ID());
             dataset.put("remark", fieldVisitPendingList.get(pos1).getRemark());
         }
         catch (JSONException e){

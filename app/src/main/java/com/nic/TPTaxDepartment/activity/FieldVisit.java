@@ -163,7 +163,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
         Utils.setLanguage(fieldVisitBinding.remarksText,"en","USA");
 
-
+        fieldVisitBinding.serviceFiledType.setEnabled(false);
         fieldVisitBinding.taxType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -274,13 +274,18 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
     public void viewImage() {
         if(fieldVisitBinding.requestIdTextField.getText()!= null && !fieldVisitBinding.requestIdTextField.getText().equals("")){
-            if (getSaveTradeImageTable() > 0) {
-                Intent intent = new Intent(this, FullImageActivity.class);
-                intent.putExtra("request_id", fieldVisitBinding.requestIdTextField.getText().toString());
-                intent.putExtra("key", "FieldVisit");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            } else {
+            if(imageboolean==true) {
+                if (getSaveTradeImageTable() > 0) {
+                    Intent intent = new Intent(this, FullImageActivity.class);
+                    intent.putExtra("request_id", fieldVisitBinding.requestIdTextField.getText().toString());
+                    intent.putExtra("key", "FieldVisit");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                } else {
+                    Utils.showAlert(FieldVisit.this, "No image Saved in Local");
+                }
+            }
+            else {
                 Utils.showAlert(FieldVisit.this, "No image Saved in Local");
             }
         }else {
@@ -310,7 +315,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         }
     }
     public void imageWithDescription(TextView action_tv, final String type) {
-        imageboolean = true;
+
         dataset = new JSONObject();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -434,10 +439,11 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                         imageValue.put(AppConstant.DESCRIPTION, myEditTextView.getText().toString());
                         imageValue.put("pending_flag", 1);
 
-                        if (Utils.isOnline()) {
+                        if (!Utils.isOnline()) {
                            if(iscaptureImgExist(request_id)) {
                                long rowUpdated1 = LoginScreen.db.update(DBHelper.CAPTURED_PHOTO, imageValue, "request_id  = ? ", new String[]{request_id});
                                if (rowUpdated1 != -1) {
+                                   imageboolean = true;
                                     Toast.makeText(FieldVisit.this, "Image Updated!", Toast.LENGTH_SHORT).show();
 //                                   Utils.showAlert(FieldVisit.this, " Capture-Photo updated");
 
@@ -473,6 +479,22 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 imageArray.put("photo",image_str.trim());
                                 //imageArray.put(description);
                                 imageJson.put(imageArray);
+                                imageboolean = true;
+                                try {
+                                    dataset.put("image_details", imageJson);
+                                    Log.d("post_dataset_inspection", dataset.toString());
+                                    String authKey = dataset.toString();
+                                    int maxLogSize = 1000;
+                                    for(int j = 0; j <= authKey.length() / maxLogSize; j++) {
+                                        int start = j * maxLogSize;
+                                        int end = (j+1) * maxLogSize;
+                                        end = end > authKey.length() ? authKey.length() : end;
+                                        Log.v("to_send", authKey.substring(start, end));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
                             catch (Exception e){
 
@@ -482,20 +504,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
 
                     }
-                   try {
-                       dataset.put("image_details", imageJson);
-                       Log.d("post_dataset_inspection", dataset.toString());
-                       String authKey = dataset.toString();
-                       int maxLogSize = 1000;
-                        for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
-                            int start = i * maxLogSize;
-                            int end = (i+1) * maxLogSize;
-                            end = end > authKey.length() ? authKey.length() : end;
-                            Log.v("to_send", authKey.substring(start, end));
-                     }
-                   } catch (JSONException e) {
-                        e.printStackTrace();
-                   }
                 }
                 dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                 dialog.dismiss();
@@ -593,13 +601,19 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void validation() {
         if(!fieldVisitBinding.taxType.getSelectedItem().equals(null)){
             if(!fieldVisitBinding.assessmentId.getText().equals(null)){
-                if(!fieldVisitBinding.currentStatus.getSelectedItem().equals("Select Current Status")){
-                    if(imageboolean == true) {
-                        submit();
+                if(fieldVisitBinding.currentStatus.getSelectedItem()!=null&&!fieldVisitBinding.currentStatus.getSelectedItem().equals("Select Status")){
+                    if(!fieldVisitBinding.remarksText.getText().toString().isEmpty()){
+                        if(imageboolean == true) {
+                            submit();
+                        }
+                        else {
+                            Utils.showAlert(FieldVisit.this,"Take Photo");
+                        }
                     }
                     else {
-                        Utils.showAlert(FieldVisit.this,"Take Photo");
+                        Utils.showAlert(FieldVisit.this,"Enter Remarks");
                     }
+
                 }
                 else {
                     Utils.showAlert(FieldVisit.this," Please Select Current Status");
@@ -627,7 +641,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String current_status = selectedFieldVisitStatusId;
         String remarks = fieldVisitBinding.remarksText.getText().toString();
 
-        if(Utils.isOnline()) {
+        if(!Utils.isOnline()) {
             ContentValues fieldValue = new ContentValues();
             fieldValue.put("taxtypeid", tax_type_id);
             fieldValue.put("tax_type_name", selectedTaxTypeName);

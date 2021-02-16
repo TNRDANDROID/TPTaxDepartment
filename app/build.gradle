@@ -114,6 +114,10 @@ dependencies {
 
     implementation 'com.agrawalsuneet.androidlibs:dotsloader:1.4'
 
+    //hide Password
+    implementation 'com.github.scottyab:showhidepasswordedittext:0.8'
+
+
     ///File picker
     implementation 'com.vincent.filepicker:MultiTypeFilePicker:1.0.5'
     implementation 'commons-io:commons-io:2.4'

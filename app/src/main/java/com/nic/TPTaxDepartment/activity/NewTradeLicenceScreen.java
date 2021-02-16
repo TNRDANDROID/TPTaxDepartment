@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
@@ -195,6 +198,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.previous.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.next.setText("Next");
+        newTradeLicenceScreenBinding.documentLayout.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.main.setVisibility(View.VISIBLE);
 
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionEnglish,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantName,"en","USA");
@@ -239,7 +244,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         radioBtnFun();
 
-
+        newTradeLicenceScreenBinding.fileLocation.setMovementMethod(new ScrollingMovementMethod());
         String colored = "*";
         String mobileView= "கைபேசி எண் / Mobile No";
         SpannableStringBuilder builder = new SpannableStringBuilder();
@@ -395,11 +400,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     owner_status_text="N";
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
+
                 }
                 else {
                     owner_status_text="Y";
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
+                    fileString="";
+                    newTradeLicenceScreenBinding.fileLocation.setText("");
                 }
                 break;
 
@@ -408,6 +416,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     owner_status_text="Y";
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
+                    fileString="";
+                    newTradeLicenceScreenBinding.fileLocation.setText("");
                 }
                 else {
                     owner_status_text="N";
@@ -421,11 +431,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     generator_available_status_text="Y";
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
+                    newTradeLicenceScreenBinding.generatorSpinner.setAdapter(generatorRangeArray);
                 }
                 else {
                     generator_available_status_text="N";
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+                    newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
                 }
                 break;
 
@@ -434,11 +446,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     generator_available_status_text="N";
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+                    newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
                 }
                 else {
                     generator_available_status_text="Y";
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
+                    newTradeLicenceScreenBinding.generatorSpinner.setAdapter(generatorRangeArray);
                 }
                 break;
 
@@ -447,11 +461,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     motor_available_status_text="Y";
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
+                    newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(motorRangeArray);
                 }
                 else {
                     motor_available_status_text="N";
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
+                    newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
                 }
                 break;
 
@@ -460,11 +476,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     motor_available_status_text="N";
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
+                    newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
                 }
                 else {
                     motor_available_status_text="Y";
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
+                    newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(motorRangeArray);
                 }
                 break;
 
@@ -495,11 +513,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     property_tax_paid_status_text="Y";
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
+
                 }
                 else {
                     property_tax_paid_status_text="N";
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+                    newTradeLicenceScreenBinding.propertyTaxAssessmentNumber.setText("");
                 }
                 break;
 
@@ -734,11 +754,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     Runnable runnable = new Runnable() {
                         @Override
                         public void run() {
-                            OnBackPressed();
+                            //OnBackPressed();
                             finish();
                         }
                     };
-                    handler.postDelayed(runnable, 2000);
+                    handler.postDelayed(runnable, 3000);
 
 
                 }
@@ -1649,7 +1669,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         dataSet.put("amount_range_id", selectedAnnualId);
         dataSet.put("profess_tax_pay", professional_tax_paid_status_text);
         dataSet.put("property_tax_paid", property_tax_paid_status_text);
-        dataSet.put("property_tax_assessment_no", newTradeLicenceScreenBinding.descriptionTamil.getText().toString());
+        dataSet.put("property_tax_assessment_no", newTradeLicenceScreenBinding.propertyTaxAssessmentNumber.getText().toString());
         dataSet.put("owner_y_n", owner_status_text);
         dataSet.put("edit_id", 0);
         dataSet.put("del_id", 0);
@@ -1820,6 +1840,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                             if (cursor != null && cursor.moveToFirst()) {
                                 displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                                 newTradeLicenceScreenBinding.fileLocation.setText(displayName);
+                                Shader shader = new LinearGradient(0,0,0,newTradeLicenceScreenBinding.fileLocation.getLineHeight(),
+                                        context.getResources().getColor(R.color.colorPrimary) ,
+                                        context.getResources().getColor(R.color.colorPrimaryDark) , Shader.TileMode.REPEAT);
+                                newTradeLicenceScreenBinding.fileLocation.getPaint().setShader(shader);
+
                                 ConvertToString(uri);
                                 Log.d("fileString>>", fileString);
                             }
@@ -1848,10 +1873,24 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             bytes=getBytes(in);
             Log.d("data", "onActivityResult: bytes size="+bytes.length);
+            String cnt_size;
+
+            double size_kb = getFileSize(displayName) /1024;
+            double size_mb = size_kb / 1024;
+            double size_gb = size_mb / 1024 ;
+
+            if (size_gb > 0){
+                cnt_size = size_gb + " GB";
+            }else if(size_mb > 0){
+                cnt_size = size_mb + " MB";
+            }else{
+                cnt_size = size_kb + " KB";
+            }
             Log.d("data", "onActivityResult: Base64string="+Base64.encodeToString(bytes,Base64.DEFAULT));
             fileString = Base64.encodeToString(bytes,Base64.DEFAULT);
             System.out.println("Base64>>"+Base64.encodeToString(bytes,Base64.DEFAULT));
             System.out.println("Base64fileString>>"+fileString);
+            newTradeLicenceScreenBinding.fileSize.setText(cnt_size);
 
         } catch (Exception e) {
             // TODO: handle exception
@@ -2228,8 +2267,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             e.printStackTrace();
         }
 
-        newTradeLicenceScreenBinding.pdfView.setVisibility(View.VISIBLE);
-        newTradeLicenceScreenBinding.scrollView.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.documentLayout.setVisibility(View.VISIBLE);
+        newTradeLicenceScreenBinding.main.setVisibility(View.GONE);
         //File destination = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Test/TestTest/" + displayName);
         newTradeLicenceScreenBinding.pdfView.fromBytes(decodedString).onRender(new OnRenderListener() {
             @Override
@@ -2332,11 +2371,18 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
-    public void convertdoctoPdf(){
+    public static long getFileSize(String filename) {
+        File file = new File(filename);
+        if (!file.exists() || !file.isFile()) {
+            System.out.println("File doesn\'t exist");
+            return -1;
+        }
+        return file.length();
+    }
 
-
-
-
+    public void closeDoc() {
+        newTradeLicenceScreenBinding.documentLayout.setVisibility(View.GONE);
+        newTradeLicenceScreenBinding.main.setVisibility(View.VISIBLE);
     }
 }
 

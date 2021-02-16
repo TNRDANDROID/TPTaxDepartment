@@ -59,9 +59,9 @@ public class TradeLicenceScreen extends AppCompatActivity {
         anim.setRepeatCount(Animation.INFINITE);
 
 
-        tradeLicenceScreenBinding.newTv.startAnimation(anim);
+        //tradeLicenceScreenBinding.newTv.startAnimation(anim);
 
-        tradeLicenceScreenBinding.existTv.startAnimation(anim);
+        //tradeLicenceScreenBinding.existTv.startAnimation(anim);
 
 
     }
