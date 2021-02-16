@@ -38,7 +38,7 @@
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@drawable/back"
                     android:backgroundTint="@android:color/white"
-                    android:onClick="@{()-> activity.closeDoc()}" />
+                    android:onClick="@{()-> activity.onBackPressed()}" />
 
 
                 <TextView
@@ -171,7 +171,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/first"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/padding"
                         android:orientation="vertical">
                         //Applicant Name
@@ -1444,7 +1444,7 @@
                         android:layout_below="@+id/second"
                         android:id="@+id/third"
                         android:layout_marginBottom="10dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical">
                         //Trade Description
                         <LinearLayout
@@ -1997,7 +1997,7 @@
                             android:layout_below="@+id/tv"
                             android:layout_gravity="center"
                             android:layout_marginLeft="@dimen/margin_left_20dp"
-                            android:layout_marginTop="@dimen/_25sdp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginRight="@dimen/margin_left_20dp"
                             android:orientation="horizontal">
 
@@ -2006,11 +2006,10 @@
                                 style="@string/font_circular_bold"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-
-
                                 android:layout_centerInParent="true"
                                 android:text="Amount to pay 550"
                                 android:textColor="@color/grey2"
+                                android:gravity="center"
                                 android:textSize="@dimen/_15sdp" />
 
                             <RelativeLayout
@@ -2022,6 +2021,7 @@
                                 android:layout_gravity="center"
                                 android:background="@drawable/rectangle_box"
                                 android:gravity="center"
+                                android:visibility="gone"
                                 android:orientation="horizontal">
 
 
