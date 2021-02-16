@@ -2012,6 +2012,7 @@
                        android:foreground="?attr/selectableItemBackground"
                        android:onClick="@{()-> activity.ValidationThird()}"
                        android:text="Submit"
+                       android:visibility="gone"
                        android:textAllCaps="false"
                        android:textColor="@android:color/black"
                        android:textSize="@dimen/_15sdp" />

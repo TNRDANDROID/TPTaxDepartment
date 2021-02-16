@@ -199,13 +199,13 @@
                                 android:orientation="horizontal">
 
                                 <ImageView
-                                    android:padding="8dp"
+                                    android:padding="9dp"
                                     android:layout_centerVertical="true"
                                     android:id="@+id/image_voting_progress"
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:background="@drawable/cerclebackgroundpurple"
-                                    android:src="@drawable/ic_investment"
+                                    android:src="@drawable/ic_bar_chart"
                                      />
 
 
@@ -277,9 +277,9 @@
                                     android:layout_height="50dp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/cerclebackgroundpink"
-                                    android:padding="8dp"
+                                    android:padding="10dp"
                                     android:layout_centerVertical="true"
-                                    android:src="@drawable/ic_crew"
+                                    android:src="@drawable/ic_audit"
                                     android:visibility="visible" />
 
                                 <View
@@ -351,7 +351,7 @@
                                     android:layout_width="50dp"
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
-                                    android:padding="8dp"
+                                    android:padding="10dp"
                                     android:background="@drawable/cerclebackgroundgreen"
                                     android:src="@drawable/ic_positive_review"
                                     android:visibility="visible" />
@@ -427,8 +427,8 @@
                                     android:layout_height="50dp"
                                     android:layout_gravity="center_vertical"
                                     android:background="@drawable/cerclebackgroundyello"
-                                    android:padding="8dp"
-                                    android:src="@drawable/ic_counting"
+                                    android:padding="3dp"
+                                    android:src="@drawable/ic_payment"
                                     android:visibility="visible" />
 
                                 <View

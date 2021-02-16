@@ -134,7 +134,6 @@ public class AppConstant {
     public static  String FIELD_VISIT_STATUS_ID="field_visit_status_id";
     public static  String FIELD_VISIT_STATUS="field_visit_status";
 
-
     public static  String PDF="JVBERi0xLjMNCiXi48/TDQoNCjEgMCBvYmoNCjw8DQovVHlwZSAvQ2F0YWxvZw0KL091dGxpbmVz\n" +
             "IDIgMCBSDQovUGFnZXMgMyAwIFINCj4+DQplbmRvYmoNCg0KMiAwIG9iag0KPDwNCi9UeXBlIC9P\n" +
             "dXRsaW5lcw0KL0NvdW50IDANCj4+DQplbmRvYmoNCg0KMyAwIG9iag0KPDwNCi9UeXBlIC9QYWdl\n" +
