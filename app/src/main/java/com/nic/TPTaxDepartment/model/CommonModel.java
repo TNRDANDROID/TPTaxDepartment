@@ -88,7 +88,16 @@ public class CommonModel {
 ////Motor,Generator,Annual List;
     public String annual_id,motor_id,generator_id;
     public String annual_sale,motor_range,generator_range;
+    public String slab_amount;
     ///////
+
+    public String getSlab_amount() {
+        return slab_amount;
+    }
+
+    public void setSlab_amount(String slab_amount) {
+        this.slab_amount = slab_amount;
+    }
 
     String request_id;
     String data_ref_id;

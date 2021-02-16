@@ -818,6 +818,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             String amount_range_id = Utils.NotNullString(jsonobject.getString("amount_range_id"));
                             String amount_range = Utils.NotNullString(jsonobject.getString("amount_range"));
                             String slab_amount = Utils.NotNullString(jsonobject.getString("slab_amount"));
+                            String traders_license_type_id = Utils.NotNullString(jsonobject.getString("traders_license_type_id"));
+
 
 
                             ContentValues fieldValue = new ContentValues();
@@ -825,6 +827,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             fieldValue.put("amount_range_id", amount_range_id);
                             fieldValue.put("amount_range", amount_range);
                             fieldValue.put("slab_amount", slab_amount);
+                            fieldValue.put("traders_license_type_id",traders_license_type_id);
 
                             db.insert(DBHelper.ANNUAL_SALE_LIST, null, fieldValue);
                         }

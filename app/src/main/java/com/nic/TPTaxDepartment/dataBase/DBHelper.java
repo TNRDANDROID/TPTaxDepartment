@@ -205,6 +205,7 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE " + ANNUAL_SALE_LIST + " ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "trade_slab_rate_id INTEGER," +
+                "traders_license_type_id INTEGER," +
                 "amount_range_id INTEGER," +
                 "slab_amount TEXT," +
                 "amount_range Text)"

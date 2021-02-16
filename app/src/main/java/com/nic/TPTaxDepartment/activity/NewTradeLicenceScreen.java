@@ -176,6 +176,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     Uri uri;
     File myFile;
     String displayName = "";
+
+    ArrayList<CommonModel> filterAnnualSale;
+    ArrayList<CommonModel> filtermotorRangeList;
+    ArrayList<CommonModel> filterGeneratorList;
     //PDFView pdfView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -217,9 +221,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             LoadGenderSpinner();
             LoadTradeCodeListSpinner();
             LoadLicenceTypeSpinner();
-            LoadAnnualSaleListSpinner();
-            LoadGeneratorRangeListSpinner();
-            LoadMotorRangeListSpinner();
+            //LoadAnnualSaleListSpinner();
+            //LoadGeneratorRangeListSpinner();
+            //LoadMotorRangeListSpinner();
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -296,6 +300,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         //Focus Change
         newTradeLicenceScreenBinding.applicantName.setOnFocusChangeListener(this::onFocusChange);
+
+        newTradeLicenceScreenBinding.annualSale.setEnabled(false);
+        newTradeLicenceScreenBinding.motorRangeSpinner.setEnabled(false);
+        newTradeLicenceScreenBinding.generatorSpinner.setEnabled(false);
 
 
 
@@ -438,6 +446,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
+                    selectedGeneratorId=null;
+                    selectedGeneratorRange="";
+                    amountTextShow();
                 }
                 break;
 
@@ -447,6 +458,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
+                    selectedGeneratorId=null;
+                    selectedGeneratorRange="";
+                    amountTextShow();
                 }
                 else {
                     generator_available_status_text="Y";
@@ -468,6 +482,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
+                    selectedMotorId=null;
+                    selectedMotorRange="";
+                    amountTextShow();
                 }
                 break;
 
@@ -477,6 +494,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
+                    selectedMotorId=null;
+                    selectedMotorRange="";
+                    amountTextShow();
                 }
                 else {
                     motor_available_status_text="Y";
@@ -590,6 +610,27 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
+            if(selectedLicenceTpeId!=null&&!selectedLicenceTypeName.equals("Select Licence Type")){
+                newTradeLicenceScreenBinding.annualSale.setEnabled(true);
+                newTradeLicenceScreenBinding.motorRangeSpinner.setEnabled(true);
+                newTradeLicenceScreenBinding.generatorSpinner.setEnabled(true);
+                LoadAnnualSaleListSpinner();
+                LoadGeneratorRangeListSpinner();
+                LoadMotorRangeListSpinner();
+            }
+
+            if(selectedLicenceTypeName.equals("Industrial")){
+                newTradeLicenceScreenBinding.annualSaleTextId.setText("Production");
+            }
+            else if(selectedLicenceTypeName.equals("Commercial")){
+                newTradeLicenceScreenBinding.annualSaleTextId.setText("Annual Sale");
+            }
+            else if(selectedLicenceTypeName.equals("Select Licence Type")){
+                newTradeLicenceScreenBinding.annualSale.setAdapter(null);
+                newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
+                newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
+                amountTextShow();
+            }
 
         }
         else if(parent == newTradeLicenceScreenBinding.wardNo){
@@ -642,19 +683,28 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
+
+                amountTextShow();
+
+
+
         }
-        else if(parent == newTradeLicenceScreenBinding.motorRangeSpinner){
+        else if(parent == newTradeLicenceScreenBinding.motorRangeSpinner) {
             String motor_range = parent.getSelectedItem().toString();
-            selectedMotorRange=motor_range;
+            selectedMotorRange = motor_range;
             // iterate each entry of hashmap
-            for(Map.Entry<String, String> entry: spinnerMapMotorRange.entrySet()) {
+            for (Map.Entry<String, String> entry : spinnerMapMotorRange.entrySet()) {
                 // if give value is equal to value from entry
                 // print the corresponding key
-                if(entry.getValue() == selectedMotorRange) {
-                    selectedMotorId=entry.getKey();
+                if (entry.getValue() == selectedMotorRange) {
+                    selectedMotorId = entry.getKey();
                     break;
                 }
             }
+
+
+                amountTextShow();
+
         }
         else if(parent == newTradeLicenceScreenBinding.generatorSpinner){
             String generator_range = parent.getSelectedItem().toString();
@@ -668,6 +718,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
+
+                amountTextShow();
+
         }
     }
 
@@ -751,7 +804,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
                     Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
-                    Runnable runnable = new Runnable() {
+                    Runnable runnable  = new Runnable() {
                         @Override
                         public void run() {
                             //OnBackPressed();
@@ -1096,23 +1149,35 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     CommonModel commonModel=new CommonModel();
                     commonModel.setAnnual_id(cursor.getString(cursor.getColumnIndexOrThrow("amount_range_id")));
                     commonModel.setAnnual_sale(cursor.getString(cursor.getColumnIndexOrThrow("amount_range")));
+                    commonModel.setSlab_amount(cursor.getString(cursor.getColumnIndexOrThrow("slab_amount")));
+                    commonModel.setTraders_license_type_id(cursor.getString(cursor.getColumnIndexOrThrow("traders_license_type_id")));
 
                     AnnualSaleList.add(commonModel);
                 }while (cursor.moveToNext());
             }
         }
         Collections.sort(AnnualSaleList, (lhs, rhs) -> lhs.getAnnual_sale().compareTo(rhs.getAnnual_sale()));
+        filterAnnualSale = new ArrayList<CommonModel>();
 
-        if(AnnualSaleList != null && AnnualSaleList.size() >0) {
+
+        for (int i = 0; i < AnnualSaleList.size(); i++) {
+            if(AnnualSaleList.get(i).traders_license_type_id.equals(selectedLicenceTpeId)){
+                filterAnnualSale.add(AnnualSaleList.get(i));
+            }else { }
+        }
+
+        if(filterAnnualSale != null && filterAnnualSale.size() >0) {
 
             spinnerMapAnnualSale = new HashMap<String, String>();
             spinnerMapAnnualSale.put(null, null);
-            final String[] items = new String[AnnualSaleList.size() + 1];
+            final String[] items = new String[filterAnnualSale.size() + 1];
             items[0] = "Select AnnualSale";
-            for (int i = 0; i < AnnualSaleList.size(); i++) {
-                spinnerMapAnnualSale.put(AnnualSaleList.get(i).annual_id, AnnualSaleList.get(i).annual_sale);
-                String Class = AnnualSaleList.get(i).annual_sale;
-                items[i + 1] = Class;
+            for (int i = 0; i < filterAnnualSale.size(); i++) {
+                 {
+                    spinnerMapAnnualSale.put(filterAnnualSale.get(i).annual_id, filterAnnualSale.get(i).annual_sale);
+                    String Class = filterAnnualSale.get(i).annual_sale;
+                    items[i + 1] = Class;
+                }
             }
             System.out.println("items" + items.toString());
 
@@ -1122,7 +1187,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     annualSaleArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.annualSale.setAdapter(annualSaleArray);
                     newTradeLicenceScreenBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedAnnualId="0";
+                    selectedAnnualId=null;
                     selectedAnnualSale="";
                 }
             } catch (Exception exp) {
@@ -1141,23 +1206,34 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     CommonModel commonModel=new CommonModel();
                     commonModel.setMotor_id(cursor.getString(cursor.getColumnIndexOrThrow("motor_id")));
                     commonModel.setMotor_range(cursor.getString(cursor.getColumnIndexOrThrow("motor_type_name")));
+                    commonModel.setSlab_amount(cursor.getString(cursor.getColumnIndexOrThrow("slab_amount")));
+                    commonModel.setTraders_license_type_id(cursor.getString(cursor.getColumnIndexOrThrow("traders_license_type_id")));
+
 
                     motorRangeList.add(commonModel);
                 }while (cursor.moveToNext());
             }
         }
         Collections.sort(motorRangeList, (lhs, rhs) -> lhs.getMotor_range().compareTo(rhs.getMotor_range()));
+         filtermotorRangeList = new ArrayList<CommonModel>();
 
-        if(motorRangeList != null && motorRangeList.size() >0) {
+        for (int i = 0; i < motorRangeList.size(); i++) {
+            if(motorRangeList.get(i).traders_license_type_id.equals(selectedLicenceTpeId)){
+                filtermotorRangeList.add(motorRangeList.get(i));
+            }else { }
+        }
+        if(filtermotorRangeList != null && filtermotorRangeList.size() >0) {
 
             spinnerMapMotorRange = new HashMap<String, String>();
             spinnerMapMotorRange.put(null, null);
-            final String[] items = new String[motorRangeList.size() + 1];
+            final String[] items = new String[filtermotorRangeList.size() + 1];
             items[0] = "Select Motor Range";
-            for (int i = 0; i < motorRangeList.size(); i++) {
-                spinnerMapMotorRange.put(motorRangeList.get(i).motor_id, motorRangeList.get(i).motor_range);
-                String Class = motorRangeList.get(i).motor_range;
-                items[i + 1] = Class;
+            for (int i = 0; i < filtermotorRangeList.size(); i++) {
+                {
+                    spinnerMapMotorRange.put(filtermotorRangeList.get(i).motor_id, filtermotorRangeList.get(i).motor_range);
+                    String Class = filtermotorRangeList.get(i).motor_range;
+                    items[i + 1] = Class;
+                }
             }
             System.out.println("items" + items.toString());
 
@@ -1167,7 +1243,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     motorRangeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(motorRangeArray);
                     newTradeLicenceScreenBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedMotorId="0";
+                    selectedMotorId=null;
                     selectedMotorRange="";
                 }
             } catch (Exception exp) {
@@ -1186,24 +1262,37 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     CommonModel commonModel=new CommonModel();
                     commonModel.setGenerator_id(cursor.getString(cursor.getColumnIndexOrThrow("generator_range_id")));
                     commonModel.setGenerator_range(cursor.getString(cursor.getColumnIndexOrThrow("generator_range_name")));
+                    commonModel.setSlab_amount(cursor.getString(cursor.getColumnIndexOrThrow("slab_amount")));
+                    commonModel.setTraders_license_type_id(cursor.getString(cursor.getColumnIndexOrThrow("traders_license_type_id")));
+
 
                     generatorRangeList.add(commonModel);
                 }while (cursor.moveToNext());
             }
         }
         Collections.sort(generatorRangeList, (lhs, rhs) -> lhs.getGenerator_range().compareTo(rhs.getGenerator_range()));
+        filterGeneratorList = new ArrayList<CommonModel>();
 
-        if(generatorRangeList != null && generatorRangeList.size() >0) {
 
-            spinnerMapGeneratorRange = new HashMap<String, String>();
-            spinnerMapGeneratorRange.put(null, null);
-            final String[] items = new String[generatorRangeList.size() + 1];
-            items[0] = "Select Generator Range";
-            for (int i = 0; i < generatorRangeList.size(); i++) {
-                spinnerMapGeneratorRange.put(generatorRangeList.get(i).getGenerator_id(), generatorRangeList.get(i).getGenerator_range());
-                String Class = generatorRangeList.get(i).getGenerator_range();
-                items[i + 1] = Class;
-            }
+        for (int i = 0; i < generatorRangeList.size(); i++) {
+            if(generatorRangeList.get(i).traders_license_type_id.equals(selectedLicenceTpeId)){
+                filterGeneratorList.add(generatorRangeList.get(i));
+            }else { }
+        }
+        if(filterGeneratorList != null && filterGeneratorList.size() >0) {
+
+                spinnerMapGeneratorRange = new HashMap<String, String>();
+                spinnerMapGeneratorRange.put(null, null);
+                final String[] items = new String[filterGeneratorList.size() + 1];
+                items[0] = "Select Generator Range";
+                for (int i = 0; i < filterGeneratorList.size(); i++) {
+                    {
+                        spinnerMapGeneratorRange.put(filterGeneratorList.get(i).getGenerator_id(), filterGeneratorList.get(i).getGenerator_range());
+                        String Class = filterGeneratorList.get(i).getGenerator_range();
+                        items[i + 1] = Class;
+                    }
+                }
+
             System.out.println("items" + items.toString());
 
             try {
@@ -1212,7 +1301,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     generatorRangeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(generatorRangeArray);
                     newTradeLicenceScreenBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
-                    selectedGeneratorId="0";
+                    selectedGeneratorId=null;
                     selectedGeneratorRange="";
                 }
             } catch (Exception exp) {
@@ -2384,6 +2473,116 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.documentLayout.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.main.setVisibility(View.VISIBLE);
     }
+
+    public void amountTextShow(){
+        int annual_amount=0;
+        int generator_amount=0;
+        int motor_amount=0;
+        if(selectedAnnualId!=null&&selectedMotorId!=null&&selectedGeneratorId!=null){
+            for(int i=0;i<filterAnnualSale.size();i++){
+                if(filterAnnualSale.get(i).getAnnual_id().equals(selectedAnnualId)){
+                    annual_amount=Integer.parseInt(filterAnnualSale.get(i).getSlab_amount());
+
+                }
+            }
+            for(int i=0;i<filtermotorRangeList.size();i++){
+                if(filtermotorRangeList.get(i).getMotor_id().equals(selectedMotorId)){
+                    motor_amount=Integer.parseInt(filtermotorRangeList.get(i).getSlab_amount());
+                }
+            }
+
+            for(int i=0;i<filterGeneratorList.size();i++){
+                if(filterGeneratorList.get(i).getGenerator_id().equals(selectedGeneratorId)){
+                    generator_amount=Integer.parseInt(filterGeneratorList.get(i).getSlab_amount());
+                }
+            }
+            //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
+            //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
+            //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
+            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+        }
+
+       else if((selectedAnnualId!=null)&&(selectedMotorId!=null)){
+            for(int i=0;i<filterAnnualSale.size();i++){
+                if(filterAnnualSale.get(i).getAnnual_id().equals(selectedAnnualId)){
+                    annual_amount=Integer.parseInt(filterAnnualSale.get(i).getSlab_amount());
+
+                }
+            }
+            for(int i=0;i<filtermotorRangeList.size();i++){
+                if(filtermotorRangeList.get(i).getMotor_id().equals(selectedMotorId)){
+                    motor_amount=Integer.parseInt(filtermotorRangeList.get(i).getSlab_amount());
+                }
+            }
+            //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
+            //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
+            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+        }
+        else if((selectedMotorId!=null)&&(selectedGeneratorId!=null)){
+                 for(int i=0;i<filtermotorRangeList.size();i++){
+                        if(filtermotorRangeList.get(i).getMotor_id().equals(selectedMotorId)){
+                            motor_amount=Integer.parseInt(filtermotorRangeList.get(i).getSlab_amount());
+                        }
+            }
+            for(int i=0;i<filterGeneratorList.size();i++){
+                if(filterGeneratorList.get(i).getGenerator_id().equals(selectedGeneratorId)){
+                    generator_amount=Integer.parseInt(filterGeneratorList.get(i).getSlab_amount());
+                }
+            }
+            //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
+            //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
+            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+        }
+        else if((selectedAnnualId!=null)&&(selectedGeneratorId!=null)){
+            for(int i=0;i<filterAnnualSale.size();i++){
+                if(filterAnnualSale.get(i).getAnnual_id().equals(selectedAnnualId)){
+                    annual_amount=Integer.parseInt(filterAnnualSale.get(i).getSlab_amount());
+
+                }
+            }
+            for(int i=0;i<filterGeneratorList.size();i++){
+                if(filterGeneratorList.get(i).getGenerator_id().equals(selectedGeneratorId)){
+                    generator_amount=Integer.parseInt(filterGeneratorList.get(i).getSlab_amount());
+                }
+            }
+            //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
+            //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
+            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+        }
+        else if((selectedAnnualId!=null)||(selectedMotorId!=null)||(selectedGeneratorId!=null)){
+            if((selectedAnnualId!=null)){
+                for(int i=0;i<filterAnnualSale.size();i++){
+                    if(filterAnnualSale.get(i).getAnnual_id().equals(selectedAnnualId)){
+                        annual_amount=Integer.parseInt(filterAnnualSale.get(i).getSlab_amount());
+
+                    }
+                }
+
+                newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            }
+            else if((selectedMotorId!=null)){
+                for(int i=0;i<filtermotorRangeList.size();i++){
+                    if(filtermotorRangeList.get(i).getMotor_id().equals(selectedMotorId)){
+                        motor_amount=Integer.parseInt(filtermotorRangeList.get(i).getSlab_amount());
+                    }
+                }
+                newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            }
+            else if((selectedGeneratorId!=null)){
+                for(int i=0;i<filterGeneratorList.size();i++){
+                    if(filterGeneratorList.get(i).getGenerator_id().equals(selectedGeneratorId)){
+                        generator_amount=Integer.parseInt(filterGeneratorList.get(i).getSlab_amount());
+                    }
+                }
+                newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            }
+        }
+
+        else {
+            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+        }
+
+        }
 }
 
 
