@@ -4,6 +4,15 @@
     <color name="colorPrimaryDark">#6CBCE2</color>
     <color name="colorAccent">#D81B60</color>
 
+   <!-- <color name="colorPrimary">#E91E63</color>
+    <color name="colorPrimaryLite">#FF4081</color>
+    <color name="colorPrimaryVeryLite">#FF4081</color>
+    <color name="colorPrimaryMedium">#E91E63</color>
+    <color name="colorPrimaryDark">#C2185B</color>
+    <color name="colortittlebar">#f0f0f1</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentLight">#FF4081</color>-->
+
     <color name="start">#0189ff</color>
     <color name="end">#01f1fa</color>
     <color name="address">#2F7092</color>

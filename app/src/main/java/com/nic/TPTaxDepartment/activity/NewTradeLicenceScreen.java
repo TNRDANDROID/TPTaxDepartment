@@ -42,6 +42,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
@@ -171,11 +172,16 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private static final String LOG_TAG = "AndroidExample";
     private String uriString;
     private String fileString="";
+    private String fileSize="";
     private byte[] bytes;
     Context context;
     Uri uri;
     File myFile;
     String displayName = "";
+    static long kilo = 1024;
+    static long mega = kilo * kilo;
+    static long giga = mega * kilo;
+    static long tera = giga * kilo;
 
     ArrayList<CommonModel> filterAnnualSale;
     ArrayList<CommonModel> filtermotorRangeList;
@@ -216,6 +222,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
 
 
+/*
         try {
             LoadFinYearSpinner();
             LoadGenderSpinner();
@@ -228,6 +235,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         } catch (JSONException e) {
             e.printStackTrace();
         }
+*/
 
         //getIntent Data
         traders =new ArrayList<TPtaxModel>();
@@ -243,7 +251,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             LoadPendingTraderDetails();
 
         }else {
-            LoadWardSpinner();
+//            LoadWardSpinner();
         }
 
         radioBtnFun();
@@ -572,6 +580,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         if(parent == newTradeLicenceScreenBinding.gender){
             String gender = parent.getSelectedItem().toString();
             selectedGender=gender;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             for(Map.Entry<String, String> entry: spinnerMap.entrySet()) {
                 if(entry.getValue() == selectedGender) {
                     selectedGenderId=entry.getKey();
@@ -585,6 +595,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         else if(parent == newTradeLicenceScreenBinding.licenceValidity){
             String finYear = parent.getSelectedItem().toString();
             selectedFinName=finYear;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
                 if(entry.getValue() == selectedFinName) {
                     selectedFinId=entry.getKey();
@@ -596,6 +608,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             String tradeCode = parent.getSelectedItem().toString();
             String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
             selectedTrdeCodeDetailsID=tradeID;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             System.out.println("tradeCode>> "+ tradeCode);
             System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
             selectedTradeCode=tradeCode;
@@ -604,6 +618,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         else if(parent == newTradeLicenceScreenBinding.licenceType){
             String LicenceTypeName = parent.getSelectedItem().toString();
             selectedLicenceTypeName=LicenceTypeName;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             for(Map.Entry<String, String> entry: spinnerMapLicenceType.entrySet()) {
                 if(entry.getValue() == selectedLicenceTypeName) {
                     selectedLicenceTpeId=entry.getKey();
@@ -629,6 +645,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 newTradeLicenceScreenBinding.annualSale.setAdapter(null);
                 newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
                 newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
+                newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(false);
+                newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
+                newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
+                newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(false);
                 amountTextShow();
             }
 
@@ -636,6 +656,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         else if(parent == newTradeLicenceScreenBinding.wardNo){
             String ward = parent.getSelectedItem().toString();
             selectedWardName=ward;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             for(Map.Entry<String, String> entry: spinnerMapWard.entrySet()) {
                 if(entry.getValue() == selectedWardName) {
                     selectedWardId=entry.getKey();
@@ -662,6 +684,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         else if(parent == newTradeLicenceScreenBinding.streetsName){
             String street = parent.getSelectedItem().toString();
             selectedStreetName=street;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             for(Map.Entry<String, String> entry: spinnerMapStreets.entrySet()) {
                 if(entry.getValue() == selectedStreetName) {
                     selectedStreetId=entry.getKey();
@@ -674,6 +698,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         else if(parent == newTradeLicenceScreenBinding.annualSale){
             String annual_sale = parent.getSelectedItem().toString();
             selectedAnnualSale=annual_sale;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             // iterate each entry of hashmap
             for(Map.Entry<String, String> entry: spinnerMapAnnualSale.entrySet()) {
                 // if give value is equal to value from entry
@@ -683,8 +709,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
-
+            if(selectedAnnualSale.equals("Select AnnualSale")) {
+                selectedAnnualId=null;
                 amountTextShow();
+            }
+            else {
+                amountTextShow();
+            }
 
 
 
@@ -692,6 +723,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         else if(parent == newTradeLicenceScreenBinding.motorRangeSpinner) {
             String motor_range = parent.getSelectedItem().toString();
             selectedMotorRange = motor_range;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             // iterate each entry of hashmap
             for (Map.Entry<String, String> entry : spinnerMapMotorRange.entrySet()) {
                 // if give value is equal to value from entry
@@ -702,13 +735,20 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
 
-
+            if(selectedMotorRange.equals("Select Motor Range")) {
+                selectedMotorId=null;
                 amountTextShow();
+            }
+            else {
+                amountTextShow();
+            }
 
         }
         else if(parent == newTradeLicenceScreenBinding.generatorSpinner){
             String generator_range = parent.getSelectedItem().toString();
             selectedGeneratorRange=generator_range;
+            ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
             // iterate each entry of hashmap
             for(Map.Entry<String, String> entry: spinnerMapGeneratorRange.entrySet()) {
                 // if give value is equal to value from entry
@@ -719,10 +759,18 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
 
+            if(selectedGeneratorRange.equals("Select Generator Range")) {
+                selectedGeneratorId=null;
                 amountTextShow();
+            }
+            else {
+                amountTextShow();
+            }
 
         }
     }
+
+
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
@@ -1461,7 +1509,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
     }
+    public void downloadPDF()
+    {
 
+    }
     public void dashboard() {
         Intent intent = new Intent(this, Dashboard.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -1822,7 +1873,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
             if (visible_count == 0) {
-                if (ValidationFirst()){
+                if (!ValidationFirst()){
                     newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 1;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1836,7 +1887,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
 
         else if(visible_count==1){
-            if (ValidationSecond()) {
+            if (!ValidationSecond()) {
                 newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 2;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1890,13 +1941,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void getDocument()
     {
-        showFileChooser();
+        if(checkPermissions()){
+            showFileChooser();
+        }
+
+
     }
     private static final int FILE_SELECT_CODE = 0;
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType("application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
 
         try {
@@ -1928,12 +1983,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                             cursor = this.getContentResolver().query(uri, null, null, null, null);
                             if (cursor != null && cursor.moveToFirst()) {
                                 displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-                                newTradeLicenceScreenBinding.fileLocation.setText(displayName);
+                                int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
+                                long fileSizeInBytes = cursor.getLong(sizeIndex);
+                                newTradeLicenceScreenBinding.fileLocation.setText(displayName+" "+getSize(fileSizeInBytes));
                                 Shader shader = new LinearGradient(0,0,0,newTradeLicenceScreenBinding.fileLocation.getLineHeight(),
                                         context.getResources().getColor(R.color.colorPrimary) ,
                                         context.getResources().getColor(R.color.colorPrimaryDark) , Shader.TileMode.REPEAT);
                                 newTradeLicenceScreenBinding.fileLocation.getPaint().setShader(shader);
-
                                 ConvertToString(uri);
                                 Log.d("fileString>>", fileString);
                             }
@@ -1951,6 +2007,25 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public static String getSize(long size) {
+        String s = "";
+        double kb = (double)size / kilo;
+        double mb = kb / kilo;
+        double gb = mb / kilo;
+        double tb = gb / kilo;
+        if(size < kilo) {
+            s = size + " Bytes";
+        } else if(size >= kilo && size < mega) {
+            s =  String.format("%.2f", kb) + " KB";
+        } else if(size >= mega && size < giga) {
+            s = String.format("%.2f", mb) + " MB";
+        } else if(size >= giga && size < tera) {
+            s = String.format("%.2f", gb) + " GB";
+        } else if(size >= tera) {
+            s = String.format("%.2f", tb) + " TB";
+        }
+        return s;
+    }
     public void ConvertToString(Uri uri){
         uriString = uri.toString();
         Log.d("data", "onActivityResult: uri"+uriString);
@@ -1979,6 +2054,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             fileString = Base64.encodeToString(bytes,Base64.DEFAULT);
             System.out.println("Base64>>"+Base64.encodeToString(bytes,Base64.DEFAULT));
             System.out.println("Base64fileString>>"+fileString);
+            fileSize=cnt_size;
             newTradeLicenceScreenBinding.fileSize.setText(cnt_size);
 
         } catch (Exception e) {
@@ -2154,7 +2230,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     if(newTradeLicenceScreenBinding.professionalTaxYes.isChecked()||newTradeLicenceScreenBinding.professionalTaxNo.isChecked()){
                         if(propertyDetailsCondition()){
                             if(newTradeLicenceScreenBinding.remarksField.getText() != null && !newTradeLicenceScreenBinding.remarksField.getText().toString().isEmpty()){
+/*
                                 if ((newTradeLicenceScreenBinding.isPaid.isChecked())) {
+*/
                                     if (getSaveTradeImageTable()==1) {
                                         if (Utils.isOnline()) {
                                            //savenewTraderINLocal();
@@ -2166,11 +2244,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                     } else {
                                         Utils.showAlert(NewTradeLicenceScreen.this, "Capture One Image");
                                     }
-                                }
+                                /*}
                                 else {
                                     Utils.showAlert(this,"Choose Payment Status");
                                     newTradeLicenceScreenBinding.isPaid.requestLayout();
-                                }
+                                }*/
                             }
                             else {
                                 Utils.showAlert(this,"Enter Remarks");
@@ -2322,6 +2400,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
     }
+
+    private static String getFileSizeMegaBytes(File file) {
+        return (double) file.length() / (1024 * 1024) + " mb";
+    }
+
+    private static String getFileSizeKiloBytes(String fileSize) {
+        return (double) fileSize.length() / 1024 + "  kb";
+    }
     public static String getFileContents(final File file) throws IOException {
         final InputStream inputStream = new FileInputStream(file);
         final BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -2350,6 +2436,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         try {
             //byte[] name = java.util.Base64.getEncoder().encode(fileString.getBytes());
             decodedString = Base64.decode(fileString.toString(), Base64.DEFAULT);
+
             System.out.println(new String(decodedString));
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -2365,35 +2452,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 newTradeLicenceScreenBinding.pdfView.fitToWidth();
             }
         }).load();
-
-
-
-        //try {
-           // byte[] pdfAsBytes = Base64.decode(getFileContents(myFile), Base64.DEFAULT);
-           // File dir = Environment.getExternalStorageDirectory();
-          //  File pdffile = new File(dir, myFile.getName());
-          //  if(!pdffile.exists())
-           // {
-            //    pdffile.getParentFile().mkdirs();
-                //pdffile.createNewFile();
-           // }
-//            Files.write(pdfAsBytes, pdffile);
-            //Intent pdfIntent = new Intent(Intent.ACTION_VIEW);
-           // pdfIntent.setDataAndType(Uri.fromFile(pdffile), "*/*");
-         //   pdfIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-         //   startActivity(pdfIntent);
-        //}
-       // catch (IOException e)
-       /// {
-        //    e.printStackTrace();
-        //}
     }
 
 
     public void openFile2() {
 
-        File file=myFile;
-        Uri uri = Uri.fromFile(file);
+       /* File file=myFile;
+        Uri uri = Uri.fromFile(file);*/
 
         Intent pdfOpenintent = new Intent(Intent.ACTION_VIEW);
         pdfOpenintent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -2583,6 +2648,28 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
         }
+
+    private boolean checkPermissions() {
+        String[] permissions = new String[] {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+
+        };
+        int result;
+        List<String> listPermissionsNeeded = new ArrayList<>();
+        for (String p:permissions) {
+            result = ContextCompat.checkSelfPermission(NewTradeLicenceScreen.this,p);
+            if (result != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(p);
+            }
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MY_REQUEST_CODE_PERMISSION);
+            return false;
+        }
+        return true;
+    }
+
 }
 
 

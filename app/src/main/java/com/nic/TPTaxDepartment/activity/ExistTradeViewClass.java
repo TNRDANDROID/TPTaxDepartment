@@ -346,6 +346,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewNewBinding.establishName.setText(traders.get(position).getEstablishment_name_en());
         existingTradeDetailsViewNewBinding.descriptionEnglish.setText(traders.get(position).getDescription_en());
         existingTradeDetailsViewNewBinding.descriptionTamil.setText(traders.get(position).getDescription_ta());
+        existingTradeDetailsViewNewBinding.remarksField.setText(traders.get(position).getRemark());
 
         existingTradeDetailsViewNewBinding.doorNo.setText(traders.get(position).getDoorno());
 
