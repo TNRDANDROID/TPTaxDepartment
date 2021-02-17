@@ -12,9 +12,11 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.OpenableColumns;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -38,6 +40,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 
 import com.android.volley.VolleyError;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -59,6 +62,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,6 +72,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.nic.TPTaxDepartment.activity.NewTradeLicenceScreen.getSize;
 
 public class ExistTradeViewClass extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener
         , CompoundButton.OnCheckedChangeListener,AdapterView.OnItemSelectedListener
@@ -162,6 +168,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     Animation animation;
     Animation animationOut;
     Context context;
+    Integer pageNumber = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -1438,10 +1445,17 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         }
         existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.VISIBLE);
         existingTradeDetailsViewNewBinding.main.setVisibility(View.GONE);
-        existingTradeDetailsViewNewBinding.documentViewer.fromBytes(decodedString).load();
+        existingTradeDetailsViewNewBinding.documentViewer.fromBytes(decodedString).
+               onPageChange(new OnPageChangeListener() {
+                   @Override
+                   public void onPageChanged(int page, int pageCount) {
+                       pageNumber = page;
+                       setTitle(String.format("%s %s / %s", "PDF", page + 1, pageCount));
+                       existingTradeDetailsViewNewBinding.pageNum.setText(pageNumber+1 +"/"+pageCount);
+                   }
+               }).defaultPage(pageNumber).swipeHorizontal(true).enableDoubletap(true).load();
 
     }
-
         public void viewImageScreen() {
         if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {
             String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());

@@ -142,11 +142,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     FieldVisitRquestListAdapter fieldVisitRquestListAdapter;
     String request_id,data_ref_id;
     Dialog dialog;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fieldVisitBinding = DataBindingUtil.setContentView(this, R.layout.field_visit);
         fieldVisitBinding.setActivity(this);
+        context=this;
         prefManager = new PrefManager(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
@@ -168,6 +170,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String TaxTypeName = parent.getSelectedItem().toString();
+                ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
 //                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
                 String TaxTypeId = "";
                 // iterate each entry of hashmap
@@ -196,7 +200,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             {
                 String serviceListFieldDesc = parent.getSelectedItem().toString();
                 String serviceListFieldTaxTypeId = "";
-                // iterate each entry of hashmap
+                ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
                 for(Map.Entry<String, String> entry: spinnerMapServiceFieldVisitTypes.entrySet()) {
                     // if give value is equal to value from entry
                     // print the corresponding key
@@ -224,7 +228,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             {
                 String Name = parent.getSelectedItem().toString();
                 String Id = "";
-                // iterate each entry of hashmap
+                ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+
                 for(Map.Entry<String, String> entry: spinnerMapFieldVisitType.entrySet()) {
                     // if give value is equal to value from entry
                     // print the corresponding key
@@ -328,18 +333,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String current_status = fieldVisitBinding.currentStatus.getSelectedItem().toString();
         String remarks = fieldVisitBinding.remarks.getText().toString();
 
-//            ContentValues fieldValue = new ContentValues();
-//            fieldValue.put(AppConstant.TAX_TYPE_ID, tax_type_id);
-//            fieldValue.put(AppConstant.ASSESSMENT_ID, assessment_id);
-////            fieldValue.put(AppConstant.APPLICANT_NAME, applicant_name);
-////            fieldValue.put(AppConstant.BUILD_TYPE, build_type);
-//            fieldValue.put(AppConstant.CURRENT_STATUS, current_status);
-//          //  fieldValue.put(AppConstant.REMARKS, remarks);
-//
-//            fieldValue.put("delete_flag", 0);
-//
-//            LoginScreen.db.insert(DBHelper.SAVE_TRADE_IMAGE, null, fieldValue);
-
         dialog = new Dialog(this, R.style.AppTheme);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.add_photo);
@@ -385,16 +378,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 JSONArray imageJson = new JSONArray();
-//                Cursor inpection_Cursor = getRawEvents("SELECT MAX(inspection_id) FROM " + DBHelper.INSPECTION_PENDING, null);
-//                Log.d("cursor_count", String.valueOf(inpection_Cursor.getCount()));
-//                if (inpection_Cursor.getCount() > 0) {
-//                    if (inpection_Cursor.moveToFirst()) {
-//                        do {
-//                            inspectionID = inpection_Cursor.getInt(0);
-//                            Log.d("inspectionID", "" + inspectionID);
-//                        } while (inpection_Cursor.moveToNext());
-//                    }
-//                }
                 int childCount = mobileNumberLayout.getChildCount();
                 if (childCount > 0) {
                     for (int i = 0; i < childCount; i++) {
@@ -439,7 +422,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                         imageValue.put(AppConstant.DESCRIPTION, myEditTextView.getText().toString());
                         imageValue.put("pending_flag", 1);
 
-                        if (!Utils.isOnline()) {
+
                            if(iscaptureImgExist(request_id)) {
                                long rowUpdated1 = LoginScreen.db.update(DBHelper.CAPTURED_PHOTO, imageValue, "request_id  = ? ", new String[]{request_id});
                                if (rowUpdated1 != -1) {
@@ -461,17 +444,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                     Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                                 }
                             }
-//                            long rowInserted = Dashboard.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
-                            //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            /*if (rowInserted != -1) {
-                                // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                                Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
-
-                            }
-                            else {
-                                Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            }*/
-                        } else {
+                        if (Utils.isOnline())  {
                             try {
                                 //imageArray.put(i);
                                 imageArray.put("lat",offlatTextValue);
@@ -629,11 +602,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public  void  submit() {
-//        try {
-//            db.delete(DBHelper.LOCAL_IMAGE, null, null);
-//        } catch (Exception e)
-//            e.printStackTrace();
-//        }
         String tax_type_id = selectedTaxTypeId;
         //String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
         String applicant_name = fieldVisitBinding.applicantName.getText().toString();

@@ -63,9 +63,6 @@ import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
-import com.vincent.filepicker.Constant;
-import com.vincent.filepicker.activity.NormalFilePickActivity;
-import com.vincent.filepicker.filter.entity.NormalFile;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -222,7 +219,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
 
 
-/*
         try {
             LoadFinYearSpinner();
             LoadGenderSpinner();
@@ -235,7 +231,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         } catch (JSONException e) {
             e.printStackTrace();
         }
-*/
 
         //getIntent Data
         traders =new ArrayList<TPtaxModel>();
@@ -251,7 +246,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             LoadPendingTraderDetails();
 
         }else {
-//            LoadWardSpinner();
+            LoadWardSpinner();
         }
 
         radioBtnFun();
