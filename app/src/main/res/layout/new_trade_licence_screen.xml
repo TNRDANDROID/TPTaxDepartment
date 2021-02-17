@@ -600,7 +600,7 @@
             android:layout_below="@+id/appBarLayout"
             android:id="@+id/second"
             android:layout_marginBottom="@dimen/padding"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
             //Ward No
             <LinearLayout
@@ -976,7 +976,7 @@
                         android:layout_marginLeft="10dp"
                         android:background="@drawable/round_corner_button"
                         android:ellipsize="marquee"
-                        android:text="Choose File"
+                        android:text="Choose PDF File"
                         android:textColor="@color/grey2"
                         android:textSize="@dimen/_15sdp"
                         customfontdemo:fontName="@string/font_circular_book" />
@@ -1039,6 +1039,7 @@
                     customfontdemo:fontName="@string/font_circular_medium" />
 
                 <RelativeLayout
+                    android:onClick="@{()-> activity.showDatePickerDialog()}"
                     android:id="@+id/date_layout"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/header"
@@ -1070,7 +1071,6 @@
 
                     <TextView
                         android:id="@+id/calendar_icon"
-                        android:onClick="@{()-> activity.showDatePickerDialog()}"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
@@ -1400,7 +1400,7 @@
                    android:layout_below="@+id/second"
                    android:layout_marginBottom="10dp"
                    android:orientation="vertical"
-                   android:visibility="visible">
+                   android:visibility="gone">
 
                    //Motor is Available
 
