@@ -609,7 +609,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String current_status = selectedFieldVisitStatusId;
         String remarks = fieldVisitBinding.remarksText.getText().toString();
 
-        if(!Utils.isOnline()) {
+        if(Utils.isOnline()) {
             ContentValues fieldValue = new ContentValues();
             fieldValue.put("taxtypeid", tax_type_id);
             fieldValue.put("tax_type_name", selectedTaxTypeName);
@@ -631,8 +631,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             if (isrequestIDexixt(request_id)){
                 long rowUpdated1 = Dashboard.db.update(DBHelper.SAVE_FIELD_VISIT, fieldValue, "request_id  = ? ", new String[]{request_id});
             if (rowUpdated1 != -1) {
-                // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                Utils.showAlert(FieldVisit.this, " Field-Visit updated");
+//                 Toast.makeText(FieldVisit.this, "Field-Visit updated", Toast.LENGTH_SHORT).show();
+//                Utils.showAlert(FieldVisit.this, " Field-Visit updated");
+                Utils.showToast(this,"Field-Visit updated");
+
                 onBackPressed();
                 //Dashboard.syncvisiblity();
                 //finish();
@@ -643,8 +645,9 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 long rowInserted = Dashboard.db.insert(DBHelper.SAVE_FIELD_VISIT,null,fieldValue);
                 //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                 if (rowInserted != -1) {
-                    // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                    Utils.showAlert(FieldVisit.this, " Field-Visit added");
+//                     Toast.makeText(FieldVisit.this, "Field-Visit added", Toast.LENGTH_SHORT).show();
+//                    Utils.showAlert(FieldVisit.this, " Field-Visit added");
+                    Utils.showToast(this,"Field-Visit added");
                     onBackPressed();
                     //Dashboard.syncvisiblity();
                     //finish();

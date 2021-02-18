@@ -844,9 +844,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
                     Dashboard.db.delete(DBHelper.SAVE_TRADE_IMAGE, AppConstant.MOBILE + "=?", new String[]{mobileNumber});
                     //Dashboard.db.delete(DBHelper.SAVE_NEW_TRADER_DETAILS, AppConstant.MOBILE + "=?", new String[]{traders.get(position).getMobileno()});
-
-                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
-                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
+                    Utils.showToast(this,Utils.NotNullString(jsonObject.getString("MESSAGE")));
+//                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+//                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE_TA")));
                     Runnable runnable  = new Runnable() {
                         @Override
                         public void run() {
@@ -860,10 +860,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
                 else if (status.equalsIgnoreCase("FAILD"))
                 {
-                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+//                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+                    Utils.showToast(this,Utils.NotNullString(jsonObject.getString("MESSAGE")));
+
                 }
                 else {
-                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+//                    Utils.showAlert(this,  Utils.NotNullString(jsonObject.getString("MESSAGE")));
+                    Utils.showToast(this,Utils.NotNullString(jsonObject.getString("MESSAGE")));
+
                 }
             }
 

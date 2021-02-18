@@ -12,22 +12,29 @@ import android.graphics.Canvas;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.FileProvider;
+import androidx.databinding.library.BuildConfig;
 
 import com.nic.TPTaxDepartment.Application.NICApplication;
-import com.nic.TPTaxDepartment.BuildConfig;
+
 import com.nic.TPTaxDepartment.R;
 
 import java.io.File;
@@ -185,6 +192,32 @@ public class Utils {
         }
     }
 
+    public static  void showToast(Activity context,String msg){
+
+        LayoutInflater inflater =context.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_layout,null,false);
+
+
+        TextView text = (TextView) layout.findViewById(R.id.tv_message);
+        TextView btn_ok = (TextView) layout.findViewById(R.id.btn_ok);
+        btn_ok.setVisibility(View.GONE);
+        text.setText(msg);
+
+        Toast toast = new Toast(context);
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+/*
+        btn_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toast.cancel();
+            }
+        });
+*/
+
+    }
     public static long getDateInMillis(String srcDate) {
         SimpleDateFormat desiredFormat = new SimpleDateFormat(
                 "MM/dd/yyyy HH:mm:ss");
@@ -538,6 +571,7 @@ public class Utils {
         return dir.delete();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public static  void setLanguage(EditText view, String lang, String country){
         view.setImeHintLocales(new LocaleList(new Locale(lang, country)));
     }

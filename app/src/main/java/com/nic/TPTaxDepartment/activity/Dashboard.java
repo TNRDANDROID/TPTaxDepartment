@@ -82,6 +82,12 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             e.printStackTrace();
         }
         sync_layout =(LinearLayout)  findViewById(R.id.sync_layout);
+        newDashboardBinding.logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout();
+            }
+        });
 
 
         newDashboardBinding.voteprogresscard.setTranslationX(800);

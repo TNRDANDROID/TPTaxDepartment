@@ -219,7 +219,7 @@
                 android:layout_marginBottom="35dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:elevation="10dp"
                 app:cardBackgroundColor="#fcfcfc"
                 app:cardCornerRadius="10dp"

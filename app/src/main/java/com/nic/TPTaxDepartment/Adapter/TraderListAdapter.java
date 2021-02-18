@@ -46,6 +46,8 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
             holder.payment.setText(traders.get(position).paymentStatus);
             holder.mobileValue.setText(traders.get(position).mobileno);
             holder.paymentDateValue.setText(traders.get(position).paymentdate);
+            holder.traderType.setText(traders.get(position).traders_license_type_name);
+            holder.emailValue.setText(traders.get(position).email);
 
 
             if(traders.get(position).paymentStatus .equals("Paid")){
@@ -58,7 +60,19 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
                 holder.payment.setText("-");
             }
 
+/*
             holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (activity instanceof ExistingTradeList) {
+                        ((ExistingTradeList)activity).showTraderDetails(position,traders);
+                    }
+
+                }
+
+            });
+*/
+            holder.viewDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (activity instanceof ExistingTradeList) {
@@ -81,7 +95,7 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
         return traders.size();
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
-        TextView name,code,payment,mobileValue,paymentDateValue;
+        TextView name,code,payment,mobileValue,paymentDateValue,traderType,emailValue,viewDetails;
 
         SummaryViewHolder(View view) {
             super(view);
@@ -90,6 +104,9 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
             payment=(TextView)view.findViewById(R.id.paymentStatus);
             mobileValue=(TextView)view.findViewById(R.id.mobileValue);
             paymentDateValue=(TextView)view.findViewById(R.id.paymentDateValue);
+            traderType=(TextView)view.findViewById(R.id.traderType);
+            emailValue=(TextView)view.findViewById(R.id.emailValue);
+            viewDetails=(TextView)view.findViewById(R.id.viewDetails);
         }
     }
 }

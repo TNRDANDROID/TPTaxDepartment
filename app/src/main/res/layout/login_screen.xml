@@ -13,7 +13,35 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+    <RelativeLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/img_rll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:background="@drawable/header_login"
+            ></ImageView>
 
+    </RelativeLayout>
+    <RelativeLayout
+        android:background="@android:color/transparent"
+        android:id="@+id/below_bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_90sdp"
+        android:layout_alignParentBottom="true"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:background="@drawable/header_login"
+            android:rotation="180"></ImageView>
+
+    </RelativeLayout>
     <ScrollView
         android:visibility="visible"
         android:id="@+id/scroll_view"
@@ -35,9 +63,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="@dimen/_40sdp"
-                android:layout_marginEnd="8dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="30dp"
                 android:src="@mipmap/tamilnadu_logo" />
 
             <TextView
@@ -45,11 +72,11 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                 android:id="@+id/rd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:padding="3dp"
                 android:text="TpTax Department"
-                android:textColor="@android:color/black"
+                android:textColor="@color/grey2"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -85,7 +112,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
 
 
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_centerVertical="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -175,7 +202,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
 
                 </LinearLayout>
 
-                <!-- Login Button -->
+                &lt;!&ndash; Login Button &ndash;&gt;
 
 
                 <Button
@@ -195,7 +222,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                     android:visibility="gone"
                     />
 
-                <!--   <LinearLayout
+                &lt;!&ndash;   <LinearLayout
                        android:layout_width="match_parent"
                        android:layout_height="@dimen/_50sdp"
                         android:layout_marginLeft="@dimen/_10sdp"
@@ -206,9 +233,9 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                            android:layout_width="@dimen/_25sdp"
                            android:layout_height="@dimen/_25sdp"
                            android:visibility="gone" />
-                   </LinearLayout>-->
+                   </LinearLayout>&ndash;&gt;
 
-                <!--<LinearLayout
+                &lt;!&ndash;<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_20sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
@@ -219,7 +246,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                         android:layout_width="@dimen/_25sdp"
                         android:layout_height="@dimen/_25sdp"
                         android:visibility="gone" />
-                </LinearLayout>-->
+                </LinearLayout>&ndash;&gt;
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnBuy"
@@ -230,6 +257,204 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                     android:layout_gravity="center_horizontal"
                     android:onClick="@{()-> activity.checkLoginScreen()}"
                     android:text="Login"
+                    android:textAllCaps="true"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/submit_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:visibility="visible"
+                        android:elevation="10dp"
+                        app:cardBackgroundColor="#fcfcfc"
+                        app:cardCornerRadius="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        app:cardElevation="10dp"
+                        app:cardPreventCornerOverlap="false"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:padding="20dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"                                    android:layout_marginTop="@dimen/padding"
+                                    android:text="Username"
+                                    android:textColor="@color/grey2"
+                                    android:textSize="15sp"
+                                    android:visibility="visible"
+                                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                                <LinearLayout
+                                    android:id="@+id/ivItemOne"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/cornered_rect_lite_bg"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            app:hintEnabled="false"
+                                            android:id="@+id/userNameTXINP"
+                                            android:background="@color/white"
+                                            app:boxStrokeColor="@color/white"
+                                            android:layout_toLeftOf="@+id/user_img"
+                                            app:boxStrokeWidth="0dp"
+                                            app:boxStrokeWidthFocused="0dp"
+                                            app:boxBackgroundColor="@color/full_transparent"
+                                            android:padding="0dp"
+                                            android:hint="Username">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/username"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="40dp"
+                                                android:background="@color/full_transparent"
+                                                android:inputType="textPersonName"
+                                                android:padding="0dp"
+                                                android:hint="Username"
+                                                />
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                                        <ImageView
+                                            android:id="@+id/user_img"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_centerVertical="true"
+                                            android:layout_margin="@dimen/_5sdp"
+                                            android:background="@drawable/usernamebg" />
+
+
+                                    </RelativeLayout>
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="30dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"                                    android:layout_marginTop="@dimen/padding"
+                                    android:text="Password"
+                                    android:textColor="@color/grey2"
+                                    android:textSize="15sp"
+                                    android:visibility="visible"
+                                    customfontdemo:fontName="@string/font_circular_medium" />
+
+                                <LinearLayout
+                                    android:id="@+id/ivItemTwo"
+                                    android:layout_below="@+id/ivItemOne"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginTop="10dp"
+                                    android:orientation="horizontal">
+
+
+                                    <RelativeLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/cornered_rect_lite_bg"
+                                        android:orientation="vertical">
+
+                                        <com.google.android.material.textfield.TextInputLayout
+                                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            app:endIconMode="password_toggle"
+                                            android:hint="password"
+                                            app:hintEnabled="false"
+                                            android:background="@color/white"
+                                            app:boxStrokeColor="@color/white"
+                                            app:boxStrokeWidth="0dp"
+                                            app:boxStrokeWidthFocused="0dp"
+                                            app:boxBackgroundColor="@color/full_transparent"
+                                            android:padding="0dp"
+                                            android:textColor="@android:color/black">
+
+                                            <com.google.android.material.textfield.TextInputEditText
+                                                android:id="@+id/password"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="40dp"
+                                                android:background="@color/full_transparent"
+                                               android:padding="0dp"
+                                                android:hint="Password"
+                                                android:inputType="textPassword"/>
+
+                                        </com.google.android.material.textfield.TextInputLayout>
+
+
+                                    </RelativeLayout>
+
+
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnBuy"
+                    android:layout_width="@dimen/_100sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/button_background"
+                    android:layout_marginTop="-35dp"
+                    android:visibility="visible"
+                    android:onClick="@{()-> activity.checkLoginScreen()}"
+                    android:text="Login"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
                     android:textAllCaps="true"
                     android:textColor="@android:color/white" />
 
@@ -255,7 +480,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
 
 
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="@color/grey2"
                     android:textSize="@dimen/_15sdp" />
 
                 <TextView
@@ -264,7 +489,6 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/_13sdp"
-                    android:background="@drawable/background"
                     android:layout_alignParentBottom="true"
                     android:text="Sofware Designed &amp; Developed by NIC"
                     android:textAlignment="center"
