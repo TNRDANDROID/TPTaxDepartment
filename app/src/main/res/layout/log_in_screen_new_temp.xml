@@ -12,7 +12,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@drawable/log_in_new_bg1">
 
         <ScrollView
             android:visibility="visible"
@@ -25,19 +25,18 @@
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:orientation="vertical"
                 >
 
 
                 <ImageView
+                    android:visibility="visible"
+                    android:layout_marginTop="100dp"
+                    android:layout_alignParentTop="true"
                     android:id="@+id/ivIlls"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="@dimen/_40sdp"
-                    android:layout_marginEnd="8dp"
                     android:src="@mipmap/tamilnadu_logo" />
 
                 <TextView
@@ -45,12 +44,11 @@
                     android:id="@+id/rd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="@dimen/_10sdp"
                     android:padding="3dp"
-                    android:text="TpTax Department"
-                    android:textColor="@android:color/black"
-                    android:textSize="17sp"
+                    android:text="TPTax Department"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="#414142"
+                    android:textSize="17dp"
                     android:textStyle="bold"
                     customfontdemo:fontName="@string/font_circular_medium" />
 
@@ -86,6 +84,7 @@
 
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_centerVertical="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -235,8 +234,89 @@
 
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+
+                    <LinearLayout
+                        android:id="@+id/new_ll"
+                        android:background="@drawable/new_log_in_ll_curve"
+                        android:layout_width="300dp"
+                        android:layout_height="150dp"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:hint="User Name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/user"
+                            android:textAlignment="textStart"
+                            android:paddingLeft="10dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:inputType="textPersonName"
+                            android:drawablePadding="5dp"></EditText>
+
+                        <View
+                            android:id="@+id/v1"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/user"
+                            android:background="@color/greyed_lite"></View>
+
+                        <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
+                            android:layout_below="@+id/v1"
+                            android:layout_weight="1"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/password2"
+                            android:paddingLeft="10dp"
+                            android:hint="password"
+                            app:tint_color="@color/grey2"
+                            android:layout_marginRight="20dp"
+                            android:background="@null"
+                            android:inputType="textPersonName"
+                            android:drawablePadding="5dp"></com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText>
+
+                        <View
+                            android:visibility="gone"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_below="@+id/password2"
+                            android:background="@color/greyed_lite"></View>
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="85dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/new_circle_pink_bg">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="180"
+                        android:layout_centerInParent="true"
+                        android:tint="@color/white"
+                        android:src="@drawable/ic_left_arrow">
+
+                    </ImageView>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/tv_version_nic_name_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
