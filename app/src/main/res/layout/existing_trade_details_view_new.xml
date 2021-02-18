@@ -13,13 +13,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/document_layout"
-            android:visibility="visible">
+            android:visibility="gone">
             <RelativeLayout
                 android:id="@+id/header2_layout"
                 android:layout_width="match_parent"
@@ -92,7 +91,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main"
-            android:visibility="gone">
+            android:visibility="visible">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 app:elevation="0dp"
@@ -170,10 +169,10 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <ScrollView
+                android:layout_above="@+id/bottom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/scroll_view"
-                android:layout_marginBottom="45dp"
                 android:layout_below="@+id/appBarLayout">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -2150,11 +2149,9 @@
             <RelativeLayout
                 android:id="@+id/bottom_layout"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_gravity="bottom"
-                android:layout_below="@+id/scroll_view"
-                android:paddingBottom="0dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
                 android:background="@drawable/background">
 
 
