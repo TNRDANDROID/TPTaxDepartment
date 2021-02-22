@@ -682,6 +682,7 @@
                 </LinearLayout>
                 <androidx.cardview.widget.CardView
                     android:layout_margin="10dp"
+                    android:id="@+id/fieldList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <androidx.recyclerview.widget.RecyclerView

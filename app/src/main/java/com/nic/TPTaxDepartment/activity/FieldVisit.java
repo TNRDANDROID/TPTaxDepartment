@@ -993,8 +993,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        if(fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE){
+            fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
+            fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
+        }else {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
     }
 
 

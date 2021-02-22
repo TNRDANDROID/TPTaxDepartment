@@ -169,6 +169,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     Animation animationOut;
     Context context;
     Integer pageNumber = 0;
+    String DocumentString="";
+    String TraderImageString="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -285,6 +287,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     private void LoadPendingTraderDetails() {
         wardFlag=false;
         LoadWardSpinner();
+        getTradeImage();
         try {
             LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
         } catch (Exception e) {
@@ -357,11 +360,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         existingTradeDetailsViewNewBinding.doorNo.setText(traders.get(position).getDoorno());
 
-        if(traders.get(position).getPaymentStatus() != null && traders.get(position).getPaymentStatus().equals("Paid")){
+       /* if(traders.get(position).getPaymentStatus() != null && traders.get(position).getPaymentStatus().equals("Paid")){
             existingTradeDetailsViewNewBinding.isPaid.setChecked(true);
         }else {
             existingTradeDetailsViewNewBinding.isPaid.setChecked(false);
-        }
+        }*/
+
         if(traders.get(position).getOwnerStatus() != null && traders.get(position).getOwnerStatus().equals("N")){
             existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(false);
             existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(true);
@@ -371,17 +375,24 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                    context.getResources().getColor(R.color.colorPrimary) ,
                     context.getResources().getColor(R.color.colorPrimaryDark) , Shader.TileMode.REPEAT);
             existingTradeDetailsViewNewBinding.viewDoc.getPaint().setShader(shader);
+            existingTradeDetailsViewNewBinding.yes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.no.setVisibility(View.VISIBLE);
+            getDocument();
+
         }else {
             existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(true);
             existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(false);
             existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.yes.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.no.setVisibility(View.GONE);
         }
 
         if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("Y")){
             existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(true);
             existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
             existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
-
+            existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
             try {
                 int motorPosition = motorRangeArray.getPosition(spinnerMapMotorRange.get(traders.get(position).getMotor_type_id()));
                 if(motorPosition >= 0){
@@ -398,12 +409,16 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
             existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(true);
             existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.VISIBLE);
         }
 
         if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("Y")){
             existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(true);
             existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
-            existingTradeDetailsViewNewBinding.genaratorLayout.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
             try {
                 int geneartorPosition = generatorRangeArray.getPosition(spinnerMapGeneratorRange.get(traders.get(position).getGenerator_range_id()));
                 if(geneartorPosition >= 0){
@@ -419,7 +434,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         }else {
             existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
             existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(true);
-            existingTradeDetailsViewNewBinding.genaratorLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.VISIBLE);
         }
 
         if(traders.get(position).getPropertyStatus() != null && traders.get(position).getPropertyStatus().equals("Y")){
@@ -427,17 +444,22 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(false);
             existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
             existingTradeDetailsViewNewBinding.propertyTaxAssessmentNumber.setText(traders.get(position).getPropertyTaxAssessmentNumber());
-
+            existingTradeDetailsViewNewBinding.propertyYes.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.propertyNo.setVisibility(View.GONE);
         }else {
             existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(false);
             existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(true);
             existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.propertyYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.propertyNo.setVisibility(View.VISIBLE);
         }
 
         if(traders.get(position).getProfesstionlStatus() != null && traders.get(position).getProfesstionlStatus().equals("Y")){
             existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(true);
             existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(false);
             existingTradeDetailsViewNewBinding.professionalTaxLayout.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.professionalYes.setVisibility(View.VISIBLE);
+            existingTradeDetailsViewNewBinding.professionalNo.setVisibility(View.GONE);
             try {
                 int annualPosition = annualSaleArray.getPosition(spinnerMapAnnualSale.get(traders.get(position).getAmount_range_id()));
                 if(annualPosition >= 0){
@@ -454,10 +476,61 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(false);
             existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(true);
             existingTradeDetailsViewNewBinding.professionalTaxLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.professionalYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.professionalNo.setVisibility(View.VISIBLE);
         }
         setDisableToFields();
     }
 
+    private void getTradeImage() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
+                    traderImageJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void getDocument() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("TraderDocument", Api.Method.POST, UrlGenerator.TradersUrl(),
+                    traderDocumentJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public JSONObject traderDocumentJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
+                traderDocumentParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TraderDocument", "" + dataSet);
+        return dataSet;
+    }
+
+    public JSONObject traderDocumentParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderDocument");
+        return dataSet;
+    }
+    public JSONObject traderImageJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
+                traderImageParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TraderImage", "" + dataSet);
+        return dataSet;
+    }
+
+    public JSONObject traderImageParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderImage");
+        return dataSet;
+    }
     private void setDisableToFields() {
         existingTradeDetailsViewNewBinding.tradeCodeSpinner.setEnabled(false);
         existingTradeDetailsViewNewBinding.date.setEnabled(false);
@@ -904,12 +977,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         try {
             JSONObject responseObj = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
-
+            String status ;
             if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
                 String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
-                String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 Log.d("Response",""+userDataDecrypt);
                 //String status = responseObj.getString(AppConstant.KEY_STATUS);
                 //String response = responseObj.getString(AppConstant.KEY_RESPONSE);
@@ -934,6 +1007,30 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     Utils.showAlert(this, jsonObject.getString("MESSAGE"));
                 }
             }
+            if ("TraderDocument".equals(urlType) && responseObj != null) {
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("TraderDocumentDatadecry", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    DocumentString = jsonObject.getString(AppConstant.TRADE_DOCUMENT);
+                    Log.d("TraderDocument", "" + jsonObject);
+
+                } }
+            if ("TraderImage".equals(urlType) && responseObj != null) {
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("TraderImageDatadecry", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    TraderImageString = jsonObject.getString(AppConstant.TRADE_DOCUMENT);
+                    Log.d("TraderImage", "" + jsonObject);
+
+                } }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1437,7 +1534,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         byte[] decodedString = new byte[0];
         try {
             //byte[] name = java.util.Base64.getEncoder().encode(fileString.getBytes());
-            decodedString = Base64.decode(traders.get(position).getDocument().toString(), Base64.DEFAULT);
+            decodedString = Base64.decode(/*DocumentString*/traders.get(position).getDocument().toString(), Base64.DEFAULT);
             System.out.println(new String(decodedString));
         } catch (Exception e) {
             // TODO Auto-generated catch block

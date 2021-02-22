@@ -395,8 +395,15 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+
+        if(assessmentStatusBinding.detailsLayout.getVisibility() == View.VISIBLE){
+            assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
+            assessmentStatusBinding.submitLayout.setVisibility(View.VISIBLE);
+            assessmentStatusBinding.submit.setVisibility(View.VISIBLE);
+        }else {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
     }
 
 

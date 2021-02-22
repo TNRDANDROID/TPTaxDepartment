@@ -5,7 +5,7 @@
     android:viewportHeight="509.287">
   <path
       android:pathData="M254.644,254.644m-254.644,0a254.644,254.644 0,1 1,509.288 0a254.644,254.644 0,1 1,-509.288 0"
-      android:fillColor="@color/yello"/>
+      android:fillColor="@color/full_transparent"/>
   <path
       android:pathData="M253.287,346.872c0,-96.975 -29.838,-189.881 -44.419,-284.821c66.458,-18.31 135.29,-18.31 201.748,0c-14.919,94.94 -44.419,187.846 -44.419,284.821C328.562,346.872 290.924,346.872 253.287,346.872z"
       android:fillColor="@color/account_status_green_color"/>
@@ -29,5 +29,5 @@
       android:fillColor="#F7CFA2"/>
   <path
       android:pathData="M105.113,460.8h26.448V294.654H3.052C13.902,362.808 51.878,421.807 105.113,460.8z"
-      android:fillColor="#6EB1E1"/>
+      android:fillColor="@color/white"/>
 </vector>

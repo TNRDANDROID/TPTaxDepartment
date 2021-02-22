@@ -10,6 +10,7 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1"
+        multiDexEnabled true
         testInstrumentationRunner "androidx.Dashboard.runner.AndroidJUnitRunner"
     }
     signingConfigs {
@@ -124,5 +125,5 @@ dependencies {
 */
     //PDF viewer
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
-
+    implementation 'com.android.support:multidex:2.0.0'
 }

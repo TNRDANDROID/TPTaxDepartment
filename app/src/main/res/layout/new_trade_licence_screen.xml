@@ -126,7 +126,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Applicant Name"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -181,7 +181,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Applicant Name In Tamil"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -235,7 +235,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Gender"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -295,7 +295,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Age"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -350,7 +350,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Father/Husband Name"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -404,7 +404,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Father/Husband Name In Tamil"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -460,7 +460,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Mobile No"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -516,7 +516,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Email Id"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -569,7 +569,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Description In English"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible" />
 
@@ -621,7 +621,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Description In Tamil"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible" />
 
@@ -683,7 +683,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Ward No"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -742,7 +742,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Street Name"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -802,7 +802,7 @@
                                 android:layout_marginTop="@dimen/padding"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Street Name"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="@dimen/_15sdp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -855,7 +855,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Door No"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -909,7 +909,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Licence Validity"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -969,7 +969,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Are you the Owner"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1020,7 +1020,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Rental Lease Agreement"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1108,7 +1108,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Date"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1194,7 +1194,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Trade Code"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible" />
 
@@ -1277,7 +1277,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Licence Type"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1336,7 +1336,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Annual Sale"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1395,7 +1395,7 @@
                                 android:layout_marginTop="@dimen/padding"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Licence Type"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="@dimen/_15sdp"
                                 android:visibility="visible" />
 
@@ -1494,7 +1494,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Motor Available"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1547,7 +1547,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Motor Range(in Horse Power)"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1609,7 +1609,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Generator Available"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1679,7 +1679,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Generator Range(in Kilowatt)"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1740,7 +1740,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Professional Tax Paid"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1796,7 +1796,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Property Tax Paid"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1850,7 +1850,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="property Tax Assessment Number"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
@@ -1910,7 +1910,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Remarks"
-                                android:textColor="@color/grey1"
+                                android:textColor="@color/black_grey"
                                 android:textSize="16sp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_medium" />
