@@ -30,15 +30,13 @@
 
 
                 <ImageView
-                    android:visibility="visible"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="100dp"
-                    android:layout_alignParentTop="true"
                     android:id="@+id/ivIlls"
+                    android:visibility="visible"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_centerHorizontal="true"
                     android:src="@mipmap/tamilnadu_logo" />
-
                 <TextView
                     android:layout_below="@+id/ivIlls"
                     android:id="@+id/rd"
@@ -237,7 +235,7 @@
                 <RelativeLayout
                     android:layout_centerVertical="true"
                     android:layout_alignParentLeft="true"
-                    android:layout_width="match_parent"
+                    android:layout_width="320dp"
                     android:layout_height="wrap_content"
                     >
 
@@ -258,6 +256,7 @@
                             android:paddingLeft="10dp"
                             android:layout_weight="1"
                             android:background="@null"
+                            android:drawableLeft="@drawable/usernamebg"
                             android:inputType="textPersonName"
                             android:drawablePadding="5dp"></EditText>
 
@@ -271,6 +270,7 @@
 
                         <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
                             android:layout_below="@+id/v1"
+                            android:visibility="gone"
                             android:layout_weight="1"
                             android:layout_marginTop="5dp"
                             android:layout_width="match_parent"
@@ -283,7 +283,20 @@
                             android:background="@null"
                             android:inputType="textPersonName"
                             android:drawablePadding="5dp"></com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText>
-
+                        <EditText
+                            android:layout_below="@+id/v1"
+                            android:layout_weight="1"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/password_12"
+                            android:paddingLeft="10dp"
+                            android:hint="password"
+                            android:layout_marginRight="20dp"
+                            android:background="@null"
+                            android:drawableLeft="@drawable/usernamebg"
+                            android:inputType="textWebPassword"
+                            android:drawablePadding="5dp"></EditText>
                         <View
                             android:visibility="gone"
                             android:layout_marginTop="5dp"
@@ -296,9 +309,8 @@
                     <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="85dp"
-                        android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
                         android:background="@drawable/new_circle_pink_bg">
                     <ImageView
                         android:layout_width="wrap_content"

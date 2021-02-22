@@ -77,50 +77,58 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
      private void LoadDailyCollectionList() throws JSONException {
          collectionList = new ArrayList<TPtaxModel>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 6; i++) {
             if(i==0){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("1");
                 Detail.setTaxTypeName("Property Tax");
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
-            }else if(i==1){
+            }
+            else if(i==1){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("2");
                 Detail.setTaxTypeName("Water Tax");
                 Detail.setTaxCollection("");
                 collectionList.add(Detail);
-            }else if(i==2){
+            }
+            else if(i==2){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("3");
                 Detail.setTaxTypeName("SWM Tax");
                 Detail.setTaxCollection("70050.00");
                 collectionList.add(Detail);
-            }else if(i==3){
+            }
+            else if(i==3){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("4");
                 Detail.setTaxTypeName("Professional Tax");
                 Detail.setTaxCollection("780050.00");
                 collectionList.add(Detail);
-            }else if(i==4){
+            }
+            else if(i==4){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("5");
                 Detail.setTaxTypeName("Non Tax");
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
-            }else if(i==5){
+            }
+            /*else if(i==5){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("4");
                 Detail.setTaxTypeName("Professional Tax");
                 Detail.setTaxCollection("780050.00");
                 collectionList.add(Detail);
-            }else if(i==6){
+            }
+            else if(i==6){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("5");
                 Detail.setTaxTypeName("Non Tax");
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
-            }else {
+            }
+*/
+            else {
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("6");
                 Detail.setTaxTypeName("Trade License Tax");

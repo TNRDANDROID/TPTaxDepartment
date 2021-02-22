@@ -183,7 +183,24 @@ public class dbData {
 //
 //
     public void deleteAll() {
-
+        db.execSQL("delete from " + DBHelper.SAVE_TRADE_IMAGE);
+        db.execSQL("delete from " + DBHelper.CAPTURED_PHOTO);
+        db.execSQL("delete from " + DBHelper.SAVE_FIELD_VISIT);
+        db.execSQL("delete from " + DBHelper.DISTRICT_LIST);
+        db.execSQL("delete from " + DBHelper.LOCAL_LIST);
+        db.execSQL("delete from " + DBHelper.WARD_LIST);
+        db.execSQL("delete from " + DBHelper.STREET_LIST);
+        db.execSQL("delete from " + DBHelper.GENDER_LIST);
+        db.execSQL("delete from " + DBHelper.TAX_TYPE_LIST);
+        db.execSQL("delete from " + DBHelper.TAX_TYPE_FIELD_VISIT_LIST);
+        db.execSQL("delete from " + DBHelper.LICENCE_VALIDITY_LIST);
+        db.execSQL("delete from " + DBHelper.SAVE_NEW_TRADER_DETAILS);
+        db.execSQL("delete from " + DBHelper.TRADE_CODE_LIST);
+        db.execSQL("delete from " + DBHelper.FIELD_VISIT_STATUS);
+        db.execSQL("delete from " + DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES);
+        db.execSQL("delete from " + DBHelper.ANNUAL_SALE_LIST);
+        db.execSQL("delete from " + DBHelper.MOTOR_RANG_POWER);
+        db.execSQL("delete from " + DBHelper.GENERATOR_RANGE_POWER);
 //        deleteVillageTable();
 //        deleteHabitationTable();
 //        deleteTankStructure();

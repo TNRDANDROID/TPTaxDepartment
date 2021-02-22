@@ -34,7 +34,7 @@
         </LinearLayout>
 
         <TextView
-            android:background="@drawable/corner_bg_white"
+            android:background="@drawable/daily_collection_new_drawable"
             android:id="@+id/taxAmount"
             android:gravity="center"
             android:layout_width="0dp"
