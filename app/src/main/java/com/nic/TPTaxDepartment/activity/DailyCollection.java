@@ -3,10 +3,16 @@ package com.nic.TPTaxDepartment.activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -21,7 +27,9 @@ import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.DailyCollectionBinding;
+import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
@@ -36,14 +44,23 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
-public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener {
+public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener, Spinner.OnItemSelectedListener {
 
     private DailyCollectionBinding dailyCollectionBinding;
     private PrefManager prefManager;
     private static TextView date;
     ArrayList<TPtaxModel> collectionList;
+    ArrayList<CommonModel> finYear;
+    HashMap<String,String> spinnerMapFinYear;
+    ArrayAdapter<String> finYearArray;
+    String selectedFinId;
+    String selectedFinName="";
+    boolean flag;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +78,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         dailyCollectionBinding.dailyCollectionRecycler.setHasFixedSize(true);
         dailyCollectionBinding.dailyCollectionRecycler.setNestedScrollingEnabled(false);
         dailyCollectionBinding.dailyCollectionRecycler.setFocusable(false);
+        dailyCollectionBinding.finYear.setOnItemSelectedListener(this);
 
         Calendar cldr = Calendar.getInstance();
         int day = cldr.get(Calendar.DAY_OF_MONTH);
@@ -68,8 +86,16 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int year = cldr.get(Calendar.YEAR);
         date.setText("Select Date");
 
+        dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
+        dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
+        dailyCollectionBinding.yearVice.setChecked(false);
+        dailyCollectionBinding.daily.setChecked(false);
+        dailyCollectionBinding.daily.setOnClickListener(this::onClick);
+        dailyCollectionBinding.yearVice.setOnClickListener(this::onClick);
+
         try {
             LoadDailyCollectionList();
+            LoadFinYearSpinner();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -174,7 +200,40 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if(adapterView == dailyCollectionBinding.finYear){
+            String finYear = adapterView.getSelectedItem().toString();
+            selectedFinName=finYear;
+            ((TextView) adapterView.getChildAt(0)).setTextColor(this.getResources().getColor(R.color.grey2));
+
+            for(Map.Entry<String, String> entry: spinnerMapFinYear.entrySet()) {
+                if(entry.getValue() == selectedFinName) {
+                    selectedFinId=entry.getKey();
+                    break;
+                }
+            }
+/*
+            if(selectedFinId!=null&&!selectedFinName.equals("Select Financial Year")){
+                if(Utils.isOnline()) {
+                    getYearCollection();
+                }
+                else {
+                    Utils.showAlert(DailyCollection.this,"No Network Connection");
+                }
+            }
+*/
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
+
+    public  class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         Calendar cldr = Calendar.getInstance();
 
         @Override
@@ -202,6 +261,12 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
             updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+           /* if(Utils.isOnline()){
+                getDailyCollection();
+            }
+            else {
+                Utils.showAlert(DailyCollection.this,"No Network Connection");
+            }*/
 
         }
 
@@ -232,6 +297,14 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
         }
     }
+    public  void getYearCollection() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("YearCollection", Api.Method.POST, UrlGenerator.TradersUrl(), dailyCollectionJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public JSONObject dailyCollectionJsonParams() throws JSONException {
         String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), taxDailyCollectionJsonParams().toString());
@@ -245,9 +318,16 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     public JSONObject taxDailyCollectionJsonParams() throws JSONException {
 
         JSONObject data = new JSONObject();
-        data.put(AppConstant.KEY_SERVICE_ID,"TaxDailyCollection");
-        data.put(AppConstant.COLLECTION_DATE,date.getText().toString());
-        Log.d("DailyCollectionRequest", "" + data);
+        if(flag) {
+            data.put(AppConstant.KEY_SERVICE_ID, "TaxYearCollection");
+            data.put(AppConstant.COLLECTION_YEAR, selectedFinId);
+            Log.d("YearCollectionRequest", "" + data);
+        }
+        else {
+            data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollection");
+            data.put(AppConstant.COLLECTION_DATE, date.getText().toString());
+            Log.d("DailyCollectionRequest", "" + data);
+        }
         return data;
     }
 
@@ -275,6 +355,26 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                     dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
                 }
             }
+
+            if ("YearCollection".equals(urlType) && responseObj != null) {
+                String key =Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
+                String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
+                JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
+                Log.d("AssessmentStatus", "" + jsonObject);
+                String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
+                    if(jsonarray != null && jsonarray.length() >0) {
+                        prefManager.setDailyCollectionList(jsonarray.toString());
+                        LoadDailyCollectionList();
+                    }
+
+                } else {
+                    dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
+                    dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
+                }
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -302,6 +402,74 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.year_vice:
+                dailyCollectionBinding.yearVice.setChecked(true);
+                dailyCollectionBinding.daily.setChecked(false);
+                dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
+                dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
+                flag=true;
+                break;
+
+            case R.id.daily:
+                dailyCollectionBinding.yearVice.setChecked(false);
+                dailyCollectionBinding.daily.setChecked(true);
+                dailyCollectionBinding.dateLayout.setVisibility(View.VISIBLE);
+                dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
+                flag=false;
+                break;
+        }
+    }
+
+    public void LoadFinYearSpinner() {
+        finYear = new ArrayList<CommonModel>();
+        String select_query= "SELECT *FROM " + DBHelper.LICENCE_VALIDITY_LIST;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        if(cursor.getCount()>0){
+
+            if(cursor.moveToFirst()){
+                do{
+                    CommonModel commonModel=new CommonModel();
+                    commonModel.setFIN_YEAR_ID(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FIN_YEAR_ID))));
+                    commonModel.setFIN_YEAR(String.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(AppConstant.FIN_YEAR))));
+                    commonModel.setFROM_FIN_YEAR(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FROM_FIN_YEAR))));
+                    commonModel.setFROM_FIN_MON(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.FROM_FIN_MON))));
+                    commonModel.setTO_FIN_YEAR(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TO_FIN_YEAR))));
+                    commonModel.setTO_FIN_MON(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(AppConstant.TO_FIN_MON))));
+                    finYear.add(commonModel);
+                }while (cursor.moveToNext());
+            }
+        }
+        Collections.sort(finYear, (lhs, rhs) -> lhs.getFIN_YEAR().compareTo(rhs.getFIN_YEAR()));
+
+        if(finYear != null && finYear.size() >0) {
+
+            spinnerMapFinYear = new HashMap<String, String>();
+            spinnerMapFinYear.put(null, null);
+            final String[] items = new String[finYear.size() + 1];
+            items[0] = "Select Financial Year";
+            for (int i = 0; i < finYear.size(); i++) {
+                spinnerMapFinYear.put(finYear.get(i).FIN_YEAR_ID, finYear.get(i).FIN_YEAR);
+                String Class = finYear.get(i).FIN_YEAR;
+                items[i + 1] = Class;
+            }
+            System.out.println("items" + items.toString());
+
+            try {
+                if (items != null && items.length > 0) {
+                    finYearArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    finYearArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    dailyCollectionBinding.finYear.setAdapter(finYearArray);
+                    dailyCollectionBinding.finYear.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    selectedFinId="0";
+                    selectedFinName="";
+                }
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+
 
     }
+
 }

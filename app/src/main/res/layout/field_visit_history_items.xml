@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/cornered_border_bg"
+    android:layout_margin="8dp"
+    android:elevation="@dimen/_6sdp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/new_round_cornered_bg"
+            android:id="@+id/rel1">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:id="@+id/nameValue"
+                    android:text="Owner Name"
+                    android:fontFamily="sans-serif" />
+                <ImageView
+                    android:padding="@dimen/_5sdp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:id="@+id/image_list"
+                    android:tint="@color/white"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/ic_gallery"/>
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel1"
+            android:weightSum="3"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:id="@+id/rel2">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:id="@+id/name"
+                android:text="Request ID"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:layout_toRightOf="@+id/name"
+                android:layout_below="@+id/rel1"
+                android:id="@+id/namec"
+                android:text=" : "
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textColor="@color/border_line"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/namec"
+                android:layout_below="@+id/rel1"
+                android:id="@+id/codeValue"
+                android:text="Request ID"
+                android:fontFamily="sans-serif" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel2"
+            android:weightSum="3"
+            android:paddingTop="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/rel3">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:id="@+id/mobile"
+                android:layout_below="@+id/name"
+                android:text="Tax Type"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:layout_toRightOf="@+id/name"
+                android:layout_below="@+id/name"
+                android:id="@+id/mobilec"
+                android:text=" : "
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.9"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textColor="@color/border_line"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/mobilec"
+                android:layout_below="@+id/name"
+                android:id="@+id/taxTypeValue"
+                android:text="Mobile No"
+                android:fontFamily="sans-serif" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel3"
+            android:weightSum="3"
+            android:paddingTop="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/rel4">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/grey1"
+                android:id="@+id/paymentDate"
+                android:layout_below="@+id/mobile"
+                android:text="Status"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/grey1"
+                android:layout_toRightOf="@+id/name"
+                android:layout_below="@+id/mobile"
+                android:id="@+id/paymentdatec"
+                android:text=" : "
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/border_line"
+                android:layout_toRightOf="@+id/paymentdatec"
+                android:layout_below="@+id/mobile"
+                android:id="@+id/status_filed"
+                android:text="Status"
+                android:fontFamily="sans-serif" />
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="match_parent"
+                android:id="@+id/extend_view_icon"
+                android:src="@drawable/back"
+                android:tint="@color/grey2"
+                android:rotation="270"></ImageView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:visibility="visible"
+        android:layout_below="@+id/content2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/details_view_layout">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:id="@+id/rel5">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:id="@+id/ward_name"
+                android:text="Ward Name"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:layout_toRightOf="@+id/ward_name"
+                android:id="@+id/icon1"
+                android:text=" : "
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textColor="@color/border_line"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/icon1"
+                android:id="@+id/ward_name_value"
+                android:text="Ward Name"
+                android:fontFamily="sans-serif" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel5"
+            android:weightSum="3"
+            android:paddingTop="0dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/rel6">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:id="@+id/street_name"
+                android:layout_below="@+id/name"
+                android:text="Street Name"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:layout_toRightOf="@+id/street_name"
+                android:id="@+id/icon2"
+                android:text=" : "
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.9"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textColor="@color/border_line"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@+id/icon2"
+                android:id="@+id/street_name_value"
+                android:text="Street Name"
+                android:fontFamily="sans-serif" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/rel6"
+            android:weightSum="3"
+            android:paddingTop="3dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:id="@+id/rel7">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:id="@+id/remarks"
+                android:text="Remarks"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.1"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:textColor="@color/grey1"
+                android:layout_toRightOf="@+id/remarks"
+                android:layout_below="@+id/mobile"
+                android:id="@+id/icon3"
+                android:text=" : "
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1.5"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:textSize="16sp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/border_line"
+                android:layout_toRightOf="@+id/icon3"
+                android:id="@+id/remarks_value"
+                android:text="Status"
+                android:fontFamily="sans-serif" />
+
+            <ImageView
+                android:layout_gravity="center_vertical"
+                android:padding="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="0.4"
+                android:layout_height="match_parent"
+                android:id="@+id/hide_details_icon"
+                android:src="@drawable/back"
+                android:tint="@color/grey2"
+                android:rotation="90"></ImageView>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
+
+

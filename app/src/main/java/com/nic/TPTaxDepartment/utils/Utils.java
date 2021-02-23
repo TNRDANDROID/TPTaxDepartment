@@ -199,8 +199,8 @@ public class Utils {
 
 
         TextView text = (TextView) layout.findViewById(R.id.tv_message);
-        TextView btn_ok = (TextView) layout.findViewById(R.id.btn_ok);
-        btn_ok.setVisibility(View.GONE);
+        //TextView btn_ok = (TextView) layout.findViewById(R.id.btn_ok);
+        //btn_ok.setVisibility(View.GONE);
         text.setText(msg);
 
         Toast toast = new Toast(context);

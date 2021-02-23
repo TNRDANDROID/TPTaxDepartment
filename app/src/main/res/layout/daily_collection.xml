@@ -161,6 +161,37 @@
             </RelativeLayout>
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/img_rll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_25sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/year_vice"
+                    android:text="Year"></RadioButton>
+
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/daily"
+                    android:text="Daily"
+                    android:layout_toRightOf="@+id/year_vice"
+                    android:layout_marginLeft="70dp"></RadioButton>
+            </RelativeLayout>
+
+
+        //date_layout
         <RelativeLayout
             android:id="@+id/date_layout"
             android:layout_width="match_parent"
@@ -211,13 +242,72 @@
 
         </RelativeLayout>
 
+        //Fin_Year
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="@dimen/_25sdp"
+            android:layout_marginRight="@dimen/_25sdp"
+            android:layout_below="@+id/date_layout"
+            android:id="@+id/fin_year_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:background="@drawable/click_here">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Select Financial Year"
+                android:textColor="@color/black_grey"
+                android:textSize="16dp"
+                android:visibility="gone"
+                customfontdemo:fontName="@string/font_circular_medium" />
+
+            <RelativeLayout
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+
+
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/_15sdp"
+                    android:visibility="visible"
+                    customfontdemo:fontName="@string/font_circular_book" />
+
+                <Spinner
+                    android:id="@+id/fin_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:overlapAnchor="false"
+                    android:gravity="center" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+            //Recyler_view
         <RelativeLayout
             android:id="@+id/recy_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
-            android:layout_below="@+id/date_layout"
+            android:layout_below="@+id/gender_layout"
             android:layout_marginBottom="10dp"
             android:gravity="center">
             <androidx.recyclerview.widget.RecyclerView
@@ -241,6 +331,7 @@
 
 
         </RelativeLayout>
+        </LinearLayout>
 
 
         <RelativeLayout
