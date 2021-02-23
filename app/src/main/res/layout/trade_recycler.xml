@@ -74,7 +74,7 @@
             android:textColor="@color/border_line"
             android:layout_toRightOf="@+id/codec"
             android:id="@+id/codeValue"
-            android:text="Trader code "
+            android:text="Traders code "
             android:fontFamily="sans-serif" />
         </LinearLayout>
         <LinearLayout

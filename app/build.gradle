@@ -86,6 +86,8 @@ android {
 }
 repositories {
     maven { url "https://jitpack.io" }
+    mavenCentral()
+    maven { url "https://repository.aspose.com/repo/" }
 }
 
 
@@ -126,4 +128,6 @@ dependencies {
     //PDF viewer
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.android.support:multidex:2.0.0'
+    compile (group: 'com.aspose', name: 'aspose-words', version: '20.6', classifier: 'android.via.java')
+    api 'se.emilsjolander:stickylistheaders:2.7.0'
 }

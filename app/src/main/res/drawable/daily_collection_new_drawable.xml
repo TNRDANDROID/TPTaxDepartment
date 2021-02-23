@@ -11,7 +11,11 @@
 
     <item>
         <shape>
-            <corners android:radius="30dp"/>
+            <corners android:topRightRadius="10dp"
+                android:topLeftRadius="10dp"
+                android:bottomRightRadius="0dp"
+                android:bottomLeftRadius="0dp"/>
+
             <gradient android:endColor="#EC4791"
                 android:angle="360" android:startColor="#955BE4"></gradient>
         </shape>

@@ -113,7 +113,36 @@ public class TPtaxModel  implements Serializable {
     public String propertyTaxAssessmentNumber;
     public String document;
     public String remark;
+    public String status;
+    public String fieldVisitImage;
+    public String fieldVisitDate;
 
+    public String getFieldVisitDate() {
+        return fieldVisitDate;
+    }
+
+    public TPtaxModel setFieldVisitDate(String fieldVisitDate) {
+        this.fieldVisitDate = fieldVisitDate;
+        return this;
+    }
+
+    public String getFieldVisitImage() {
+        return fieldVisitImage;
+    }
+
+    public TPtaxModel setFieldVisitImage(String fieldVisitImage) {
+        this.fieldVisitImage = fieldVisitImage;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public TPtaxModel setStatus(String status) {
+        this.status = status;
+        return this;
+    }
 
     public String getRemark() {
         return remark;

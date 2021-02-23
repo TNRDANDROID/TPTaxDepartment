@@ -27,6 +27,7 @@ import android.text.SpannableStringBuilder;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
+import android.util.Base64OutputStream;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -47,7 +48,10 @@ import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import com.android.volley.VolleyError;
+import com.aspose.words.Document;
+import com.aspose.words.License;
 import com.github.barteksc.pdfviewer.PDFView;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
@@ -66,7 +70,6 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Document;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -183,7 +186,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     ArrayList<CommonModel> filterAnnualSale;
     ArrayList<CommonModel> filtermotorRangeList;
     ArrayList<CommonModel> filterGeneratorList;
+
+    private static final int PICK_PDF_FILE = 2;
+    private final String storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator;
+    private final String outputPDF = storageDir + "Converted_PDF.pdf";
+    private Uri document = null;
+    Integer pageNumber = 0;
     //PDFView pdfView;
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -218,7 +228,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
 
-
+// apply the license if you have the Aspose.Words license...
+//        applyLicense();
         try {
             LoadFinYearSpinner();
             LoadGenderSpinner();
@@ -1872,7 +1883,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
             if (visible_count == 0) {
-                if (!ValidationFirst()){
+                if (ValidationFirst()){
                     newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 1;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1886,7 +1897,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
 
         else if(visible_count==1){
-            if (!ValidationSecond()) {
+            if (ValidationSecond()) {
                 newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 2;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1944,7 +1955,70 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             showFileChooser();
         }
 
+//        openaAndConvertFile(null);
+    }
+    private void openaAndConvertFile(Uri pickerInitialUri) {
+        // create a new intent to open document
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        // mime types for MS Word documents
+        String[] mimetypes = {"application/vnd.openxmlformats-officedocument.wordprocessingml.document", "application/msword"};
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
+        // start activiy
+        startActivityForResult(intent, PICK_PDF_FILE);
+    }
 
+/*
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,
+                                 Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (intent != null) {
+                document = intent.getData();
+                // open the selected document into an Input stream
+                try (InputStream inputStream =
+                             getContentResolver().openInputStream(document);) {
+                    com.aspose.words.Document doc = new Document(inputStream);
+                    // save DOCX as PDF
+                    doc.save(outputPDF);
+                    uri=Uri.fromFile(new File(outputPDF));
+                    ConvertToString(uri);
+                    // show PDF file location in toast as well as treeview (optional)
+                    Toast.makeText(NewTradeLicenceScreen.this, "File saved in: " + outputPDF, Toast.LENGTH_LONG).show();
+                    // view converted PDF
+//                    viewPDFFile();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                    Toast.makeText(NewTradeLicenceScreen.this, "File not found: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(NewTradeLicenceScreen.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Toast.makeText(NewTradeLicenceScreen.this, e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+*/
+    public void viewPDFFile() {
+        // load PDF into the PDFView
+        newTradeLicenceScreenBinding.pdfView.fromFile(new File(outputPDF)).load();
+    }
+    public void applyLicense()
+    {
+        // set license
+        License lic= new License();
+        InputStream inputStream = getResources().openRawResource(R.raw.license);
+        try {
+            lic.setLicense(inputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     private static final int FILE_SELECT_CODE = 0;
 
@@ -1952,6 +2026,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("application/pdf");
         intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
         try {
             startActivityForResult(
@@ -2387,8 +2463,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
                     Log.i( LOG_TAG,"Permission granted!");
                     Toast.makeText(this.getApplicationContext(), "Permission granted!", Toast.LENGTH_SHORT).show();
+                    showFileChooser();
 
-                    this.doBrowseFile();
+//                    this.doBrowseFile();
                 }
                 // Cancelled or denied.
                 else {
@@ -2445,12 +2522,24 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.documentLayout.setVisibility(View.VISIBLE);
         newTradeLicenceScreenBinding.main.setVisibility(View.GONE);
         //File destination = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Test/TestTest/" + displayName);
+/*
         newTradeLicenceScreenBinding.pdfView.fromBytes(decodedString).onRender(new OnRenderListener() {
             @Override
             public void onInitiallyRendered(int nbPages, float pageWidth, float pageHeight) {
                 newTradeLicenceScreenBinding.pdfView.fitToWidth();
             }
         }).load();
+*/
+        newTradeLicenceScreenBinding.pdfView.fromBytes(decodedString).
+                onPageChange(new OnPageChangeListener() {
+                    @Override
+                    public void onPageChanged(int page, int pageCount) {
+                        pageNumber = page;
+                        setTitle(String.format("%s %s / %s", "PDF", page + 1, pageCount));
+                        newTradeLicenceScreenBinding.pageNum.setText(pageNumber+1 +"/"+pageCount);
+                    }
+                }).defaultPage(pageNumber).swipeHorizontal(true).enableDoubletap(true).load();
+
     }
 
 

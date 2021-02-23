@@ -19,6 +19,7 @@ import android.os.Handler;
 import android.provider.OpenableColumns;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
@@ -197,8 +198,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewNewBinding.third.setVisibility(View.GONE);
         existingTradeDetailsViewNewBinding.previous.setVisibility(View.GONE);
         existingTradeDetailsViewNewBinding.next.setText("Next");
-        
 
+//scroolable
+        existingTradeDetailsViewNewBinding.trderDetailsValue.setMovementMethod(new ScrollingMovementMethod());
         try {
             LoadFinYearSpinner();
             LoadGenderSpinner();
@@ -366,7 +368,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.isPaid.setChecked(false);
         }*/
 
-        if(traders.get(position).getOwnerStatus() != null && traders.get(position).getOwnerStatus().equals("N")){
+        if(traders.get(position).getOwnerStatus() != null && traders.get(position).getOwnerStatus().equals("No")){
             existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(false);
             existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(true);
             existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.VISIBLE);
@@ -379,15 +381,21 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.no.setVisibility(View.VISIBLE);
             getDocument();
 
-        }else {
+        }else  if(traders.get(position).getOwnerStatus() != null && traders.get(position).getOwnerStatus().equals("Yes")){
             existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(true);
             existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(false);
             existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.yes.setVisibility(View.VISIBLE);
             existingTradeDetailsViewNewBinding.no.setVisibility(View.GONE);
+        }else {
+            existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(false);
+            existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(false);
+            existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.yes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.no.setVisibility(View.GONE);
         }
 
-        if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("Y")){
+        if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("Yes")){
             existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(true);
             existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
             existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
@@ -405,15 +413,21 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
 
 
-        }else {
+        }else  if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("No")){
             existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
             existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(true);
             existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.VISIBLE);
+        }else {
+            existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
+            existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
+            existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
         }
 
-        if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("Y")){
+        if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("Yes")){
             existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(true);
             existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
             existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
@@ -431,30 +445,42 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
 
 
-        }else {
+        }else if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("No")){
             existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
             existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(true);
             existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.VISIBLE);
+        }else {
+            existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
+            existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
+            existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
         }
 
-        if(traders.get(position).getPropertyStatus() != null && traders.get(position).getPropertyStatus().equals("Y")){
+        if(traders.get(position).getPropertyStatus() != null && traders.get(position).getPropertyStatus().equals("Yes")){
             existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(true);
             existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(false);
             existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
             existingTradeDetailsViewNewBinding.propertyTaxAssessmentNumber.setText(traders.get(position).getPropertyTaxAssessmentNumber());
             existingTradeDetailsViewNewBinding.propertyYes.setVisibility(View.VISIBLE);
             existingTradeDetailsViewNewBinding.propertyNo.setVisibility(View.GONE);
-        }else {
+        }else if(traders.get(position).getPropertyStatus() != null && traders.get(position).getPropertyStatus().equals("No")){
             existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(false);
             existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(true);
             existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.propertyYes.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.propertyNo.setVisibility(View.VISIBLE);
+        }else {
+            existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(false);
+            existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(false);
+            existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.propertyYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.propertyNo.setVisibility(View.GONE);
         }
 
-        if(traders.get(position).getProfesstionlStatus() != null && traders.get(position).getProfesstionlStatus().equals("Y")){
+        if(traders.get(position).getProfesstionlStatus() != null && traders.get(position).getProfesstionlStatus().equals("Yes")){
             existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(true);
             existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(false);
             existingTradeDetailsViewNewBinding.professionalTaxLayout.setVisibility(View.VISIBLE);
@@ -472,12 +498,18 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
 
 
-        }else {
+        }else if(traders.get(position).getProfesstionlStatus() != null && traders.get(position).getProfesstionlStatus().equals("No")){
             existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(false);
             existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(true);
-            existingTradeDetailsViewNewBinding.professionalTaxLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.professionalTaxLayout.setVisibility(View.VISIBLE);
             existingTradeDetailsViewNewBinding.professionalYes.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.professionalNo.setVisibility(View.VISIBLE);
+        }else {
+            existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(false);
+            existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(false);
+            existingTradeDetailsViewNewBinding.professionalTaxLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.professionalYes.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.professionalNo.setVisibility(View.GONE);
         }
         setDisableToFields();
     }
@@ -632,13 +664,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         switch (compoundButton.getId()){
             case R.id.owner_status_no:
                 if(compoundButton.isChecked()){
-                    owner_status_text="N";
+                    owner_status_text="No";
                     existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(false);
                     existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.VISIBLE);
 
                 }
                 else {
-                    owner_status_text="Y";
+                    owner_status_text="Yes";
                     existingTradeDetailsViewNewBinding.ownerStatusYes.setChecked(true);
                     existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.GONE);
                     fileString="";
@@ -648,14 +680,14 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.owner_status_yes:
                 if(compoundButton.isChecked()){
-                    owner_status_text="Y";
+                    owner_status_text="Yes";
                     existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(false);
                     existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.GONE);
                     fileString="";
                     existingTradeDetailsViewNewBinding.fileLocation.setText("");
                 }
                 else {
-                    owner_status_text="N";
+                    owner_status_text="No";
                     existingTradeDetailsViewNewBinding.ownerStatusNo.setChecked(true);
                     existingTradeDetailsViewNewBinding.chooseFileLayout.setVisibility(View.VISIBLE);
                 }
@@ -663,13 +695,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.geneartor_avilable_status_yes:
                 if(compoundButton.isChecked()){
-                    generator_available_status_text="Y";
+                    generator_available_status_text="Yes";
                     existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
                     existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                     existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
                 }
                 else {
-                    generator_available_status_text="N";
+                    generator_available_status_text="No";
                     existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(true);
                     existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                     existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(null);
@@ -678,13 +710,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.generator_avilable_status_no:
                 if(compoundButton.isChecked()){
-                    generator_available_status_text="N";
+                    generator_available_status_text="No";
                     existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
                     existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                     existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(null);
                 }
                 else {
-                    generator_available_status_text="Y";
+                    generator_available_status_text="Yes";
                     existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(true);
                     existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                     existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
@@ -693,13 +725,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.motor_avilable_status_yes:
                 if(compoundButton.isChecked()){
-                    motor_available_status_text="Y";
+                    motor_available_status_text="Yes";
                     existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
                     existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                     existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
                 }
                 else {
-                    motor_available_status_text="N";
+                    motor_available_status_text="No";
                     existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(true);
                     existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
                     existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(null);
@@ -708,13 +740,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.motor_avilable_status_no:
                 if(compoundButton.isChecked()){
-                    motor_available_status_text="N";
+                    motor_available_status_text="No";
                     existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
                     existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
                     existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(null);
                 }
                 else {
-                    motor_available_status_text="Y";
+                    motor_available_status_text="Yes";
                     existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(true);
                     existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                     existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
@@ -723,35 +755,35 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.professional_tax_yes:
                 if(compoundButton.isChecked()){
-                    professional_tax_paid_status_text="Y";
+                    professional_tax_paid_status_text="Yes";
                     existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(false);
                 }
                 else {
-                    professional_tax_paid_status_text="N";
+                    professional_tax_paid_status_text="No";
                     existingTradeDetailsViewNewBinding.professionalTaxNo.setChecked(true);
                 }
                 break;
 
             case R.id.professional_tax_no:
                 if(compoundButton.isChecked()){
-                    professional_tax_paid_status_text="N";
+                    professional_tax_paid_status_text="No";
                     existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(false);
                 }
                 else {
-                    professional_tax_paid_status_text="Y";
+                    professional_tax_paid_status_text="Yes";
                     existingTradeDetailsViewNewBinding.professionalTaxYes.setChecked(true);
                 }
                 break;
 
             case R.id.property_tax_yes:
                 if(compoundButton.isChecked()){
-                    property_tax_paid_status_text="Y";
+                    property_tax_paid_status_text="Yes";
                     existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(false);
                     existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
 
                 }
                 else {
-                    property_tax_paid_status_text="N";
+                    property_tax_paid_status_text="No";
                     existingTradeDetailsViewNewBinding.propertyTaxNo.setChecked(true);
                     existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                     existingTradeDetailsViewNewBinding.propertyTaxAssessmentNumber.setText("");
@@ -760,12 +792,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             case R.id.property_tax_no:
                 if(compoundButton.isChecked()){
-                    property_tax_paid_status_text="N";
+                    property_tax_paid_status_text="No";
                     existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(false);
                     existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                 }
                 else {
-                    professional_tax_paid_status_text="Y";
+                    property_tax_paid_status_text="Yes";
                     existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(true);
                     existingTradeDetailsViewNewBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
                 }

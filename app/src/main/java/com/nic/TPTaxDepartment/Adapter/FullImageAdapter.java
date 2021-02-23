@@ -81,7 +81,7 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
                 .into(holder.galleryThumbnailBinding.thumbnail);
 
         if(key.equals("FieldVisit")){
-            holder.galleryThumbnailBinding.closeIcon.setVisibility(View.VISIBLE);
+            holder.galleryThumbnailBinding.closeIcon.setVisibility(View.GONE);
         }else if(key.equals("NewTradeLicence")){
             holder.galleryThumbnailBinding.closeIcon.setVisibility(View.VISIBLE);
         }else if(key.equals("ExistTradeViewClass")){

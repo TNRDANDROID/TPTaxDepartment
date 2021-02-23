@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -160,9 +161,9 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         existingTradeLicenceBinding.tradeCodeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                String tradeCode = parent.getSelectedItem().toString();
-                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
-              /*  String tradeID ="";
+              /*  String tradeCode = parent.getSelectedItem().toString();
+//                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+                String tradeID ="";
                 System.out.println("tradeCode>> "+ tradeCode);
                 // iterate each entry of hashmap
                 for(Map.Entry<String, String> entry: spinnerTradeCode.entrySet()) {
@@ -172,7 +173,17 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                         tradeID=entry.getKey();
                         break;
                     }
-                }*/
+                }
+              */
+                String tradeCode = parent.getSelectedItem().toString();
+                String tradeID = spinnerTradeCode.get(parent.getSelectedItemPosition());
+                selectedTrdeCodeDetailsID=tradeID;
+                ((TextView) parent.getChildAt(0)).setTextColor(ExistingTradeLicence.this.getResources().getColor(R.color.grey2));
+
+                System.out.println("tradeCode>> "+ tradeCode);
+                System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
+                selectedTradeCode=tradeCode;
+
                 selectedTrdeCodeDetailsID=tradeID;
                 System.out.println("TradeId>> "+ selectedTrdeCodeDetailsID);
                 selectedTradeCode=tradeCode;
@@ -226,7 +237,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             final String[] items = new String[loadTradeCodeList.size() + 1];
             items[0] = "Select TradeCode";
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
-                spinnerTradeCode.put(i+1, loadTradeCodeList.get(i).getLB_TRADE_CODE());
+                spinnerTradeCode.put(i+1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
                 items[i + 1] = Class;
             }
@@ -388,7 +399,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
-    public void existTradeLicenceSubmit(String wardId,String streetId,String traderCode,String mobileNo) {
+    public void existTradeLicenceSubmit(String wardId,String streetId,String tradeDetails_id,String mobileNo) {
 
         tradersList = new ArrayList<TPtaxModel>();
         tradersImageList = new ArrayList<TPtaxModel>();
@@ -402,10 +413,10 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
                     String tradersdetails_id= Utils.NotNullString(jsonobject.getString("tradersdetails_id"));
                     String lb_sno= Utils.NotNullString(jsonobject.getString("lb_sno"));
-                    String lb_tradecode= Utils.NotNullString(jsonobject.getString("lb_tradecode"));
+//                    String lb_tradecode= Utils.NotNullString(jsonobject.getString("lb_tradecode"));
                     String lb_traderscode= Utils.NotNullString(jsonobject.getString("lb_traderscode"));
                     String tradedetails_id= Utils.NotNullString(jsonobject.getString("tradedetails_id"));
-                    String traderate= Utils.NotNullString(jsonobject.getString("traderate"));
+//                    String traderate= Utils.NotNullString(jsonobject.getString("traderate"));
                     String traders_rate= Utils.NotNullString(jsonobject.getString("traders_rate"));
                     String traders_type= Utils.NotNullString(jsonobject.getString("traders_type"));
                     String tradersperiod= Utils.NotNullString(jsonobject.getString("tradersperiod"));
@@ -477,12 +488,13 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                      byte[] ByteArray = tradeImage.getBytes();
 
 
-                         if(!traderCode.equals("0") && !traderCode.isEmpty() && traderCode != null){
-                             if(traderCode.equals(lb_tradecode)){
+                         if(!tradeDetails_id.equals("0") && !tradeDetails_id.isEmpty() && tradeDetails_id != null){
+                             if(tradeDetails_id.equals(tradedetails_id)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
-                                 Detail.setTraderCode(lb_tradecode);
+//                                 Detail.setTraderCode(lb_tradecode);
                                  Detail.setTraders_typ(traders_type);
+                                 Detail.setTraderCode(lb_traderscode);
                                  Detail.setDoorno(doorno);
                                  Detail.setApfathername_ta(apfathername_ta);
                                  Detail.setLicenceValidity(licence_validity);
@@ -493,7 +505,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setTradedetails_id(tradedetails_id);
                                  Detail.setDescription_en(description_en);
                                  Detail.setDescription_ta(description_ta);
-                                 Detail.setTraderate(traderate);
+//                                 Detail.setTraderate(traderate);
                                  Detail.setTraders_rate(traders_rate);
                                  Detail.setTrade_date(date);
                                  Detail.setTradersperiod(tradersperiod);
@@ -532,8 +544,9 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                              if(mobileNo.equals(mobileno)){
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
-                                 Detail.setTraderCode(lb_tradecode);
+//                                 Detail.setTraderCode(lb_tradecode);
                                  Detail.setTraders_typ(traders_type);
+                                 Detail.setTraderCode(lb_traderscode);
                                  Detail.setDoorno(doorno);
                                  Detail.setApfathername_ta(apfathername_ta);
                                  Detail.setLicenceValidity(licence_validity);
@@ -544,7 +557,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setTradedetails_id(tradedetails_id);
                                  Detail.setDescription_en(description_en);
                                  Detail.setDescription_ta(description_ta);
-                                 Detail.setTraderate(traderate);
+//                                 Detail.setTraderate(traderate);
                                  Detail.setTraders_rate(traders_rate);
                                  Detail.setTrade_date(date);
                                  Detail.setTradersperiod(tradersperiod);
@@ -582,8 +595,9 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                             if(wardId.equals(wardid) && streetId.equals(streetid)){
                                 TPtaxModel Detail = new TPtaxModel();
                                 Detail.setTraderName(apname_en);
-                                Detail.setTraderCode(lb_tradecode);
+//                                Detail.setTraderCode(lb_tradecode);
                                 Detail.setTraders_typ(traders_type);
+                                Detail.setTraderCode(lb_traderscode);
                                 Detail.setDoorno(doorno);
                                 Detail.setApfathername_ta(apfathername_ta);
                                 Detail.setLicenceValidity(licence_validity);
@@ -594,7 +608,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 Detail.setTradedetails_id(tradedetails_id);
                                 Detail.setDescription_en(description_en);
                                 Detail.setDescription_ta(description_ta);
-                                Detail.setTraderate(traderate);
+//                                Detail.setTraderate(traderate);
                                 Detail.setTraders_rate(traders_rate);
                                 Detail.setTrade_date(date);
                                 Detail.setTradersperiod(tradersperiod);
