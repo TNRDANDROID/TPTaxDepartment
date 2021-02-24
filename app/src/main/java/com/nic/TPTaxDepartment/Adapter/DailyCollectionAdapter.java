@@ -39,10 +39,10 @@ public class DailyCollectionAdapter extends RecyclerView.Adapter<DailyCollection
     public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
-            holder.taxName.setText(taxCollection.get(position).TaxTypeName);
+            holder.taxName.setText(taxCollection.get(position).getTaxTypeName());
 
-            if(!taxCollection.get(position).TaxCollection .equals("") && taxCollection.get(position).TaxCollection != null){
-                holder.taxAmount.setText("\u20b9"+" "+taxCollection.get(position).TaxCollection);
+            if(!taxCollection.get(position).getTaxCollection() .equals("") && taxCollection.get(position).getTaxCollection() != null){
+                holder.taxAmount.setText("\u20b9"+" "+taxCollection.get(position).getTaxCollection());
             }else {
                 holder.taxAmount.setText("\u20b9"+" "+"00.00");
             }

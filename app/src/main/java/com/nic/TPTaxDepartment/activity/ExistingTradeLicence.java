@@ -305,7 +305,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
         selectedStreets = new ArrayList<CommonModel>();
         for (int i = 0; i < streets.size(); i++) {
-            if(streets.get(i).ward_id.equals(selectedWardId)){
+            if(streets.get(i).getWard_id().equals(selectedWardId)){
                 selectedStreets.add(streets.get(i));
             }else { }
         }
@@ -317,8 +317,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             final String[] items = new String[selectedStreets.size() + 1];
             items[0] = "Select Street";
             for (int i = 0; i < selectedStreets.size(); i++) {
-                spinnerMapStreets.put(selectedStreets.get(i).streetid, selectedStreets.get(i).street_name_ta);
-                String Class = selectedStreets.get(i).street_name_ta;
+                spinnerMapStreets.put(selectedStreets.get(i).getStreetid(), selectedStreets.get(i).getStreet_name_ta());
+                String Class = selectedStreets.get(i).getStreet_name_ta();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -368,8 +368,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_name_ta);
-                String Class = wards.get(i).ward_name_ta;
+                spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_name_ta());
+                String Class = wards.get(i).getWard_name_ta();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());

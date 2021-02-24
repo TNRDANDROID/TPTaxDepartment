@@ -40,14 +40,14 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
     public void onBindViewHolder(final SummaryViewHolder holder,final int position) {
 
         try {
-            holder.name.setText(traders.get(position).traderName);
-            holder.code.setText(traders.get(position).traderCode);
+            holder.name.setText(traders.get(position).getTraderName());
+            holder.code.setText(traders.get(position).getTraderCode());
 
 //            holder.payment.setText(traders.get(position).paymentStatus);
-            holder.mobileValue.setText(traders.get(position).mobileno);
-            holder.paymentDateValue.setText(traders.get(position).paymentdate);
-            holder.traderType.setText(traders.get(position).traders_license_type_name);
-            holder.emailValue.setText(traders.get(position).email);
+            holder.mobileValue.setText(traders.get(position).getMobileno());
+            holder.paymentDateValue.setText(traders.get(position).getPaymentdate());
+            holder.traderType.setText(traders.get(position).getTraders_license_type_name());
+            holder.emailValue.setText(traders.get(position).getEmail());
 
 
            /* if(traders.get(position).paymentStatus .equals("Paid")){

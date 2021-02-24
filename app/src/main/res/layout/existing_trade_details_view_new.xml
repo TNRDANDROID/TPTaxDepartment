@@ -5,6 +5,7 @@
 
     <data>
 
+
         <variable
             name="activity"
             type="com.nic.TPTaxDepartment.activity.ExistTradeViewClass" />
@@ -93,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main"
-            android:visibility="gone">
+            android:visibility="visible">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 app:elevation="0dp"
@@ -2339,7 +2340,7 @@
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackground"
                             android:onClick="@{()-> activity.validateUserDetails()}"
-                            android:text="Submit"
+                            android:text="Update"
                             android:textAllCaps="false"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/_15sdp" />
@@ -2387,7 +2388,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="visible"
+            android:visibility="gone"
             android:id="@+id/full_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -2426,7 +2427,7 @@
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:background="@drawable/back"
                             android:backgroundTint="@android:color/white"
-                            android:onClick="@{()-> activity.previous()}" />
+                            android:onClick="@{()-> activity.onBackPressed()}" />
 
 
                         <TextView
@@ -2539,8 +2540,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/trder_details_value"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:textSize="15sp"
                 android:scrollbars = "vertical"
                 android:textColor="@color/grey2"
                 android:layout_below="@+id/appBarLayout1"></TextView>

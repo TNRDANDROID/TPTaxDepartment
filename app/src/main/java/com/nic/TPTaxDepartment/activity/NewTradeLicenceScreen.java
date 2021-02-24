@@ -1,7 +1,6 @@
 package com.nic.TPTaxDepartment.activity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -19,7 +18,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.text.Spannable;
@@ -27,12 +25,10 @@ import android.text.SpannableStringBuilder;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
-import android.util.Base64OutputStream;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
@@ -44,15 +40,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import com.android.volley.VolleyError;
-import com.aspose.words.Document;
-import com.aspose.words.License;
-import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
-import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -70,19 +61,13 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -228,8 +213,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
 
-// apply the license if you have the Aspose.Words license...
-//        applyLicense();
         try {
             LoadFinYearSpinner();
             LoadGenderSpinner();
@@ -911,8 +894,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[genders.size() + 1];
             items[0] = "Select Gender";
             for (int i = 0; i < genders.size(); i++) {
-                spinnerMap.put(genders.get(i).gender_code, genders.get(i).gender_name_en);
-                String Class = genders.get(i).gender_name_en;
+                spinnerMap.put(genders.get(i).getGender_code(), genders.get(i).getGender_name_en());
+                String Class = genders.get(i).getGender_name_en();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -970,8 +953,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[selectedStreets.size() + 1];
             items[0] = "Select Street";
             for (int i = 0; i < selectedStreets.size(); i++) {
-                spinnerMapStreets.put( (selectedStreets.get(i).streetid).toString(), selectedStreets.get(i).street_name_ta);
-                String Class = selectedStreets.get(i).street_name_ta;
+                spinnerMapStreets.put( (selectedStreets.get(i).getStreetid()).toString(), selectedStreets.get(i).getStreet_name_ta());
+                String Class = selectedStreets.get(i).getStreet_name_ta();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1023,8 +1006,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_code);
-                String Class = wards.get(i).ward_code;
+                spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_code());
+                String Class = wards.get(i).getWard_code();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1073,8 +1056,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[finYear.size() + 1];
             items[0] = "Select Licence Validity";
             for (int i = 0; i < finYear.size(); i++) {
-                spinnerMapFinYear.put(finYear.get(i).FIN_YEAR_ID, finYear.get(i).FIN_YEAR);
-                String Class = finYear.get(i).FIN_YEAR;
+                spinnerMapFinYear.put(finYear.get(i).getFIN_YEAR_ID(), finYear.get(i).getFIN_YEAR());
+                String Class = finYear.get(i).getFIN_YEAR();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1120,8 +1103,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             final String[] items = new String[traderLicenseTypeList.size() + 1];
             items[0] = "Select Licence Type";
             for (int i = 0; i < traderLicenseTypeList.size(); i++) {
-                spinnerMapLicenceType.put(traderLicenseTypeList.get(i).traders_license_type_id, traderLicenseTypeList.get(i).traders_license_type_name);
-                String Class = traderLicenseTypeList.get(i).traders_license_type_name;
+                spinnerMapLicenceType.put(traderLicenseTypeList.get(i).getTraders_license_type_id(), traderLicenseTypeList.get(i).getTraders_license_type_name());
+                String Class = traderLicenseTypeList.get(i).getTraders_license_type_name();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1219,7 +1202,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
 
         for (int i = 0; i < AnnualSaleList.size(); i++) {
-            if(AnnualSaleList.get(i).traders_license_type_id.equals(selectedLicenceTpeId)){
+            if(AnnualSaleList.get(i).getTraders_license_type_id().equals(selectedLicenceTpeId)){
                 filterAnnualSale.add(AnnualSaleList.get(i));
             }else { }
         }
@@ -1232,8 +1215,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             items[0] = "Select AnnualSale";
             for (int i = 0; i < filterAnnualSale.size(); i++) {
                  {
-                    spinnerMapAnnualSale.put(filterAnnualSale.get(i).annual_id, filterAnnualSale.get(i).annual_sale);
-                    String Class = filterAnnualSale.get(i).annual_sale;
+                    spinnerMapAnnualSale.put(filterAnnualSale.get(i).getAnnual_id(), filterAnnualSale.get(i).getAnnual_sale());
+                    String Class = filterAnnualSale.get(i).getAnnual_sale();
                     items[i + 1] = Class;
                 }
             }
@@ -1276,7 +1259,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
          filtermotorRangeList = new ArrayList<CommonModel>();
 
         for (int i = 0; i < motorRangeList.size(); i++) {
-            if(motorRangeList.get(i).traders_license_type_id.equals(selectedLicenceTpeId)){
+            if(motorRangeList.get(i).getTraders_license_type_id().equals(selectedLicenceTpeId)){
                 filtermotorRangeList.add(motorRangeList.get(i));
             }else { }
         }
@@ -1288,8 +1271,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             items[0] = "Select Motor Range";
             for (int i = 0; i < filtermotorRangeList.size(); i++) {
                 {
-                    spinnerMapMotorRange.put(filtermotorRangeList.get(i).motor_id, filtermotorRangeList.get(i).motor_range);
-                    String Class = filtermotorRangeList.get(i).motor_range;
+                    spinnerMapMotorRange.put(filtermotorRangeList.get(i).getMotor_id(), filtermotorRangeList.get(i).getMotor_range());
+                    String Class = filtermotorRangeList.get(i).getMotor_range();
                     items[i + 1] = Class;
                 }
             }
@@ -1333,7 +1316,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
 
         for (int i = 0; i < generatorRangeList.size(); i++) {
-            if(generatorRangeList.get(i).traders_license_type_id.equals(selectedLicenceTpeId)){
+            if(generatorRangeList.get(i).getTraders_license_type_id().equals(selectedLicenceTpeId)){
                 filterGeneratorList.add(generatorRangeList.get(i));
             }else { }
         }
@@ -2008,17 +1991,6 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public void viewPDFFile() {
         // load PDF into the PDFView
         newTradeLicenceScreenBinding.pdfView.fromFile(new File(outputPDF)).load();
-    }
-    public void applyLicense()
-    {
-        // set license
-        License lic= new License();
-        InputStream inputStream = getResources().openRawResource(R.raw.license);
-        try {
-            lic.setLicense(inputStream);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
     private static final int FILE_SELECT_CODE = 0;
 

@@ -523,7 +523,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.professionalYes.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.professionalNo.setVisibility(View.GONE);
         }
-        setDisableToFields();
+//        setDisableToFields();
+        setEnableToFields();
     }
 
     private void getTradeImage() {
@@ -575,6 +576,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderImage");
         return dataSet;
     }
+
+
     private void setDisableToFields() {
         existingTradeDetailsViewNewBinding.tradeCodeSpinner.setEnabled(false);
         existingTradeDetailsViewNewBinding.date.setEnabled(false);
@@ -649,6 +652,82 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewNewBinding.propertyTaxYes.setEnabled(false);
         existingTradeDetailsViewNewBinding.propertyTaxNo.setEnabled(false);
          closeKeyboard();
+    }
+    private void setEnableToFields() {
+        existingTradeDetailsViewNewBinding.tradeCodeSpinner.setEnabled(true);
+        existingTradeDetailsViewNewBinding.date.setEnabled(true);
+        existingTradeDetailsViewNewBinding.licenceType.setEnabled(true);
+        existingTradeDetailsViewNewBinding.tradeDescription.setEnabled(true);
+        existingTradeDetailsViewNewBinding.applicantName.setEnabled(true);
+        existingTradeDetailsViewNewBinding.applicantNameTamil.setEnabled(true);
+        existingTradeDetailsViewNewBinding.gender.setEnabled(true);
+        existingTradeDetailsViewNewBinding.age.setEnabled(true);
+        existingTradeDetailsViewNewBinding.fatherHusName.setEnabled(true);
+        existingTradeDetailsViewNewBinding.fatherHusNameTamil.setEnabled(true);
+        existingTradeDetailsViewNewBinding.mobileNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.emailId.setEnabled(true);
+        existingTradeDetailsViewNewBinding.establishName.setEnabled(true);
+        existingTradeDetailsViewNewBinding.wardNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.streetsName.setEnabled(true);
+        existingTradeDetailsViewNewBinding.doorNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.licenceValidity.setEnabled(true);
+        existingTradeDetailsViewNewBinding.descriptionEnglish.setEnabled(true);
+        existingTradeDetailsViewNewBinding.descriptionTamil.setEnabled(true);
+        existingTradeDetailsViewNewBinding.remarksTxInp.setEnabled(true);
+        existingTradeDetailsViewNewBinding.propertyAssessmentNoTxInp.setEnabled(true);
+        existingTradeDetailsViewNewBinding.annualSale.setEnabled(true);
+        existingTradeDetailsViewNewBinding.motorRangeSpinner.setEnabled(true);
+        existingTradeDetailsViewNewBinding.generatorSpinner.setEnabled(true);
+
+        existingTradeDetailsViewNewBinding.tradersCodeTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.tradeDescriptionTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.descriptionEnglishTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.descriptionTamilTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.applicantNameTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.applicantNameTamilTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.ageTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.fatherHusNameTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.fatherHusNameTamilTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.mobileNoTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.emailIdTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.establishNameTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.doorNoTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.remarksTxInp.setHintEnabled(true);
+        existingTradeDetailsViewNewBinding.propertyAssessmentNoTxInp.setHintEnabled(true);
+
+        existingTradeDetailsViewNewBinding.tradersCodeTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.tradeDescriptionTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.descriptionEnglishTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.descriptionTamilTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.applicantNameTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.applicantNameTamilTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.ageTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.fatherHusNameTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.fatherHusNameTamilTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.mobileNoTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.emailIdTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.establishNameTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.doorNoTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.remarksTxInp.setHintAnimationEnabled(true);
+        existingTradeDetailsViewNewBinding.propertyAssessmentNoTxInp.setHintAnimationEnabled(true);
+
+        existingTradeDetailsViewNewBinding.btnRegister.setVisibility(View.VISIBLE);
+        existingTradeDetailsViewNewBinding.fab.setVisibility(View.VISIBLE);
+        existingTradeDetailsViewNewBinding.isPaid.setEnabled(true);
+        existingTradeDetailsViewNewBinding.calendarIcon.setEnabled(true);
+        existingTradeDetailsViewNewBinding.calendarIcon.setClickable(true);
+        existingTradeDetailsViewNewBinding.ownerStatusYes.setEnabled(true);
+        existingTradeDetailsViewNewBinding.ownerStatusNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setEnabled(true);
+        existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setEnabled(true);
+        existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.professionalTaxYes.setEnabled(true);
+        existingTradeDetailsViewNewBinding.professionalTaxNo.setEnabled(true);
+        existingTradeDetailsViewNewBinding.propertyTaxYes.setEnabled(true);
+        existingTradeDetailsViewNewBinding.propertyTaxNo.setEnabled(true);
+
+                 closeKeyboard();
     }
 
     private void closeKeyboard() {
@@ -1105,8 +1184,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[genders.size() + 1];
             items[0] = "Select Gender";
             for (int i = 0; i < genders.size(); i++) {
-                spinnerMap.put( genders.get(i).gender_code, genders.get(i).gender_name_en);
-                String Class = genders.get(i).gender_name_en;
+                spinnerMap.put( genders.get(i).getGender_code(), genders.get(i).getGender_name_en());
+                String Class = genders.get(i).getGender_name_en();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1152,7 +1231,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         selectedStreets = new ArrayList<CommonModel>();
         for (int i = 0; i < streets.size(); i++) {
-            if(streets.get(i).ward_id.equals(selectedWardId)){
+            if(streets.get(i).getWard_id().equals(selectedWardId)){
                 selectedStreets.add(streets.get(i));
             }else { }
         }
@@ -1164,8 +1243,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[selectedStreets.size() + 1];
             items[0] = "Select Street";
             for (int i = 0; i < selectedStreets.size(); i++) {
-                spinnerMapStreets.put(selectedStreets.get(i).streetid, selectedStreets.get(i).street_name_ta);
-                String Class = selectedStreets.get(i).street_name_ta;
+                spinnerMapStreets.put(selectedStreets.get(i).getStreetid(), selectedStreets.get(i).getStreet_name_ta());
+                String Class = selectedStreets.get(i).getStreet_name_ta();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1226,8 +1305,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(wards.get(i).ward_id, wards.get(i).ward_code);
-                String Class = wards.get(i).ward_code;
+                spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_code());
+                String Class = wards.get(i).getWard_code();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1276,8 +1355,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[finYear.size() + 1];
             items[0] = "Select Licence Validity";
             for (int i = 0; i < finYear.size(); i++) {
-                spinnerMapFinYear.put(finYear.get(i).FIN_YEAR_ID, finYear.get(i).FIN_YEAR);
-                String Class = finYear.get(i).FIN_YEAR;
+                spinnerMapFinYear.put(finYear.get(i).getFIN_YEAR_ID(), finYear.get(i).getFIN_YEAR());
+                String Class = finYear.get(i).getFIN_YEAR();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1323,8 +1402,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[traderLicenseTypeList.size() + 1];
             items[0] = "Select Licence Type";
             for (int i = 0; i < traderLicenseTypeList.size(); i++) {
-                spinnerMapLicenceType.put(traderLicenseTypeList.get(i).traders_license_type_id, traderLicenseTypeList.get(i).traders_license_type_name);
-                String Class = traderLicenseTypeList.get(i).traders_license_type_name;
+                spinnerMapLicenceType.put(traderLicenseTypeList.get(i).getTraders_license_type_id(), traderLicenseTypeList.get(i).getTraders_license_type_name());
+                String Class = traderLicenseTypeList.get(i).getTraders_license_type_name();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -1534,7 +1613,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     @Override
     public void onBackPressed() {
-        if(existingTradeDetailsViewNewBinding.documentLayout.getVisibility() == View.VISIBLE){
+        if(existingTradeDetailsViewNewBinding.fullDetails.getVisibility()==View.VISIBLE){
+            super.onBackPressed();
+            setResult(Activity.RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        }
+        else  if(existingTradeDetailsViewNewBinding.documentLayout.getVisibility() == View.VISIBLE){
             existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.main.setVisibility(View.VISIBLE);
         }else {
@@ -1598,19 +1682,30 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     }
         public void viewImageScreen() {
-        if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {
-            String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
-            Intent intent = new Intent(this, FullImageActivity.class);
-            intent.putExtra(AppConstant.TRADE_CODE, "");
-            intent.putExtra(AppConstant.MOBILE, "");
-            intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
-            intent.putExtra(AppConstant.TRADE_IMAGE,/*TraderImageString*/ value);
-            intent.putExtra("key", "ExistTradeViewClass");
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-        } else {
-            Utils.showAlert(ExistTradeViewClass.this, "No image Found");
-        }
+            if (getSaveTradeImageTable()==1) {
+                Intent intent = new Intent(this, FullImageActivity.class);
+                intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
+                intent.putExtra(AppConstant.MOBILE, existingTradeDetailsViewNewBinding.mobileNo.getText().toString());
+                intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "new");
+                intent.putExtra("key", "NewTradeLicence");
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+            }else {
+                if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {
+                    String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
+                    Intent intent = new Intent(this, FullImageActivity.class);
+                    intent.putExtra(AppConstant.TRADE_CODE, "");
+                    intent.putExtra(AppConstant.MOBILE, "");
+                    intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
+                    intent.putExtra(AppConstant.TRADE_IMAGE,/*TraderImageString*/ value);
+                    intent.putExtra("key", "ExistTradeViewClass");
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                } else {
+                    Utils.showAlert(ExistTradeViewClass.this, "No image Found");
+                }
+            }
+
 
     }
     public void decryptRegister(){
@@ -1901,9 +1996,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.first.setAnimation(animationOut);
             animationOut.start();
         }else if(visible_count==0){
-            super.onBackPressed();
+            existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.main.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.fullDetails.setVisibility(View.VISIBLE);
+           /* super.onBackPressed();
             setResult(Activity.RESULT_CANCELED);
-            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
         }
     }
 
@@ -1938,8 +2036,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[AnnualSaleList.size() + 1];
             items[0] = "Select AnnualSale";
             for (int i = 0; i < AnnualSaleList.size(); i++) {
-                spinnerMapAnnualSale.put(AnnualSaleList.get(i).annual_id, AnnualSaleList.get(i).annual_sale);
-                String Class = AnnualSaleList.get(i).annual_sale;
+                spinnerMapAnnualSale.put(AnnualSaleList.get(i).getAnnual_id(), AnnualSaleList.get(i).getAnnual_sale());
+                String Class = AnnualSaleList.get(i).getAnnual_sale();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
@@ -2028,8 +2126,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             final String[] items = new String[motorRangeList.size() + 1];
             items[0] = "Select Motor Range";
             for (int i = 0; i < motorRangeList.size(); i++) {
-                spinnerMapMotorRange.put(motorRangeList.get(i).motor_id, motorRangeList.get(i).motor_range);
-                String Class = motorRangeList.get(i).motor_range;
+                spinnerMapMotorRange.put(motorRangeList.get(i).getMotor_id(), motorRangeList.get(i).getMotor_range());
+                String Class = motorRangeList.get(i).getMotor_range();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());

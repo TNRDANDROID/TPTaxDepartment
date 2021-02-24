@@ -1243,8 +1243,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             final String[] items = new String[taxType.size() + 1];
             items[0] = "Select TaxType";
             for (int i = 0; i < taxType.size(); i++) {
-                spinnerMapTaxType.put( taxType.get(i).taxtypeid, taxType.get(i).taxtypedesc_en);
-                String Class = taxType.get(i).taxtypedesc_en;
+                spinnerMapTaxType.put( taxType.get(i).getTaxtypeid(), taxType.get(i).getTaxtypedesc_en());
+                String Class = taxType.get(i).getTaxtypedesc_en();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());

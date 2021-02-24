@@ -67,10 +67,10 @@ public class NewTradersListAdapter extends RecyclerView.Adapter<NewTradersListAd
             if(traders.size()<0){
                 ((PendingScreen)activity).noDataLayout();
             }
-            holder.name.setText(traders.get(position).traderName);
-            holder.code.setText(traders.get(position).traderCode);
-            holder.mobileValue.setText(traders.get(position).mobileno);
-            holder.date.setText(traders.get(position).trade_date);
+            holder.name.setText(traders.get(position).getTraderName());
+            holder.code.setText(traders.get(position).getTraderCode());
+            holder.mobileValue.setText(traders.get(position).getMobileno());
+            holder.date.setText(traders.get(position).getTrade_date());
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

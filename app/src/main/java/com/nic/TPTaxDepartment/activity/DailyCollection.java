@@ -449,8 +449,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             final String[] items = new String[finYear.size() + 1];
             items[0] = "Select Financial Year";
             for (int i = 0; i < finYear.size(); i++) {
-                spinnerMapFinYear.put(finYear.get(i).FIN_YEAR_ID, finYear.get(i).FIN_YEAR);
-                String Class = finYear.get(i).FIN_YEAR;
+                spinnerMapFinYear.put(finYear.get(i).getFIN_YEAR_ID(), finYear.get(i).getFIN_YEAR());
+                String Class = finYear.get(i).getFIN_YEAR();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());
