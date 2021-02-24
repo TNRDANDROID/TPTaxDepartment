@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main"
-            android:visibility="visible">
+            android:visibility="gone">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 app:elevation="0dp"
@@ -129,6 +129,7 @@
                             android:background="@drawable/back"
                             android:backgroundTint="@android:color/white"
                             android:onClick="@{()-> activity.previous()}" />
+
 
 
                         <TextView
@@ -2386,7 +2387,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/full_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -2454,6 +2455,19 @@
                             android:onClick="@{()-> activity.dashboard()}"
                             android:scaleType="centerInside" />
 
+                        <ImageView
+                            android:visibility="gone"
+                            android:layout_centerVertical="true"
+                            android:id="@+id/whole_details_view_icon"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_toLeftOf="@+id/log_out1"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:background="@drawable/back"
+                            android:backgroundTint="@android:color/white"
+                            android:onClick="@{()-> activity.shoewDetails()}" />
+
+
 
                     </RelativeLayout>
 
@@ -2495,6 +2509,7 @@
                         android:src="@drawable/circletransparant" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/circle3"
                         android:layout_width="162dp"
                         android:layout_height="162dp"
@@ -2505,11 +2520,12 @@
                         android:src="@drawable/circle" />
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/circle4"
                         android:layout_width="124dp"
                         android:layout_height="124dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginRight="-50dp"
+                        android:layout_alignParentRight="true"
                         android:layout_marginBottom="-50dp"
                         android:layout_toLeftOf="@+id/circle3"
                         android:src="@drawable/circletransparant" />
@@ -2526,9 +2542,25 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:scrollbars = "vertical"
+                android:textColor="@color/grey2"
                 android:layout_below="@+id/appBarLayout1"></TextView>
 
-
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/edit_details"
+                app:srcCompat="@drawable/ic_edit_new"
+                android:backgroundTint="@color/colorPrimary"
+                app:fabCustomSize="45dp"
+                app:maxImageSize="22dp"
+                app:borderWidth="0dp"
+                app:elevation="6dp"
+                app:tint="@android:color/white"
+                app:rippleColor="@color/white"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
     </RelativeLayout>
 </layout>

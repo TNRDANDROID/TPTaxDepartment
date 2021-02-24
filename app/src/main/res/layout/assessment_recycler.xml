@@ -145,7 +145,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="18sp"
                     android:id="@+id/property_assessment_no"
                     android:layout_marginRight="@dimen/margin_left_20dp"
@@ -216,7 +216,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Owner Name"
@@ -276,10 +276,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Father Name"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Father Name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/light_grey"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -301,7 +319,6 @@
                         android:hint="Father Name">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/father_name"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -313,6 +330,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -327,10 +345,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Permanent Address"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/permanent_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Permanent Address"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/light_grey"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -352,7 +388,6 @@
                         android:hint="Permanent Address">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/permanent_address"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -364,6 +399,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -378,10 +414,29 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Area In Square Feet"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/area_in_sq_feet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Area In Square Feet"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -403,7 +458,6 @@
                         android:hint="Area In Square Feet">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/area_in_sq_feet"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -438,10 +492,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Trader Code"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/lb_traderscode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Trader Code"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -463,7 +535,6 @@
                         android:hint="Trader Code">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lb_traderscode"
                             android:layout_width="match_parent"
                             android:enabled="false"
                             android:textColor="@color/grey2"
@@ -489,10 +560,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Father Name"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/apfathername_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Father Name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -514,7 +603,6 @@
                         android:hint="Father Name">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/apfathername_en"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -526,6 +614,7 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
+
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -540,10 +629,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Father Name in Tamil"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/apfathername_ta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Father Name in Tamil"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -565,7 +672,6 @@
                         android:hint="Father Name in Tamil">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/apfathername_ta"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -591,10 +697,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Door No"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/doorno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Door No"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -616,7 +740,6 @@
                         android:hint="Door No">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/doorno"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -642,10 +765,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Trader Rate"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/traders_rate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Trader Rate"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -667,7 +808,6 @@
                         android:hint="Trader Rate">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/traders_rate"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -693,10 +833,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Financial Year"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/fin_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Financial Year"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_margin="5dp"
+                    android:background="@color/light_grey"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -718,7 +876,6 @@
                         android:hint="Financial Year">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/fin_year"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -744,10 +901,29 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Trade Description"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/trade_description_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Trade Description"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -769,7 +945,6 @@
                         android:hint="Trade Description">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/trade_description_en"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -804,10 +979,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Connection No"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/lb_connectionno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Connection No"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -829,7 +1022,6 @@
                         android:hint="Connection No">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lb_connectionno"
                             android:layout_width="match_parent"
                             android:enabled="false"
                             android:textColor="@color/grey2"
@@ -855,10 +1047,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Connection Name"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/connectionname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Connection Name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -880,7 +1090,6 @@
                         android:hint="Connection Name">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/connectionname"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -906,10 +1115,22 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Water Charges"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/water_charges"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Water Charges"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -931,7 +1152,6 @@
                         android:hint="Water Charges">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/water_charges"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -966,10 +1186,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Lease Assessment No"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/lb_leaseassessmentno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Lease Assessment No"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -991,7 +1229,6 @@
                         android:hint="Connection No">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lb_leaseassessmentno"
                             android:layout_width="match_parent"
                             android:enabled="false"
                             android:textColor="@color/grey2"
@@ -1017,10 +1254,27 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Name"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/leasee_name_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
+                <view
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></view>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1042,7 +1296,6 @@
                         android:hint="Connection Name">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/leasee_name_en"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -1068,10 +1321,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Name in Tamil"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/leasee_name_ta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Name in Tamil"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1093,7 +1364,6 @@
                         android:hint="Water Charges">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/leasee_name_ta"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -1119,10 +1389,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Lease Type Code"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/lease_type_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Lease Type Code"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1144,7 +1432,6 @@
                         android:hint="Water Charges">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lease_type_code"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -1171,10 +1458,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Lease Type Description"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/lease_type_description_en"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Lease Type Description"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1196,7 +1501,6 @@
                         android:hint="Water Charges">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lease_type_description_en"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -1223,10 +1527,28 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Lease Payment Due Type"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/lease_payment_due_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Lease Payment Due Type"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1248,7 +1570,6 @@
                         android:hint="Water Charges">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/lease_payment_due_type"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"
@@ -1275,10 +1596,29 @@
                     android:textSize="18sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
                     android:text="Annual Lease Amount"
+                    android:textColor="@color/grey2"
+                    android:visibility="visible" />
+                <TextView
+                    android:id="@+id/annuallease_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_left_20dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="18sp"
+                    android:layout_marginRight="@dimen/margin_left_20dp"
+                    android:text="Annual Lease Amount"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
+                <View
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/light_grey"
+                    android:layout_margin="5dp"></View>
+
                 <RelativeLayout
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_left_20dp"
@@ -1300,7 +1640,6 @@
                         android:hint="Water Charges">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/annuallease_amount"
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@color/full_transparent"

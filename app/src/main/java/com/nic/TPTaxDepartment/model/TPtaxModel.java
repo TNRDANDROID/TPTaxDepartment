@@ -117,6 +117,99 @@ public class TPtaxModel  implements Serializable {
     public String fieldVisitImage;
     public String fieldVisitDate;
 
+    /////////////
+    public String annual_sale_production_amount;
+    public String annual_sale_production_range;
+    public String generator_range;
+    public String generator_range_amount;
+    public String motor_range;
+    public String motor_range_amount;
+    public String street_name_en;
+    public String street_name_ta;
+    public String ward_name_en;
+    public String ward_name_ta;
+
+    public String getAnnual_sale_production_amount() {
+        return annual_sale_production_amount;
+    }
+
+    public void setAnnual_sale_production_amount(String annual_sale_production_amount) {
+        this.annual_sale_production_amount = annual_sale_production_amount;
+    }
+
+    public String getAnnual_sale_production_range() {
+        return annual_sale_production_range;
+    }
+
+    public void setAnnual_sale_production_range(String annual_sale_production_range) {
+        this.annual_sale_production_range = annual_sale_production_range;
+    }
+
+    public String getGenerator_range() {
+        return generator_range;
+    }
+
+    public void setGenerator_range(String generator_range) {
+        this.generator_range = generator_range;
+    }
+
+    public String getGenerator_range_amount() {
+        return generator_range_amount;
+    }
+
+    public void setGenerator_range_amount(String generator_range_amount) {
+        this.generator_range_amount = generator_range_amount;
+    }
+
+    public String getMotor_range() {
+        return motor_range;
+    }
+
+    public void setMotor_range(String motor_range) {
+        this.motor_range = motor_range;
+    }
+
+    public String getMotor_range_amount() {
+        return motor_range_amount;
+    }
+
+    public void setMotor_range_amount(String motor_range_amount) {
+        this.motor_range_amount = motor_range_amount;
+    }
+
+    public String getStreet_name_en() {
+        return street_name_en;
+    }
+
+    public void setStreet_name_en(String street_name_en) {
+        this.street_name_en = street_name_en;
+    }
+
+    public String getStreet_name_ta() {
+        return street_name_ta;
+    }
+
+    public void setStreet_name_ta(String street_name_ta) {
+        this.street_name_ta = street_name_ta;
+    }
+
+    public String getWard_name_en() {
+        return ward_name_en;
+    }
+
+    public void setWard_name_en(String ward_name_en) {
+        this.ward_name_en = ward_name_en;
+    }
+
+    public String getWard_name_ta() {
+        return ward_name_ta;
+    }
+
+    public void setWard_name_ta(String ward_name_ta) {
+        this.ward_name_ta = ward_name_ta;
+    }
+    ////////////////
+
     public String getFieldVisitDate() {
         return fieldVisitDate;
     }

@@ -146,7 +146,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
             propertyTax=(LinearLayout)view.findViewById(R.id.propertyTax);
             property_assessment_no=(TextView)view.findViewById(R.id.property_assessment_no);
             owner_name=(TextView)view.findViewById(R.id.owner_name);
-            father_name=(TextView)view.findViewById(R.id.father_name);
+            //father_name=(TextView)view.findViewById(R.id.father_name);
             permanent_address=(TextView)view.findViewById(R.id.permanent_address);
             area_in_sq_feet=(TextView)view.findViewById(R.id.area_in_sq_feet);
 
