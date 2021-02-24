@@ -20,6 +20,8 @@ import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.activity.FieldVisit;
+import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
     private LayoutInflater inflater;
     Activity activity;
     private Animation animShow, animHide;
+    int pos=-1;
 
     public FieldVisitHistoryAdapter(Context context,ArrayList<TPtaxModel> historyList,Activity activity) {
         this.context = context;
@@ -90,50 +93,34 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
             holder.image_list.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    ((FieldVisit)activity).viewImageScreen(AppConstant.SAMPLE_IMAGE);
+//                    ((FieldVisit)activity).getFieldVisitImage();
                 }
             });
             holder.content2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    holder.extend_view_icon.setVisibility(View.GONE);
-                    holder.details_view_layout.setVisibility(View.VISIBLE);
-
-/*
-                    if(historyList!=null && historyList.size()>0){
-                        for (int i = 0; i < historyList.size(); i++) {
-                            if(i==position){
-                                holder.extend_view_icon.setVisibility(View.GONE);
-                                holder.details_view_layout.setVisibility(View.VISIBLE);
-                            }else {
-                                holder.extend_view_icon.setVisibility(View.VISIBLE);
-                                holder.details_view_layout.setVisibility(View.GONE);
-                            }
-                        }
-                    }
-*/
+                    pos=position;
+                    notifyDataSetChanged();
+                  /*  holder.extend_view_icon.setVisibility(View.GONE);
+                    holder.details_view_layout.setVisibility(View.VISIBLE);*/
 
                 }
             });
+
+            if(pos==position){
+                holder.extend_view_icon.setVisibility(View.GONE);
+                holder.details_view_layout.setVisibility(View.VISIBLE);
+            }else {
+                holder.extend_view_icon.setVisibility(View.VISIBLE);
+                holder.details_view_layout.setVisibility(View.GONE);
+            }
+
             holder.details_view_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     holder.extend_view_icon.setVisibility(View.VISIBLE);
                     holder.details_view_layout.setVisibility(View.GONE);
-/*
-                    if(historyList!=null && historyList.size()>0){
-                        for (int i = 0; i < historyList.size(); i++) {
-                            if(i==position){
-                                holder.extend_view_icon.setVisibility(View.VISIBLE);
-                                holder.details_view_layout.setVisibility(View.GONE);
-                            }else {
-                                holder.extend_view_icon.setVisibility(View.GONE);
-                                holder.details_view_layout.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    }
-*/
-
                 }
             });
         } catch(Exception exp){

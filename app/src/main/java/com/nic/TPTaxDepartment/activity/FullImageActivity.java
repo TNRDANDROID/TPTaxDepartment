@@ -71,6 +71,9 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         }else  if(key.equals("ExistTradeViewClass")){
             tradeImage = getIntent().getStringExtra(AppConstant.TRADE_IMAGE);
             new fetchTradeImagetask().execute();
+        }else  if(key.equals("FieldVisitedImage")){
+            tradeImage = getIntent().getStringExtra(AppConstant.TRADE_IMAGE);
+            new fetchFieldVisitedImagetask().execute();
         }else  if(key.equals("ExistingTradeSubmit")){
             tradecode = getIntent().getStringExtra(AppConstant.TRADE_CODE);
             mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
@@ -135,6 +138,28 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         }
     }
     public class fetchTradeImagetask extends AsyncTask<Void, Void,
+            ArrayList<TPtaxModel>> {
+        @Override
+        protected ArrayList<TPtaxModel> doInBackground(Void... params) {
+            dbData.open();
+            activityImage = new ArrayList<>();
+           if(tradeImage != null){
+               TPtaxModel card = new TPtaxModel();
+               card.setImage(StringToBitMap(tradeImage));
+               activityImage.add(card);
+           }
+
+            Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
+            return activityImage;
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<TPtaxModel> imageList) {
+            super.onPostExecute(imageList);
+            setAdapter();
+        }
+    }
+    public class fetchFieldVisitedImagetask extends AsyncTask<Void, Void,
             ArrayList<TPtaxModel>> {
         @Override
         protected ArrayList<TPtaxModel> doInBackground(Void... params) {

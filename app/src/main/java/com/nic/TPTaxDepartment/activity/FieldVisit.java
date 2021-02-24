@@ -82,12 +82,15 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
@@ -153,6 +156,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     ArrayAdapter<String> serviceFieldVisitAdapter;
     ArrayAdapter<String> taxTypeAdapter;
     ArrayList<TPtaxModel> historyList;
+    String FieldVisitImageString="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -313,12 +318,53 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         fieldVisitBinding.currentStatus.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
 
     }
+    public void getFieldVisitImage() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("FieldVisitedImage", Api.Method.POST, UrlGenerator.TradersUrl(),
+                    FieldVisitImageJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
+    }
+    public JSONObject FieldVisitImageJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
+                FieldVisitImageParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("FieldVisitedImage", "" + dataSet);
+        return dataSet;
+    }
+
+    public JSONObject FieldVisitImageParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "FieldVisitedImage");
+        return dataSet;
+    }
     public void openCameraScreen() {
         Intent intent = new Intent(this, CameraScreen.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
+
+    public void viewImageScreen(String fieldVisitImg) {
+        if (fieldVisitImg != null ) {
+            Intent intent = new Intent(this, FullImageActivity.class);
+            intent.putExtra(AppConstant.TRADE_CODE, "");
+            intent.putExtra(AppConstant.MOBILE, "");
+            intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
+            intent.putExtra(AppConstant.TRADE_IMAGE, fieldVisitImg);
+            intent.putExtra("key", "FieldVisitedImage");
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        } else {
+            Utils.showAlert(FieldVisit.this, "No image Found");
+        }
+
+    }
+
+
     public void viewImage() {
         if(fieldVisitBinding.requestIdTextField.getText()!= null && !fieldVisitBinding.requestIdTextField.getText().equals("")){
             if(imageboolean==true) {
@@ -1078,7 +1124,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 historyList.add(Detail);
             }
         }
-
+        SortAndReverseList(historyList);
         if(historyList != null && historyList.size() > 0){
             fieldVisitBinding.noDataFoundLayout.setVisibility(View.GONE);
             fieldVisitBinding.swipeRefresh.setVisibility(View.VISIBLE);
@@ -1092,9 +1138,37 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         }
 
     }
+
+    public void SortAndReverseList( ArrayList<TPtaxModel> historyList) {
+        Collections.sort(historyList, new Comparator<TPtaxModel>() {
+            @Override
+            public int compare(TPtaxModel o1, TPtaxModel o2) {
+                String date1=o1.fieldVisitDate;
+                String date2=o2.fieldVisitDate;
+                int compareResult = 0;
+                SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
+                try {
+                    Date arg0Date = format.parse(date1);
+                    Date arg1Date = format.parse(date2);
+                    compareResult = arg0Date.compareTo(arg1Date);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    compareResult = date2.compareTo(date1);
+                }
+                return compareResult;
+            }
+
+        });
+        // Collections.reverse(studentActivityDetails);
+    }
+
     @Override
     public void onBackPressed() {
-        if(request_id.equals("") &&fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE){
+        if(fieldVisitBinding.historyLayout.getVisibility() == View.VISIBLE ){
+
+            fieldVisitBinding.historyLayout.setVisibility(View.GONE);
+            fieldVisitBinding.activityMain.setVisibility(View.VISIBLE);
+        }else  if(request_id.equals("") &&fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE){
             fieldVisitBinding.taxType.setAdapter(taxTypeAdapter);
             fieldVisitBinding.serviceFiledType.setAdapter(serviceFieldVisitAdapter);
             fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
@@ -1104,10 +1178,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
             fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
             fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
-        }else if(fieldVisitBinding.historyLayout.getVisibility() == View.VISIBLE ){
-
-            fieldVisitBinding.historyLayout.setVisibility(View.GONE);
-            fieldVisitBinding.activityMain.setVisibility(View.VISIBLE);
         }else {
             super.onBackPressed();
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
@@ -1417,6 +1487,20 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 }
 
             }
+            if ("FieldVisitedImage".equals(urlType) && responseObj != null) {
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("FieldImageDatadecry", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                if (status.equalsIgnoreCase("SUCCESS") ) {
+                    FieldVisitImageString = jsonObject.getString(AppConstant.TRADE_DOCUMENT);
+                    Log.d("FieldVisitImage", "" + jsonObject);
+                    viewImageScreen(FieldVisitImageString);
+
+                } }
+
         }
         catch (Exception e){
             e.printStackTrace();

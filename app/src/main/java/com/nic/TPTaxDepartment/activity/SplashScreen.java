@@ -3,6 +3,7 @@ package com.nic.TPTaxDepartment.activity;
 import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -55,7 +56,7 @@ public class SplashScreen extends AppCompatActivity implements
         smalltobig = AnimationUtils.loadAnimation(this, R.anim.smalltobig);
         fleft = AnimationUtils.loadAnimation(this, R.anim.fleft);
         fhelper = AnimationUtils.loadAnimation(this, R.anim.fhelper);
-        splashScreenBinding.ivSplash.startAnimation(smalltobig);
+       /* splashScreenBinding.ivSplash.startAnimation(smalltobig);
 
         splashScreenBinding.ivLogo.setTranslationX(400);
         splashScreenBinding.ivSubtitle.setTranslationX(400);
@@ -67,7 +68,7 @@ public class SplashScreen extends AppCompatActivity implements
 
         splashScreenBinding.ivLogo.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(500).start();
         splashScreenBinding.ivSubtitle.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(700).start();
-        splashScreenBinding.ivBtn.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();
+        splashScreenBinding.ivBtn.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(900).start();*/
 
        /* if((prefManager.getUserName()!=null) &&(!prefManager.getUserName().equals(""))
                 &&(prefManager.getUserPassword()!=null)&&(!prefManager.getUserPassword().equals(""))){
@@ -78,6 +79,7 @@ public class SplashScreen extends AppCompatActivity implements
         }*/
 
 
+       /*
             splashScreenBinding.ivBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +87,13 @@ public class SplashScreen extends AppCompatActivity implements
                 showSignInScreen();
             }
         });
+*/
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showSignInScreen();
+            }
+        }, 2000);
 
 
     }
