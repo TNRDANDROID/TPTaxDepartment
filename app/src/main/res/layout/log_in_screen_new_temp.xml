@@ -268,21 +268,6 @@
                             android:layout_below="@+id/user"
                             android:background="@color/greyed_lite"></View>
 
-                        <com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText
-                            android:layout_below="@+id/v1"
-                            android:visibility="gone"
-                            android:layout_weight="1"
-                            android:layout_marginTop="5dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/password2"
-                            android:paddingLeft="10dp"
-                            android:hint="password"
-                            app:tint_color="@color/grey2"
-                            android:layout_marginRight="20dp"
-                            android:background="@null"
-                            android:inputType="textPersonName"
-                            android:drawablePadding="5dp"></com.scottyab.showhidepasswordedittext.ShowHidePasswordEditText>
                         <EditText
                             android:layout_below="@+id/v1"
                             android:layout_weight="1"
