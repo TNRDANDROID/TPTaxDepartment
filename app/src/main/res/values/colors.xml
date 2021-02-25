@@ -111,6 +111,8 @@
     <color name="transparent_black_hex_7">#77000000</color>
     <color name="transparent_black_hex_8">#88000000</color>
     <color name="transparent_black_hex_9">#99000000</color>
+    <color name="bg1">#f3f3f3</color>
+    <color name="bg2">#fff</color>
 
     <color name="grey1">#878787</color>
     <color name="grey2">#505454</color>

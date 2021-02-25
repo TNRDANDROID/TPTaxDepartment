@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main"
-            android:visibility="visible">
+            android:visibility="gone">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 app:elevation="0dp"
@@ -2392,7 +2392,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:visibility="gone"
+            android:visibility="visible"
             android:id="@+id/full_details"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -2487,6 +2487,7 @@
             </com.google.android.material.appbar.AppBarLayout>
 
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -2540,6 +2541,7 @@
             </RelativeLayout>
 
             <TextView
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/trder_details_value"
@@ -2568,6 +2570,462 @@
                 android:layout_marginBottom="20dp"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true" />
+            <ScrollView
+                android:layout_below="@+id/appBarLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t1"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t2"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t3"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t4"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t5"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t6"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t7"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t8"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t9"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t10"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t11"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t12"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t13"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t14"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t15"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t16"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t17"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t18"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t19"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t20"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t21"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t22"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t23"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t24"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t25"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t26"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t27"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t28"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t29"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t30"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t31"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t32"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t33"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t34"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t35"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t36"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t37"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t38"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t39"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t40"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t41"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t42"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t43"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t44"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t45"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg2"
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t46"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+                <TextView
+                    android:background="@color/bg1"
+                    android:padding="8dp"                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/t47"
+                    android:textSize="15sp"
+                    android:scrollbars = "vertical"
+                    android:textColor="@color/grey2"
+                    ></TextView>
+
+
+            </LinearLayout>
+            </ScrollView>
         </RelativeLayout>
     </RelativeLayout>
 </layout>
