@@ -60,7 +60,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     String selectedFinId;
     String selectedFinName="";
     boolean flag;
-
+    final Calendar myCalendar = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,11 +195,40 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
 
     public void showDatePickerDialog() {
-        DialogFragment newFragment = new datePickerFragment();
+      /*  DialogFragment newFragment = new datePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+*/        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+                /*if(Utils.isOnline()){
+                getDailyCollection();
+            }
+            else {
+                Utils.showAlert(getActivity(),"No Network Connection");
+            }*/
+            }
+
+        };
+
+        new DatePickerDialog(DailyCollection.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
     }
 
+    private void updateLabel() {
+        String myFormat = "dd-mm-yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+
+        dailyCollectionBinding.date.setText(sdf.format(myCalendar.getTime()));
+    }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
             if(adapterView == dailyCollectionBinding.finYear){
@@ -233,7 +262,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public  class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+      public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         Calendar cldr = Calendar.getInstance();
 
         @Override
@@ -261,11 +290,11 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
             updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-           /* if(Utils.isOnline()){
+            /*if(Utils.isOnline()){
                 getDailyCollection();
             }
             else {
-                Utils.showAlert(DailyCollection.this,"No Network Connection");
+                Utils.showAlert(getActivity(),"No Network Connection");
             }*/
 
         }
