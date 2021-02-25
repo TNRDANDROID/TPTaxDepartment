@@ -359,7 +359,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_name_ta().compareTo(rhs.getWard_name_ta()));
+        Collections.sort(wards, (lhs, rhs) -> lhs.getWard_code().compareTo(rhs.getWard_code()));
 
         if(wards != null && wards.size() >0) {
 
@@ -368,8 +368,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             final String[] items = new String[wards.size() + 1];
             items[0] = "Select Ward";
             for (int i = 0; i < wards.size(); i++) {
-                spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_name_ta());
-                String Class = wards.get(i).getWard_name_ta();
+                spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_code());
+                String Class = wards.get(i).getWard_code();
                 items[i + 1] = Class;
             }
             System.out.println("items" + items.toString());

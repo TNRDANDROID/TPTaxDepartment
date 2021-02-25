@@ -90,7 +90,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         });
 
 
-        newDashboardBinding.voteprogresscard.setTranslationX(800);
+       /* newDashboardBinding.voteprogresscard.setTranslationX(800);
         newDashboardBinding.attendanecard.setTranslationX(800);
         newDashboardBinding.cameracard.setTranslationX(800);
         newDashboardBinding.votecountcard.setTranslationX(800);
@@ -126,7 +126,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         anim.setFillAfter(true); // Needed to keep the result of the animation
         anim.setDuration(1000);
         anim.setRepeatMode(Animation.INFINITE);
-        anim.setRepeatCount(Animation.INFINITE);
+        anim.setRepeatCount(Animation.INFINITE);*/
 
         ////newDashboardBinding.tradeTv.startAnimation(anim);
         //newDashboardBinding.fieldTv.startAnimation(anim);

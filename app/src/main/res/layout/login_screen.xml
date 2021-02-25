@@ -74,7 +74,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:padding="3dp"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
                 android:text="@string/app_name_line"
                 android:textColor="@color/grey2"
                 android:textSize="17sp"
@@ -303,7 +304,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginEnd="10dp"                                    android:layout_marginTop="@dimen/padding"
-                                    android:text="Username"
+                                    android:text="UserName"
                                     android:textColor="@color/grey2"
                                     android:textSize="15sp"
                                     android:visibility="visible"
@@ -347,7 +348,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                                 android:background="@color/full_transparent"
                                                 android:inputType="textPersonName"
                                                 android:padding="0dp"
-                                                android:hint="Username"
+                                                android:hint="UserName"
                                                 />
 
                                         </com.google.android.material.textfield.TextInputLayout>
@@ -381,7 +382,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:layout_marginEnd="10dp"                                    android:layout_marginTop="@dimen/padding"
-                                    android:text="Password"
+                                    android:text="PassWord"
                                     android:textColor="@color/grey2"
                                     android:textSize="15sp"
                                     android:visibility="visible"
@@ -425,7 +426,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                                 android:layout_height="40dp"
                                                 android:background="@color/full_transparent"
                                                android:padding="0dp"
-                                                android:hint="Password"
+                                                android:hint="PassWord"
                                                 android:inputType="textPassword"/>
 
                                         </com.google.android.material.textfield.TextInputLayout>

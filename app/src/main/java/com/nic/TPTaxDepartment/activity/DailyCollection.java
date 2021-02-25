@@ -87,8 +87,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         date.setText("Select Date");
 
         dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
-        dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
-        dailyCollectionBinding.yearVice.setChecked(false);
+        dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
+        dailyCollectionBinding.yearVice.setChecked(true);
         dailyCollectionBinding.daily.setChecked(false);
         dailyCollectionBinding.daily.setOnClickListener(this::onClick);
         dailyCollectionBinding.yearVice.setOnClickListener(this::onClick);

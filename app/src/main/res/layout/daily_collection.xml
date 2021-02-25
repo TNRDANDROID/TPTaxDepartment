@@ -185,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/daily"
-                    android:text="Daily"
+                    android:text="Date"
                     android:layout_toRightOf="@+id/year_vice"
                     android:layout_marginLeft="70dp"></RadioButton>
             </RelativeLayout>
@@ -220,7 +220,6 @@
                 android:focusableInTouchMode="true"
                 android:hint=""
                 android:textAlignment="viewStart"
-                android:textColor="@android:color/black"
                 android:textSize="@dimen/_15sdp"
                 customfontdemo:fontName="@string/font_circular_book" />
 

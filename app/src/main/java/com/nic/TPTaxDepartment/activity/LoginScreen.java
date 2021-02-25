@@ -129,7 +129,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         });
 
         loginScreenBinding.password.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Poppins-Regular.ttf"));
-        loginScreenBinding.rd.setTranslationY(400);
+       /* loginScreenBinding.rd.setTranslationY(400);
         loginScreenBinding.and.setTranslationY(400);
         loginScreenBinding.dpt.setTranslationY(400);
         loginScreenBinding.tvVersionNumber.setTranslationY(400);
@@ -163,7 +163,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.ivItemOne.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(200).start();
         loginScreenBinding.ivItemTwo.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(400).start();
 
-        loginScreenBinding.ivIlls.startAnimation(stb2);
+        loginScreenBinding.ivIlls.startAnimation(stb2);*/
         randString = Utils.randomChar();
 
 

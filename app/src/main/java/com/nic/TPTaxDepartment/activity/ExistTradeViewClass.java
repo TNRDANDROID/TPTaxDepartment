@@ -151,6 +151,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     int position;
     int tradersImagePosition;
     Boolean flag,wardFlag=false;
+    Boolean Annualflag=false;
+    Boolean Motorflag=false;
+    Boolean Generatorflag=false;
     ArrayList< TPtaxModel > traders ;
     ArrayList< TPtaxModel > tradersImageList ;
 
@@ -230,7 +233,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             LoadGenderSpinner();
             LoadTradeCodeListSpinner();
             LoadLicenceTypeSpinner();
-            /*LoadAnnualSaleListSpinner();
+           /* LoadAnnualSaleListSpinner();
             LoadGeneratorRangeListSpinner();
             LoadMotorRangeListSpinner();*/
         } catch (JSONException e) {
@@ -328,9 +331,6 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         System.out.println("getAmount_range_id"+tt);
         wardFlag=false;
         LoadWardSpinner();
-        //LoadAnnualSaleListSpinner();
-        //LoadGeneratorRangeListSpinner();
-        //LoadMotorRangeListSpinner();
 //        getTradeImage();
         try {
             LoadStreetSpinner(traders.get(position).getWardId(),spinnerMapStreets.get(traders.get(position).getStreetId()));
@@ -387,6 +387,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         } catch (Exception e) {
             e.printStackTrace();
         }
+/*
         try {
             int annualPosition = annualSaleArray.getPosition(spinnerMapAnnualSale.get(traders.get(position).getAmount_range_id()));
             if(annualPosition >= 0){
@@ -397,6 +398,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         } catch (Exception e) {
             e.printStackTrace();
         }
+*/
 
         existingTradeDetailsViewNewBinding.date.setText(traders.get(position).getTrade_date());
         existingTradeDetailsViewNewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
@@ -447,69 +449,6 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.no.setVisibility(View.GONE);
         }
 
-        if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("Yes")){
-            existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(true);
-            existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
-            existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
-            existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
-            try {
-                int motorPosition = motorRangeArray.getPosition(spinnerMapMotorRange.get(traders.get(position).getMotor_type_id()));
-                if(motorPosition >= 0){
-                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setSelection(motorPosition);
-                }else {
-                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(null);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }else  if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("No")){
-            existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
-            existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(true);
-            existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
-        }else {
-            existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
-            existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
-            existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
-        }
-
-        if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("Yes")){
-            existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(true);
-            existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
-            existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
-            existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
-            try {
-                int geneartorPosition = generatorRangeArray.getPosition(spinnerMapGeneratorRange.get(traders.get(position).getGenerator_range_id()));
-                if(geneartorPosition >= 0){
-                    existingTradeDetailsViewNewBinding.generatorSpinner.setSelection(geneartorPosition);
-                }else {
-                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(null);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
-        }else if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("No")){
-            existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
-            existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(true);
-            existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
-        }else {
-            existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
-            existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
-            existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
-        }
 
         if(traders.get(position).getPropertyStatus() != null && traders.get(position).getPropertyStatus().equals("Yes")){
             existingTradeDetailsViewNewBinding.propertyTaxYes.setChecked(true);
@@ -552,6 +491,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             existingTradeDetailsViewNewBinding.professionalYes.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.professionalNo.setVisibility(View.GONE);
         }
+        existingTradeDetailsViewNewBinding.tv1.setText("Amount to pay "+(traders.get(position).getTraders_rate()));
 //        setDisableToFields();
 //        setEnableToFields();
     }
@@ -1790,6 +1730,24 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             } catch (Exception exp) {
                 exp.printStackTrace();
             }
+            if(!Annualflag) {
+                try {
+                    int annualPosition = annualSaleArray.getPosition(spinnerMapAnnualSale.get(traders.get(position).getAmount_range_id()));
+                    if(annualPosition >= 0){
+                        Annualflag=true;
+                        existingTradeDetailsViewNewBinding.annualSale.setSelection(annualPosition);
+                    }else {
+                        existingTradeDetailsViewNewBinding.annualSale.setAdapter(null);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }else {
+                existingTradeDetailsViewNewBinding.annualSale.setSelection(0);
+            }
+
+
         }
 
     }
@@ -1845,6 +1803,42 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 }
             } catch (Exception exp) {
                 exp.printStackTrace();
+            }
+            if(!Motorflag) {
+                if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("Yes")){
+                    existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(true);
+                    existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
+                    existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
+                    existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
+                    try {
+                        int motorPosition = motorRangeArray.getPosition(spinnerMapMotorRange.get(traders.get(position).getMotor_type_id()));
+                        if(motorPosition >= 0){
+                            Motorflag=true;
+                            existingTradeDetailsViewNewBinding.motorRangeSpinner.setSelection(motorPosition);
+                        }else {
+                            existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(null);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else  if(traders.get(position).getMotorStatus() != null && traders.get(position).getMotorStatus().equals("No")){
+                    existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
+                    existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(true);
+                    existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
+                }else {
+                    existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(false);
+                    existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
+                    existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.motorYes.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.motorNo.setVisibility(View.GONE);
+                }
+            }else {
+                existingTradeDetailsViewNewBinding.motorRangeSpinner.setSelection(0);
             }
         }
 
@@ -1904,6 +1898,42 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             } catch (Exception exp) {
                 exp.printStackTrace();
             }
+            if(!Generatorflag) {
+                if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("Yes")){
+                    existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(true);
+                    existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
+                    existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
+                    existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
+                    try {
+                        int geneartorPosition = generatorRangeArray.getPosition(spinnerMapGeneratorRange.get(traders.get(position).getGenerator_range_id()));
+                        if(geneartorPosition >= 0){
+                            Generatorflag=true;
+                            existingTradeDetailsViewNewBinding.generatorSpinner.setSelection(geneartorPosition);
+                        }else {
+                            existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(null);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+
+                }else if(traders.get(position).getGeneratorStatus() != null && traders.get(position).getGeneratorStatus().equals("No")){
+                    existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
+                    existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(true);
+                    existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
+                }else {
+                    existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(false);
+                    existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
+                    existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.generatorYes.setVisibility(View.GONE);
+                    existingTradeDetailsViewNewBinding.generatorNo.setVisibility(View.GONE);
+                }
+            }else {
+                existingTradeDetailsViewNewBinding.generatorSpinner.setSelection(0);
+            }
         }
 
     }
@@ -1939,6 +1969,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
         String description_ta= changeTextColor("Establishment Name Ta : ")+traders.get(position).getEstablishment_name_ta() + "\n"+ "\n";
         String description_en= changeTextColor("Establishment Name En : ")+traders.get(position).getEstablishment_name_en() + "\n"+ "\n";
+
         String statecode=changeTextColor("State Code : ")+traders.get(position).getStatecode() + "\n"+ "\n";
         String wardid= changeTextColor("Ward ID : ")+traders.get(position).getWardId() + "\n"+ "\n";
         String streetid= changeTextColor("Street ID : ")+traders.get(position).getStreetId() + "\n"+ "\n";;
@@ -1976,6 +2007,61 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         String ward_name_en= changeTextColor("WardName En: ")+traders.get(position).getWard_name_en() + "\n"+ "\n";
         String ward_name_ta= changeTextColor("WardName Ta: ")+traders.get(position).getWard_name_ta() + "\n"+ "\n";
 
+        existingTradeDetailsViewNewBinding.t1.setText(Html.fromHtml(tradersdetails_id));
+        existingTradeDetailsViewNewBinding.t2.setText(Html.fromHtml(lb_sno));
+        existingTradeDetailsViewNewBinding.t3.setText(Html.fromHtml(lb_traderscode));
+        existingTradeDetailsViewNewBinding.t4.setText(Html.fromHtml(tradedetails_id));
+        existingTradeDetailsViewNewBinding.t5.setText(Html.fromHtml(traders_rate));
+        existingTradeDetailsViewNewBinding.t6.setText(Html.fromHtml(traders_type));
+        existingTradeDetailsViewNewBinding.t7.setText(Html.fromHtml(tradersperiod));
+        existingTradeDetailsViewNewBinding.t8.setText(Html.fromHtml(traderstypee));
+        existingTradeDetailsViewNewBinding.t9.setText(Html.fromHtml(apname_ta));
+        existingTradeDetailsViewNewBinding.t10.setText(Html.fromHtml(apname_en));
+        existingTradeDetailsViewNewBinding.t11.setText(Html.fromHtml(apfathername_ta));
+        existingTradeDetailsViewNewBinding.t12.setText(Html.fromHtml(apfathername_en));
+        existingTradeDetailsViewNewBinding.t13.setText(Html.fromHtml(apgender));
+        existingTradeDetailsViewNewBinding.t14.setText(Html.fromHtml(apage));
+        existingTradeDetailsViewNewBinding.t15.setText(Html.fromHtml(date));
+        existingTradeDetailsViewNewBinding.t16.setText(Html.fromHtml(dcode));
+        existingTradeDetailsViewNewBinding.t17.setText(Html.fromHtml(doorno));
+        existingTradeDetailsViewNewBinding.t18.setText(Html.fromHtml(email));
+        existingTradeDetailsViewNewBinding.t19.setText(Html.fromHtml(description_ta));
+        existingTradeDetailsViewNewBinding.t20.setText(Html.fromHtml(description_en));
+
+
+        existingTradeDetailsViewNewBinding.t21.setText(Html.fromHtml(statecode));
+        existingTradeDetailsViewNewBinding.t22.setText(Html.fromHtml(wardid));
+        existingTradeDetailsViewNewBinding.t23.setText(Html.fromHtml(streetid));
+        existingTradeDetailsViewNewBinding.t24.setText(Html.fromHtml(mobileno));
+        existingTradeDetailsViewNewBinding.t25.setText(Html.fromHtml(licencetypeid));
+        existingTradeDetailsViewNewBinding.t26.setText(Html.fromHtml(licence_validity));
+        existingTradeDetailsViewNewBinding.t27.setText(Html.fromHtml(traders_license_type_name));
+
+        existingTradeDetailsViewNewBinding.t28.setText(Html.fromHtml(ownerStatus));
+        existingTradeDetailsViewNewBinding.t29.setText(Html.fromHtml(motorStatus));
+        existingTradeDetailsViewNewBinding.t30.setText(Html.fromHtml(generatorStatus));
+        existingTradeDetailsViewNewBinding.t31.setText(Html.fromHtml(propertyStatus));
+        existingTradeDetailsViewNewBinding.t32.setText(Html.fromHtml(professtionlStatus));
+        existingTradeDetailsViewNewBinding.t33.setText(Html.fromHtml(motor_type_id));
+        existingTradeDetailsViewNewBinding.t34.setText(Html.fromHtml(amount_range_id));
+        existingTradeDetailsViewNewBinding.t35.setText(Html.fromHtml(generator_range_id));
+        existingTradeDetailsViewNewBinding.t36.setText(Html.fromHtml(propertyTaxAssessmentNumber));
+        existingTradeDetailsViewNewBinding.t37.setText(Html.fromHtml(remark));
+
+        existingTradeDetailsViewNewBinding.t38.setText(Html.fromHtml(annual_sale_production_amount));
+        existingTradeDetailsViewNewBinding.t39.setText(Html.fromHtml(annual_sale_production_range));
+        existingTradeDetailsViewNewBinding.t40.setText(Html.fromHtml(generator_range));
+        existingTradeDetailsViewNewBinding.t41.setText(Html.fromHtml(generator_range_amount));
+        existingTradeDetailsViewNewBinding.t42.setText(Html.fromHtml(motor_range));
+        existingTradeDetailsViewNewBinding.t43.setText(Html.fromHtml(motor_range_amount));
+        existingTradeDetailsViewNewBinding.t44.setText(Html.fromHtml(street_name_ta));
+        existingTradeDetailsViewNewBinding.t45.setText(Html.fromHtml(street_name_en));
+        existingTradeDetailsViewNewBinding.t46.setText(Html.fromHtml(ward_name_en));
+        existingTradeDetailsViewNewBinding.t47.setText(Html.fromHtml(ward_name_ta));
+
+
+
+
 
 
 
@@ -1985,7 +2071,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 +"<br/>"+"<br/>"+ description_ta+"<br/>"+"<br/>"+	description_en+"<br/>"+"<br/>"+	statecode+"<br/>"+"<br/>"+ wardid+"<br/>"+"<br/>"+	streetid+"<br/>"+"<br/>"+	mobileno	+"<br/>"+"<br/>"+licence_validity+"<br/>"+"<br/>"+	licencetypeid
                 +"<br/>"+"<br/>"+traders_license_type_name+	"<br/>"+"<br/>"+ ownerStatus	+ "<br/>"+"<br/>"+ motorStatus + "<br/>"+"<br/>"+ generatorStatus +"<br/>"+"<br/>"+ propertyStatus+"<br/>"+"<br/>"+	professtionlStatus	+"<br/>"+"<br/>"+ motor_type_id+"<br/>"+"<br/>"+	amount_range_id
                 +"<br/>"+"<br/>"+generator_range_id	+"<br/>"+"<br/>"+propertyTaxAssessmentNumber +"<br/>"+"<br/>"+remark+"<br/>"+"<br/>"+annual_sale_production_amount+"<br/>"+"<br/>"+annual_sale_production_range+"<br/>"+"<br/>"+generator_range+"<br/>"+"<br/>"+generator_range_amount
-       +"<br/>"+"<br/>"+motor_range+"<br/>"+"<br/>"+motor_range_amount +"<br/>"+"<br/>"+street_name_ta+"<br/>"+"<br/>"+street_name_en+"<br/>"+"<br/>"+ward_name_en+"<br/>"+"<br/>"+ward_name_ta));
+                +"<br/>"+"<br/>"+motor_range+"<br/>"+"<br/>"+motor_range_amount +"<br/>"+"<br/>"+street_name_ta+"<br/>"+"<br/>"+street_name_en+"<br/>"+"<br/>"+ward_name_en+"<br/>"+"<br/>"+ward_name_ta));
 
         //existingTradeDetailsViewNewBinding.trderDetailsValue.setText(Html.fromHtml(tradersdetails_id +"<br/>"+"<br/>"+  lb_sno));
     }
