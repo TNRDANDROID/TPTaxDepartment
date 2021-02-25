@@ -825,9 +825,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
             JSONObject responseObj = serverResponse.getJsonResponse();
-            String myFileType = serverResponse.getApi();
+            String urlType = serverResponse.getApi();
 
-            if ("SaveLicenseTraders".equals(myFileType) && responseObj != null) {
+            if ("SaveLicenseTraders".equals(urlType) && responseObj != null) {
                 String user_data = Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);

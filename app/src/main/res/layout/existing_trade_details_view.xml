@@ -2116,7 +2116,7 @@
                         android:background="@drawable/click_here"
                         android:clickable="true"
                         android:foreground="?attr/selectableItemBackground"
-                        android:onClick="@{()-> activity.validateUserDetails()}"
+                        android:onClick="@{()-> activity.ValidationThird()}"
                         android:text="Submit"
                         android:textAllCaps="false"
                         android:textColor="@android:color/black"

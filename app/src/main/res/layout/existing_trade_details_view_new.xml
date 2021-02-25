@@ -350,7 +350,6 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:overlapAnchor="false"
                                     android:gravity="center" />
 
@@ -739,7 +738,7 @@
                         android:layout_below="@+id/appBarLayout"
                         android:id="@+id/second"
                         android:layout_marginBottom="@dimen/padding"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical">
                         //Ward No
                         <LinearLayout
@@ -791,7 +790,6 @@
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
                                     android:layout_marginLeft="10dp"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
@@ -850,7 +848,6 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:gravity="center" />
 
                             </RelativeLayout>
@@ -1018,7 +1015,6 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
@@ -1035,7 +1031,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_below="@id/gender_layout"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/owner_hint"
@@ -1057,8 +1053,7 @@
                                 android:src="@drawable/ic_no"
                                 android:id="@+id/no"
                                 android:padding="5dp"
-                                android:visibility="visible"
-                                android:background="@drawable/yes_no_bg"
+                                android:visibility="gone"                                android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/subscription_type_red_color"
                                 />
@@ -1068,6 +1063,7 @@
                                 android:src="@drawable/ic_check"
                                 android:id="@+id/yes"
                                 android:padding="3dp"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/account_status_green_color"
@@ -1078,7 +1074,8 @@
                                 android:layout_height="40dp"
                                 android:layout_marginLeft="@dimen/margin_left_20dp"
                                 android:layout_marginTop="10dp"
-                                android:visibility="gone"
+                                android:visibility="visible"
+                                android:id="@+id/ownerRadio"
                                 android:background="@color/white"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:orientation="vertical">
@@ -1117,7 +1114,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:layout_marginTop="10dp"
-                                android:textSize="16sp"                                 android:id="@+id/viewDoc"
+                                android:textSize="16sp"
+                                android:id="@+id/viewDoc"
                                 android:onClick="@{()-> activity.viewDocument()}"
                                 android:layout_marginRight="20dp"
                                 android:drawablePadding="10dp"
@@ -1136,11 +1134,11 @@
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:background="@drawable/rectangle_box"
                                 android:orientation="vertical"
-                                android:visibility="gone">
+                                android:visibility="visible">
 
 
                                 <TextView
-                                    android:onClick="@{()-> activity.openDocument()}"
+                                    android:onClick="@{()-> activity.getDocument()}"
                                     android:layout_centerVertical="true"
                                     android:id="@+id/choose_file"
                                     android:padding="@dimen/_5sdp"
@@ -1168,6 +1166,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
+                                    android:onClick="@{()-> activity.openFile()}"
                                     android:layout_marginRight="@dimen/_6sdp"
                                     customfontdemo:fontName="@string/font_circular_book"/>
 
@@ -1325,7 +1324,6 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
@@ -1383,7 +1381,6 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
@@ -1405,7 +1402,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/margin_left_20dp"
                                 android:layout_marginTop="10dp"
-                                android:textSize="16sp"                                 android:layout_marginRight="@dimen/margin_left_20dp"
+                                android:textSize="16sp"
+                                android:id="@+id/annual_sale_text_id"
+                                android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:text="Annual Sale"
                                 android:textColor="@color/black_grey"
                                 android:visibility="visible"
@@ -1441,7 +1440,6 @@
                                     android:layout_centerInParent="true"
                                     android:layout_marginLeft="10dp"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
@@ -1542,7 +1540,7 @@
                         android:layout_below="@+id/second"
                         android:id="@+id/third"
                         android:layout_marginBottom="10dp"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:orientation="vertical">
                         //Trade Description
                         <LinearLayout
@@ -1662,7 +1660,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_below="@id/gender_layout"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/moter_hint"
@@ -1682,7 +1680,7 @@
                                 android:src="@drawable/ic_no"
                                 android:id="@+id/motor_no"
                                 android:padding="5dp"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/subscription_type_red_color"
@@ -1693,6 +1691,7 @@
                                 android:src="@drawable/ic_check"
                                 android:id="@+id/motor_yes"
                                 android:padding="3dp"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/account_status_green_color"
@@ -1702,7 +1701,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/white"
-                                android:visibility="gone"
+                                android:visibility="visible"
+                                android:id="@+id/motorRadio"
                                 android:layout_marginLeft="@dimen/margin_left_20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
@@ -1780,7 +1780,6 @@
                                     android:layout_centerInParent="true"
                                     android:layout_marginLeft="10dp"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
@@ -1797,7 +1796,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_below="@id/gender_layout"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/genarator_hint"
@@ -1817,7 +1816,7 @@
                                 android:src="@drawable/ic_no"
                                 android:id="@+id/generator_no"
                                 android:padding="5dp"
-                                android:visibility="visible"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/subscription_type_red_color"
@@ -1828,6 +1827,7 @@
                                 android:src="@drawable/ic_check"
                                 android:id="@+id/generator_yes"
                                 android:padding="3dp"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/account_status_green_color"
@@ -1840,7 +1840,9 @@
                                 android:layout_marginLeft="@dimen/margin_left_20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
-                                android:visibility="gone"
+                                android:visibility="visible"
+                                android:id="@+id/generatorRadio"
+
                                 android:orientation="vertical">
 
                                 <RadioButton
@@ -1916,7 +1918,6 @@
                                     android:layout_centerInParent="true"
                                     android:layout_marginLeft="10dp"
                                     android:textColor="@color/grey2"
-                                    android:backgroundTint="@color/full_transparent"
                                     android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
@@ -1932,7 +1933,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_below="@id/gender_layout"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/professional_tax_hint"
@@ -1951,8 +1952,7 @@
                                 android:src="@drawable/ic_no"
                                 android:id="@+id/professional_no"
                                 android:padding="5dp"
-                                android:visibility="visible"
-                                android:background="@drawable/yes_no_bg"
+                                android:visibility="gone"                                android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/subscription_type_red_color"
                                 />
@@ -1962,6 +1962,7 @@
                                 android:src="@drawable/ic_check"
                                 android:id="@+id/professional_yes"
                                 android:padding="3dp"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/account_status_green_color"
@@ -1970,11 +1971,12 @@
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
-                                android:backgroundTint="@color/full_transparent"
+                                android:id="@+id/professionalRadio"
+                                android:background="@color/white"
                                 android:layout_marginLeft="@dimen/margin_left_20dp"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:orientation="vertical">
 
                                 <RadioButton
@@ -2007,7 +2009,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_below="@id/gender_layout"
-                            android:orientation="horizontal">
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/property_tax_hint"
@@ -2027,8 +2029,7 @@
                                 android:src="@drawable/ic_no"
                                 android:id="@+id/property_no"
                                 android:padding="5dp"
-                                android:visibility="visible"
-                                android:background="@drawable/yes_no_bg"
+                                android:visibility="gone"                                android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/subscription_type_red_color"
                                 />
@@ -2038,6 +2039,7 @@
                                 android:src="@drawable/ic_check"
                                 android:id="@+id/property_yes"
                                 android:padding="3dp"
+                                android:visibility="gone"
                                 android:background="@drawable/yes_no_bg"
                                 android:layout_gravity="center_vertical"
                                 android:tint="@color/account_status_green_color"
@@ -2046,9 +2048,11 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="40dp"
                                 android:background="@color/white"
+                                android:id="@+id/propertyRadio"
+
                                 android:layout_marginLeft="@dimen/margin_left_20dp"
                                 android:layout_marginTop="10dp"
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:orientation="vertical">
 
@@ -2339,7 +2343,7 @@
                             android:background="@drawable/click_here"
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackground"
-                            android:onClick="@{()-> activity.validateUserDetails()}"
+                            android:onClick="@{()-> activity.ValidationThird()}"
                             android:text="Update"
                             android:textAllCaps="false"
                             android:textColor="@color/colorPrimary"
