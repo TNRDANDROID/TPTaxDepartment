@@ -389,7 +389,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 String responseDecryptedBlockKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedBlockKey);
                 if ( Utils.NotNullString(jsonObject.getString("STATUS")).equalsIgnoreCase("OK") &&  Utils.NotNullString(jsonObject.getString("RESPONSE")).equalsIgnoreCase("OK")) {
-                    Utils.showAlert(this, "Your Activity is Synchronized to the server!");
+                    Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.synchronized_to_server));
 //                    ODFMonitoringListValue value = prefManager.getLocalSaveDeletedKeyList();
 //                    pendingScreenAdapter.notifyDataSetChanged();
 //                    long id = db.delete(DBHelper.SAVE_ACTIVITY,"dcode = ? and bcode = ? and pvcode = ? and schedule_id = ? and activity_id = ?",new String[] {value.getDistictCode(),value.getBlockCode(),value.getPvCode(), String.valueOf(value.getScheduleId()), String.valueOf(value.getActivityId())});
@@ -446,7 +446,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     }
                 }catch (Exception e){
                     e.printStackTrace();
-                    Utils.showAlert(PendingScreen.this, "Not Saved");
+                    Utils.showAlert(PendingScreen.this, getApplicationContext().getResources().getString(R.string.pending_not_saved));
                 }
 
             }
@@ -622,7 +622,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             sync_data();
         }
         else {
-            Utils.showAlert(PendingScreen.this,"No Internet Connection ");
+            Utils.showAlert(PendingScreen.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
         }
 
     }
@@ -689,12 +689,12 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         }
     }
 
-    public void  loadFieldList(ArrayList<CommonModel> fields,int pos){
+    public void  loadFieldList(ArrayList<CommonModel> fields){
         Intent intent = new Intent( PendingScreen.this, FieldVisit.class);
         intent.putExtra("flag",true);
-        intent.putExtra("position",pos);
+        intent.putExtra("position",0);
         intent.putExtra("fieldsList", fields);
-        startActivity(intent);
+        startActivityForResult(intent,1);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 }

@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:text="Trade Licence"
+                android:text="@string/trade_licence_title"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_15sdp"
@@ -145,7 +145,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="2dp"
-                                android:text="New"
+                                android:text="@string/new_trade"
                                 android:textSize="23sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white" />
@@ -219,7 +219,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center"
                                 android:padding="2dp"
-                                android:text="Existing"
+                                android:text="@string/existing_trade"
                                 android:textSize="23sp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white" />

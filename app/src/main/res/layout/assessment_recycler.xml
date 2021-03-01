@@ -14,7 +14,7 @@
             android:id="@+id/professionalTax"
             android:padding="5dp"
             android:layout_marginBottom="@dimen/margin_left_20dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Assessment No"
+                    android:text="@string/assessment_no"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -69,7 +69,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Assessment Name"
+                    android:text="@string/assessment_name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -108,7 +108,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Organization Type"
+                    android:text="@string/organization_type"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -131,7 +131,7 @@
             android:id="@+id/propertyTax"
             android:padding="5dp"
             android:layout_marginBottom="@dimen/margin_left_20dp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Assessment No"
+                    android:text="@string/assessment_no"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
@@ -189,7 +189,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Owner Name"
+                    android:text="@string/owner_name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
@@ -230,7 +230,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Father Name"
+                    android:text="@string/father_name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
 
@@ -271,7 +271,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Permanent Address"
+                    android:text="@string/permanent_address"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -311,7 +311,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Area In Square Feet"
+                    android:text="@string/area_in_square_feet"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -359,7 +359,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Trader Code"
+                    android:text="@string/trader_code"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -398,7 +398,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Father Name"
+                    android:text="@string/father_name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -438,7 +438,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Father Name in Tamil"
+                    android:text="@string/father_name_in_tamil"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -477,7 +477,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Door No"
+                    android:text="@string/assessment_door_no"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -516,7 +516,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Trader Rate"
+                    android:text="@string/assessment_trader_rate"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -555,7 +555,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Financial Year"
+                    android:text="@string/assessment_financial_Year"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -594,7 +594,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Trade Description"
+                    android:text="@string/trade_description"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -642,7 +642,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Connection No"
+                    android:text="@string/connection_no"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -681,7 +681,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Connection Name"
+                    android:text="@string/connection_name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -720,7 +720,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Water Charges"
+                    android:text="@string/water_charges"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -743,7 +743,7 @@
             android:id="@+id/non_tax"
             android:padding="5dp"
             android:layout_marginBottom="@dimen/margin_left_20dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -760,7 +760,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Lease Assessment No"
+                    android:text="@string/lease_assessment_no"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -799,7 +799,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Name"
+                    android:text="@string/name"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -837,7 +837,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Name in Tamil"
+                    android:text="@string/name_in_tamil"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -876,7 +876,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Lease Type Code"
+                    android:text="@string/lease_type_code"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -916,7 +916,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Lease Type Description"
+                    android:text="@string/lease_type_description"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -956,7 +956,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Lease Payment Due Type"
+                    android:text="@string/lease_payment_due_type"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView
@@ -996,7 +996,7 @@
                     android:layout_marginLeft="@dimen/margin_left_20dp"
                     android:textSize="15sp"
                     android:layout_marginRight="@dimen/margin_left_20dp"
-                    android:text="Annual Lease Amount"
+                    android:text="@string/annual_lease_amount"
                     android:textColor="@color/grey1"
                     android:visibility="visible" />
                 <TextView

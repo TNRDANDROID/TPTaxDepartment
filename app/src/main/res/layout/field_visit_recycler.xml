@@ -43,7 +43,7 @@
                         android:textSize="16sp"
                         android:layout_centerVertical="true"
                         android:id="@+id/upload"
-                        android:text="Upload"
+                        android:text="@string/upload"
                         android:paddingRight="5dp"
                         android:fontFamily="sans-serif" />
                     <ImageView
@@ -224,7 +224,7 @@
                 android:textSize="16sp"
                 android:textColor="@color/grey1"
                 android:id="@+id/name"
-                android:text="Request ID"
+                android:text="@string/request_id"
                 android:fontFamily="sans-serif" />
             <TextView
                 android:layout_width="0dp"
@@ -272,7 +272,7 @@
                 android:textColor="@color/grey1"
                 android:id="@+id/mobile"
                 android:layout_below="@+id/name"
-                android:text="Tax Type"
+                android:text="@string/tax_type"
                 android:fontFamily="sans-serif" />
             <TextView
                 android:layout_width="0dp"
@@ -320,7 +320,7 @@
                 android:textColor="@color/grey1"
                 android:id="@+id/paymentDate"
                 android:layout_below="@+id/mobile"
-                android:text="Status"
+                android:text="@string/current_status"
                 android:fontFamily="sans-serif" />
             <TextView
                 android:layout_width="0dp"

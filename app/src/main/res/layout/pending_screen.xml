@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="Field Visit"
+            android:text="@string/pending_screen_title"
             android:textAlignment="center"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_15sdp"

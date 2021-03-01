@@ -27,7 +27,7 @@
                 android:singleLine="true"
                 android:minWidth="100dp"
                 android:minLines="1"
-                android:text="Trade Licence"
+                android:text="@string/trade_licence_title"
                 android:textSize="18sp"
                 android:textColor="@color/colorPrimary" />
 

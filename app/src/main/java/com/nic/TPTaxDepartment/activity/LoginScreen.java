@@ -170,7 +170,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         try {
             String versionName = getPackageManager()
                     .getPackageInfo(getPackageName(), 0).versionName;
-            loginScreenBinding.tvVersionNumber.setText("Version" + " " + versionName);
+            loginScreenBinding.tvVersionNumber.setText(getApplicationContext().getResources().getString(R.string.version) + " " + versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
@@ -202,10 +202,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         if (username.isEmpty()) {
             valid = false;
-            Utils.showAlert(this, "Please enter the username");
+            Utils.showAlert(this, this.getApplicationContext().getResources().getString(R.string.please_enter_the_username));
         } else if (password.isEmpty()) {
             valid = false;
-            Utils.showAlert(this, "Please enter the password");
+            Utils.showAlert(this, this.getApplicationContext().getResources().getString(R.string.please_enter_the_password));
         }
         return valid;
     }
@@ -221,14 +221,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             else if (prefManager.getUserName().length() > 0 && password.length() > 0) {
                 new ApiService(this).makeRequest("LoginScreen", Api.Method.POST, UrlGenerator.getLoginUrl(), loginParams(), "not cache", this);
             } else {
-                Utils.showAlert(this, "Please enter your username and password!");
+                Utils.showAlert(this, this.getApplicationContext().getResources().getString(R.string.please_enter_your_username_and_password));
             }
         } else {
             //Utils.showAlert(this, getResources().getString(R.string.no_internet));
             AlertDialog.Builder ab = new AlertDialog.Builder(
                     LoginScreen.this);
-            ab.setMessage("Internet Connection is not avaliable..Please Turn ON Network Connection OR Continue With Off-line Mode..");
-            ab.setPositiveButton("Settings",
+            ab.setMessage(getApplicationContext().getResources().getString(R.string.internet_connection_available));
+            ab.setPositiveButton(getApplicationContext().getResources().getString(R.string.settings),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                             int whichButton) {
@@ -237,7 +237,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                             startActivity(I);
                         }
                     });
-            ab.setNegativeButton("Continue With Off-Line",
+            ab.setNegativeButton(getApplicationContext().getResources().getString(R.string.continue_with_off_line),
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                             int whichButton) {
@@ -340,7 +340,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         if (response.equals("LOGIN_FAILED")) {
                             //loginScreenBinding.progressBar.setVisibility(View.GONE);
                             //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
-                            Utils.showAlert(this, "Invalid UserName Or Password");
+                            Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.invalid_username_or_password));
                         }
                     }
                 }
@@ -368,23 +368,23 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }*/
         String message = null;
         if (volleyError instanceof NetworkError) {
-            message = "Cannot connect to Internet...Please check your connection!";
+            message = getApplicationContext().getResources().getString(R.string.please_check_your_connection);
             Utils.showAlert(this, message);
 
         } else if (volleyError instanceof ServerError) {
-            message = "The server could not be found. Please try again after some time!!";
+            message = getApplicationContext().getResources().getString(R.string.server_could_not_be_found);
             Utils.showAlert(this, message);
         } else if (volleyError instanceof AuthFailureError) {
-            message = "Cannot connect to Internet...Please check your connection!";
+            message = getApplicationContext().getResources().getString(R.string.please_check_your_connection);
             Utils.showAlert(this, message);
         } else if (volleyError instanceof ParseError) {
-            message = "Parsing error! Please try again after some time!!";
+            message = getApplicationContext().getResources().getString(R.string.parsing_error);
             Utils.showAlert(this, message);
         } else if (volleyError instanceof NoConnectionError) {
-            message = "Cannot connect to Internet...Please check your connection!";
+            message = getApplicationContext().getResources().getString(R.string.please_check_your_connection);
             Utils.showAlert(this, message);
         } else if (volleyError instanceof TimeoutError) {
-            message = "Connection TimeOut! Please check your internet connection.";
+            message = getApplicationContext().getResources().getString(R.string.connection_timeout);
             Utils.showAlert(this, message);
         }
     }
@@ -409,7 +409,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         if (name.equals(userName) && pass.equals(password)) {
             showHomeScreen();
         } else {
-            Utils.showAlert(this, "No data available for offline. Please Turn On Your Network");
+            Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.no_data_available_for_offline));
         }
     }
 }

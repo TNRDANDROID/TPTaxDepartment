@@ -49,7 +49,7 @@
             android:textSize="16sp"
             android:textColor="@color/grey1"
             android:id="@+id/code"
-            android:text="Trade Code"
+            android:text="@string/trade_code"
             android:fontFamily="sans-serif" />
 
         <TextView
@@ -95,7 +95,7 @@
             android:textColor="@color/grey1"
             android:id="@+id/mobile"
             android:layout_below="@+id/code"
-            android:text="Mobile"
+            android:text="@string/mobile"
             android:fontFamily="sans-serif" />
         <TextView
             android:layout_width="0dp"
@@ -192,7 +192,7 @@
             android:layout_marginTop="5dp"
             android:id="@+id/email"
             android:layout_below="@+id/mobile"
-            android:text="Email"
+            android:text="@string/_trader_email"
             android:fontFamily="sans-serif" />
         <TextView
             android:layout_width="0dp"

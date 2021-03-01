@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/margin"
-                android:text="View Image"
+                android:text="@string/View_Image"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 

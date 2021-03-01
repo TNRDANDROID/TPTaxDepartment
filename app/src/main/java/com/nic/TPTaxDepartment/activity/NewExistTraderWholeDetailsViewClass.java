@@ -99,68 +99,68 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
     public void shoewDetails() {
 
         
-        String tradersdetails_id= changeTextColor("TradersDetailsID : ")+traders.get(position).getTradersdetails_id() + "\n"+ "\n";
-        String lb_sno= changeTextColor("LB_SNo : ")+traders.get(position).getLb_sno() + "\n"+ "\n";
-        String lb_traderscode= changeTextColor("LB_TraderCode : ")+traders.get(position).getTraderCode() + "\n"+ "\n";
-        String tradedetails_id= changeTextColor("TradeDetailsID : ")+traders.get(position).getTradedetails_id() + "\n"+ "\n";
-        String traders_rate= changeTextColor("Trader Rate : ")+traders.get(position).getTraders_rate() + "\n"+ "\n";
-        String traders_type= changeTextColor("Trader Type : ")+traders.get(position).getTraders_typ() + "\n"+ "\n";
-        String tradersperiod= changeTextColor("Trader Peroid : ")+traders.get(position).getTradersperiod() + "\n"+ "\n";
-        String traderstypee= changeTextColor("TrdersTypee : ")+traders.get(position).getTraders_typ() + "\n"+ "\n";
+        String tradersdetails_id= changeTextColor(getApplicationContext().getResources().getString(R.string.tradersDetailsID))+traders.get(position).getTradersdetails_id() + "\n"+ "\n";
+        String lb_sno= changeTextColor(getApplicationContext().getResources().getString(R.string.lb_sno))+traders.get(position).getLb_sno() + "\n"+ "\n";
+        String lb_traderscode= changeTextColor(getApplicationContext().getResources().getString(R.string.lb_trader_code))+traders.get(position).getTraderCode() + "\n"+ "\n";
+        String tradedetails_id= changeTextColor(getApplicationContext().getResources().getString(R.string.trade_details_id))+traders.get(position).getTradedetails_id() + "\n"+ "\n";
+        String traders_rate= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_rate))+traders.get(position).getTraders_rate() + "\n"+ "\n";
+        String traders_type= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_type))+traders.get(position).getTraders_typ() + "\n"+ "\n";
+        String tradersperiod= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_period))+traders.get(position).getTradersperiod() + "\n"+ "\n";
+        String traderstypee= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_type_en))+traders.get(position).getTraders_typ() + "\n"+ "\n";
 
-        String apname_ta= changeTextColor("Trader Name Ta : ")+traders.get(position).getApname_ta() + "\n"+ "\n";
-        String apname_en=changeTextColor("Trader Name En : ")+traders.get(position).getTraderName() + "\n"+ "\n";
-        String apfathername_ta= changeTextColor("Father Name Ta : ")+traders.get(position).getApfathername_en() + "\n"+ "\n";
-        String apfathername_en= changeTextColor("Father Name En : ")+traders.get(position).getApfathername_ta() + "\n"+ "\n";
-        String apgender= changeTextColor("Gender : ")+traders.get(position).getApgenderId() + "\n"+ "\n";
-
-
-        String apage= changeTextColor("Age : ")+traders.get(position).getApage() + "\n"+ "\n";
-        String date= changeTextColor("Date : ")+traders.get(position).getTrade_date() + "\n"+ "\n";
-        String dcode= changeTextColor("District Code : ")+traders.get(position).getDcode() + "\n"+ "\n";
-        String doorno= changeTextColor("Door NO : ")+traders.get(position).getDoorno() + "\n"+ "\n";
-        String email= changeTextColor("Email : ")+traders.get(position).getEmail() + "\n"+ "\n";
+        String apname_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_name_ta))+traders.get(position).getApname_ta() + "\n"+ "\n";
+        String apname_en=changeTextColor(getApplicationContext().getResources().getString(R.string.trader_name_en))+traders.get(position).getTraderName() + "\n"+ "\n";
+        String apfathername_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.father_name_ta))+traders.get(position).getApfathername_en() + "\n"+ "\n";
+        String apfathername_en= changeTextColor(getApplicationContext().getResources().getString(R.string.father_name_en))+traders.get(position).getApfathername_ta() + "\n"+ "\n";
+        String apgender= changeTextColor(getApplicationContext().getResources().getString(R.string.gender_c))+traders.get(position).getApgenderId() + "\n"+ "\n";
 
 
-        String description_ta= changeTextColor("Establishment Name Ta : ")+traders.get(position).getEstablishment_name_ta() + "\n"+ "\n";
-        String description_en= changeTextColor("Establishment Name En : ")+traders.get(position).getEstablishment_name_en() + "\n"+ "\n";
-
-        String statecode=changeTextColor("State Code : ")+traders.get(position).getStatecode() + "\n"+ "\n";
-        String wardid= changeTextColor("Ward ID : ")+traders.get(position).getWardId() + "\n"+ "\n";
-        String streetid= changeTextColor("Street ID : ")+traders.get(position).getStreetId() + "\n"+ "\n";;
-
-
-        String mobileno= changeTextColor("Mobile NO : ")+traders.get(position).getMobileno() + "\n"+ "\n";
-        String licencetypeid= changeTextColor("Licence TypeID : ")+traders.get(position).getLicencetypeid() + "\n"+ "\n";
-        String licence_validity= changeTextColor("Licence Validity : ")+traders.get(position).getLicence_validity() + "\n"+ "\n";
-        String traders_license_type_name= changeTextColor("Licence Type : ")+traders.get(position).getTraders_license_type_name() + "\n"+ "\n";
+        String apage= changeTextColor(getApplicationContext().getResources().getString(R.string.age_c))+traders.get(position).getApage() + "\n"+ "\n";
+        String date= changeTextColor(getApplicationContext().getResources().getString(R.string.date_c))+traders.get(position).getTrade_date() + "\n"+ "\n";
+        String dcode= changeTextColor(getApplicationContext().getResources().getString(R.string.district_code))+traders.get(position).getDcode() + "\n"+ "\n";
+        String doorno= changeTextColor(getApplicationContext().getResources().getString(R.string.door_no))+traders.get(position).getDoorno() + "\n"+ "\n";
+        String email= changeTextColor(getApplicationContext().getResources().getString(R.string.email))+traders.get(position).getEmail() + "\n"+ "\n";
 
 
-        String ownerStatus= changeTextColor("OwnerStatus: ")+traders.get(position).getOwnerStatus() + "\n"+ "\n";
-        String motorStatus= changeTextColor("MotorStatus: ")+traders.get(position).getMotorStatus() + "\n"+ "\n";
-        String generatorStatus= changeTextColor("GeneratorStatus: ")+traders.get(position).getGeneratorStatus() + "\n"+ "\n";
-        String propertyStatus= changeTextColor("PropertyStatus: ")+traders.get(position).getPropertyStatus() + "\n"+ "\n";
-        String professtionlStatus= changeTextColor("ProfessionlStatus: ")+traders.get(position).getProfesstionlStatus() + "\n"+ "\n";
-        String motor_type_id= changeTextColor("MotorTypeId: ")+traders.get(position).getMotor_type_id() + "\n"+ "\n";
+        String description_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.establishment_name_ta))+traders.get(position).getEstablishment_name_ta() + "\n"+ "\n";
+        String description_en= changeTextColor(getApplicationContext().getResources().getString(R.string.establishment_name_en))+traders.get(position).getEstablishment_name_en() + "\n"+ "\n";
+
+        String statecode=changeTextColor(getApplicationContext().getResources().getString(R.string.state_code))+traders.get(position).getStatecode() + "\n"+ "\n";
+        String wardid= changeTextColor(getApplicationContext().getResources().getString(R.string.ward_id))+traders.get(position).getWardId() + "\n"+ "\n";
+        String streetid= changeTextColor(getApplicationContext().getResources().getString(R.string.street_id))+traders.get(position).getStreetId() + "\n"+ "\n";;
 
 
-        String amount_range_id= changeTextColor("AmountRangeId: ")+traders.get(position).getAmount_range_id() + "\n"+ "\n";
-        String generator_range_id= changeTextColor("GeneratorRangeId: ")+traders.get(position).getGenerator_range_id() + "\n"+ "\n";
-        String propertyTaxAssessmentNumber= changeTextColor("PropertyTax AssessmentNumber: ")+traders.get(position).getPropertyTaxAssessmentNumber() + "\n"+ "\n";
-        String document= changeTextColor("Document: ")+traders.get(position).getDocument() + "\n"+ "\n";
-        String remark= changeTextColor("Remark: ")+traders.get(position).getRemark() + "\n"+ "\n";
+        String mobileno= changeTextColor(getApplicationContext().getResources().getString(R.string.mobile_no))+traders.get(position).getMobileno() + "\n"+ "\n";
+        String licencetypeid= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_type_id))+traders.get(position).getLicencetypeid() + "\n"+ "\n";
+        String licence_validity= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_validity))+traders.get(position).getLicence_validity() + "\n"+ "\n";
+        String traders_license_type_name= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_type))+traders.get(position).getTraders_license_type_name() + "\n"+ "\n";
 
 
-        String annual_sale_production_amount= changeTextColor("AnnualSale ProductionAmount: ")+traders.get(position).getAnnual_sale_production_amount() + "\n"+ "\n";
-        String annual_sale_production_range= changeTextColor("AnnualSale ProductionRange: ")+traders.get(position).getAnnual_sale_production_range() + "\n"+ "\n";
-        String generator_range= changeTextColor("GeneratorRange: ")+traders.get(position).getGenerator_range() + "\n"+ "\n";
-        String generator_range_amount= changeTextColor("GeneratorRange Amount: ")+traders.get(position).getGenerator_range_amount() + "\n"+ "\n";
-        String motor_range= changeTextColor("MotorRange: ")+traders.get(position).getMotor_range() + "\n"+ "\n";
-        String motor_range_amount= changeTextColor("MotorRange Amount: ")+traders.get(position).getMotor_range_amount() + "\n"+ "\n";
-        String street_name_ta= changeTextColor("StreetName Ta: ")+traders.get(position).getStreet_name_ta() + "\n"+ "\n";
-        String street_name_en= changeTextColor("StreetName En: ")+traders.get(position).getStreet_name_en() + "\n"+ "\n";
-        String ward_name_en= changeTextColor("WardName En: ")+traders.get(position).getWard_name_en() + "\n"+ "\n";
-        String ward_name_ta= changeTextColor("WardName Ta: ")+traders.get(position).getWard_name_ta() + "\n"+ "\n";
+        String ownerStatus= changeTextColor(getApplicationContext().getResources().getString(R.string.owner_status))+traders.get(position).getOwnerStatus() + "\n"+ "\n";
+        String motorStatus= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_status))+traders.get(position).getMotorStatus() + "\n"+ "\n";
+        String generatorStatus= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_status))+traders.get(position).getGeneratorStatus() + "\n"+ "\n";
+        String propertyStatus= changeTextColor(getApplicationContext().getResources().getString(R.string.property_status))+traders.get(position).getPropertyStatus() + "\n"+ "\n";
+        String professtionlStatus= changeTextColor(getApplicationContext().getResources().getString(R.string.professional_status))+traders.get(position).getProfesstionlStatus() + "\n"+ "\n";
+        String motor_type_id= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_type_id))+traders.get(position).getMotor_type_id() + "\n"+ "\n";
+
+
+        String amount_range_id= changeTextColor(getApplicationContext().getResources().getString(R.string.amount_range_id))+traders.get(position).getAmount_range_id() + "\n"+ "\n";
+        String generator_range_id= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range_id))+traders.get(position).getGenerator_range_id() + "\n"+ "\n";
+        String propertyTaxAssessmentNumber= changeTextColor(getApplicationContext().getResources().getString(R.string.property_tax_assessment_no))+traders.get(position).getPropertyTaxAssessmentNumber() + "\n"+ "\n";
+        String document= changeTextColor(getApplicationContext().getResources().getString(R.string.document_c))+traders.get(position).getDocument() + "\n"+ "\n";
+        String remark= changeTextColor(getApplicationContext().getResources().getString(R.string.remark))+traders.get(position).getRemark() + "\n"+ "\n";
+
+
+        String annual_sale_production_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.annual_sale_production_amount))+traders.get(position).getAnnual_sale_production_amount() + "\n"+ "\n";
+        String annual_sale_production_range= changeTextColor(getApplicationContext().getResources().getString(R.string.annual_sale_production_range))+traders.get(position).getAnnual_sale_production_range() + "\n"+ "\n";
+        String generator_range= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range))+traders.get(position).getGenerator_range() + "\n"+ "\n";
+        String generator_range_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range_amount))+traders.get(position).getGenerator_range_amount() + "\n"+ "\n";
+        String motor_range= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_range))+traders.get(position).getMotor_range() + "\n"+ "\n";
+        String motor_range_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_range_amount))+traders.get(position).getMotor_range_amount() + "\n"+ "\n";
+        String street_name_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.street_name_ta))+traders.get(position).getStreet_name_ta() + "\n"+ "\n";
+        String street_name_en= changeTextColor(getApplicationContext().getResources().getString(R.string.street_name_en))+traders.get(position).getStreet_name_en() + "\n"+ "\n";
+        String ward_name_en= changeTextColor(getApplicationContext().getResources().getString(R.string.ward_name_en))+traders.get(position).getWard_name_en() + "\n"+ "\n";
+        String ward_name_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.ward_name_ta))+traders.get(position).getWard_name_ta() + "\n"+ "\n";
 
         existTraderDetailsWholeViewBinding.t1.setText(Html.fromHtml(tradersdetails_id));
         existTraderDetailsWholeViewBinding.t2.setText(Html.fromHtml(lb_sno));
@@ -275,7 +275,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             } else {
-                Utils.showAlert(NewExistTraderWholeDetailsViewClass.this, "No image Found");
+                Utils.showAlert(NewExistTraderWholeDetailsViewClass.this, getApplicationContext().getResources().getString(R.string.no_image_found));
             }
 
     }

@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:text="Existing Trader Details"
+                        android:text="@string/existing_trader_details"
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:textSize="@dimen/_15sdp"
@@ -301,7 +301,7 @@
                         android:layout_marginRight="10dp"
                         android:drawablePadding="6dp"
                         android:drawableLeft="@drawable/ic_document"
-                        android:text="Lease Agreement"
+                        android:text="@string/exist_trader_lease_agreement"
                         android:textColor="@color/black_grey"
                         android:visibility="visible"
                         customfontdemo:fontName="@string/font_circular_medium" />
@@ -318,7 +318,7 @@
                         android:layout_marginRight="0dp"
                         android:drawablePadding="6dp"
                         android:drawableLeft="@drawable/ic_gallery"
-                        android:text="View Image"
+                        android:text="@string/exist_trader_view_image"
                         android:textColor="@color/black_grey"
                         android:visibility="visible"
                         customfontdemo:fontName="@string/font_circular_medium" />

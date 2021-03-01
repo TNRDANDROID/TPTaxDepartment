@@ -159,7 +159,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
-                                android:text="Request Id"
+                                android:text="@string/request_id"
                                 android:textAlignment="viewEnd"
                                 android:textColor="#000"
                                 android:textSize="18sp" />
@@ -235,7 +235,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
-                                android:text="Ward Name"
+                                android:text="@string/ward_name"
                                 android:textAlignment="viewEnd"
                                 android:textColor="#000"
                                 android:textSize="18sp" />
@@ -311,7 +311,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:padding="5dp"
-                                android:text="Street Name"
+                                android:text="@string/street_name"
                                 android:textAlignment="viewEnd"
                                 android:textColor="#000"
                                 android:textSize="18sp" />

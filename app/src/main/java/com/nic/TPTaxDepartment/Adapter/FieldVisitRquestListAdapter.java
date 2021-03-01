@@ -54,10 +54,10 @@ public class FieldVisitRquestListAdapter extends RecyclerView.Adapter<FieldVisit
         try {
             holder.owner_name.setText(commonModelArrayList.get(position).getOwnername());
             if (type.equals("Property")){
-            holder.tax_type.setText("Property Tax");
+            holder.tax_type.setText(context.getResources().getString(R.string.property_tax));
             }
             else {
-                holder.tax_type.setText("Water Charges");
+                holder.tax_type.setText(context.getResources().getString(R.string.water_charges));
             }
 
             holder.ward_name.setText(commonModelArrayList.get(position).getWard_name_ta());
