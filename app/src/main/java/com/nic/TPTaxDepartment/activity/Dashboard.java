@@ -54,7 +54,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickListener, Api.ServerResponseListener {
-    private static LinearLayout sync_layout;
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     private BottomAppBar bar;
     private DashboardBinding dashboardBinding;
@@ -88,7 +87,6 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         } catch (Exception e) {
             e.printStackTrace();
         }
-        sync_layout =(LinearLayout)  findViewById(R.id.sync_layout);
         newDashboardBinding.logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,7 +145,6 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         //newDashboardBinding.dailcollTv.startAnimation(anim);
         //newDashboardBinding.pendingTv.startAnimation(anim);
 
-        syncvisiblity();
         if(Utils.isOnline()) {
             getTaxTypeList();
             getTaxTypeListFieldVisit();
@@ -241,18 +238,6 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         Intent intent = new Intent( this, PendingScreen.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-    }
-    public static void syncvisiblity() {
-
-        Cursor pendingList = db.rawQuery("select * from "+DBHelper.SAVE_FIELD_VISIT, null);
-        int count = pendingList.getCount();
-        Log.d("pending_count",String.valueOf(count));
-        if (count > 0) {
-            sync_layout.setVisibility(View.GONE);
-           // count_tv.setText(String.valueOf(count));
-        }else {
-            sync_layout.setVisibility(View.GONE);
-        }
     }
     @Override
     public void onBackPressed() {

@@ -65,7 +65,8 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        existTraderDetailsWholeViewBinding.fullDetails.setVisibility(View.VISIBLE);
+        existTraderDetailsWholeViewBinding.documentLayout.setVisibility(View.GONE);
         existTraderDetailsWholeViewBinding.editDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +85,6 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if(existTraderDetailsWholeViewBinding.fullDetails.getVisibility()==View.VISIBLE){
             super.onBackPressed();
             setResult(Activity.RESULT_CANCELED);
@@ -148,7 +148,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
         String generator_range_id= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range_id))+traders.get(position).getGenerator_range_id() + "\n"+ "\n";
         String propertyTaxAssessmentNumber= changeTextColor(getApplicationContext().getResources().getString(R.string.property_tax_assessment_no))+traders.get(position).getPropertyTaxAssessmentNumber() + "\n"+ "\n";
         String document= changeTextColor(getApplicationContext().getResources().getString(R.string.document_c))+traders.get(position).getDocument() + "\n"+ "\n";
-        String remark= changeTextColor(getApplicationContext().getResources().getString(R.string.remark))+traders.get(position).getRemark() + "\n"+ "\n";
+        String remark= changeTextColor(getApplicationContext().getResources().getString(R.string.remark_c))+traders.get(position).getRemark() + "\n"+ "\n";
 
 
         String annual_sale_production_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.annual_sale_production_amount))+traders.get(position).getAnnual_sale_production_amount() + "\n"+ "\n";

@@ -410,7 +410,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         } else {
-            Utils.showAlert(FieldVisit.this, "No image Found");
+            Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.no_image_Found));
         }
 
     }
@@ -426,11 +426,11 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
-                    Utils.showAlert(FieldVisit.this, "No image Saved in Local");
+                    Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.no_image_Saved_in_Local));
                 }
 
         }else {
-            Utils.showAlert(FieldVisit.this, "Select TaxType To Get Request Id");
+            Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.select_TaxType_To_Get_Request_Id));
         }
 
     }
@@ -448,11 +448,11 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public void image() {
-        if(!fieldVisitBinding.requestIdTextField.getText().toString().isEmpty() && !selectedTaxTypeName.equals("Select TaxType")) {
+        if(!fieldVisitBinding.requestIdTextField.getText().toString().isEmpty() && !selectedTaxTypeName.equals(context.getResources().getString(R.string.select_TaxType))) {
             imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
         }
         else {
-            Utils.showAlert(FieldVisit.this,"Select Tax Type first!");
+            Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_Tax_Type_first));
         }
     }
     public void imageWithDescription(TextView action_tv, final String type) {
@@ -536,7 +536,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             //Log.d("imageInByte_string",string);
                             Log.d("image_str", image_str);
                         } catch (Exception e) {
-                            Utils.showAlert(FieldVisit.this, "Atleast Capture one Photo");
+                            Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.atleast_Capture_one_Photo));
                             break;
                             //e.printStackTrace();
                         }
@@ -562,7 +562,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                            if(iscaptureImgExist(request_id)) {
                                long rowUpdated1 = LoginScreen.db.update(DBHelper.CAPTURED_PHOTO, imageValue, "request_id  = ? ", new String[]{request_id});
                                if (rowUpdated1 != -1) {
-                                    Toast.makeText(FieldVisit.this, "Image Updated!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.image_Updated), Toast.LENGTH_SHORT).show();
 //                                   Utils.showAlert(FieldVisit.this, " Capture-Photo updated");
 
                                }
@@ -571,12 +571,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
                                 //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
                                 if (rowInserted != -1) {
-                                     Toast.makeText(FieldVisit.this, "Image added", Toast.LENGTH_SHORT).show();
+                                     Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.image_added), Toast.LENGTH_SHORT).show();
 //                                    Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
 
                                 }
                                 else {
-                                    Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         if (Utils.isOnline())  {
@@ -638,7 +638,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     updateView(FieldVisit.this, mobileNumberLayout, "", type);
                 } else {
-                    Utils.showAlert(FieldVisit.this, "First Capture Image then add another Image!");
+                    Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.first_Capture_Image_then_add_another_Image));
                 }
             }
         });
@@ -709,30 +709,30 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     public void validation() {
         if(!fieldVisitBinding.taxType.getSelectedItem().equals(null)){
             if(!fieldVisitBinding.assessmentId.getText().equals(null)){
-                if(fieldVisitBinding.currentStatus.getSelectedItem()!=null&&!fieldVisitBinding.currentStatus.getSelectedItem().equals("Select Status")){
+                if(fieldVisitBinding.currentStatus.getSelectedItem()!=null&&!fieldVisitBinding.currentStatus.getSelectedItem().equals(context.getResources().getString(R.string.select_Status))){
                     if(!fieldVisitBinding.remarksText.getText().toString().isEmpty()){
                         if (getSaveTradeImageTable() > 0) {
                             submit();
                         }
                         else {
-                            Utils.showAlert(FieldVisit.this,"Take Photo");
+                            Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.take_Photo));
                         }
                     }
                     else {
-                        Utils.showAlert(FieldVisit.this,"Enter Remarks");
+                        Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.enter_Remarks));
                     }
 
                 }
                 else {
-                    Utils.showAlert(FieldVisit.this," Please Select Current Status");
+                    Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_Status));
                 }
             }
             else {
-                Utils.showAlert(FieldVisit.this,"Enter Assessment Id");
+                Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.enter_Assessment_ID));
             }
         }
         else {
-            Utils.showAlert(FieldVisit.this,"Enter Tax Type Id");
+            Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.enter_Tax_Type_Id));
         }
     }
 
@@ -768,7 +768,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             if (rowUpdated1 != -1) {
 //                 Toast.makeText(FieldVisit.this, "Field-Visit updated", Toast.LENGTH_SHORT).show();
 //                Utils.showAlert(FieldVisit.this, " Field-Visit updated");
-                Utils.showToast(this,"Field-Visit updated");
+                Utils.showToast(this,context.getResources().getString(R.string.field_Visit_updated));
 
                 onBackPressed();
                 //Dashboard.syncvisiblity();
@@ -782,13 +782,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 if (rowInserted != -1) {
 //                     Toast.makeText(FieldVisit.this, "Field-Visit added", Toast.LENGTH_SHORT).show();
 //                    Utils.showAlert(FieldVisit.this, " Field-Visit added");
-                    Utils.showToast(this,"Field-Visit added");
+                    Utils.showToast(this,context.getResources().getString(R.string.field_Visit_added));
                     onBackPressed();
                     //Dashboard.syncvisiblity();
                     //finish();
                     //dashboard();
                 } else {
-                    Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -957,10 +957,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     captureImage();
                 }
             } else {
-                Utils.showAlert(FieldVisit.this, "Satellite communication not available to get GPS Co-ordination Please Capture Photo in Open Area..");
+                Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.satellite_communication_msg));
             }
         } else {
-            Utils.showAlert(FieldVisit.this, "GPS is not turned on...");
+            Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.gPS_is_not_turned_on));
         }
     }
     private void captureImage() {
@@ -1013,14 +1013,14 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
     private void showPermissionsAlert() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Permissions required!")
-                .setMessage("Camera needs few permissions to work properly. Grant them in settings.")
-                .setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
+        builder.setTitle(context.getResources().getString(R.string.permissions_required))
+                .setMessage(context.getResources().getString(R.string.camera_needs_few_permissions))
+                .setPositiveButton(context.getResources().getString(R.string.goto_SETTINGS), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         CameraUtils.openSettings(FieldVisit.this);
                     }
                 })
-                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                .setNegativeButton(context.getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
@@ -1088,12 +1088,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             } else if (resultCode == RESULT_CANCELED) {
                 // user cancelled Image capture
                 Toast.makeText(getApplicationContext(),
-                        "User cancelled image capture", Toast.LENGTH_SHORT)
+                        context.getResources().getString(R.string.user_cancelled_image_capture), Toast.LENGTH_SHORT)
                         .show();
             } else {
                 // failed to capture image
                 Toast.makeText(getApplicationContext(),
-                        "Sorry! Failed to capture image", Toast.LENGTH_SHORT)
+                        context.getResources().getString(R.string.sorry_Failed_to_capture_image), Toast.LENGTH_SHORT)
                         .show();
             }
         } else if (requestCode == CAMERA_CAPTURE_VIDEO_REQUEST_CODE) {
@@ -1107,12 +1107,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             } else if (resultCode == RESULT_CANCELED) {
                 // user cancelled recording
                 Toast.makeText(getApplicationContext(),
-                        "User cancelled video recording", Toast.LENGTH_SHORT)
+                        context.getResources().getString(R.string.user_cancelled_video_recording), Toast.LENGTH_SHORT)
                         .show();
             } else {
                 // failed to record video
                 Toast.makeText(getApplicationContext(),
-                        "Sorry! Failed to record video", Toast.LENGTH_SHORT)
+                        context.getResources().getString(R.string.sorry_Failed_to_record_video), Toast.LENGTH_SHORT)
                         .show();
             }
         }
@@ -1289,7 +1289,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             spinnerMapTaxType = new HashMap<String, String>();
             spinnerMapTaxType.put(null, null);
             final String[] items = new String[taxType.size() + 1];
-            items[0] = "Select TaxType";
+            items[0] = context.getResources().getString(R.string.select_TaxType);
             for (int i = 0; i < taxType.size(); i++) {
                 spinnerMapTaxType.put( taxType.get(i).getTaxtypeid(), taxType.get(i).getTaxtypedesc_en());
                 String Class = taxType.get(i).getTaxtypedesc_en();
@@ -1336,7 +1336,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             spinnerMapFieldVisitType = new HashMap<String, String>();
             spinnerMapFieldVisitType.put(null, null);
             final String[] items = new String[fieldVisitStatus.size() + 1];
-            items[0] = "Select Status";
+            items[0] = context.getResources().getString(R.string.select_Status);
             for (int i = 0; i < fieldVisitStatus.size(); i++) {
                 spinnerMapFieldVisitType.put(fieldVisitStatus.get(i).getFIELD_VISIT_STATUS_ID(), fieldVisitStatus.get(i).getFIELD_VISIT_STATUS());
                 String Class = fieldVisitStatus.get(i).getFIELD_VISIT_STATUS();
@@ -1390,7 +1390,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             spinnerMapServiceFieldVisitTypes = new HashMap<String, String>();
             spinnerMapServiceFieldVisitTypes.put(null, null);
             final String[] items = new String[selectedService.size() + 1];
-            items[0] = "Select ServiceListFieldVisit";
+            items[0] = context.getResources().getString(R.string.select_ServiceListFieldVisit);
             for (int i = 0; i < selectedService.size(); i++) {
                 spinnerMapServiceFieldVisitTypes.put(selectedService.get(i).getService_list_field_visit_service_id(), selectedService.get(i).getService_list_field_visit_types_desc());
                 String Class = selectedService.get(i).getService_list_field_visit_types_desc();
@@ -1558,7 +1558,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(FieldVisit.this, "Try after some time!");
+        Utils.showAlert(FieldVisit.this, context.getResources().getString(R.string.try_after_some_time));
     }
 
     public void fieldRequestListClickedItemProcess(int pos){

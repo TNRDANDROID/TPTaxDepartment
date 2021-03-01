@@ -56,6 +56,7 @@
    //01/03/2020
     <string name="select_TaxType">Select TaxType</string>
     <string name="enter_Assessment_ID">Enter Assessment ID</string>
+    <string name="enter_Tax_Type_Id">Enter Tax Type Id</string>
     <string name="no_RECORD_FOUND">NO RECORD FOUND!</string>
     <string name="success">Success!</string>
     <string name="atleast_Capture_one_Photo">Atleast Capture one Photo</string>
@@ -66,6 +67,8 @@
     <string name="goto_SETTINGS">GOTO SETTINGS</string>
     <string name="cancel">CANCEL</string>
     <string name="title">Title</string>
+    <string name="field_Visit_added">Field Visit Added In Local!</string>
+    <string name="field_Visit_updated">Field Visit Updated In Local!</string>
     <string name="user_cancelled_image_capture">User cancelled image capture</string>
     <string name="sorry_Failed_to_capture_image">Sorry! Failed to capture image</string>
     <string name="user_cancelled_video_recording">User cancelled video recording</string>
@@ -94,7 +97,7 @@
     <string name="production">Production</string>
     <string name="commercial">Commercial</string>
     <string name="annual_Sale">Annual Sale</string>
-    <string name="select_AnnualSale">Select AnnualSale</string>
+    <string name="select_AnnualSale">Select Annual Sale</string>
     <string name="select_Motor_Range">Select Motor Range</string>
     <string name="select_Generator_Range">Select Generator Range</string>
     <string name="select_Gender">Select Gender</string>
@@ -109,7 +112,7 @@
     <string name="enter_Mobile_Number">Enter Mobile Number</string>
     <string name="enter_Fathers_Husband_Name_Tamil">Enter Fathers/Husband Name Tamil</string>
     <string name="enter_Father_Husband_Name_English">Enter Father/ Husband Name English</string>
-    <string name="enter_Valid_Age">Enter Enter Valid Age</string>
+    <string name="enter_Valid_Age">Enter Valid Age</string>
     <string name="enter_Applicant_Name_Tamil">Enter Applicant Name Tamil</string>
     <string name="enter_Applicant_Name_English">Enter Applicant Name English</string>
     <string name="enter_Door_Number">Enter Door Number</string>
@@ -181,6 +184,16 @@
     <string name="property_Tax_Assessment_Number">Property Tax Assessment Number</string>
     <string name="remarks">Remarks</string>
     <string name="previous">Previous</string>
+    <string name="try_after_some_time">Try after some time!</string>
+    <string name="select_ServiceListFieldVisit">Select ServiceListFieldVisit</string>
+    <string name="select_Status">Select Status</string>
+    <string name="first_Capture_Image_then_add_another_Image">First Capture Image then add another Image!</string>
+    <string name="image_Updated">Image Updated!</string>
+    <string name="image_added">Image Added!</string>
+    <string name="something_wrong">Something wrong</string>
+    <string name="no_image_Saved_in_Local">No image Saved in Local</string>
+    <string name="select_TaxType_To_Get_Request_Id">Select TaxType To Get Request Id</string>
+    <string name="select_Tax_Type_first">Select Tax Type first!</string>
 
  <string name="View_Image">	View Image	</string>
  <string name="for_official_use">	(For Official Use)	</string>
@@ -237,7 +250,8 @@
  <string name="generator_range_id">	Generator Range ID : 	</string>
  <string name="property_tax_assessment_no">	Property Tax Assessment NO : 	</string>
  <string name="document_c">	Document : 	</string>
- <string name="remark">	Remarks : 	</string>
+ <string name="remark_c">	Remarks : 	</string>
+ <string name="remark">	Remarks 	</string>
  <string name="annual_sale_production_amount">	Annual Sale Production Amount : 	</string>
  <string name="annual_sale_production_range">	Annual Sale Production Range : 	</string>
  <string name="generator_range">	Generator Range : "	</string>
@@ -248,7 +262,7 @@
  <string name="street_name_en">	Street Name EN  : 	</string>
  <string name="ward_name_ta">	Ward Name TA  : 	</string>
  <string name="ward_name_en">	Ward Name EN  : 	</string>
- <string name="existing_trader_details">	Existing Trader Details  : 	</string>
+ <string name="existing_trader_details">	Existing Trader Details  	</string>
  <string name="exist_trader_lease_agreement">	Lease Agreement	</string>
  <string name="exist_trader_view_image">	View Image	</string>
 
@@ -280,13 +294,13 @@
  <string name="area_in_square_feet">	Area In Square Feet	</string>
  <string name="trader_code">	Trader Code	</string>
  <string name="father_name_in_tamil">	Father Name Tamil	</string>
- <string name="assessment_door_no">	Door NO	</string>
+ <string name="assessment_door_no">	Door No	</string>
  <string name="assessment_trader_rate">	Trader Rate	</string>
  <string name="assessment_financial_Year">	Financial Year	</string>
  <string name="trade_description">	Trade Description	</string>
  <string name="connection_no">	Connection No	</string>
  <string name="connection_name">	Connection Name	</string>
- <string name="water_charges">	Connection Name	</string>
+ <string name="water_charges">	Water Charges	</string>
  <string name="lease_assessment_no">	Lease Assessment No	</string>
  <string name="name">	Name	</string>
  <string name="name_in_tamil">	Name In Tamil	</string>
@@ -308,6 +322,10 @@
 
 
  <string name="property_tax">	Property Tax	</string>
+ <string name="trader_Details_Updated">	Trader Details Updated	</string>
+ <string name="trader_Details_Added_Successfully">	Trader Details Added Successfully	</string>
+ <string name="maximum_5_trader_Details_Stored_in_Local">	Maximum 5 Trader Details Stored in Local	</string>
+ <string name="select_ProductionSale">Select Production Sale</string>
 
   <!--  //21/01/2021
 

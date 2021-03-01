@@ -272,7 +272,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         builder.setSpan(new ForegroundColorSpan(Color.RED), start, end,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        existingTradeDetailsViewNewBinding.mobileHint.setText(builder);
+//        existingTradeDetailsViewNewBinding.mobileHint.setText(builder);
 
         //Spinners
         existingTradeDetailsViewNewBinding.gender.setOnItemSelectedListener(this);
@@ -2043,7 +2043,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         if(!existingTradeDetailsViewNewBinding.applicantName.getText().toString().isEmpty()){
             if(!existingTradeDetailsViewNewBinding.applicantNameTamil.getText().toString().isEmpty()){
                 if (!context.getResources().getString(R.string.select_Gender).equalsIgnoreCase(selectedGender) && !existingTradeDetailsViewNewBinding.gender.getSelectedItem().toString().isEmpty()) {
-                    if(!existingTradeDetailsViewNewBinding.age.getText().toString().isEmpty()&&existingTradeDetailsViewNewBinding.age.getText().toString().length()>3){
+                    if(!existingTradeDetailsViewNewBinding.age.getText().toString().isEmpty() &&existingTradeDetailsViewNewBinding.age.getText().toString().length()<3){
                         if(!existingTradeDetailsViewNewBinding.fatherHusName.getText().toString().isEmpty()){
                             if(!existingTradeDetailsViewNewBinding.fatherHusNameTamil.getText().toString().isEmpty()){
                                 if(!existingTradeDetailsViewNewBinding.mobileNo.getText().toString().isEmpty()){
