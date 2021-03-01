@@ -140,7 +140,7 @@ public class ExistingTradeList extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent( this, ExistTradeViewClass.class);
+        Intent intent = new Intent( this, NewExistTraderWholeDetailsViewClass.class);
         intent.putExtra("position", position);
         intent.putExtra("tradersList", tradersList);
         intent.putExtra("tradersImageList", ImageList);

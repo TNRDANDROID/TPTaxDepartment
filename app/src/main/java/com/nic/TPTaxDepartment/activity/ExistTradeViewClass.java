@@ -216,7 +216,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         date.setText("Select Date");
 
         existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
-        existingTradeDetailsViewNewBinding.main.setVisibility(View.GONE);
+        existingTradeDetailsViewNewBinding.main.setVisibility(View.VISIBLE);
         animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
         animationOut   =    AnimationUtils.loadAnimation(this, R.anim.slide_enter);
         visible_count=0;
@@ -226,8 +226,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewNewBinding.previous.setVisibility(View.GONE);
         existingTradeDetailsViewNewBinding.next.setText("Next");
 
-//scroolable
-        existingTradeDetailsViewNewBinding.trderDetailsValue.setMovementMethod(new ScrollingMovementMethod());
+
         try {
             LoadFinYearSpinner();
             LoadGenderSpinner();
@@ -255,7 +254,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
             LoadPendingTraderDetails();
-            shoewDetails();
+            //shoewDetails();
         }else {
             LoadWardSpinner();
         }
@@ -312,14 +311,6 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         //Focus Change
         existingTradeDetailsViewNewBinding.applicantName.setOnFocusChangeListener(this::onFocusChange);
 
-        existingTradeDetailsViewNewBinding.editDetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                existingTradeDetailsViewNewBinding.main.setVisibility(View.VISIBLE);
-                existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
-                existingTradeDetailsViewNewBinding.fullDetails.setVisibility(View.GONE);
-            }
-        });
 
 
     }
@@ -1166,6 +1157,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                         @Override
                         public void run() {
                             //OnBackPressed();
+                            dashboard();
                             finish();
                         }
                     };
@@ -1534,12 +1526,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     
     @Override
     public void onBackPressed() {
-        if(existingTradeDetailsViewNewBinding.fullDetails.getVisibility()==View.VISIBLE){
-            super.onBackPressed();
-            setResult(Activity.RESULT_CANCELED);
-            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
-        }
-        else  if(existingTradeDetailsViewNewBinding.documentLayout.getVisibility() == View.VISIBLE){
+        if(existingTradeDetailsViewNewBinding.documentLayout.getVisibility() == View.VISIBLE){
             existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
             existingTradeDetailsViewNewBinding.main.setVisibility(View.VISIBLE);
         }else {
@@ -1938,143 +1925,6 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     }
 
-    public void shoewDetails() {
-
-        existingTradeDetailsViewNewBinding.fullDetails.setVisibility(View.VISIBLE);
-        existingTradeDetailsViewNewBinding.main.setVisibility(View.GONE);
-        existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
-
-        String tradersdetails_id= changeTextColor("TradersDetailsID : ")+traders.get(position).getTradersdetails_id() + "\n"+ "\n";
-        String lb_sno= changeTextColor("LB_SNo : ")+traders.get(position).getLb_sno() + "\n"+ "\n";
-        String lb_traderscode= changeTextColor("LB_TraderCode : ")+traders.get(position).getTraderCode() + "\n"+ "\n";
-        String tradedetails_id= changeTextColor("TradeDetailsID : ")+traders.get(position).getTradedetails_id() + "\n"+ "\n";
-        String traders_rate= changeTextColor("Trader Rate : ")+traders.get(position).getTraders_rate() + "\n"+ "\n";
-        String traders_type= changeTextColor("Trader Type : ")+traders.get(position).getTraders_typ() + "\n"+ "\n";
-        String tradersperiod= changeTextColor("Trader Peroid : ")+traders.get(position).getTradersperiod() + "\n"+ "\n";
-        String traderstypee= changeTextColor("TrdersTypee : ")+traders.get(position).getTraders_typ() + "\n"+ "\n";
-
-        String apname_ta= changeTextColor("Trader Name Ta : ")+traders.get(position).getApname_ta() + "\n"+ "\n";
-        String apname_en=changeTextColor("Trader Name En : ")+traders.get(position).getTraderName() + "\n"+ "\n";
-        String apfathername_ta= changeTextColor("Father Name Ta : ")+traders.get(position).getApfathername_en() + "\n"+ "\n";
-        String apfathername_en= changeTextColor("Father Name En : ")+traders.get(position).getApfathername_ta() + "\n"+ "\n";
-        String apgender= changeTextColor("Gender : ")+traders.get(position).getApgenderId() + "\n"+ "\n";
-
-
-        String apage= changeTextColor("Age : ")+traders.get(position).getApage() + "\n"+ "\n";
-        String date= changeTextColor("Date : ")+traders.get(position).getTrade_date() + "\n"+ "\n";
-        String dcode= changeTextColor("District Code : ")+traders.get(position).getDcode() + "\n"+ "\n";
-        String doorno= changeTextColor("Door NO : ")+traders.get(position).getDoorno() + "\n"+ "\n";
-        String email= changeTextColor("Email : ")+traders.get(position).getEmail() + "\n"+ "\n";
-
-
-        String description_ta= changeTextColor("Establishment Name Ta : ")+traders.get(position).getEstablishment_name_ta() + "\n"+ "\n";
-        String description_en= changeTextColor("Establishment Name En : ")+traders.get(position).getEstablishment_name_en() + "\n"+ "\n";
-
-        String statecode=changeTextColor("State Code : ")+traders.get(position).getStatecode() + "\n"+ "\n";
-        String wardid= changeTextColor("Ward ID : ")+traders.get(position).getWardId() + "\n"+ "\n";
-        String streetid= changeTextColor("Street ID : ")+traders.get(position).getStreetId() + "\n"+ "\n";;
-
-
-        String mobileno= changeTextColor("Mobile NO : ")+traders.get(position).getMobileno() + "\n"+ "\n";
-        String licencetypeid= changeTextColor("Licence TypeID : ")+traders.get(position).getLicencetypeid() + "\n"+ "\n";
-        String licence_validity= changeTextColor("Licence Validity : ")+traders.get(position).getLicence_validity() + "\n"+ "\n";
-        String traders_license_type_name= changeTextColor("Licence Type : ")+traders.get(position).getTraders_license_type_name() + "\n"+ "\n";
-
-
-        String ownerStatus= changeTextColor("OwnerStatus: ")+traders.get(position).getOwnerStatus() + "\n"+ "\n";
-        String motorStatus= changeTextColor("MotorStatus: ")+traders.get(position).getMotorStatus() + "\n"+ "\n";
-        String generatorStatus= changeTextColor("GeneratorStatus: ")+traders.get(position).getGeneratorStatus() + "\n"+ "\n";
-        String propertyStatus= changeTextColor("PropertyStatus: ")+traders.get(position).getPropertyStatus() + "\n"+ "\n";
-        String professtionlStatus= changeTextColor("ProfessionlStatus: ")+traders.get(position).getProfesstionlStatus() + "\n"+ "\n";
-        String motor_type_id= changeTextColor("MotorTypeId: ")+traders.get(position).getMotor_type_id() + "\n"+ "\n";
-
-
-        String amount_range_id= changeTextColor("AmountRangeId: ")+traders.get(position).getAmount_range_id() + "\n"+ "\n";
-        String generator_range_id= changeTextColor("GeneratorRangeId: ")+traders.get(position).getGenerator_range_id() + "\n"+ "\n";
-        String propertyTaxAssessmentNumber= changeTextColor("PropertyTax AssessmentNumber: ")+traders.get(position).getPropertyTaxAssessmentNumber() + "\n"+ "\n";
-        String document= changeTextColor("Document: ")+traders.get(position).getDocument() + "\n"+ "\n";
-        String remark= changeTextColor("Remark: ")+traders.get(position).getRemark() + "\n"+ "\n";
-
-
-        String annual_sale_production_amount= changeTextColor("AnnualSale ProductionAmount: ")+traders.get(position).getAnnual_sale_production_amount() + "\n"+ "\n";
-        String annual_sale_production_range= changeTextColor("AnnualSale ProductionRange: ")+traders.get(position).getAnnual_sale_production_range() + "\n"+ "\n";
-        String generator_range= changeTextColor("GeneratorRange: ")+traders.get(position).getGenerator_range() + "\n"+ "\n";
-        String generator_range_amount= changeTextColor("GeneratorRange Amount: ")+traders.get(position).getGenerator_range_amount() + "\n"+ "\n";
-        String motor_range= changeTextColor("MotorRange: ")+traders.get(position).getMotor_range() + "\n"+ "\n";
-        String motor_range_amount= changeTextColor("MotorRange Amount: ")+traders.get(position).getMotor_range_amount() + "\n"+ "\n";
-        String street_name_ta= changeTextColor("StreetName Ta: ")+traders.get(position).getStreet_name_ta() + "\n"+ "\n";
-        String street_name_en= changeTextColor("StreetName En: ")+traders.get(position).getStreet_name_en() + "\n"+ "\n";
-        String ward_name_en= changeTextColor("WardName En: ")+traders.get(position).getWard_name_en() + "\n"+ "\n";
-        String ward_name_ta= changeTextColor("WardName Ta: ")+traders.get(position).getWard_name_ta() + "\n"+ "\n";
-
-        existingTradeDetailsViewNewBinding.t1.setText(Html.fromHtml(tradersdetails_id));
-        existingTradeDetailsViewNewBinding.t2.setText(Html.fromHtml(lb_sno));
-        existingTradeDetailsViewNewBinding.t3.setText(Html.fromHtml(lb_traderscode));
-        existingTradeDetailsViewNewBinding.t4.setText(Html.fromHtml(tradedetails_id));
-        existingTradeDetailsViewNewBinding.t5.setText(Html.fromHtml(traders_rate));
-        existingTradeDetailsViewNewBinding.t6.setText(Html.fromHtml(traders_type));
-        existingTradeDetailsViewNewBinding.t7.setText(Html.fromHtml(tradersperiod));
-        existingTradeDetailsViewNewBinding.t8.setText(Html.fromHtml(traderstypee));
-        existingTradeDetailsViewNewBinding.t9.setText(Html.fromHtml(apname_ta));
-        existingTradeDetailsViewNewBinding.t10.setText(Html.fromHtml(apname_en));
-        existingTradeDetailsViewNewBinding.t11.setText(Html.fromHtml(apfathername_ta));
-        existingTradeDetailsViewNewBinding.t12.setText(Html.fromHtml(apfathername_en));
-        existingTradeDetailsViewNewBinding.t13.setText(Html.fromHtml(apgender));
-        existingTradeDetailsViewNewBinding.t14.setText(Html.fromHtml(apage));
-        existingTradeDetailsViewNewBinding.t15.setText(Html.fromHtml(date));
-        existingTradeDetailsViewNewBinding.t16.setText(Html.fromHtml(dcode));
-        existingTradeDetailsViewNewBinding.t17.setText(Html.fromHtml(doorno));
-        existingTradeDetailsViewNewBinding.t18.setText(Html.fromHtml(email));
-        existingTradeDetailsViewNewBinding.t19.setText(Html.fromHtml(description_ta));
-        existingTradeDetailsViewNewBinding.t20.setText(Html.fromHtml(description_en));
-
-
-        existingTradeDetailsViewNewBinding.t21.setText(Html.fromHtml(statecode));
-        existingTradeDetailsViewNewBinding.t22.setText(Html.fromHtml(wardid));
-        existingTradeDetailsViewNewBinding.t23.setText(Html.fromHtml(streetid));
-        existingTradeDetailsViewNewBinding.t24.setText(Html.fromHtml(mobileno));
-        existingTradeDetailsViewNewBinding.t25.setText(Html.fromHtml(licencetypeid));
-        existingTradeDetailsViewNewBinding.t26.setText(Html.fromHtml(licence_validity));
-        existingTradeDetailsViewNewBinding.t27.setText(Html.fromHtml(traders_license_type_name));
-
-        existingTradeDetailsViewNewBinding.t28.setText(Html.fromHtml(ownerStatus));
-        existingTradeDetailsViewNewBinding.t29.setText(Html.fromHtml(motorStatus));
-        existingTradeDetailsViewNewBinding.t30.setText(Html.fromHtml(generatorStatus));
-        existingTradeDetailsViewNewBinding.t31.setText(Html.fromHtml(propertyStatus));
-        existingTradeDetailsViewNewBinding.t32.setText(Html.fromHtml(professtionlStatus));
-        existingTradeDetailsViewNewBinding.t33.setText(Html.fromHtml(motor_type_id));
-        existingTradeDetailsViewNewBinding.t34.setText(Html.fromHtml(amount_range_id));
-        existingTradeDetailsViewNewBinding.t35.setText(Html.fromHtml(generator_range_id));
-        existingTradeDetailsViewNewBinding.t36.setText(Html.fromHtml(propertyTaxAssessmentNumber));
-        existingTradeDetailsViewNewBinding.t37.setText(Html.fromHtml(remark));
-
-        existingTradeDetailsViewNewBinding.t38.setText(Html.fromHtml(annual_sale_production_amount));
-        existingTradeDetailsViewNewBinding.t39.setText(Html.fromHtml(annual_sale_production_range));
-        existingTradeDetailsViewNewBinding.t40.setText(Html.fromHtml(generator_range));
-        existingTradeDetailsViewNewBinding.t41.setText(Html.fromHtml(generator_range_amount));
-        existingTradeDetailsViewNewBinding.t42.setText(Html.fromHtml(motor_range));
-        existingTradeDetailsViewNewBinding.t43.setText(Html.fromHtml(motor_range_amount));
-        existingTradeDetailsViewNewBinding.t44.setText(Html.fromHtml(street_name_ta));
-        existingTradeDetailsViewNewBinding.t45.setText(Html.fromHtml(street_name_en));
-        existingTradeDetailsViewNewBinding.t46.setText(Html.fromHtml(ward_name_en));
-        existingTradeDetailsViewNewBinding.t47.setText(Html.fromHtml(ward_name_ta));
-
-
-
-
-
-
-
-        existingTradeDetailsViewNewBinding.trderDetailsValue.setText(Html.fromHtml(tradersdetails_id	+"<br/>"+"<br/>"+ lb_sno +"<br/>"+"<br/>"+	lb_traderscode+	"<br/>"+"<br/>"+tradedetails_id	+"<br/>"+"<br/>"+ traders_rate	+"<br/>"+"<br/>"+ traders_type
-                +"<br/>"+"<br/>"+ tradersperiod+ "<br/>"+"<br/>"+ traderstypee+"<br/>"+"<br/>"+ apname_ta +"<br/>"+"<br/>"+ apname_en +"<br/>"+"<br/>"+ apfathername_ta
-                +"<br/>"+"<br/>"+ apfathername_en+"<br/>"+"<br/>"+ 	apgender+"<br/>"+"<br/>"+  apage+"<br/>"+"<br/>"+	date	+ "<br/>"+"<br/>"+ dcode+"<br/>"+"<br/>"+	doorno+"<br/>"+"<br/>"+	email
-                +"<br/>"+"<br/>"+ description_ta+"<br/>"+"<br/>"+	description_en+"<br/>"+"<br/>"+	statecode+"<br/>"+"<br/>"+ wardid+"<br/>"+"<br/>"+	streetid+"<br/>"+"<br/>"+	mobileno	+"<br/>"+"<br/>"+licence_validity+"<br/>"+"<br/>"+	licencetypeid
-                +"<br/>"+"<br/>"+traders_license_type_name+	"<br/>"+"<br/>"+ ownerStatus	+ "<br/>"+"<br/>"+ motorStatus + "<br/>"+"<br/>"+ generatorStatus +"<br/>"+"<br/>"+ propertyStatus+"<br/>"+"<br/>"+	professtionlStatus	+"<br/>"+"<br/>"+ motor_type_id+"<br/>"+"<br/>"+	amount_range_id
-                +"<br/>"+"<br/>"+generator_range_id	+"<br/>"+"<br/>"+propertyTaxAssessmentNumber +"<br/>"+"<br/>"+remark+"<br/>"+"<br/>"+annual_sale_production_amount+"<br/>"+"<br/>"+annual_sale_production_range+"<br/>"+"<br/>"+generator_range+"<br/>"+"<br/>"+generator_range_amount
-                +"<br/>"+"<br/>"+motor_range+"<br/>"+"<br/>"+motor_range_amount +"<br/>"+"<br/>"+street_name_ta+"<br/>"+"<br/>"+street_name_en+"<br/>"+"<br/>"+ward_name_en+"<br/>"+"<br/>"+ward_name_ta));
-
-        //existingTradeDetailsViewNewBinding.trderDetailsValue.setText(Html.fromHtml(tradersdetails_id +"<br/>"+"<br/>"+  lb_sno));
-    }
 
     public String changeTextColor(String text){
         String input="<font color=" + "#878787" + ">" + text  + "</font> ";
@@ -2193,7 +2043,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         if(!existingTradeDetailsViewNewBinding.applicantName.getText().toString().isEmpty()){
             if(!existingTradeDetailsViewNewBinding.applicantNameTamil.getText().toString().isEmpty()){
                 if (!"Select Gender".equalsIgnoreCase(selectedGender) && !existingTradeDetailsViewNewBinding.gender.getSelectedItem().toString().isEmpty()) {
-                    if(!existingTradeDetailsViewNewBinding.age.getText().toString().isEmpty()){
+                    if(!existingTradeDetailsViewNewBinding.age.getText().toString().isEmpty()&&existingTradeDetailsViewNewBinding.age.getText().toString().length()>3){
                         if(!existingTradeDetailsViewNewBinding.fatherHusName.getText().toString().isEmpty()){
                             if(!existingTradeDetailsViewNewBinding.fatherHusNameTamil.getText().toString().isEmpty()){
                                 if(!existingTradeDetailsViewNewBinding.mobileNo.getText().toString().isEmpty()){
@@ -2245,7 +2095,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                         }
                     }
                     else {
-                        Utils.showAlert(this,"Enter Age");
+                        Utils.showAlert(this,"Enter Age or Enter correct format");
                         existingTradeDetailsViewNewBinding.age.requestFocus();
                     }
                 }
@@ -2516,9 +2366,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             animationOut.start();
         }
         else if(visible_count==0){
-            existingTradeDetailsViewNewBinding.fullDetails.setVisibility(View.VISIBLE);
+           /* existingTradeDetailsViewNewBinding.fullDetails.setVisibility(View.VISIBLE);
             existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
-            existingTradeDetailsViewNewBinding.main.setVisibility(View.GONE);
+            existingTradeDetailsViewNewBinding.main.setVisibility(View.GONE);*/
+            super.onBackPressed();
+            setResult(Activity.RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
     }
 

@@ -692,7 +692,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         System.out.println("size2 >>"+ tradersImageList.size());
 
         if(tradersList != null  && tradersList.size() == 1) {
-            Intent intent = new Intent( this, ExistTradeViewClass.class);
+            Intent intent = new Intent( this, NewExistTraderWholeDetailsViewClass.class);
             intent.putExtra("position", 0);
             intent.putExtra("tradersList", tradersList);
             intent.putExtra("tradersImageList", tradersImageList);

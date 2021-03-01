@@ -698,7 +698,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
-            if(selectedAnnualSale.equals("Select AnnualSale")) {
+            if(selectedAnnualSale.equals("Select Annual Sale")&&selectedAnnualSale.equals("Select Production Sale")) {
                 selectedAnnualId=null;
                 amountTextShow();
             }
@@ -1212,7 +1212,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapAnnualSale = new HashMap<String, String>();
             spinnerMapAnnualSale.put(null, null);
             final String[] items = new String[filterAnnualSale.size() + 1];
-            items[0] = "Select AnnualSale";
+            if(selectedLicenceTypeName.equals("Industrial")) {
+                items[0] = "Select Production Sale";
+            }
+            else {
+                items[0] = "Select Annual Sale";
+            }
             for (int i = 0; i < filterAnnualSale.size(); i++) {
                  {
                     spinnerMapAnnualSale.put(filterAnnualSale.get(i).getAnnual_id(), filterAnnualSale.get(i).getAnnual_sale());
@@ -2141,7 +2146,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
             if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
                 if (!"Select Gender".equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
-                    if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()){
+                    if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()&&newTradeLicenceScreenBinding.age.getText().toString().length()>3){
                         if(!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()){
                             if(!newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString().isEmpty()){
                                 if(!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()){
@@ -2193,7 +2198,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         }
                     }
                     else {
-                        Utils.showAlert(this,"Enter Age");
+                        Utils.showAlert(this,"Enter Age or Enter correct format");
                         newTradeLicenceScreenBinding.age.requestFocus();
                     }
                 }
@@ -2224,7 +2229,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 if (newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem() != null && selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
 
                                     if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
-                                        if (newTradeLicenceScreenBinding.annualSale.getSelectedItem() != null && !newTradeLicenceScreenBinding.annualSale.getSelectedItem().toString().isEmpty()&&!"Select AnnualSale".equalsIgnoreCase(selectedAnnualSale)) {
+                                        if (newTradeLicenceScreenBinding.annualSale.getSelectedItem() != null
+                                                && !newTradeLicenceScreenBinding.annualSale.getSelectedItem().toString().isEmpty()&&
+                                                !"Select Annual Sale".equalsIgnoreCase(selectedAnnualSale)
+                                            &&!(selectedAnnualSale.equals("Select Production Sale"))){
                                            return true;
                                         }
                                         else {
@@ -2624,7 +2632,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
             //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
             //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
 
        else if((selectedAnnualId!=null)&&(selectedMotorId!=null)){
@@ -2641,7 +2649,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
             //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
         else if((selectedMotorId!=null)&&(selectedGeneratorId!=null)){
                  for(int i=0;i<filtermotorRangeList.size();i++){
@@ -2656,7 +2664,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
             //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
         else if((selectedAnnualId!=null)&&(selectedGeneratorId!=null)){
             for(int i=0;i<filterAnnualSale.size();i++){
@@ -2672,7 +2680,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
             //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
         else if((selectedAnnualId!=null)||(selectedMotorId!=null)||(selectedGeneratorId!=null)){
             if((selectedAnnualId!=null)){
@@ -2683,7 +2691,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     }
                 }
 
-                newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+                newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
             }
             else if((selectedMotorId!=null)){
                 for(int i=0;i<filtermotorRangeList.size();i++){
@@ -2691,7 +2699,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         motor_amount=Integer.parseInt(filtermotorRangeList.get(i).getSlab_amount());
                     }
                 }
-                newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+                newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
             }
             else if((selectedGeneratorId!=null)){
                 for(int i=0;i<filterGeneratorList.size();i++){
@@ -2699,12 +2707,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         generator_amount=Integer.parseInt(filterGeneratorList.get(i).getSlab_amount());
                     }
                 }
-                newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+                newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
             }
         }
 
         else {
-            newTradeLicenceScreenBinding.tv1.setText("Amount to pay "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
 
         }

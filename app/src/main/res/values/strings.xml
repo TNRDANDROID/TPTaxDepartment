@@ -1,7 +1,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools">
 <string name="app_name">Town Panchayat Tax</string>
-<string name="app_name_line">Town Panchayat Tax Department</string>
+<string name="app_name_line">Directorate Town Panchayat Tax Department</string>
 <string name="hint_password">Password</string>
 <string name="hint_username">UserName</string>
 <string name="btn_login">Login</string>

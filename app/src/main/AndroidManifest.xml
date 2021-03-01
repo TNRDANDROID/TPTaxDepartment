@@ -69,67 +69,67 @@
         <activity
             android:name="com.nic.TPTaxDepartment.activity.LoginScreen"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.Dashboard"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.TradeLicenceScreen"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.NewTradeLicenceScreen"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.ExistingTradeLicence"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.ExistingTradeList"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
         <activity
             android:name="com.nic.TPTaxDepartment.activity.ExistingTradeSubmit"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.AssessmentStatus"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.CameraScreen"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.DailyCollection"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
             android:name="com.nic.TPTaxDepartment.activity.FieldVisit"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
 
         <activity
@@ -145,7 +145,11 @@
             android:windowSoftInputMode="stateUnchanged|adjustPan" />
         <activity android:name=".activity.ExistTradeViewClass"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="locked"/>
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".activity.NewExistTraderWholeDetailsViewClass"
+            android:screenOrientation="portrait"
+            />
 
 
         <provider
