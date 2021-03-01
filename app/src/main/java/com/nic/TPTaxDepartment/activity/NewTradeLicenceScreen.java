@@ -191,7 +191,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         date = newTradeLicenceScreenBinding.date;
-        date.setText("Select Date");
+        date.setText(getApplicationContext().getResources().getString(R.string.select_Date));
         animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
         animationOut   =    AnimationUtils.loadAnimation(this, R.anim.slide_enter);
         visible_count=0;
@@ -199,7 +199,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.previous.setVisibility(View.GONE);
-        newTradeLicenceScreenBinding.next.setText("Next");
+        newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.next));
         newTradeLicenceScreenBinding.documentLayout.setVisibility(View.GONE);
         newTradeLicenceScreenBinding.main.setVisibility(View.VISIBLE);
 
@@ -257,7 +257,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         builder.setSpan(new ForegroundColorSpan(Color.RED), start, end,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        newTradeLicenceScreenBinding.mobileHint.setText(builder);
+        //newTradeLicenceScreenBinding.mobileHint.setText(builder);
 
         //Spinners
         newTradeLicenceScreenBinding.gender.setOnItemSelectedListener(this);
@@ -402,13 +402,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         switch (compoundButton.getId()){
             case R.id.owner_status_no:
                 if(compoundButton.isChecked()){
-                    owner_status_text="N";
+                    owner_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
 
                 }
                 else {
-                    owner_status_text="Y";
+                    owner_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.ownerStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
                     fileString="";
@@ -418,14 +418,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.owner_status_yes:
                 if(compoundButton.isChecked()){
-                    owner_status_text="Y";
+                    owner_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.GONE);
                     fileString="";
                     newTradeLicenceScreenBinding.fileLocation.setText("");
                 }
                 else {
-                    owner_status_text="N";
+                    owner_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.ownerStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.chooseFileLayout.setVisibility(View.VISIBLE);
                 }
@@ -433,13 +433,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.geneartor_avilable_status_yes:
                 if(compoundButton.isChecked()){
-                    generator_available_status_text="Y";
+                    generator_available_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(generatorRangeArray);
                 }
                 else {
-                    generator_available_status_text="N";
+                    generator_available_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.generatorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
@@ -451,7 +451,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.generator_avilable_status_no:
                 if(compoundButton.isChecked()){
-                    generator_available_status_text="N";
+                    generator_available_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
@@ -460,7 +460,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     amountTextShow();
                 }
                 else {
-                    generator_available_status_text="Y";
+                    generator_available_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.geneartorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
                     newTradeLicenceScreenBinding.generatorSpinner.setAdapter(generatorRangeArray);
@@ -469,13 +469,13 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.motor_avilable_status_yes:
                 if(compoundButton.isChecked()){
-                    motor_available_status_text="Y";
+                    motor_available_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(motorRangeArray);
                 }
                 else {
-                    motor_available_status_text="N";
+                    motor_available_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.motorAvilableStatusNo.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
@@ -487,7 +487,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.motor_avilable_status_no:
                 if(compoundButton.isChecked()){
-                    motor_available_status_text="N";
+                    motor_available_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(false);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
@@ -496,7 +496,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     amountTextShow();
                 }
                 else {
-                    motor_available_status_text="Y";
+                    motor_available_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.motorAvilableStatusYes.setChecked(true);
                     newTradeLicenceScreenBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
                     newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(motorRangeArray);
@@ -505,35 +505,35 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.professional_tax_yes:
                 if(compoundButton.isChecked()){
-                    professional_tax_paid_status_text="Y";
+                    professional_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.professionalTaxNo.setChecked(false);
                 }
                 else {
-                    professional_tax_paid_status_text="N";
+                    professional_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.professionalTaxNo.setChecked(true);
                 }
                 break;
 
             case R.id.professional_tax_no:
                 if(compoundButton.isChecked()){
-                    professional_tax_paid_status_text="N";
+                    professional_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.professionalTaxYes.setChecked(false);
                 }
                 else {
-                    professional_tax_paid_status_text="Y";
+                    professional_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.professionalTaxYes.setChecked(true);
                 }
                 break;
 
             case R.id.property_tax_yes:
                 if(compoundButton.isChecked()){
-                    property_tax_paid_status_text="Y";
+                    property_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
 
                 }
                 else {
-                    property_tax_paid_status_text="N";
+                    property_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.propertyTaxNo.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentNumber.setText("");
@@ -542,12 +542,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
             case R.id.property_tax_no:
                 if(compoundButton.isChecked()){
-                    property_tax_paid_status_text="N";
+                    property_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.n);
                     newTradeLicenceScreenBinding.propertyTaxYes.setChecked(false);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.GONE);
                 }
                 else {
-                    professional_tax_paid_status_text="Y";
+                    professional_tax_paid_status_text=getApplicationContext().getResources().getString(R.string.y);
                     newTradeLicenceScreenBinding.propertyTaxYes.setChecked(true);
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.setVisibility(View.VISIBLE);
                 }
@@ -615,7 +615,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
-            if(selectedLicenceTpeId!=null&&!selectedLicenceTypeName.equals("Select Licence Type")){
+            if(selectedLicenceTpeId!=null&&!selectedLicenceTypeName.equals(getApplicationContext().getResources().getString(R.string.select_Licence_Type))){
                 newTradeLicenceScreenBinding.annualSale.setEnabled(true);
                 newTradeLicenceScreenBinding.motorRangeSpinner.setEnabled(true);
                 newTradeLicenceScreenBinding.generatorSpinner.setEnabled(true);
@@ -625,12 +625,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
 
             if(selectedLicenceTypeName.equals("Industrial")){
-                newTradeLicenceScreenBinding.annualSaleTextId.setText("Production");
+                newTradeLicenceScreenBinding.annualSaleTextId.setText(getApplicationContext().getResources().getString(R.string.production));
             }
             else if(selectedLicenceTypeName.equals("Commercial")){
-                newTradeLicenceScreenBinding.annualSaleTextId.setText("Annual Sale");
+                newTradeLicenceScreenBinding.annualSaleTextId.setText(getApplicationContext().getResources().getString(R.string.annual_Sale));
             }
-            else if(selectedLicenceTypeName.equals("Select Licence Type")){
+            else if(selectedLicenceTypeName.equals(getApplicationContext().getResources().getString(R.string.select_Licence_Type))){
                 newTradeLicenceScreenBinding.annualSale.setAdapter(null);
                 newTradeLicenceScreenBinding.motorRangeSpinner.setAdapter(null);
                 newTradeLicenceScreenBinding.generatorSpinner.setAdapter(null);
@@ -654,7 +654,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
 
-            if(selectedWardId != null && !selectedWardName.equals("Select Ward")){
+            if(selectedWardId != null && !selectedWardName.equals(getApplicationContext().getResources().getString(R.string.select_Ward))){
                 if(wardFlag){
                     LoadStreetSpinner(selectedWardId, "");
                 }else { }
@@ -698,7 +698,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     break;
                 }
             }
-            if(selectedAnnualSale.equals("Select Annual Sale")&&selectedAnnualSale.equals("Select Production Sale")) {
+            if(selectedAnnualSale.equals(getApplicationContext().getResources().getString(R.string.select_AnnualSale))&&selectedAnnualSale.equals(getApplicationContext().getResources().getString(R.string.select_ProductionSale))) {
                 selectedAnnualId=null;
                 amountTextShow();
             }
@@ -724,7 +724,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
 
-            if(selectedMotorRange.equals("Select Motor Range")) {
+            if(selectedMotorRange.equals(getApplicationContext().getResources().getString(R.string.select_Motor_Range))) {
                 selectedMotorId=null;
                 amountTextShow();
             }
@@ -748,7 +748,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 }
             }
 
-            if(selectedGeneratorRange.equals("Select Generator Range")) {
+            if(selectedGeneratorRange.equals(getApplicationContext().getResources().getString(R.string.select_Generator_Range))) {
                 selectedGeneratorId=null;
                 amountTextShow();
             }
@@ -892,7 +892,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMap = new HashMap<String, String>();
             spinnerMap.put(null, null);
             final String[] items = new String[genders.size() + 1];
-            items[0] = "Select Gender";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_Gender);
             for (int i = 0; i < genders.size(); i++) {
                 spinnerMap.put(genders.get(i).getGender_code(), genders.get(i).getGender_name_en());
                 String Class = genders.get(i).getGender_name_en();
@@ -951,7 +951,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapStreets = new HashMap<String, String>();
             spinnerMapStreets.put(null, null);
             final String[] items = new String[selectedStreets.size() + 1];
-            items[0] = "Select Street";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_Street);
             for (int i = 0; i < selectedStreets.size(); i++) {
                 spinnerMapStreets.put( (selectedStreets.get(i).getStreetid()).toString(), selectedStreets.get(i).getStreet_name_ta());
                 String Class = selectedStreets.get(i).getStreet_name_ta();
@@ -1004,7 +1004,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapWard = new HashMap<String, String>();
             spinnerMapWard.put(null, null);
             final String[] items = new String[wards.size() + 1];
-            items[0] = "Select Ward";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_Ward);
             for (int i = 0; i < wards.size(); i++) {
                 spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_code());
                 String Class = wards.get(i).getWard_code();
@@ -1054,7 +1054,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapFinYear = new HashMap<String, String>();
             spinnerMapFinYear.put(null, null);
             final String[] items = new String[finYear.size() + 1];
-            items[0] = "Select Licence Validity";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_Licence_Validity);
             for (int i = 0; i < finYear.size(); i++) {
                 spinnerMapFinYear.put(finYear.get(i).getFIN_YEAR_ID(), finYear.get(i).getFIN_YEAR());
                 String Class = finYear.get(i).getFIN_YEAR();
@@ -1101,7 +1101,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapLicenceType = new HashMap<String, String>();
             spinnerMapLicenceType.put(null, null);
             final String[] items = new String[traderLicenseTypeList.size() + 1];
-            items[0] = "Select Licence Type";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_Licence_Type);
             for (int i = 0; i < traderLicenseTypeList.size(); i++) {
                 spinnerMapLicenceType.put(traderLicenseTypeList.get(i).getTraders_license_type_id(), traderLicenseTypeList.get(i).getTraders_license_type_name());
                 String Class = traderLicenseTypeList.get(i).getTraders_license_type_name();
@@ -1157,7 +1157,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerTradeCode = new HashMap<Integer, String>();
             spinnerTradeCode.put(0, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
-            items[0] = "Select TradeCode";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_TradeCode);
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
                 spinnerTradeCode.put(i + 1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
@@ -1213,10 +1213,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapAnnualSale.put(null, null);
             final String[] items = new String[filterAnnualSale.size() + 1];
             if(selectedLicenceTypeName.equals("Industrial")) {
-                items[0] = "Select Production Sale";
+                items[0] = getApplicationContext().getResources().getString(R.string.select_ProductionSale);
             }
             else {
-                items[0] = "Select Annual Sale";
+                items[0] = getApplicationContext().getResources().getString(R.string.select_AnnualSale);
             }
             for (int i = 0; i < filterAnnualSale.size(); i++) {
                  {
@@ -1273,7 +1273,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             spinnerMapMotorRange = new HashMap<String, String>();
             spinnerMapMotorRange.put(null, null);
             final String[] items = new String[filtermotorRangeList.size() + 1];
-            items[0] = "Select Motor Range";
+            items[0] = getApplicationContext().getResources().getString(R.string.select_Motor_Range);
             for (int i = 0; i < filtermotorRangeList.size(); i++) {
                 {
                     spinnerMapMotorRange.put(filtermotorRangeList.get(i).getMotor_id(), filtermotorRangeList.get(i).getMotor_range());
@@ -1330,7 +1330,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 spinnerMapGeneratorRange = new HashMap<String, String>();
                 spinnerMapGeneratorRange.put(null, null);
                 final String[] items = new String[filterGeneratorList.size() + 1];
-                items[0] = "Select Generator Range";
+                items[0] = getApplicationContext().getResources().getString(R.string.select_Generator_Range);
                 for (int i = 0; i < filterGeneratorList.size(); i++) {
                     {
                         spinnerMapGeneratorRange.put(filterGeneratorList.get(i).getGenerator_id(), filterGeneratorList.get(i).getGenerator_range());
@@ -1521,7 +1521,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     public void openCameraScreen() {
         if (selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty()
-                && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode) && !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
+                && !getApplicationContext().getResources().getString(R.string.select_TradeCode).equalsIgnoreCase(selectedTradeCode) && !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
             Intent intent = new Intent(this, CameraScreen.class);
             intent.putExtra(AppConstant.TRADE_CODE, selectedTrdeCodeDetailsID);
             intent.putExtra(AppConstant.MOBILE, newTradeLicenceScreenBinding.mobileNo.getText().toString());
@@ -1530,14 +1530,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }
         else {
-            Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
+            Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.select_Trade_Code_and_Mobile_Number));
         }
     }
 
     public void viewImageScreen() {
         if(!flag){
             if (selectedTradeCode != null &&!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
-                    !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
+                    !getApplicationContext().getResources().getString(R.string.select_TradeCode).equalsIgnoreCase(selectedTradeCode)&&
                     !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
 
@@ -1549,15 +1549,15 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
-                    Utils.showAlert(NewTradeLicenceScreen.this, "No image Saved in Local");
+                    Utils.showAlert(NewTradeLicenceScreen.this, getApplicationContext().getResources().getString(R.string.no_image_Saved_in_Local));
                 }
             }
             else {
-                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
+                Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.select_Trade_Code_and_Mobile_Number));
             }
         }else {
             if (selectedTradeCode != null &&!newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() &&
-                    !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)&&
+                    !getApplicationContext().getResources().getString(R.string.select_TradeCode).equalsIgnoreCase(selectedTradeCode)&&
                     !newTradeLicenceScreenBinding.mobileNo.getText().toString().equals("")) {
                 if (getSaveTradeImageTable() == 1) {
                     Intent intent = new Intent(this, FullImageActivity.class);
@@ -1568,11 +1568,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     startActivity(intent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                 } else {
-                    Utils.showAlert(NewTradeLicenceScreen.this, "No image Saved in Local");
+                    Utils.showAlert(NewTradeLicenceScreen.this, getApplicationContext().getResources().getString(R.string.no_image_Saved_in_Local));
                 }
             }
             else {
-                Utils.showAlert(NewTradeLicenceScreen.this,"Select Trade Code and Mobile Number");
+                Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.select_Trade_Code_and_Mobile_Number));
             }
         }
 
@@ -1670,7 +1670,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 long rowUpdated1 = Dashboard.db.update(DBHelper.SAVE_NEW_TRADER_DETAILS, values, "mobileno  = ? ", new String[]{newTradeLicenceScreenBinding.mobileNo.getText().toString()});
                 if (rowUpdated1 != -1) {
                     // Toast.makeText(FieldVisit.this, "New Inspection added", Toast.LENGTH_SHORT).show();
-                    Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details updated");
+                    Utils.showAlert(NewTradeLicenceScreen.this, getApplicationContext().getResources().getString(R.string.trader_Details_Updated));
                     OnBackPressed();
                     //Dashboard.syncvisiblity();
                     //finish();
@@ -1679,7 +1679,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }else {
                 long rowUpdated1 =  Dashboard.db.insert(DBHelper.SAVE_NEW_TRADER_DETAILS,null,values);
                 if (rowUpdated1 != -1) {
-                    Utils.showAlert(NewTradeLicenceScreen.this, " Trader Details Added Successfully!");
+                    Utils.showAlert(NewTradeLicenceScreen.this, getApplicationContext().getResources().getString(R.string.trader_Details_Added_Successfully));
                     Log.d("InsertNewTrader",""+values);
                     OnBackPressed();
                 }
@@ -1688,7 +1688,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
         else {
-            Utils.showAlert(NewTradeLicenceScreen.this,"Maximum 5 Traders Details Stored in Local");
+            Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.maximum_5_trader_Details_Stored_in_Local));
         }
 
 
@@ -1878,7 +1878,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
                 newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
                 newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
-                newTradeLicenceScreenBinding.next.setText("Next");
+                newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.next));
                 newTradeLicenceScreenBinding.second.setAnimation(animation);
                 animation.start();
                 }
@@ -1892,12 +1892,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
                 newTradeLicenceScreenBinding.third.setVisibility(View.VISIBLE);
                 newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
-                newTradeLicenceScreenBinding.next.setText("Submit");
+                newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.submit));
                 newTradeLicenceScreenBinding.third.setAnimation(animation);
                 animation.start();
             }
         }
-        else if (newTradeLicenceScreenBinding.next.getText().toString().equals("Submit")){
+        else if (newTradeLicenceScreenBinding.next.getText().toString().equals(getApplicationContext().getResources().getString(R.string.submit))){
                 ValidationThird();
         }
     }
@@ -1910,7 +1910,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
             newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
             newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
-            newTradeLicenceScreenBinding.next.setText("Next");
+            newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.submit));
             newTradeLicenceScreenBinding.second.setAnimation(animationOut);
             animationOut.start();
         }
@@ -1920,7 +1920,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             newTradeLicenceScreenBinding.second.setVisibility(View.GONE);
             newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
             newTradeLicenceScreenBinding.previous.setVisibility(View.GONE);
-            newTradeLicenceScreenBinding.next.setText("Next");
+            newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.next));
             newTradeLicenceScreenBinding.first.setAnimation(animationOut);
             animationOut.start();
         }
@@ -2145,7 +2145,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     public boolean ValidationFirst(){
         if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
             if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
-                if (!"Select Gender".equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
+                if (!getApplicationContext().getResources().getString(R.string.select_Gender).equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
                     if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()&&newTradeLicenceScreenBinding.age.getText().toString().length()>3){
                         if(!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()){
                             if(!newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString().isEmpty()){
@@ -2158,123 +2158,123 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                                 return true;
                                             }
                                             else {
-                                                Utils.showAlert(this,"Enter Description Tamil");
+                                                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Description_Tamil));
                                                 newTradeLicenceScreenBinding.descriptionTamil.requestFocus();
                                                 return false;
                                             }
                                         }
                                         else {
-                                            Utils.showAlert(this,"Enter Description English");
+                                            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Description_English));
                                             newTradeLicenceScreenBinding.descriptionEnglish.requestFocus();
                                         }
                                     }
                                     else {
-                                        Utils.showAlert(this,"Enter Valid Email ID");
+                                        Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Valid_Email_ID));
                                         newTradeLicenceScreenBinding.emailId.requestFocus();
                                     }
                                     }
                                     else {
-                                        Utils.showAlert(this,"Enter Email ID");
+                                        Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Email_ID));
                                         newTradeLicenceScreenBinding.emailId.requestFocus();
                                     }
                                 }
                                 else {
-                                    Utils.showAlert(this,"Enter Valid Mobile Number");
+                                    Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Valid_Mobile_Number));
                                     newTradeLicenceScreenBinding.mobileNo.requestFocus();
                                 } }
                                 else {
-                                    Utils.showAlert(this,"Enter Mobile Number");
+                                    Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Mobile_Number));
                                     newTradeLicenceScreenBinding.mobileNo.requestFocus();
                                 }
                             }
                             else {
-                                Utils.showAlert(this,"Enter Fathers/Husband Name Tamil");
+                                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Fathers_Husband_Name_Tamil));
                                 newTradeLicenceScreenBinding.fatherHusNameTamil.requestFocus();
                             }
                         }
                         else {
-                            Utils.showAlert(this,"Enter Father/ Husband Name English");
+                            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Father_Husband_Name_English));
                             newTradeLicenceScreenBinding.fatherHusName.requestFocus();
                         }
                     }
                     else {
-                        Utils.showAlert(this,"Enter Age or Enter correct format");
+                        Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Valid_Age));
                         newTradeLicenceScreenBinding.age.requestFocus();
                     }
                 }
                 else {
-                    Utils.showAlert(this,"Select Gender");
+                    Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.select_Gender));
                     newTradeLicenceScreenBinding.genderLayout.requestLayout();
                 }
             }
             else {
-                Utils.showAlert(this,"Enter Applicant Name Tamil");
+                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Applicant_Name_Tamil));
                 newTradeLicenceScreenBinding.applicantNameTamil.requestFocus();
             }
         }
         else {
-            Utils.showAlert(this,"Enter Applicant Name English");
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Applicant_Name_English));
             newTradeLicenceScreenBinding.applicantName.requestFocus();
         }
         return false;
     }
     public boolean ValidationSecond(){
-        if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty() && !"Select Ward".equalsIgnoreCase(selectedWardName)) {
-            if (!newTradeLicenceScreenBinding.streetsName.getSelectedItem().toString().isEmpty() && !"Select Street".equalsIgnoreCase(selectedStreetName)) {
+        if (!newTradeLicenceScreenBinding.wardNo.getSelectedItem().toString().isEmpty() && !getApplicationContext().getResources().getString(R.string.select_Ward).equalsIgnoreCase(selectedWardName)) {
+            if (!newTradeLicenceScreenBinding.streetsName.getSelectedItem().toString().isEmpty() && !getApplicationContext().getResources().getString(R.string.select_Street).equalsIgnoreCase(selectedStreetName)) {
                 if (!newTradeLicenceScreenBinding.doorNo.getText().toString().isEmpty()) {
 
-                    if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty() && !"Select Licence Validity".equalsIgnoreCase(selectedFinName)) {
+                    if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty() && !getApplicationContext().getResources().getString(R.string.select_Licence_Validity).equalsIgnoreCase(selectedFinName)) {
                         if(ownerDetailsCondition()){
-                            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty() && !newTradeLicenceScreenBinding.date.getText().toString().equals("Select Date")) {
+                            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty() && !newTradeLicenceScreenBinding.date.getText().toString().equals(getApplicationContext().getResources().getString(R.string.select_Date))) {
                                 if (newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem() != null && selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
 
-                                    if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !"Select Licence Type".equalsIgnoreCase(selectedLicenceTypeName)) {
+                                    if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !getApplicationContext().getResources().getString(R.string.select_Licence_Type).equalsIgnoreCase(selectedLicenceTypeName)) {
                                         if (newTradeLicenceScreenBinding.annualSale.getSelectedItem() != null
                                                 && !newTradeLicenceScreenBinding.annualSale.getSelectedItem().toString().isEmpty()&&
-                                                !"Select Annual Sale".equalsIgnoreCase(selectedAnnualSale)
-                                            &&!(selectedAnnualSale.equals("Select Production Sale"))){
+                                                !getApplicationContext().getResources().getString(R.string.select_AnnualSale).equalsIgnoreCase(selectedAnnualSale)
+                                            &&!(selectedAnnualSale.equals(getApplicationContext().getResources().getString(R.string.select_ProductionSale)))){
                                            return true;
                                         }
                                         else {
-                                            Utils.showAlert(this, "Select Annual Sale");
+                                            Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.select_AnnualSale));
                                             newTradeLicenceScreenBinding.annualSaleLayout.requestLayout();
                                             return false;
                                         }
 
                                     } else {
-                                        Utils.showAlert(this, "Select License Type ");
+                                        Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.select_Licence_Type));
                                         newTradeLicenceScreenBinding.licenceTypeLayout.requestLayout();
                                         return false;
                                     }
                                 } else {
-                                    Utils.showAlert(this, "Select Trade Code");
+                                    Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.select_TradeCode));
                                     newTradeLicenceScreenBinding.tradersCodeLayout.requestLayout();
                                 }
                             }
                             else {
-                                Utils.showAlert(this,"Select Date");
+                                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.select_Date));
                                 newTradeLicenceScreenBinding.dateLayout.requestFocus();
                             }
                         }
                     }
                     else {
-                        Utils.showAlert(this,"Select Licence Validity");
+                        Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.select_Licence_Validity));
                         newTradeLicenceScreenBinding.licenceValidityLayout.requestLayout();
                     }
 
                 }
                 else {
-                    Utils.showAlert(this,"Enter Door Number");
+                    Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Door_Number));
                     newTradeLicenceScreenBinding.doorNo.requestFocus();
                 }
             }
             else {
-                Utils.showAlert(this,"Select Street");
+                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.select_Street));
                 newTradeLicenceScreenBinding.streetLayout.requestLayout();
             }
         }
         else {
-            Utils.showAlert(this,"Select Ward");
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.select_Ward));
             newTradeLicenceScreenBinding.wardLayout.requestLayout();
         }
         return false;
@@ -2297,7 +2297,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                             Utils.showAlert(this, getResources().getString(R.string.no_internet));
                                         }
                                     } else {
-                                        Utils.showAlert(NewTradeLicenceScreen.this, "Capture One Image");
+                                        Utils.showAlert(NewTradeLicenceScreen.this, getApplicationContext().getResources().getString(R.string.capture_One_Image));
                                     }
                                 /*}
                                 else {
@@ -2306,14 +2306,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 }*/
                             }
                             else {
-                                Utils.showAlert(this,"Enter Remarks");
+                                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.enter_Remarks));
                                 newTradeLicenceScreenBinding.remarksField.requestFocus();
                             }
                         }
 
                     }
                     else {
-                        Utils.showAlert(this,"Choose Professional Tax Paid status");
+                        Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.choose_Professional_Tax_Paid_status));
                         newTradeLicenceScreenBinding.professionalTaxLayout.requestLayout();
                     }
                 }
@@ -2331,14 +2331,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 if(fileString!=null && !fileString.isEmpty() && !fileString.equals("")){
                     return true;
                 }else{
-                    Utils.showAlert(this,"Upload Document");
+                    Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.upload_Document));
                     newTradeLicenceScreenBinding.areYouOwnerLayout.requestFocus();
                 return false;}
             }
 
         }
         else {
-            Utils.showAlert(this,"Choose Owner or Not");
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.choose_Owner_or_Not));
         }
         return false;
     }
@@ -2347,11 +2347,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             if(newTradeLicenceScreenBinding.motorAvilableStatusYes.isChecked()){
                 if(newTradeLicenceScreenBinding.motorRangeSpinner!= null &&
                         newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItem() !=null
-                &&  !newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItem().toString().equals("Select Motor Range")) {
+                &&  !newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItem().toString().equals(getApplicationContext().getResources().getString(R.string.select_Motor_Range))) {
                     return true;
                 }
                 else {
-                    Utils.showAlert(this, "Select Motor Range");
+                    Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.select_Motor_Range));
                     newTradeLicenceScreenBinding.motorSpinnerLayout.requestLayout();
                     return false;
 
@@ -2362,7 +2362,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
         else {
-            Utils.showAlert(this,"Choose motor available status");
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.choose_motor_available_status));
             newTradeLicenceScreenBinding.moterLayout.requestLayout();
             return false;
         }
@@ -2372,11 +2372,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             if(newTradeLicenceScreenBinding.geneartorAvilableStatusYes.isChecked()){
                 if(newTradeLicenceScreenBinding.generatorSpinner!= null &&
                         newTradeLicenceScreenBinding.generatorSpinner.getSelectedItem() !=null
-                &&  !newTradeLicenceScreenBinding.generatorSpinner.getSelectedItem().toString().equals("Select Generator Range")) {
+                &&  !newTradeLicenceScreenBinding.generatorSpinner.getSelectedItem().toString().equals(getApplicationContext().getResources().getString(R.string.select_Generator_Range))) {
                     return true;
                 }
                 else {
-                    Utils.showAlert(this, "Select Generator Range");
+                    Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.select_Generator_Range));
                     newTradeLicenceScreenBinding.genaratorLayout.requestLayout();
                     return false;
                 }
@@ -2386,7 +2386,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
         else {
-            Utils.showAlert(this,"Choose generator available status");
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.choose_generator_available_status));
             newTradeLicenceScreenBinding.genaratorLayout.requestLayout();
             return false;
         }
@@ -2399,7 +2399,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     return true;
                 }
                 else {
-                    Utils.showAlert(this, "Enter Property Tax Assessment Number");
+                    Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.enter_Property_Tax_Assessment_Number));
                     newTradeLicenceScreenBinding.propertyTaxAssessmentLayout.requestLayout();
                     return false;
                 }
@@ -2409,7 +2409,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
         }
         else {
-            Utils.showAlert(this,"Choose Property Tax Payment status");
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.choose_Property_Tax_Payment_status));
             newTradeLicenceScreenBinding.genaratorLayout.requestLayout();
             return false;
         }
@@ -2442,7 +2442,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
                     Log.i( LOG_TAG,"Permission granted!");
-                    Toast.makeText(this.getApplicationContext(), "Permission granted!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getApplicationContext(), getApplicationContext().getResources().getString(R.string.permission_granted), Toast.LENGTH_SHORT).show();
                     showFileChooser();
 
 //                    this.doBrowseFile();
@@ -2450,7 +2450,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                 // Cancelled or denied.
                 else {
                     Log.i(LOG_TAG,"Permission denied!");
-                    Toast.makeText(this.getApplicationContext(), "Permission denied!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this.getApplicationContext(), getApplicationContext().getResources().getString(R.string.permission_denied), Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -2632,7 +2632,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
             //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
             //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
 
        else if((selectedAnnualId!=null)&&(selectedMotorId!=null)){
@@ -2649,7 +2649,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
             //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
         else if((selectedMotorId!=null)&&(selectedGeneratorId!=null)){
                  for(int i=0;i<filtermotorRangeList.size();i++){
@@ -2664,7 +2664,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
             //motor_amount=Integer.parseInt(filtermotorRangeList.get(newTradeLicenceScreenBinding.motorRangeSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
         else if((selectedAnnualId!=null)&&(selectedGeneratorId!=null)){
             for(int i=0;i<filterAnnualSale.size();i++){
@@ -2680,7 +2680,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
             //annual_amount=Integer.parseInt(filterAnnualSale.get(newTradeLicenceScreenBinding.annualSale.getSelectedItemPosition()+1).getSlab_amount());
             //generator_amount=Integer.parseInt(filterGeneratorList.get(newTradeLicenceScreenBinding.generatorSpinner.getSelectedItemPosition()+1).getSlab_amount());
-            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
         else if((selectedAnnualId!=null)||(selectedMotorId!=null)||(selectedGeneratorId!=null)){
             if((selectedAnnualId!=null)){
@@ -2691,7 +2691,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                     }
                 }
 
-                newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+                newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
             }
             else if((selectedMotorId!=null)){
                 for(int i=0;i<filtermotorRangeList.size();i++){
@@ -2699,7 +2699,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         motor_amount=Integer.parseInt(filtermotorRangeList.get(i).getSlab_amount());
                     }
                 }
-                newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+                newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
             }
             else if((selectedGeneratorId!=null)){
                 for(int i=0;i<filterGeneratorList.size();i++){
@@ -2707,12 +2707,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                         generator_amount=Integer.parseInt(filterGeneratorList.get(i).getSlab_amount());
                     }
                 }
-                newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+                newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
             }
         }
 
         else {
-            newTradeLicenceScreenBinding.tv1.setText("Licence Amount "+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
+            newTradeLicenceScreenBinding.tv1.setText(getApplicationContext().getResources().getString(R.string.amount_to_pay)+"\u20b9"+" "+(annual_amount+generator_amount+motor_amount));
         }
 
         }
