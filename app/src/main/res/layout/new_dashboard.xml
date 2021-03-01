@@ -22,7 +22,7 @@
                 android:background="@android:color/transparent"
                 android:id="@+id/img_rll"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_120sdp"
+                android:layout_height="@dimen/_130sdp"
                 >
                 <ImageView
                     android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                     <RelativeLayout
                         android:id="@+id/header_layout"
                         android:layout_width="match_parent"
+                        android:layout_marginTop="15dp"
                         android:layout_height="wrap_content"
                         >
 
@@ -51,14 +52,29 @@
                             android:id="@+id/refresh"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:layout_alignParentStart="true"
-                            android:layout_centerHorizontal="true"
                             android:layout_gravity="start"
                             android:layout_marginLeft="@dimen/_10sdp"
-                            android:layout_marginTop="10dp"
                             android:background="@drawable/back"
                             android:backgroundTint="@android:color/white"
                             android:onClick="@{()-> activity.onBackPressed()}" />
+
+
+
+<!--
+                        <ImageView
+                            android:id="@+id/refresh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="start"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:background="@drawable/usernamebg"
+                            android:backgroundTint="@android:color/white"
+                            android:onClick="@{()-> activity.showProfile()}" />
+-->
+
 
 
                         <TextView
@@ -66,8 +82,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="15dp"
                             android:text="Dashboard"
+                            android:layout_marginTop="5dp"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_15sdp"
@@ -79,7 +95,6 @@
                             android:layout_height="30dp"
                             android:layout_alignParentRight="true"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginTop="15dp"
                             android:layout_marginRight="15dp"
                             android:adjustViewBounds="true"
                             android:background="@drawable/logout_variant"
@@ -101,6 +116,212 @@
 
             </RelativeLayout>
 
+<!--
+        <LinearLayout
+            android:id="@+id/linear_root"
+            android:layout_below="@+id/img_rll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="-100dp"
+            android:visibility="gone"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/waterTax"
+                android:background="@drawable/dash_board_bg_rect"
+                android:padding="5dp"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_20dp"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:text="Name : "
+                        android:textColor="@color/grey2"
+                        android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/Name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginRight="@dimen/margin_left_20dp"
+                        android:text="Connection No"
+                        android:textColor="@color/grey2"
+                        android:visibility="visible" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:visibility="gone"
+                        android:background="@color/light_grey"
+                        android:layout_margin="5dp"></View>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_20dp"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:text="District : "
+                        android:textColor="@color/grey2"
+                        android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/District"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginRight="@dimen/margin_left_20dp"
+                        android:text="Connection Name"
+                        android:textColor="@color/grey2"
+                        android:visibility="visible" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:visibility="gone"
+                        android:background="@color/light_grey"
+                        android:layout_margin="5dp"></View>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:visibility="gone"
+                    android:paddingBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_20dp"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:text="Town Panchayat : "
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/Town"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginRight="@dimen/margin_left_20dp"
+                        android:text="Water Charges"
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp"
+                    android:visibility="gone"
+                    android:paddingBottom="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_left_20dp"
+                        android:textSize="15sp"
+                        android:layout_marginRight="10dp"
+                        android:text="Role : "
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+                    <TextView
+                        android:id="@+id/Role"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginRight="@dimen/margin_left_20dp"
+                        android:text="Water Charges"
+                        android:textColor="@color/white"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-50dp"
+            android:paddingTop="5dp"
+            android:gravity="end"
+            android:visibility="visible"
+            android:id="@+id/linear2"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_below="@+id/img_rll"
+            android:paddingBottom="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:padding="5dp"
+                android:textStyle="bold"
+                android:text="Connection No"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Town"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:text="Connection No"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/District"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:padding="5dp"
+                    android:textStyle="bold"
+                    android:text="Connection No"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="visible" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
 
 
@@ -180,7 +401,7 @@
         <ScrollView
             android:visibility="visible"
             android:id="@+id/scroll_view"
-            android:layout_below="@+id/img_rll"
+            android:layout_below="@+id/linear2"
             android:layout_centerInParent="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

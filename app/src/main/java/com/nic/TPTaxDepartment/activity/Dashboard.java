@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -67,6 +68,9 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     ArrayList<CommonModel> annualSaleList;
     ArrayList<CommonModel> motorRangePowerList;
     ArrayList<CommonModel> generatorRangeList;
+    boolean flag=true;
+    Animation animZoomin;
+    Animation animZoomout;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +92,14 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 logout();
             }
         });
+        animZoomin = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_exit);
+        animZoomout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_enter);
 
-
+        newDashboardBinding.Name.setText(prefManager.getUserFname()+" "+prefManager.getUserLname());
+        newDashboardBinding.District.setText(prefManager.getDistrictName());
+        newDashboardBinding.Town.setText(prefManager.getLbodyNameEn());
+//        newDashboardBinding.Role.setText(prefManager.getRoleName());
+//        newDashboardBinding.linearRoot.setVisibility(View.GONE);
        /* newDashboardBinding.voteprogresscard.setTranslationX(800);
         newDashboardBinding.attendanecard.setTranslationX(800);
         newDashboardBinding.cameracard.setTranslationX(800);
@@ -252,6 +262,19 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public void closeApplication() {
         new MyDialog(this).exitDialog(this, "Are you sure you want to Logout?", "Logout");
     }
+/*
+    public void showProfile() {
+        if(flag){
+            flag=false;
+            newDashboardBinding.linearRoot.setVisibility(View.VISIBLE);
+            newDashboardBinding.linearRoot.startAnimation(animZoomout);
+        }else {
+            flag=true;
+            newDashboardBinding.linearRoot.setVisibility(View.GONE);
+            newDashboardBinding.linearRoot.startAnimation(animZoomin);
+        }
+    }
+*/
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

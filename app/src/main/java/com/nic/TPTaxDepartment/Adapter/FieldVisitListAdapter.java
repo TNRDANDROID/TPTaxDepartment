@@ -21,6 +21,8 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import static com.nic.TPTaxDepartment.Adapter.PendingScreenAdapter.db;
@@ -71,6 +73,12 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
                     deleteRow(position);
                 }
             });
+            holder.edit_layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((PendingScreen)activity).loadFieldList(traders,position);
+                }
+            });
             holder.upload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -103,14 +111,15 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
         TextView name,code,taxType,current_status;
-        RelativeLayout delete,upload;
-        ImageView image_list_icon;
+        RelativeLayout upload,edit_layout;
+        ImageView image_list_icon,delete;
         SummaryViewHolder(View view) {
             super(view);
             name=(TextView)view.findViewById(R.id.nameValue);
             code=(TextView)view.findViewById(R.id.codeValue);
             taxType=(TextView)view.findViewById(R.id.taxTypeValue);
-            delete=(RelativeLayout)view.findViewById(R.id.delete_layout);
+            delete=(ImageView)view.findViewById(R.id.delete);
+            edit_layout=(RelativeLayout)view.findViewById(R.id.edit_layout);
             upload=(RelativeLayout)view.findViewById(R.id.right);
             current_status=(TextView) view.findViewById(R.id.status_filed);
             image_list_icon=(ImageView) view.findViewById(R.id.image_list);

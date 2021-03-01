@@ -77,6 +77,7 @@
             android:src="@drawable/ic_gallery"></ImageView>
     </RelativeLayout>
 -->
+<!--
     <RelativeLayout
         android:id="@+id/delete_layout"
         android:layout_marginRight="@dimen/_5sdp"
@@ -92,6 +93,25 @@
             android:id="@+id/delete"
             android:src="@drawable/ic_trash"></ImageView>
     </RelativeLayout>
+-->
+
+    <RelativeLayout
+        android:id="@+id/edit_layout"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:padding="10dp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:id="@+id/edit"
+            android:tint="@color/black_grey"
+            android:src="@drawable/ic_edit"></ImageView>
+    </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -167,10 +187,20 @@
                     android:layout_height="@dimen/_30sdp"
                     android:id="@+id/image_list"
                     android:tint="@color/white"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="end"
+                    android:layout_marginLeft="5dp"
+                    android:src="@drawable/ic_gallery"/>
+                <ImageView
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:id="@+id/delete"
+                    android:tint="@color/white"
+                    android:padding="8dp"
                     android:layout_alignParentRight="true"
                     android:layout_gravity="end"
                     android:layout_marginRight="5dp"
-                    android:src="@drawable/ic_gallery"/>
+                    android:src="@drawable/ic_trash"/>
             </RelativeLayout>
 
 

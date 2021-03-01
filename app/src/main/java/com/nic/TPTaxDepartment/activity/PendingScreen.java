@@ -688,4 +688,13 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             restart(1);
         }
     }
+
+    public void  loadFieldList(ArrayList<CommonModel> fields,int pos){
+        Intent intent = new Intent( PendingScreen.this, FieldVisit.class);
+        intent.putExtra("flag",true);
+        intent.putExtra("position",pos);
+        intent.putExtra("fieldsList", fields);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
 }

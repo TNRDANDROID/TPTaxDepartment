@@ -311,9 +311,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         String userDataDecrypt = Utils.decrypt(decryptedKey, user_data);
                         Log.d("userdatadecry", "" + userDataDecrypt);
                         jsonObject = new JSONObject(userDataDecrypt);
+                        Log.d("userdatadecry", "" + jsonObject);
                         prefManager.setStateCode( Utils.NotNullString(jsonObject.getString(AppConstant.STATE_CODE)));
                         prefManager.setLbType( Utils.NotNullString(jsonObject.getString(AppConstant.LB_TYPE)));
                         prefManager.setDistrictCode( Utils.NotNullString(jsonObject.getString(AppConstant.DISTRICT_CODE)));
+                        prefManager.setDistrictName( Utils.NotNullString(jsonObject.getString(AppConstant.DISTRICT_NAME_EN)));
                         prefManager.setTpCode( Utils.NotNullString(jsonObject.getString(AppConstant.TP_CODE)));
                         /*prefManager.setDistrictCode("20");
                         prefManager.setTpCode("200292");*/

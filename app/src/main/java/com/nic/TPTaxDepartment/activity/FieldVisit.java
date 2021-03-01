@@ -148,6 +148,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     //SearchRequestIDLIST
     ArrayList<CommonModel> searchRequestList;
+    ArrayList<CommonModel> fieldVisits;
     private PrefManager prefManager;
     FieldVisitRquestListAdapter fieldVisitRquestListAdapter;
     String request_id="",data_ref_id;
@@ -157,6 +158,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     ArrayAdapter<String> taxTypeAdapter;
     ArrayList<TPtaxModel> historyList;
     String FieldVisitImageString="";
+    boolean flag=false;
+    int selectedPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -283,9 +286,31 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         fieldVisitBinding.fieldVisitLists.setFocusable(false);
 
         fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
+        flag=getIntent().getBooleanExtra("flag",false);
+        if(flag){
+            selectedPosition=getIntent().getIntExtra("position",0);
+            fieldVisits = (ArrayList<CommonModel>)getIntent().getSerializableExtra("fieldsList");
+            LoadPendingFieldDetails();
 
+        }else {
+        }
 
     }
+
+    private void LoadPendingFieldDetails() {
+        try {
+            int taxTypePosition = taxTypeAdapter.getPosition(fieldVisits.get(selectedPosition).getTaxtypeid());
+            if(taxTypePosition >= 0){
+                fieldVisitBinding.taxType.setSelection(taxTypePosition);
+            }else {
+                fieldVisitBinding.taxType.setAdapter(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
     }
