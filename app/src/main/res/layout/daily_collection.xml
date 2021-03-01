@@ -68,7 +68,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
-                        android:text="Daily Collection"
+                        android:text="@string/daily_Collection"
                         android:textAlignment="center"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/_15sdp"
@@ -179,13 +179,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/year_vice"
-                    android:text="Year"></RadioButton>
+                    android:text="@string/year"></RadioButton>
 
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/daily"
-                    android:text="Date"
+                    android:text="@string/date"
                     android:layout_toRightOf="@+id/year_vice"
                     android:layout_marginLeft="70dp"></RadioButton>
             </RelativeLayout>
@@ -258,7 +258,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Select Financial Year"
+                android:text="@string/select_Financial_Year"
                 android:textColor="@color/black_grey"
                 android:textSize="16dp"
                 android:visibility="gone"

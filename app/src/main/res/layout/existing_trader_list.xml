@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="Existing Traders"
+                android:text="@string/existing_Traders"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/_15sdp"
@@ -116,7 +116,7 @@
                     android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No Data Found"
+                    android:text="@string/no_RECORD_FOUND"
                     android:layout_below="@+id/no_data_img"
                     android:layout_centerHorizontal="true"></TextView>
             </RelativeLayout>

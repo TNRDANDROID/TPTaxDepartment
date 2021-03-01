@@ -2,6 +2,7 @@ package com.nic.TPTaxDepartment.activity;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -61,12 +62,13 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     String selectedFinName="";
     boolean flag;
     final Calendar myCalendar = Calendar.getInstance();
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dailyCollectionBinding = DataBindingUtil.setContentView(this, R.layout.daily_collection);
         dailyCollectionBinding.setActivity(this);
+        context=this;
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
 
@@ -84,7 +86,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
-        date.setText("Select Date");
+        date.setText(context.getResources().getString(R.string.select_Date));
 
         dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
         dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
@@ -476,7 +478,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             spinnerMapFinYear = new HashMap<String, String>();
             spinnerMapFinYear.put(null, null);
             final String[] items = new String[finYear.size() + 1];
-            items[0] = "Select Financial Year";
+            items[0] = context.getResources().getString(R.string.select_Financial_Year);
             for (int i = 0; i < finYear.size(); i++) {
                 spinnerMapFinYear.put(finYear.get(i).getFIN_YEAR_ID(), finYear.get(i).getFIN_YEAR());
                 String Class = finYear.get(i).getFIN_YEAR();

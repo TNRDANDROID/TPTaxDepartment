@@ -36,10 +36,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -105,7 +107,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     private FieldVisitBinding fieldVisitBinding;
     private ArrayList<String> Current_Status = new ArrayList<>();
-    private boolean imageboolean = Boolean.parseBoolean(null);
     static JSONObject dataset;
     Double offlatTextValue, offlanTextValue;
     private List<View> viewArrayList = new ArrayList<>();
@@ -156,11 +157,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     Context context;
     ArrayAdapter<String> serviceFieldVisitAdapter;
     ArrayAdapter<String> taxTypeAdapter;
+    ArrayAdapter<String> fieldCurrentStatusArray;
     ArrayList<TPtaxModel> historyList;
     String FieldVisitImageString="";
     boolean flag=false;
     int selectedPosition;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -245,7 +248,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 selectedServiceFieldVisitTypesId=serviceListFieldTaxTypeId;
                 selectedServiceFieldVisitTypesName=serviceListFieldDesc;
                 if(selectedServiceFieldVisitTypesId!=null&&position>0){
-                    getServiceRequestList();
+                    if (!flag) {
+                        getServiceRequestList();
+                    }else {
+                        flag=false;
+                    }
+
                 }
             }
             public void onNothingSelected(AdapterView<?> parent)
@@ -293,13 +301,15 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             LoadPendingFieldDetails();
 
         }else {
+            fieldVisitBinding.taxType.setEnabled(true);
         }
 
     }
 
     private void LoadPendingFieldDetails() {
+        fieldVisitBinding.taxType.setEnabled(false);
         try {
-            int taxTypePosition = taxTypeAdapter.getPosition(fieldVisits.get(selectedPosition).getTaxtypeid());
+            int taxTypePosition = taxTypeAdapter.getPosition(spinnerMapTaxType.get(fieldVisits.get(selectedPosition).getTaxtypeid()));
             if(taxTypePosition >= 0){
                 fieldVisitBinding.taxType.setSelection(taxTypePosition);
             }else {
@@ -308,6 +318,22 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         } catch (Exception e) {
             e.printStackTrace();
         }
+        try {
+            int currentStatusPosition = fieldCurrentStatusArray.getPosition(spinnerMapFieldVisitType.get(fieldVisits.get(selectedPosition).getFIELD_VISIT_STATUS_ID()));
+            if(currentStatusPosition >= 0){
+                fieldVisitBinding.currentStatus.setSelection(currentStatusPosition);
+            }else {
+                fieldVisitBinding.currentStatus.setAdapter(null);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        fieldVisitBinding.requestIdTextField.setText(fieldVisits.get(selectedPosition).getRequest_id());
+        request_id=fieldVisits.get(selectedPosition).getRequest_id();
+        data_ref_id=fieldVisits.get(selectedPosition).getData_ref_id();
+        fieldVisitBinding.applicantName.setText(fieldVisits.get(selectedPosition).getOwnername());
+        fieldVisitBinding.remarksText.setText(fieldVisits.get(selectedPosition).getRemark());
 
     }
 
@@ -392,7 +418,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     public void viewImage() {
         if(fieldVisitBinding.requestIdTextField.getText()!= null && !fieldVisitBinding.requestIdTextField.getText().equals("")){
-            if(imageboolean==true) {
+
                 if (getSaveTradeImageTable() > 0) {
                     Intent intent = new Intent(this, FullImageActivity.class);
                     intent.putExtra("request_id", fieldVisitBinding.requestIdTextField.getText().toString());
@@ -402,10 +428,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 } else {
                     Utils.showAlert(FieldVisit.this, "No image Saved in Local");
                 }
-            }
-            else {
-                Utils.showAlert(FieldVisit.this, "No image Saved in Local");
-            }
+
         }else {
             Utils.showAlert(FieldVisit.this, "Select TaxType To Get Request Id");
         }
@@ -488,6 +511,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         });
         done.setOnClickListener(new View.OnClickListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 JSONArray imageJson = new JSONArray();
@@ -512,7 +536,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             //Log.d("imageInByte_string",string);
                             Log.d("image_str", image_str);
                         } catch (Exception e) {
-                            imageboolean = false;
                             Utils.showAlert(FieldVisit.this, "Atleast Capture one Photo");
                             break;
                             //e.printStackTrace();
@@ -539,7 +562,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                            if(iscaptureImgExist(request_id)) {
                                long rowUpdated1 = LoginScreen.db.update(DBHelper.CAPTURED_PHOTO, imageValue, "request_id  = ? ", new String[]{request_id});
                                if (rowUpdated1 != -1) {
-                                   imageboolean = true;
                                     Toast.makeText(FieldVisit.this, "Image Updated!", Toast.LENGTH_SHORT).show();
 //                                   Utils.showAlert(FieldVisit.this, " Capture-Photo updated");
 
@@ -565,7 +587,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 imageArray.put("photo",image_str.trim());
                                 //imageArray.put(description);
                                 imageJson.put(imageArray);
-                                imageboolean = true;
+
                                 try {
                                     dataset.put("image_details", imageJson);
                                     Log.d("post_dataset_inspection", dataset.toString());
@@ -689,7 +711,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             if(!fieldVisitBinding.assessmentId.getText().equals(null)){
                 if(fieldVisitBinding.currentStatus.getSelectedItem()!=null&&!fieldVisitBinding.currentStatus.getSelectedItem().equals("Select Status")){
                     if(!fieldVisitBinding.remarksText.getText().toString().isEmpty()){
-                        if(imageboolean == true) {
+                        if (getSaveTradeImageTable() > 0) {
                             submit();
                         }
                         else {
@@ -792,14 +814,14 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
 
 
-        String authKey = dataset.toString();
+     /*   String authKey = dataset.toString();
         int maxLogSize = 2000;
         for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
             int start = i * maxLogSize;
             int end = (i+1) * maxLogSize;
             end = end > authKey.length() ? authKey.length() : end;
             Log.v("to_send+_plain", authKey.substring(start, end));
-        }
+        }*/
 
       //  String authKey1 = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
 
@@ -1205,6 +1227,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
         }else {
             super.onBackPressed();
+            setResult(RESULT_OK);
             overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
         }
     }
@@ -1323,9 +1346,9 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
             try {
                 if (items != null && items.length > 0) {
-                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-                    RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    fieldVisitBinding.currentStatus.setAdapter(RuralUrbanArray);
+                    fieldCurrentStatusArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    fieldCurrentStatusArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    fieldVisitBinding.currentStatus.setAdapter(fieldCurrentStatusArray);
                     fieldVisitBinding.currentStatus.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
                     selectedFieldVisitStatusId="0";
                     selectedFieldVisitStatusName="";

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.MediaRouteButton;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -71,11 +72,13 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     boolean flag=true;
     Animation animZoomin;
     Animation animZoomout;
+    Context context;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         newDashboardBinding = DataBindingUtil.setContentView(this, R.layout.new_dashboard);
         newDashboardBinding.setActivity(this);
+        context=this;
         prefManager = new PrefManager(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
@@ -260,7 +263,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
 
     public void closeApplication() {
-        new MyDialog(this).exitDialog(this, "Are you sure you want to Logout?", "Logout");
+        new MyDialog(this).exitDialog(this, context.getResources().getString(R.string.are_you_sure_you_want_to_Logout), "Logout");
     }
 /*
     public void showProfile() {
@@ -280,7 +283,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
-                new MyDialog(this).exitDialog(this, "Are you sure you want to exit ?", "Exit");
+                new MyDialog(this).exitDialog(this, context.getResources().getString(R.string.are_you_sure_you_want_to_exit), "Exit");
                 return false;
             }
         }
@@ -953,10 +956,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             count1=cursor1.getCount();
         }
             if (!Utils.isOnline()) {
-            Utils.showAlert(this, "Logging out while offline may leads to loss of data!");
+            Utils.showAlert(this, context.getResources().getString(R.string.logging_out_while_offline_may_leads_to_loss_of_data));
         } else {
             if (count1>0 ||count>0) {
-                Utils.showAlert(this,"Sync all the data before logout!");
+                Utils.showAlert(this, context.getResources().getString(R.string.sync_all_the_data_before_logout));
 
             }else{
                 closeApplication();

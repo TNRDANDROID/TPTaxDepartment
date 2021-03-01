@@ -82,7 +82,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
-                            android:text="Dashboard"
+                            android:text="@string/dashboard"
                             android:layout_marginTop="5dp"
                             android:textAlignment="center"
                             android:textColor="@android:color/white"
@@ -459,7 +459,7 @@
                                     android:id="@+id/trade_tv"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Trade Licence"
+                                    android:text="@string/trade_Licence"
                                     android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
@@ -533,7 +533,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:text="Field Visit"
+                                    android:text="@string/field_Visit"
                                     android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
@@ -607,7 +607,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:text="Assessment"
+                                    android:text="@string/assessment"
                                     android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
@@ -683,7 +683,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:text="Daily Collection"
+                                    android:text="@string/daily_Collection"
                                     android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
@@ -758,7 +758,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_centerVertical="true"
-                                    android:text="Sync Data"
+                                    android:text="@string/sync_Data"
                                     android:textSize="18dp"
                                     android:textStyle="bold"
                                     android:textColor="@color/blue_background" />
@@ -786,101 +786,6 @@
                             </RelativeLayout>
                         </RelativeLayout>
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/bottom"
-                        android:clipToPadding="false"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <androidx.cardview.widget.CardView
-                            android:id="@+id/view_polling_station_image"
-                            android:layout_width="303dp"
-                            android:layout_height="150dp"
-                            android:layout_margin="10dp"
-                            android:clickable="true"
-                            android:focusable="true"
-
-
-                            android:foreground="?android:attr/selectableItemBackground"
-                            card_view:cardCornerRadius="8dp"
-                            card_view:cardElevation="3dp">
-
-                            <LinearLayout
-
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <ImageView
-                                    android:id="@+id/polling_station_image"
-                                    android:layout_width="64dp"
-                                    android:layout_height="64dp"
-                                    android:background="@drawable/cerclebackgroundpurple"
-                                    android:contentDescription="TODO"
-                                    android:padding="10dp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/_5sdp"
-                                    android:text="Add"
-                                    android:textStyle="bold" />
-
-                                <View
-                                    android:layout_width="match_parent"
-                                    android:layout_height="1dp"
-                                    android:layout_margin="10dp"
-                                    android:background="@drawable/background" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="5dp"
-                                    android:text="Capture the polling station image"
-                                    android:textColor="@android:color/black" />
-                            </LinearLayout>
-                        </androidx.cardview.widget.CardView>
-
-
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/sync_layout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/bottom"
-                        android:clipToPadding="false"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
-
-                        <androidx.appcompat.widget.AppCompatButton
-                            android:id="@+id/sync"
-                            android:layout_width="wrap_content"
-                            android:layout_height="@dimen/_40sdp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginLeft="@dimen/margin"
-                            android:layout_marginTop="@dimen/_60sdp"
-                            android:layout_marginRight="@dimen/margin"
-                            android:layout_marginBottom="@dimen/_40sdp"
-                            android:background="@drawable/click_here"
-                            android:clickable="true"
-                            android:foreground="?attr/selectableItemBackground"
-                            android:text="Sync"
-                            android:onClick="@{()-> activity.pendingScreen()}"
-                            android:textAllCaps="false"
-                            android:textColor="@android:color/black"
-                            android:textSize="@dimen/_15sdp" />
-
-
-                    </LinearLayout>
 
                 </LinearLayout>
         </ScrollView>

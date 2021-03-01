@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/margin"
-            android:text="Take Photo"
+            android:text="@string/take_Photo"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
@@ -166,7 +166,7 @@
                 android:layout_centerInParent="true"
                 android:onClick="@{()-> activity.saveImage()}"
                 android:background="@drawable/click_here"
-                android:text="SAVE IMAGE"
+                android:text="@string/save_IMAGE"
                 android:textAllCaps="false"
                 android:textColor="@android:color/black" />
         </RelativeLayout>

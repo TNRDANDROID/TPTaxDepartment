@@ -2,8 +2,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 <string name="app_name">Town Panchayat Tax</string>
 <string name="app_name_line">Directorate Town Panchayat Tax Department</string>
+<string name="app_name_line2">Directorate Town Panchayat\nTax Department</string>
+
 <string name="hint_password">Password</string>
-<string name="hint_username">UserName</string>
+<string name="hint_username">User Name</string>
 <string name="btn_login">Login</string>
 <string name="font_circular_medium">circular-medium.ttf</string>
 <string name="font_circular_bold">circular-bold.ttf</string>
@@ -51,9 +53,263 @@
     <string name="action_mark_all_read">Mark All as Read</string>
     <string name="privacy_policy">Privacy Policy</string>
 
+   //01/03/2020
+    <string name="select_TaxType">Select TaxType</string>
+    <string name="enter_Assessment_ID">Enter Assessment ID</string>
+    <string name="no_RECORD_FOUND">NO RECORD FOUND!</string>
+    <string name="success">Success!</string>
+    <string name="atleast_Capture_one_Photo">Atleast Capture one Photo</string>
+    <string name="satellite_communication_msg">Satellite communication not available to get GPS Co-ordination Please Capture Photo in Open Area..</string>
+    <string name="gPS_is_not_turned_on">GPS is not turned on...</string>
+    <string name="permissions_required">Permissions required!</string>
+    <string name="camera_needs_few_permissions">Camera needs few permissions to work properly. Grant them in settings.</string>
+    <string name="goto_SETTINGS">GOTO SETTINGS</string>
+    <string name="cancel">CANCEL</string>
+    <string name="title">Title</string>
+    <string name="user_cancelled_image_capture">User cancelled image capture</string>
+    <string name="sorry_Failed_to_capture_image">Sorry! Failed to capture image</string>
+    <string name="user_cancelled_video_recording">User cancelled video recording</string>
+    <string name="sorry_Failed_to_record_video">Sorry! Failed to record video</string>
+    <string name="select_Date">Select Date</string>
+    <string name="select_Financial_Year">Select Financial Year</string>
+    <string name="are_you_sure_you_want_to_Logout">Are you sure you want to Logout?</string>
+    <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit ?</string>
+    <string name="logging_out_while_offline_may_leads_to_loss_of_data">Logging out while offline may leads to loss of data!</string>
+    <string name="sync_all_the_data_before_logout">Sync all the data before logout!</string>
+    <string name="select_Ward">Select Ward</string>
+    <string name="select_TradeCode">Select TradeCode</string>
+    <string name="select_Street">Select Street</string>
+    <string name="please_Select_Street">Please Select Street!</string>
+    <string name="select_Any_One">Select Any One!</string>
+    <string name="next">Next</string>
+    <string name="no">No</string>
+    <string name="n">N</string>
+    <string name="yes">Yes</string>
+    <string name="y">Y</string>
+    <string name="paid">Paid</string>
+    <string name="unPaid">UnPaid</string>
+    <string name="amount_to_pay">Amount to pay </string>
+    <string name="select_Licence_Type">Select Licence Type</string>
+    <string name="industrial">Industrial</string>
+    <string name="production">Production</string>
+    <string name="commercial">Commercial</string>
+    <string name="annual_Sale">Annual Sale</string>
+    <string name="select_AnnualSale">Select AnnualSale</string>
+    <string name="select_Motor_Range">Select Motor Range</string>
+    <string name="select_Generator_Range">Select Generator Range</string>
+    <string name="select_Gender">Select Gender</string>
+    <string name="select_Licence_Validity">Select Licence Validity</string>
+    <string name="select_Trade_Code_and_Mobile_Number">Select Trade Code and Mobile Number</string>
+    <string name="no_image_Found">No image Found</string>
+    <string name="enter_Description_Tamil">Enter Description Tamil</string>
+    <string name="enter_Description_English">Enter Description English</string>
+    <string name="enter_Valid_Email_ID">Enter Valid Email ID</string>
+    <string name="enter_Email_ID">Enter Email ID</string>
+    <string name="enter_Valid_Mobile_Number">Enter Valid Mobile Number</string>
+    <string name="enter_Mobile_Number">Enter Mobile Number</string>
+    <string name="enter_Fathers_Husband_Name_Tamil">Enter Fathers/Husband Name Tamil</string>
+    <string name="enter_Father_Husband_Name_English">Enter Father/ Husband Name English</string>
+    <string name="enter_Valid_Age">Enter Enter Valid Age</string>
+    <string name="enter_Applicant_Name_Tamil">Enter Applicant Name Tamil</string>
+    <string name="enter_Applicant_Name_English">Enter Applicant Name English</string>
+    <string name="enter_Door_Number">Enter Door Number</string>
+    <string name="capture_One_Image">Capture One Image</string>
+    <string name="enter_Remarks">Enter Remarks</string>
+    <string name="choose_Professional_Tax_Paid_status">Choose Professional Tax Paid status</string>
+    <string name="upload_Document">Upload Document</string>
+    <string name="choose_Owner_or_Not">Choose Owner or Not</string>
+    <string name="choose_motor_available_status">Choose motor available status</string>
+    <string name="choose_generator_available_status">Choose generator available status</string>
+    <string name="enter_Property_Tax_Assessment_Number">Enter Property Tax Assessment Number</string>
+    <string name="choose_Property_Tax_Payment_status">Choose Property Tax Payment status</string>
+    <string name="update">Update</string>
+    <string name="select_a_File_to_Upload">Select a File to Upload</string>
+    <string name="please_install_a_File_Manager">Please install a File Manager.</string>
+    <string name="permission_granted">Permission granted!</string>
+    <string name="permission_denied">Permission denied!</string>
+    <string name="you_need_to_update_TP_TAX">You need to update Town Panchayat TAX</string>
+    <string name="version_msg">This This version of Town Panchayat TAX is no longer supported. Please go to Official Site and install new version</string>
+    <string name="assessment_Status">Assessment Status</string>
+    <string name="tax_Type">Tax Type</string>
+    <string name="assessment_Id">Assessment Id</string>
+    <string name="submit">Submit</string>
+    <string name="take_Photo">Take Photo</string>
+    <string name="save_IMAGE">SAVE IMAGE</string>
+    <string name="daily_Collection">Daily Collection</string>
+    <string name="year">Year</string>
+    <string name="date">Date</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="trade_Licence">Trade Licence</string>
+    <string name="field_Visit">Field Visit</string>
+    <string name="assessment">Assessment</string>
+    <string name="sync_Data">Sync Data</string>
+    <string name="existing_Trade_Licence">Existing Trade Licence</string>
+    <string name="trade_Code">Trade Code</string>
+    <string name="or">Or</string>
+    <string name="mobile_No">Mobile No</string>
+    <string name="ward_No">Ward No</string>
+    <string name="street_Name">Street Name</string>
+    <string name="clear">Clear</string>
+    <string name="existing_Traders">Existing Traders</string>
+    <string name="oK">OK</string>
+    <string name="document">Document</string>
+    <string name="existing_Trader_Details">Existing Trader Details</string>
+    <string name="applicant_Name">Applicant Name</string>
+    <string name="applicant_Name_In_Tamil">Applicant Name In Tamil</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="father_Husband_Name">Father/Husband Name</string>
+    <string name="father_Husband_Name_In_Tamil">Father/Husband Name In Tamil</string>
+    <string name="email_Id">Email Id</string>
+    <string name="description_In_English">Description In English</string>
+    <string name="description_In_Tamil">Description In Tamil</string>
+    <string name="door_No">Door No</string>
+    <string name="licence_Validity">Licence Validity</string>
+    <string name="are_you_the_Owner">Are you the Owner</string>
+    <string name="rental_Lease_agreement">Rental Lease Agreement</string>
+    <string name="choose_File">Choose File</string>
+    <string name="licence_Type">Licence Type</string>
+    <string name="temporary">Temporary</string>
+    <string name="trade_Description">Trade Description</string>
+    <string name="establishment_Name">Establishment Name</string>
+    <string name="motor_Available">Motor Available</string>
+    <string name="motor_Range_in_Horse_Power">Motor Range(in Horse Power)</string>
+    <string name="generator_Available">Generator Available</string>
+    <string name="generator_Range_in_Kilowatt">Generator Range(in Kilowatt)</string>
+    <string name="professional_Tax_Paid">Professional Tax Paid</string>
+    <string name="property_Tax_Paid">Property Tax Paid</string>
+    <string name="property_Tax_Assessment_Number">Property Tax Assessment Number</string>
+    <string name="remarks">Remarks</string>
+    <string name="previous">Previous</string>
+
+ <string name="View_Image">	View Image	</string>
+ <string name="for_official_use">	(For Official Use)	</string>
+ <string name="software_designed_developed_by_NIC_chennai">	Software Designed &amp; Developed by NIC Chennai	</string>
+ <string name="please_enter_the_username">	Please enter the username	</string>
+ <string name="please_enter_the_password">	Please enter the password	</string>
+ <string name="please_enter_your_username_and_password">	Please enter your username and password!	</string>
+ <string name="internet_connection_available">	Internet Connection is not available..Please Turn ON Network Connection OR Continue With Off-line Mode..	</string>
+ <string name="settings">	Settings	</string>
+ <string name="continue_with_off_line">	Continue With Off-Line	</string>
+ <string name="invalid_username_or_password">	Invalid UserName Or Password	</string>
+ <string name="please_check_your_connection">	Cannot connect to Internet...Please check your connection!!	</string>
+ <string name="server_could_not_be_found">	The server could not be found. Please try again after some time!!	</string>
+ <string name="parsing_error">	Parsing error! Please try again after some time!!	</string>
+ <string name="connection_timeout">	Connection TimeOut! Please check your internet connection.	</string>
+ <string name="no_data_available_for_offline">	No data available for offline. Please Turn On Your Network	</string>
+ <string name="version">	Version	</string>
+
+ <string name="no_image_found">	No image Found	</string>
+ <string name="tradersDetailsID">	TradersDetailsID : 	</string>
+ <string name="lb_sno">	LB_SNO : 	</string>
+ <string name="lb_trader_code">	LB_TraderCode : 	</string>
+ <string name="trade_details_id">	TradeDetailsID : 	</string>
+ <string name="trader_rate">	Trader Rate : 	</string>
+ <string name="trader_type">	Trader Type : 	</string>
+ <string name="trader_period">	Trader Period : 	</string>
+ <string name="trader_type_en">	Trader Type EN : 	</string>
+ <string name="trader_name_ta">	Trader Name TA : 	</string>
+ <string name="trader_name_en">	Trader Name EN : 	</string>
+ <string name="father_name_en">	Father Name EN : 	</string>
+ <string name="father_name_ta">	Father Name TA : 	</string>
+ <string name="gender_c">	Gender : 	</string>
+ <string name="age_c">	Age : 	</string>
+ <string name="date_c">	Date : 	</string>
+ <string name="district_code">	District Code : 	</string>
+ <string name="door_no">	Door NO : 	</string>
+ <string name="email">	Email : 	</string>
+ <string name="establishment_name_en">	Establishment Name EN : 	</string>
+ <string name="establishment_name_ta">	Establishment Name TA : 	</string>
+ <string name="state_code">	State Code : 	</string>
+ <string name="ward_id">	Ward ID : 	</string>
+ <string name="street_id">	Street ID : 	</string>
+ <string name="mobile_no">	Mobile NO : 	</string>
+ <string name="licence_type_id">	Licence Type ID : 	</string>
+ <string name="licence_validity">	Licence Validity : 	</string>
+ <string name="licence_type">	Licence Type : 	</string>
+ <string name="owner_status">	Owner Status : 	</string>
+ <string name="motor_status">	Motor Status : 	</string>
+ <string name="generator_status">	Generator Status : 	</string>
+ <string name="property_status">	Property Status : 	</string>
+ <string name="professional_status">	Professional Status : 	</string>
+ <string name="motor_type_id">	Motor Type ID : 	</string>
+ <string name="amount_range_id">	Amount Range ID : 	</string>
+ <string name="generator_range_id">	Generator Range ID : 	</string>
+ <string name="property_tax_assessment_no">	Property Tax Assessment NO : 	</string>
+ <string name="document_c">	Document : 	</string>
+ <string name="remark">	Remarks : 	</string>
+ <string name="annual_sale_production_amount">	Annual Sale Production Amount : 	</string>
+ <string name="annual_sale_production_range">	Annual Sale Production Range : 	</string>
+ <string name="generator_range">	Generator Range : "	</string>
+ <string name="generator_range_amount">	Generator Range Amount : 	</string>
+ <string name="motor_range_amount">	Motor Range Amount : 	</string>
+ <string name="motor_range">	Motor Range  : 	</string>
+ <string name="street_name_ta">	Street Name TA  : 	</string>
+ <string name="street_name_en">	Street Name EN  : 	</string>
+ <string name="ward_name_ta">	Ward Name TA  : 	</string>
+ <string name="ward_name_en">	Ward Name EN  : 	</string>
+ <string name="existing_trader_details">	Existing Trader Details  : 	</string>
+ <string name="exist_trader_lease_agreement">	Lease Agreement	</string>
+ <string name="exist_trader_view_image">	View Image	</string>
+
+ <string name="pending_screen_title">	Field Visit	</string>
+ <string name="pending_not_saved">	Not Saved	</string>
+ <string name="no_internet_connection">	No Internet Connection	</string>
+ <string name="synchronized_to_server">	Your Activity is Synchronized to the server!	</string>
 
 
-    //21/01/2021
+ <string name="trade_licence_title">	Trade Licence	</string>
+ <string name="new_trade">	New	</string>
+ <string name="existing_trade">	Existing	</string>
+
+
+ <string name="field_visit_title">	Field Visit	</string>
+ <string name="tax_type">	Tax Type	</string>
+ <string name="service_list_field_type">	ServiceListField Type	</string>
+ <string name="request_id">	Request ID	</string>
+ <string name="applicant_name">	Applicant Name	</string>
+ <string name="current_status">	Current Status	</string>
+
+
+ <string name="assessment_no">	Assessment No	</string>
+ <string name="assessment_name">	Assessment Name	</string>
+ <string name="organization_type">	Organization Type	</string>
+ <string name="owner_name">	Owner Name	</string>
+ <string name="father_name">	Father Name	</string>
+ <string name="permanent_address">	Permanent Address	</string>
+ <string name="area_in_square_feet">	Area In Square Feet	</string>
+ <string name="trader_code">	Trader Code	</string>
+ <string name="father_name_in_tamil">	Father Name Tamil	</string>
+ <string name="assessment_door_no">	Door NO	</string>
+ <string name="assessment_trader_rate">	Trader Rate	</string>
+ <string name="assessment_financial_Year">	Financial Year	</string>
+ <string name="trade_description">	Trade Description	</string>
+ <string name="connection_no">	Connection No	</string>
+ <string name="connection_name">	Connection Name	</string>
+ <string name="water_charges">	Connection Name	</string>
+ <string name="lease_assessment_no">	Lease Assessment No	</string>
+ <string name="name">	Name	</string>
+ <string name="name_in_tamil">	Name In Tamil	</string>
+ <string name="lease_type_code">	Lease Type Code	</string>
+ <string name="lease_type_description">	Lease Type Description	</string>
+ <string name="lease_payment_due_type">	Lease Payment Due Type	</string>
+ <string name="annual_lease_amount">	Annual Lease Amount	</string>
+
+
+ <string name="ward_name">	Ward Name	</string>
+ <string name="street_name">	Street Name	</string>
+ <string name="upload">	Upload	</string>
+
+
+ <string name="trade_code">	Trade Code	</string>
+ <string name="mobile">	Mobile	</string>
+ <string name="_trader_email">	Email	</string>
+
+
+
+ <string name="property_tax">	Property Tax	</string>
+
+  <!--  //21/01/2021
 
     <string name="Applicant_Name_Tamil">	விண்ணப்பதாரர் பெயர்	</string>
     <string name="New_Trade_Licence_Tamil">	புதிய வர்த்தக உரிமம்	</string>
@@ -86,7 +342,7 @@
     <string name="Remarks_Tamil">	கருத்து	</string>
     <string name="Take_photo_Tamil">	புகைப்படம் எடுக்கவும்	</string>
     <string name="Address_Tamil">	முகவரி	</string>
-    <string name="Area_Squre_Fit_Tamil">	நில அளவு	</string>
+    <string name="Area_Squre_Fit_Tamil">	நில அளவு	</string>-->
 
 </resources>
 

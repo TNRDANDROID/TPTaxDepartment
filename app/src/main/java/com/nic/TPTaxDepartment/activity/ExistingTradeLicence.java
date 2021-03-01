@@ -1,6 +1,7 @@
 package com.nic.TPTaxDepartment.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -65,12 +66,14 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     HashMap<Integer,String> spinnerTradeCode;
     ArrayList<CommonModel> loadTradeCodeList;
     ArrayAdapter<String> tradeCodeSpArray;
+    Context context;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         existingTradeLicenceBinding = DataBindingUtil.setContentView(this, R.layout.existing_trade_licence);
         existingTradeLicenceBinding.setActivity(this);
+        context=this;
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
@@ -97,7 +100,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 selectedWardId=wardId;
                 System.out.println("selectedWardId >> "+selectedWardId);
                 System.out.println("selectedWardName >> "+selectedWardName);
-                if(selectedWardId != null  && !selectedWardId.isEmpty() && !selectedWardName.equals("Select Ward")){
+                if(selectedWardId != null  && !selectedWardId.isEmpty() &&
+                        !selectedWardName.equals(context.getResources().getString(R.string.select_Ward))){
 
                     LoadStreetSpinner(selectedWardId);
                     existingTradeLicenceBinding.tradeCodeSpinner.setEnabled(false);
@@ -235,7 +239,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             spinnerTradeCode = new HashMap<Integer, String>();
             spinnerTradeCode.put(0, null);
             final String[] items = new String[loadTradeCodeList.size() + 1];
-            items[0] = "Select TradeCode";
+            items[0] = context.getResources().getString(R.string.select_TradeCode);
             for (int i = 0; i < loadTradeCodeList.size(); i++) {
                 spinnerTradeCode.put(i+1, loadTradeCodeList.get(i).getTRADE_DETAILS_ID());
                 String Class = loadTradeCodeList.get(i).getLB_TRADE_CODE()+" - " +loadTradeCodeList.get(i).getDESCRIPTION_EN();
@@ -315,7 +319,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             spinnerMapStreets = new HashMap<String, String>();
             spinnerMapStreets.put(null, null);
             final String[] items = new String[selectedStreets.size() + 1];
-            items[0] = "Select Street";
+            items[0] = context.getResources().getString(R.string.select_Street);
             for (int i = 0; i < selectedStreets.size(); i++) {
                 spinnerMapStreets.put(selectedStreets.get(i).getStreetid(), selectedStreets.get(i).getStreet_name_ta());
                 String Class = selectedStreets.get(i).getStreet_name_ta();
@@ -366,7 +370,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             spinnerMapWard = new HashMap<String, String>();
             spinnerMapWard.put(null, null);
             final String[] items = new String[wards.size() + 1];
-            items[0] = "Select Ward";
+            items[0] =context.getResources().getString(R.string.select_Ward);
             for (int i = 0; i < wards.size(); i++) {
                 spinnerMapWard.put(wards.get(i).getWard_id(), wards.get(i).getWard_code());
                 String Class = wards.get(i).getWard_code();
@@ -718,7 +722,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
         }else {
-            Utils.showAlert(this, "No Data Found!");
+            Utils.showAlert(this, context.getResources().getString(R.string.no_RECORD_FOUND));
         }
 
     }
@@ -737,22 +741,23 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     }
     public void validateDetails() {
 
-        if ((!selectedTradeCode.isEmpty()&& !selectedTradeCode.equals("Select TradeCode")) || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || (!selectedWardName.isEmpty()&& !selectedWardName.equals("Select Ward")) || ( !selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street"))) {
+        if ((!selectedTradeCode.isEmpty() && !selectedTradeCode.equals(context.getResources().getString(R.string.select_TradeCode))) || !existingTradeLicenceBinding.mobileNo.getText().toString().isEmpty() || (!selectedWardName.isEmpty()&& !selectedWardName.equals(context.getResources().getString(R.string.select_Ward))) ||
+                ( !selectedStreetName.isEmpty() && !selectedStreetName.equals(context.getResources().getString(R.string.select_Street)))) {
 
-                if(!selectedWardName.isEmpty() && !selectedWardName.equals("Select Ward")){
-                    if(!selectedStreetName.isEmpty()&& !selectedStreetName.equals("Select Street")){
+                if(!selectedWardName.isEmpty() && !selectedWardName.equals(context.getResources().getString(R.string.select_Ward))){
+                    if(!selectedStreetName.isEmpty()&& !selectedStreetName.equals(context.getResources().getString(R.string.select_Street))){
                         existTradeLicenceSubmit(selectedWardId,selectedStreetId,selectedTrdeCodeDetailsID,existingTradeLicenceBinding.mobileNo.getText().toString());
                     }else {
-                        Utils.showAlert(this, "Please Select Street!");
+                        Utils.showAlert(this, context.getResources().getString(R.string.please_Select_Street));
                     }
-                }else if(!selectedTradeCode.isEmpty() && !selectedTradeCode.equals("Select TradeCode")){
+                }else if(!selectedTradeCode.isEmpty() && !selectedTradeCode.equals(context.getResources().getString(R.string.select_TradeCode))){
                     existTradeLicenceSubmit("0","0",selectedTrdeCodeDetailsID,"");
 
                 }else  {
                     existTradeLicenceSubmit("0","0","0",existingTradeLicenceBinding.mobileNo.getText().toString());
                 }
 
-        }else { Utils.showAlert(this, "Select Any One!"); }
+        }else { Utils.showAlert(this, context.getResources().getString(R.string.select_Any_One)); }
     }
 
 

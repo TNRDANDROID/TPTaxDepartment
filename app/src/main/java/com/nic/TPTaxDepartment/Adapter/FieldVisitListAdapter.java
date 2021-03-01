@@ -25,11 +25,11 @@ import com.nic.TPTaxDepartment.model.TPtaxModel;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import static com.nic.TPTaxDepartment.Adapter.PendingScreenAdapter.db;
 
 public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAdapter.SummaryViewHolder>{
     private Activity activity;
     private ArrayList<CommonModel> traders;
+    private ArrayList<CommonModel> selectedTraders;
     LayoutInflater mInflater;
 
     public FieldVisitListAdapter( Activity activity, ArrayList<CommonModel> traders) {
@@ -76,7 +76,9 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             holder.edit_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((PendingScreen)activity).loadFieldList(traders,position);
+                    selectedTraders=new ArrayList<>();
+                    selectedTraders.add(traders.get(position));
+                    ((PendingScreen)activity).loadFieldList(selectedTraders);
                 }
             });
             holder.upload.setOnClickListener(new View.OnClickListener() {

@@ -2,7 +2,9 @@ package com.nic.TPTaxDepartment.model;
 
 import android.graphics.Bitmap;
 
-public class CommonModel {
+import java.io.Serializable;
+
+public class CommonModel  implements Serializable {
     public String statecode;
     public String dcode;
     public String lbcode;

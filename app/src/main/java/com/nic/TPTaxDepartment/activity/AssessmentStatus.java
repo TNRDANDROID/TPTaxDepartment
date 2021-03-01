@@ -1,12 +1,16 @@
 package com.nic.TPTaxDepartment.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,12 +49,15 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     HashMap<String,String> spinnerMapTaxType;
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
+    Context context;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assessmentStatusBinding = DataBindingUtil.setContentView(this, R.layout.assessment_status_new);
         assessmentStatusBinding.setActivity(this);
+        context=this;
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         prefManager = new PrefManager(this);
@@ -91,13 +98,13 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     }
 
     public void showDetails() {
-        if (!selectedTaxTypeName.isEmpty() && !selectedTaxTypeName.equals("Select TaxType")  ) {
+        if (!selectedTaxTypeName.isEmpty() && !selectedTaxTypeName.equals(context.getResources().getString(R.string.select_TaxType))  ) {
             if(!assessmentStatusBinding.assessmentId.getText().toString().isEmpty()){
 
                 getAssessmentStatus();
-            }else { Utils.showAlert(this, "Enter Assessment ID"); }
+            }else { Utils.showAlert(this, context.getResources().getString(R.string.enter_Assessment_ID)); }
 
-        }else { Utils.showAlert(this, "Select Tax Type"); }
+        }else { Utils.showAlert(this, context.getResources().getString(R.string.select_TaxType)); }
     }
     public void closeDetails() {
                 assessmentStatusBinding.detailsLayout.setVisibility(View.GONE);
@@ -130,7 +137,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
             spinnerMapTaxType = new HashMap<String, String>();
             spinnerMapTaxType.put(null, null);
             final String[] items = new String[taxType.size() + 1];
-            items[0] = "Select TaxType";
+            items[0] = context.getResources().getString(R.string.select_TaxType);
             for (int i = 0; i < taxType.size(); i++) {
                 spinnerMapTaxType.put(taxType.get(i).getTaxtypeid(), taxType.get(i).getTaxtypedesc_en());
                 String Class = taxType.get(i).getTaxtypedesc_en();
@@ -355,7 +362,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                     }
 
                 } else {
-                    Utils.showAlert(this,"NO RECORD FOUND!");
+                    Utils.showAlert(this,context.getResources().getString(R.string.no_RECORD_FOUND));
                 }
 //                String authKey = responseDecryptedSchemeKey.toString();
 //                int maxLogSize = 4000;
