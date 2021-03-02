@@ -226,7 +226,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     }
 
     private void updateLabel() {
-        String myFormat = "dd-mm-yyyy"; //In which you need put here
+        String myFormat = "dd-MM-yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         dailyCollectionBinding.date.setText(sdf.format(myCalendar.getTime()));

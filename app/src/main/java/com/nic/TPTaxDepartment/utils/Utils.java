@@ -69,7 +69,7 @@ public class Utils {
     private static String CIPHER_NAME = "AES/CBC/NoPadding";
     private static String CIPHER_NAME2 = "AES/CBC/PKCS5PADDING";
     private static int CIPHER_KEY_LEN = 16; //128 bits
-
+    private static boolean flag = false; //128 bits
     private static void initializeSharedPreference() {
         sharedPreferences = NICApplication.getGlobalContext()
                 .getSharedPreferences(SHARED_PREFERENCE_UTILS,
@@ -189,6 +189,8 @@ public class Utils {
 //            e.printStackTrace();
 //        }
 //    }
+
+
 
     public static void showAlert(Activity activity, String msg){
         try {

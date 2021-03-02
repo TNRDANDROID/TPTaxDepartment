@@ -77,6 +77,8 @@
     <string name="select_Financial_Year">Select Financial Year</string>
     <string name="are_you_sure_you_want_to_Logout">Are you sure you want to Logout?</string>
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit ?</string>
+    <string name="are_you_sure_you_want_to_submit">Are you sure you want to submit ?</string>
+    <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete ?</string>
     <string name="logging_out_while_offline_may_leads_to_loss_of_data">Logging out while offline may leads to loss of data!</string>
     <string name="sync_all_the_data_before_logout">Sync all the data before logout!</string>
     <string name="select_Ward">Select Ward</string>

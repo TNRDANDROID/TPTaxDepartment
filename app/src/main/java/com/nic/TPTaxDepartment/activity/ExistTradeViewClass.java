@@ -1114,7 +1114,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     private void updateLabel() {
-        String myFormat = "dd-mm-yyyy"; //In which you need put here
+        String myFormat = "dd-MM-yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         existingTradeDetailsViewNewBinding.date.setText(sdf.format(myCalendar.getTime()));

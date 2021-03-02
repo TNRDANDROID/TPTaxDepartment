@@ -1203,6 +1203,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="@dimen/margin_left_20dp"
                                 android:background="@color/white"
+                                android:onClick="@{()-> activity.showDatePickerDialog()}"
                                 android:orientation="vertical"
                                 android:visibility="visible">
 
@@ -1227,7 +1228,6 @@
 
                                 <TextView
                                     android:id="@+id/calendar_icon"
-                                    android:onClick="@{()-> activity.showDatePickerDialog()}"
                                     android:layout_width="30dp"
                                     android:layout_height="30dp"
                                     android:layout_alignParentEnd="true"

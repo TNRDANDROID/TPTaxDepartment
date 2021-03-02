@@ -27,10 +27,12 @@ import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -410,14 +412,17 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         };
 
-        new DatePickerDialog(NewTradeLicenceScreen.this, date, myCalendar
+        DatePickerDialog datePickerDialog=new DatePickerDialog(this, date, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        //following line to restrict future date selection
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show();
 
     }
 
     private void updateLabel() {
-        String myFormat = "dd-mm-yyyy"; //In which you need put here
+        String myFormat = "dd-MM-yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         newTradeLicenceScreenBinding.date.setText(sdf.format(myCalendar.getTime()));
@@ -2322,7 +2327,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                     if (getSaveTradeImageTable()==1) {
                                         if (Utils.isOnline()) {
                                            //savenewTraderINLocal();
-                                           SaveLicenseTraders();
+                                            showConfirmationAlert(NewTradeLicenceScreen.this,context.getResources().getString(R.string.are_you_sure_you_want_to_submit));
+
                                         } else {
                                             //savenewTraderINLocal();
                                             Utils.showAlert(this, getResources().getString(R.string.no_internet));
@@ -2352,6 +2358,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         return false;
     }
+
 
     public boolean ownerDetailsCondition(){
         if(newTradeLicenceScreenBinding.ownerStatusYes.isChecked()||newTradeLicenceScreenBinding.ownerStatusNo.isChecked()){
@@ -2767,6 +2774,42 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             return false;
         }
         return true;
+    }
+    public void showConfirmationAlert(Activity activity, String msg) {
+
+        try {
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.alert_dialog);
+
+            TextView text = (TextView) dialog.findViewById(R.id.tv_message);
+            text.setText(msg);
+
+            Button dialogButton = (Button) dialog.findViewById(R.id.btn_ok);
+            Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+            btn_cancel.setVisibility(View.VISIBLE);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SaveLicenseTraders();
+                    dialog.dismiss();
+
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                }
+            });
+
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }
