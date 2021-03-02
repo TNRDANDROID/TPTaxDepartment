@@ -25,7 +25,7 @@
             android:id="@+id/header_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/gradiant_bg">
+            android:background="@drawable/background">
 
             <ImageView
                 android:id="@+id/refresh"
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:background="@color/transparent_black_hex_1"
+            android:background="@color/white"
             android:layout_below="@+id/header_layout"
             android:gravity="center">
 

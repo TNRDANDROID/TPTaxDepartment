@@ -177,6 +177,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     private final String outputPDF = storageDir + "Converted_PDF.pdf";
     private Uri document = null;
     Integer pageNumber = 0;
+    final Calendar myCalendar = Calendar.getInstance();
+
     //PDFView pdfView;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -191,7 +193,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         date = newTradeLicenceScreenBinding.date;
-        date.setText(getApplicationContext().getResources().getString(R.string.select_Date));
+        newTradeLicenceScreenBinding.date.setText(getApplicationContext().getResources().getString(R.string.select_Date));
         animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
         animationOut   =    AnimationUtils.loadAnimation(this, R.anim.slide_enter);
         visible_count=0;
@@ -392,10 +394,39 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
 
     public void showDatePickerDialog() {
-        DialogFragment newFragment = new datePickerFragment();
+      /*  DialogFragment newFragment = new datePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+*/        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        new DatePickerDialog(NewTradeLicenceScreen.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
     }
+
+    private void updateLabel() {
+        String myFormat = "dd-mm-yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+
+        newTradeLicenceScreenBinding.date.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
+
+
+
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -777,7 +808,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }*/
     }
 
-    public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+   /* public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
         static Calendar cldr = Calendar.getInstance();
 
         @Override
@@ -811,7 +842,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
 
     }
-
+*/
 
     public void SaveLicenseTraders() {
         try {
@@ -1360,7 +1391,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(NewTradeLicenceScreen.this,"Something went wrong!");
+        Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.something_wrong));
     }
 
     public void getNewTraderDetails() {
@@ -2146,7 +2177,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
             if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
                 if (!getApplicationContext().getResources().getString(R.string.select_Gender).equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
-                    if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()&&newTradeLicenceScreenBinding.age.getText().toString().length()>3){
+                    if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()&& Integer.parseInt(newTradeLicenceScreenBinding.age.getText().toString())>18){
                         if(!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()){
                             if(!newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString().isEmpty()){
                                 if(!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()){

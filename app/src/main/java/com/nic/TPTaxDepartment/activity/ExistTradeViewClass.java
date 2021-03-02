@@ -199,7 +199,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     Integer pageNumber = 0;
     String DocumentString="";
     String TraderImageString="";
-
+    final Calendar myCalendar = Calendar.getInstance();
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -213,7 +213,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         existingTradeDetailsViewNewBinding.scrollView.setNestedScrollingEnabled(true);
         date = existingTradeDetailsViewNewBinding.date;
-        date.setText(context.getResources().getString(R.string.select_Date));
+        existingTradeDetailsViewNewBinding.date.setText(context.getResources().getString(R.string.select_Date));
 
         existingTradeDetailsViewNewBinding.documentLayout.setVisibility(View.GONE);
         existingTradeDetailsViewNewBinding.main.setVisibility(View.VISIBLE);
@@ -1091,12 +1091,37 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     public void showDatePickerDialog() {
-        DialogFragment newFragment = new ExistTradeViewClass.datePickerFragment();
+      /*  DialogFragment newFragment = new datePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+*/        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                  int dayOfMonth) {
+                // TODO Auto-generated method stub
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                updateLabel();
+            }
+
+        };
+
+        new DatePickerDialog(ExistTradeViewClass.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
     }
 
-    public static class datePickerFragment extends DialogFragment implements
+    private void updateLabel() {
+        String myFormat = "dd-mm-yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+
+        existingTradeDetailsViewNewBinding.date.setText(sdf.format(myCalendar.getTime()));
+    }
+
+
+  /*  public static class datePickerFragment extends DialogFragment implements
             DatePickerDialog.OnDateSetListener {
         static Calendar cldr = Calendar.getInstance();
 
@@ -1131,7 +1156,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         }
 
     }
-
+*/
 
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
@@ -2043,7 +2068,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         if(!existingTradeDetailsViewNewBinding.applicantName.getText().toString().isEmpty()){
             if(!existingTradeDetailsViewNewBinding.applicantNameTamil.getText().toString().isEmpty()){
                 if (!context.getResources().getString(R.string.select_Gender).equalsIgnoreCase(selectedGender) && !existingTradeDetailsViewNewBinding.gender.getSelectedItem().toString().isEmpty()) {
-                    if(!existingTradeDetailsViewNewBinding.age.getText().toString().isEmpty() &&existingTradeDetailsViewNewBinding.age.getText().toString().length()<3){
+                    if(!existingTradeDetailsViewNewBinding.age.getText().toString().isEmpty()&& Integer.parseInt(existingTradeDetailsViewNewBinding.age.getText().toString())>18){
                         if(!existingTradeDetailsViewNewBinding.fatherHusName.getText().toString().isEmpty()){
                             if(!existingTradeDetailsViewNewBinding.fatherHusNameTamil.getText().toString().isEmpty()){
                                 if(!existingTradeDetailsViewNewBinding.mobileNo.getText().toString().isEmpty()){

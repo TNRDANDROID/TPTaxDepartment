@@ -127,6 +127,7 @@ public class Utils {
         }
     }
 
+/*
     public static boolean isEmailValid(String email) {
 
         boolean flag;
@@ -142,6 +143,27 @@ public class Utils {
         return flag;
 
     }
+*/
+    public static boolean isEmailValid(String email) {
+
+        boolean flag = android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        return flag;
+
+    }
+/*
+    public static boolean isEmailValid(String email){
+        boolean flag;
+        String regExpn = "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                + "(gmail\\.com|yahoo\\.com|nic\\.in|hotmail\\.com)$";
+        CharSequence inputStr = email.trim();
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        flag = matcher.matches();
+        return flag;
+    }
+*/
+
 
 //    public static void showAlert(Context context, String message) {
 //        try {
@@ -253,9 +275,44 @@ public class Utils {
 
 
     public static boolean isValidMobile(String phone2) {
-        boolean check;
-        check = phone2.length() == 10;
-        return check;
+        boolean check= false;
+        boolean startDigitCheck = false;
+        boolean sameDigitCheck= false;
+        String[] startDigit=new String[] {"0","1","2","3","4","5"};
+        String[] sameDigit=new String[] {"6666666666","7777777777","8888888888","9999999999"};
+        for(int i=0;i<startDigit.length;i++){
+            if(phone2.startsWith(startDigit[i])){
+                startDigitCheck=false;
+                return false;
+            }else {
+                startDigitCheck=true;
+            }
+        }
+
+        if(startDigitCheck){
+            for(int i=0;i<sameDigit.length;i++){
+                if(phone2.equals(sameDigit[i])){
+                    sameDigitCheck=false;
+                    return false;
+                }else {
+                    sameDigitCheck=true;
+                }
+            }
+
+        }else {
+              return  false;
+        }
+        if(sameDigitCheck){
+            check = phone2.length() == 10;
+        }else {
+            return  false;
+        }
+        if(check){
+            return check;
+        }else {
+            return  false;
+        }
+
     }
 
     public static String emailOrNumberValues(List<String> values) {
