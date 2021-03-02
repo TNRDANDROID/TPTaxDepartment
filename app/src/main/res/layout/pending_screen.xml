@@ -61,9 +61,102 @@
     <RelativeLayout
         android:id="@+id/header_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/gradiant_bg">
+        android:layout_height="100dp"
+        android:background="@drawable/new_field_visit_pending_screen_background_bg">
 
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:id="@+id/filter_rl"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <LinearLayout
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+            <RelativeLayout
+                android:id="@+id/satisfied_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:id="@+id/tv_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Satisfied"
+                    android:textColor="@color/white"></TextView>
+                <View
+                    android:id="@+id/v_1"
+                    android:layout_below="@+id/tv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1.5dp"
+                    android:background="@color/white"></View>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/un_satisfied_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:id="@+id/tv_2"
+                    android:textSize="13sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="UnSatisfied"
+                    android:textColor="@color/white"></TextView>
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/v_2"
+                    android:layout_below="@+id/tv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1.5dp"
+                    android:background="@color/white"></View>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/need_improvemnt_rl"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:id="@+id/tv_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Need Improvement"
+                    android:textColor="@color/white"></TextView>
+                <View
+                    android:visibility="gone"
+                    android:id="@+id/v_3"
+                    android:layout_below="@+id/tv_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="1.5dp"
+                    android:background="@color/white"></View>
+
+            </RelativeLayout>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_alignParentTop="true"
+            android:id="@+id/toolbar_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/refresh"
             android:layout_width="@dimen/_30sdp"
@@ -76,8 +169,6 @@
             android:layout_marginLeft="@dimen/_10sdp"
             android:background="@drawable/back"
             android:backgroundTint="@android:color/white" />
-
-
         <TextView
             android:id="@+id/title_tv"
             android:layout_width="wrap_content"
@@ -89,7 +180,6 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/_15sdp"
             android:textStyle="bold" />
-
         <ImageView
             android:id="@+id/home_img"
             android:layout_width="30dp"
@@ -103,6 +193,7 @@
             android:background="@drawable/ic_home_black_24dp"
             android:backgroundTint="@android:color/white"
             android:scaleType="centerInside" />
+        </RelativeLayout>
 
     </RelativeLayout>
     <androidx.core.widget.NestedScrollView

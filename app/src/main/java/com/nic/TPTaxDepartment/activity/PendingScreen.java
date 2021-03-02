@@ -70,13 +70,18 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     Activity activity;
     private Handler handler = new Handler();
 
-    RelativeLayout no_data_fond_layout;
+    RelativeLayout no_data_fond_layout,satisfied_rl,un_satisfied_rl,need_improvement_rl;
     int recyclerClickedPosition;
 
     NewTradersListAdapter newTradersListAdapter;
     JSONObject dataset;
     FieldVisitListAdapter adapter;
     int pos;
+    private ArrayList<CommonModel> filterListSatisfied;
+    private ArrayList<CommonModel> filterListUnSatisfied;
+    private ArrayList<CommonModel> filterListNeedImprovement;
+
+    View v_1,v_2,v_3;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,6 +118,24 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         newTraderRecycler.setNestedScrollingEnabled(false);
         newTraderRecycler.setFocusable(false);
 
+        satisfied_rl=findViewById(R.id.satisfied_rl);
+        satisfied_rl.setOnClickListener(this::onClick);
+
+        un_satisfied_rl=findViewById(R.id.un_satisfied_rl);
+        un_satisfied_rl.setOnClickListener(this::onClick);
+
+        need_improvement_rl=findViewById(R.id.need_improvemnt_rl);
+        need_improvement_rl.setOnClickListener(this::onClick);
+        loadFieldVisitListPending();
+        v_1=findViewById(R.id.v_1);
+        v_2=findViewById(R.id.v_2);
+        v_3=findViewById(R.id.v_3);
+
+
+        v_1.setVisibility(View.VISIBLE);
+        v_2.setVisibility(View.GONE);
+        v_3.setVisibility(View.GONE);
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         fieldVisitRecycler.setLayoutManager(layoutManager);
         fieldVisitRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -125,7 +148,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         home_img.setOnClickListener(this);
         left.setOnClickListener(this);
         right.setOnClickListener(this);
-        loadFieldVisitListPending();
+
 //        loadNewTraderList();
 //        loadFieldVisitList();
 
@@ -135,6 +158,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         fieldVisit.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
         fieldVisitRecycler.setVisibility(View.VISIBLE);
         newTraderRecycler.setVisibility(View.GONE);
+        setAdapterField("Satisfied");
 
 
     }
@@ -166,6 +190,25 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 fieldVisitRecycler.setVisibility(View.VISIBLE);
                 //loadFieldVisitList();
                 loadFieldVisitListPending();
+                break;
+
+            case R.id.satisfied_rl:
+                v_1.setVisibility(View.VISIBLE);
+                v_2.setVisibility(View.GONE);
+                v_3.setVisibility(View.GONE);
+                setAdapterField("Satisfied");
+                break;
+            case R.id.un_satisfied_rl:
+                v_1.setVisibility(View.GONE);
+                v_2.setVisibility(View.VISIBLE);
+                v_3.setVisibility(View.GONE);
+                setAdapterField("Unsatisfied");
+                break;
+            case R.id.need_improvemnt_rl:
+                v_1.setVisibility(View.GONE);
+                v_2.setVisibility(View.GONE);
+                v_3.setVisibility(View.VISIBLE);
+                setAdapterField("Need improvement");
                 break;
         }
     }
@@ -231,9 +274,10 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             }
         }
         Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().compareTo(rhs.getOwnername()));
-        if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {
+        filterList();
+      /*  if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {
             no_data_fond_layout.setVisibility(View.GONE);
-             adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitPendingList);
+            adapter = new FieldVisitListAdapter(PendingScreen.this,fieldVisitPendingList);
             adapter.notifyDataSetChanged();
             fieldVisitRecycler.setAdapter(adapter);
             fieldVisitRecycler.setVisibility(View.VISIBLE);
@@ -243,7 +287,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             //Utils.showAlert(this, "No Data Found!");
         }
 
-    }
+*/    }
 
     private void loadNewTraderList() {
         newTraderList = new ArrayList<TPtaxModel>();
@@ -696,5 +740,68 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         intent.putExtra("fieldsList", fields);
         startActivityForResult(intent,1);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+    public void filterList(){
+        filterListSatisfied=new ArrayList<>();
+        filterListUnSatisfied=new ArrayList<>();
+        filterListNeedImprovement=new ArrayList<>();
+        for(int i=0;i<fieldVisitPendingList.size();i++){
+            if("Satisfied".equals(fieldVisitPendingList.get(i).getFIELD_VISIT_STATUS())){
+                filterListSatisfied.add(fieldVisitPendingList.get(i));
+            }
+            else if("Unsatisfied".equals(fieldVisitPendingList.get(i).getFIELD_VISIT_STATUS())){
+                filterListUnSatisfied.add(fieldVisitPendingList.get(i));
+            }
+            else {
+                filterListNeedImprovement.add(fieldVisitPendingList.get(i));
+            }
+        }
+    }
+
+    public void setAdapterField(String condition){
+            if(condition.equals("Satisfied")){
+                  if(filterListSatisfied.size()>0){
+                      no_data_fond_layout.setVisibility(View.GONE);
+                      adapter = new FieldVisitListAdapter(PendingScreen.this,filterListSatisfied);
+                      adapter.notifyDataSetChanged();
+                      fieldVisitRecycler.setAdapter(adapter);
+                      fieldVisitRecycler.setVisibility(View.VISIBLE);
+                  }
+                  else {
+                      no_data_fond_layout.setVisibility(View.VISIBLE);
+                      fieldVisitRecycler.setVisibility(View.GONE);
+                      //Utils.showAlert(this, "No Data Found!");
+                  }
+            }
+            else if(condition.equals("Unsatisfied")){
+                if(filterListUnSatisfied.size()>0){
+                    no_data_fond_layout.setVisibility(View.GONE);
+                    adapter = new FieldVisitListAdapter(PendingScreen.this,filterListUnSatisfied);
+                    adapter.notifyDataSetChanged();
+                    fieldVisitRecycler.setAdapter(adapter);
+                    fieldVisitRecycler.setVisibility(View.VISIBLE);
+                }
+                else {
+                    no_data_fond_layout.setVisibility(View.VISIBLE);
+                    fieldVisitRecycler.setVisibility(View.GONE);
+                    //Utils.showAlert(this, "No Data Found!");
+                    //Utils.showAlert(this, "No Data Found!");
+                }
+            }
+            else {
+                if (filterListNeedImprovement.size() > 0) {
+                    no_data_fond_layout.setVisibility(View.GONE);
+                    adapter = new FieldVisitListAdapter(PendingScreen.this, filterListNeedImprovement);
+                    adapter.notifyDataSetChanged();
+                    fieldVisitRecycler.setAdapter(adapter);
+                    fieldVisitRecycler.setVisibility(View.VISIBLE);
+                } else {
+                    no_data_fond_layout.setVisibility(View.VISIBLE);
+                    fieldVisitRecycler.setVisibility(View.GONE);
+                    //Utils.showAlert(this, "No Data Found!");                }
+                }
+            }
+
+
     }
 }

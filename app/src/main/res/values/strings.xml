@@ -350,7 +350,7 @@
     <string name="Existing_Tamil">	பழையது	</string>
     <string name="New_tamil">	புதியது	</string>
     <string name="Trade_License_Tamil">	வர்த்தக உரிமம்	</string>
-    <string name="Field_Visit_Tamil">	கள வருகை	</string>
+
     <string name="Assessment_Status_Tamil">	மதிப்பீட்டு நிலை	</string>
     <string name="Daily_Collection_Tamil">	தினசரி சேகரிப்பு	</string>
     <string name="Daily_AMount_Tamil">	தினசரி தொகை	</string>
@@ -361,6 +361,19 @@
     <string name="Take_photo_Tamil">	புகைப்படம் எடுக்கவும்	</string>
     <string name="Address_Tamil">	முகவரி	</string>
     <string name="Area_Squre_Fit_Tamil">	நில அளவு	</string>-->
+ <string name="user_name"> பயனர் பெயர்</string>
+ <string name="password"> கடவுச்சொல்</string>
+ <string name="log_in"> உள்நுழைய</string>
+ <string name="software_developed_by_nic"> என்.ஐ.சி சென்னை உருவாக்கிய மென்பொருள்</string>
+ <string name="version_s"> பதிப்பு</string>
+ <string name="directorate_town_panchayat_tax_department"> இயக்குநரகம் டவுன்-பஞ்சாயத்து வரித் துறை</string>
+ <string name="for_official_use_only"> உத்தியோகபூர்வ பயன்பாட்டிற்கு மட்டுமே</string>
+ <string name="dash_board"> டாஷ்போர்டு</string>
+ <string name="trade_license_tamil">	வர்த்தக உரிமம்	</string>
+ <string name="Assessment_Status_Tamil">	மதிப்பீட்டு நிலை	</string>
+ <string name="Field_Visit_Tamil">	கள வருகை	</string>
+ <string name="Daily_Collection_Tamil">	தினசரி சேகரிப்பு	</string>
+
 
 </resources>
 
