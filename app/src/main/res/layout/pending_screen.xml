@@ -153,6 +153,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_marginTop="10dp"
             android:layout_alignParentTop="true"
             android:id="@+id/toolbar_rl"
             android:layout_width="match_parent"

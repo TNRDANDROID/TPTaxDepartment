@@ -1,6 +1,7 @@
 package com.nic.TPTaxDepartment.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -9,6 +10,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,7 +80,7 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    deleteRow(position);
+                    showConfirmationAlert(position,activity,activity.getResources().getString(R.string.are_you_sure_you_want_to_delete));
                 }
             });
             holder.edit.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +122,8 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
         return traders.size();
     }
     class SummaryViewHolder extends RecyclerView.ViewHolder {
-        TextView name,code,taxType,current_status;
-        RelativeLayout upload,edit_layout;
+        TextView name,code,taxType,current_status,upload;
+        RelativeLayout edit_layout,image_list_icon_rl;
         ImageView image_list_icon,delete,edit;
         SummaryViewHolder(View view) {
             super(view);
@@ -130,9 +133,10 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             delete=(ImageView)view.findViewById(R.id.delete);
             edit=(ImageView)view.findViewById(R.id.edit);
             //edit_layout=(RelativeLayout)view.findViewById(R.id.edit_layout);
-            upload=(RelativeLayout)view.findViewById(R.id.right);
+            upload=(TextView) view.findViewById(R.id.upload);
             current_status=(TextView) view.findViewById(R.id.status_filed);
             image_list_icon=(ImageView) view.findViewById(R.id.image_list);
+
         }
     }
 
@@ -184,5 +188,42 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
     }
 
 
+
+ public void showConfirmationAlert(int pos,Activity activity, String msg) {
+
+        try {
+            final Dialog dialog = new Dialog(activity);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(false);
+            dialog.setContentView(R.layout.alert_dialog);
+
+            TextView text = (TextView) dialog.findViewById(R.id.tv_message);
+            text.setText(msg);
+
+            Button dialogButton = (Button) dialog.findViewById(R.id.btn_ok);
+            Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+            btn_cancel.setVisibility(View.VISIBLE);
+            dialogButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    deleteRow(pos);
+                    dialog.dismiss();
+
+                }
+            });
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                }
+            });
+
+            dialog.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

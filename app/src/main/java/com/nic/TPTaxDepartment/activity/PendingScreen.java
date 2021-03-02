@@ -82,6 +82,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     private ArrayList<CommonModel> filterListNeedImprovement;
 
     View v_1,v_2,v_3;
+    String screen_enable="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -734,6 +735,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     }
 
     public void  loadFieldList(ArrayList<CommonModel> fields){
+        if(v_1.getVisibility()==View.VISIBLE){
+            screen_enable="Satisfied";
+        }
+        else if(v_2.getVisibility()==View.VISIBLE){
+            screen_enable="Unsatisfied";
+        }
+        else if(v_3.getVisibility()==View.VISIBLE){
+            screen_enable="Need improvement";
+        }
         Intent intent = new Intent( PendingScreen.this, FieldVisit.class);
         intent.putExtra("flag",true);
         intent.putExtra("position",0);
@@ -755,6 +765,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             else {
                 filterListNeedImprovement.add(fieldVisitPendingList.get(i));
             }
+        }
+        if (screen_enable.equals("Satisfied")){
+            setAdapterField("Satisfied");
+        }
+        else if(screen_enable.equals("Unsatisfied")){
+            setAdapterField("Unsatisfied");
+        }
+        else if(screen_enable.equals("Need improvement")){
+            setAdapterField("Need improvement");
         }
     }
 
