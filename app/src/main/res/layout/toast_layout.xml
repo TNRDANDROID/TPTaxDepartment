@@ -73,7 +73,7 @@
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:text="CANCEL"
+                android:text="@string/cancel"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/menu_title_size"
                 android:visibility="gone" />

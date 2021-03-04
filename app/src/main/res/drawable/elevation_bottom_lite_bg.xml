@@ -18,40 +18,33 @@
     </item>-->
     <item>
         <shape>
-            <solid android:color="@color/white"/>
-            <corners android:topRightRadius="10dp"
-                android:topLeftRadius="10dp"
-                android:bottomLeftRadius="5dp"
-                android:bottomRightRadius="5dp"/>
+            <padding android:bottom="0.5dp" android:left="0dp" android:right="0dp"
+                android:top="0dp"/>
+            <solid android:color="#30CCCCCC"/>
+            <corners android:radius="0dp"/>
         </shape>
     </item>
-<!--
     <item>
         <shape>
             <padding android:bottom="0.5dp" android:left="0dp" android:right="0dp"
                 android:top="0dp"/>
             <solid android:color="#40CCCCCC"/>
-            <corners android:radius="10dp"/>
+            <corners android:radius="0dp"/>
         </shape>
     </item>
--->
-<!--
     <item>
         <shape>
             <padding android:bottom="0.5dp" android:left="0dp" android:right="0dp"
                 android:top="0dp"/>
             <solid android:color="#50CCCCCC"/>
-            <corners android:radius="10dp"/>
+            <corners android:radius="0dp"/>
         </shape>
     </item>
--->
     <!-- Background -->
-<!--
     <item>
         <shape>
             <solid android:color="@color/white"/>
-            <corners android:radius="10dp"/>
+            <corners android:radius="0dp"/>
         </shape>
     </item>
--->
 </layer-list>

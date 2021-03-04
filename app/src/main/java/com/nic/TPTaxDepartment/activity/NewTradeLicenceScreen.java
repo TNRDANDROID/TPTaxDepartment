@@ -1396,7 +1396,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.something_wrong));
+        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
     }
 
     public void getNewTraderDetails() {
@@ -1946,7 +1946,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
             newTradeLicenceScreenBinding.third.setVisibility(View.GONE);
             newTradeLicenceScreenBinding.previous.setVisibility(View.VISIBLE);
-            newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.submit));
+            newTradeLicenceScreenBinding.next.setText(getApplicationContext().getResources().getString(R.string.next));
             newTradeLicenceScreenBinding.second.setAnimation(animationOut);
             animationOut.start();
         }

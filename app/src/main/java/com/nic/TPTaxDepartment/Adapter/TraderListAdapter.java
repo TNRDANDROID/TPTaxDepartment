@@ -60,7 +60,6 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
                 holder.payment.setText("-");
             }
 */
-/*
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,7 +70,6 @@ public class TraderListAdapter extends RecyclerView.Adapter<TraderListAdapter.Su
                 }
 
             });
-*/
             holder.viewDetails.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -901,6 +901,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     }
     @Override
     public void OnError(VolleyError volleyError) {
+        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
     public int getWardCount() {

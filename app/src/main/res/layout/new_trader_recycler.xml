@@ -60,7 +60,7 @@
                     android:id="@+id/upload"
                     android:drawablePadding="8dp"
                     android:drawableLeft="@drawable/ic_upload"
-                    android:text="Upload"
+                    android:text="@string/upload"
                     android:fontFamily="sans-serif" />
 
             </RelativeLayout>
@@ -181,7 +181,7 @@
             android:textColor="@color/border_line"
             android:id="@+id/mobile"
             android:layout_below="@+id/name"
-            android:text="Mobile"
+            android:text="@string/mobile"
             android:fontFamily="sans-serif" />
         <TextView
             android:layout_width="0dp"

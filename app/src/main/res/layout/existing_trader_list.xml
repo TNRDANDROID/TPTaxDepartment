@@ -14,18 +14,19 @@
     <RelativeLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
-
         android:layout_height="match_parent"
-
-
+        android:layout_marginBottom="40dp"
         android:orientation="vertical">
 
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/header_layout"
+        android:layout_height="@dimen/_100sdp"
+        android:background="@drawable/header_login">
         <RelativeLayout
-            android:id="@+id/header_layout"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/background">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:id="@+id/refresh"
@@ -69,6 +70,8 @@
 
         </RelativeLayout>
 
+    </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -84,8 +87,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginTop="-20dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center">
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
@@ -93,6 +96,7 @@
                     android:id="@+id/trade_recycler"
                     android:scrollbarSize="1dp"
                     android:padding="10dp"
+                    android:layout_marginTop="5dp"
                     android:visibility="visible"
                     android:scrollbars="vertical"/>
 

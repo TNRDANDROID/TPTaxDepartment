@@ -1,270 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/cornered_border_bg"
-    android:layout_margin="5dp"
-    android:elevation="@dimen/_6sdp">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/content1">
-        <TextView
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/submit_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textSize="16sp"
-            android:id="@+id/nameValue"
-            android:background="@drawable/new_round_cornered_bg"
-            android:text="Trader Name"
-            android:fontFamily="sans-serif" />
-    </RelativeLayout>
-
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/content2"
-        android:layout_below="@+id/content1"
-        android:padding="10dp"
-        >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:padding="3dp"
-            android:id="@+id/rel1">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:textColor="@color/grey1"
-            android:id="@+id/code"
-            android:text="@string/trade_code"
-            android:fontFamily="sans-serif" />
-
-        <TextView
-            android:id="@+id/codec"
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:textColor="@color/grey1"
-            android:layout_toRightOf="@+id/paymentDate"
-            android:fontFamily="sans-serif"
-            android:text=" : "
-            />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1.3"
-            android:layout_height="match_parent"
-            android:gravity="start"
+            android:layout_centerHorizontal="true"
+            android:visibility="visible"
+            android:elevation="6dp"
+            app:cardBackgroundColor="#fcfcfc"
+            app:cardCornerRadius="10dp"
             android:layout_marginLeft="5dp"
-            android:textSize="16sp"
-            android:textColor="@color/border_line"
-            android:layout_toRightOf="@+id/codec"
-            android:id="@+id/codeValue"
-            android:text="Traders code "
-            android:fontFamily="sans-serif" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:padding="3dp"
-            android:layout_below="@+id/rel1"
-            android:id="@+id/rel2">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/grey1"
-            android:id="@+id/mobile"
-            android:layout_below="@+id/code"
-            android:text="@string/mobile"
-            android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:textColor="@color/grey1"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/paymentDate"
-            android:layout_below="@+id/code"
-            android:id="@+id/mobilec"
-            android:text=" : "
-            android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1.9"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:layout_marginLeft="5dp"
-            android:textSize="16sp"
-            android:textColor="@color/border_line"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/mobilec"
-            android:layout_below="@+id/code"
-            android:id="@+id/mobileValue"
-            android:text="Mobile No"
-            android:fontFamily="sans-serif" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:padding="3dp"
-            android:visibility="gone"
-            android:layout_below="@+id/rel2"
-            android:id="@+id/rel3">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:textColor="@color/grey1"
-            android:layout_marginTop="5dp"
-            android:id="@+id/paymentDate"
-            android:layout_below="@+id/mobile"
-            android:text="PaymentDate"
-            android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/grey1"
-            android:layout_toRightOf="@+id/paymentDate"
-            android:layout_below="@+id/mobile"
-            android:id="@+id/paymentdatec"
-            android:text=" : "
-            android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1.9"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:layout_marginLeft="5dp"
-            android:textSize="16sp"
-            android:textColor="@color/border_line"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/paymentdatec"
-            android:layout_below="@+id/mobile"
-            android:id="@+id/paymentDateValue"
-            android:text="paymentDate"
-            android:fontFamily="sans-serif" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3"
-            android:padding="3dp"
-            android:layout_below="@+id/rel3"
-            android:id="@+id/rel4">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:textColor="@color/grey1"
-            android:layout_marginTop="5dp"
-            android:id="@+id/email"
-            android:layout_below="@+id/mobile"
-            android:text="@string/_trader_email"
-            android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="0.1"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:textSize="16sp"
-            android:layout_marginTop="5dp"
-            android:textColor="@color/grey1"
-            android:layout_toRightOf="@+id/paymentDate"
-            android:layout_below="@+id/mobile"
-            android:id="@+id/emailc"
-            android:text=" : "
-            android:fontFamily="sans-serif" />
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1.9"
-            android:layout_height="match_parent"
-            android:gravity="start"
-            android:layout_marginLeft="5dp"
-            android:textSize="16sp"
-            android:textColor="@color/border_line"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@+id/paymentdatec"
-            android:layout_below="@+id/mobile"
-            android:id="@+id/emailValue"
-            android:text="email"
-            android:fontFamily="sans-serif" />
-        </LinearLayout>
-        <TextView
+            android:layout_marginRight="5dp"
+            app:cardElevation="6dp"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCompatPadding="true">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="70dp"
-            android:id="@+id/paymentStatus"
-            android:gravity="center"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/round_green_bg"
-            android:layout_marginEnd="5dp"
-            android:visibility="gone"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:text="UnPaid" />
-        <TextView
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/traderType"
-            android:gravity="center"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/round_cornered_bg"
-            android:layout_marginEnd="5dp"
-            android:padding="5dp"
-            android:textSize="15sp"
-            android:textColor="@color/white"
-            android:text="Commercial" />
-        <TextView
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:id="@+id/viewDetails"
-            android:gravity="center"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/round_cornered_bg"
-            android:textSize="15sp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:textColor="@color/white"
-            android:text="View" />
+            android:id="@+id/content2"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/background_text_email"
+                android:padding="10dp"
+                android:id="@+id/rel1">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/name"
+                    android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:text="@string/trader_code"
+                    android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/mobile_No"
+                    android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/email_Id"
+                    android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="5dp"
+                    android:text="Payment Date"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                android:layout_toRightOf="@+id/rel1"
+                android:id="@+id/rel2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:layout_marginLeft="5dp"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:textColor="@color/border_line"
+                android:id="@+id/nameValue"
+                android:text="@string/trader_code"
+                android:fontFamily="sans-serif" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="start"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:textColor="@color/border_line"
+                android:id="@+id/codeValue"
+                android:text="@string/trader_code"
+                android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:textColor="@color/border_line"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/mobileValue"
+                    android:text="@string/mobile_No"
+                    android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:textColor="@color/border_line"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/emailValue"
+                    android:text="@string/email"
+                    android:fontFamily="sans-serif" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="start"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="16sp"
+                    android:maxLines="1"
+                    android:visibility="gone"
+                    android:textColor="@color/border_line"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/paymentDateValue"
+                    android:text="paymentDate"
+                    android:fontFamily="sans-serif" />
+
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="70dp"
+                android:id="@+id/paymentStatus"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/round_green_bg"
+                android:layout_marginEnd="5dp"
+                android:visibility="gone"
+                android:padding="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="@string/unPaid" />
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/traderType"
+                android:gravity="center"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/round_cornered_bg"
+                android:layout_marginEnd="5dp"
+                android:padding="5dp"
+                android:textSize="15sp"
+                android:textColor="@color/white"
+                android:text="@string/commercial" />
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewDetails"
+                android:visibility="gone"
+                android:gravity="center"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/round_corner_button"
+                android:textSize="15sp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@color/grey2"
+                android:text="View" />
+
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
-
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 <!--
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout

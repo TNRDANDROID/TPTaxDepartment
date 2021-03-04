@@ -1545,6 +1545,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     @Override
     public void OnError(VolleyError volleyError) {
+        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
 

@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="40dp"
+    >
     <RelativeLayout
         android:visibility="visible"
         android:layout_width="match_parent"
@@ -81,6 +83,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
                 android:orientation="vertical">
 
                 <TextView
@@ -104,6 +108,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
                 android:orientation="vertical">
                 <TextView
                     android:textAlignment="center"
@@ -128,6 +134,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:gravity="bottom"
+                android:layout_gravity="bottom"
                 android:orientation="vertical">
                 <TextView
                     android:textAlignment="center"
@@ -239,7 +247,7 @@
                             android:textColor="@color/white"
                             android:textSize="15sp"
                             android:id="@+id/new_trader"
-                            android:text="New Traders"
+                            android:text="@string/new_trade"
                             android:fontFamily="sans-serif" />
 
                     </RelativeLayout>

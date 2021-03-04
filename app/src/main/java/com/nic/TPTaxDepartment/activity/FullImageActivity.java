@@ -355,6 +355,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
     }
     @Override
     public void OnError(VolleyError volleyError) {
+        Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.try_after_some_time));
 
     }
 }

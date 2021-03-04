@@ -11,7 +11,9 @@
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="40dp"
+        >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -61,7 +63,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
-                            android:text="New Trade Licence"
+                            android:text="@string/new_Trade_Licence"
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="@dimen/_15sdp"
@@ -991,7 +993,7 @@
                                     android:layout_width="@dimen/_100sdp"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/owner_status_yes"
-                                    android:text="Yes"
+                                    android:text="@string/yes"
                                     android:textColor="@color/grey2"></RadioButton>
                                 <RadioButton
                                     android:textSize="@dimen/_13sdp"
@@ -1000,7 +1002,7 @@
                                     android:layout_width="@dimen/_100sdp"
                                     android:layout_height="wrap_content"
                                     android:id="@+id/owner_status_no"
-                                    android:text="No"
+                                    android:text="@string/no"
                                     android:textColor="@color/grey2"></RadioButton>
 
                             </RelativeLayout>
@@ -1051,7 +1053,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:background="@drawable/round_corner_button"
                                     android:ellipsize="marquee"
-                                    android:text="Choose PDF File"
+                                    android:text="@string/choose_File"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"
                                     customfontdemo:fontName="@string/font_circular_book" />
@@ -1241,8 +1243,6 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentStart="true"
                                     android:layout_centerInParent="true"
-
-
                                     android:textColor="@android:color/black"
                                     android:textSize="@dimen/_15sdp"
                                     android:visibility="visible"
@@ -1429,7 +1429,7 @@
                                         android:layout_marginRight="@dimen/_40sdp"
                                         android:checked="false"
                                         android:gravity="center"
-                                        android:text="Temporary"
+                                        android:text="@string/temporary"
                                         android:textColor="@android:color/black"
                                         android:textSize="13sp" />
 
@@ -1455,7 +1455,7 @@
                                         android:layout_marginRight="@dimen/_40sdp"
                                         android:checked="false"
                                         android:gravity="center"
-                                        android:text="Commercial"
+                                        android:text="@string/commercial"
                                         android:textColor="@android:color/black"
                                         android:textSize="13sp" />
 
@@ -1515,7 +1515,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_marginLeft="@dimen/_10sdp"
-                                    android:text="Yes"
+                                    android:text="@string/yes"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1525,7 +1525,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_toRightOf="@+id/motor_avilable_status_yes"
-                                    android:text="No"
+                                    android:text="@string/no"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1630,7 +1630,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_marginLeft="@dimen/_10sdp"
-                                    android:text="Yes"
+                                    android:text="@string/yes"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1640,7 +1640,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_toRightOf="@+id/geneartor_avilable_status_yes"
-                                    android:text="No"
+                                    android:text="@string/no"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1761,7 +1761,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_marginLeft="@dimen/_10sdp"
-                                    android:text="Yes"
+                                    android:text="@string/yes"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1771,7 +1771,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_toRightOf="@+id/professional_tax_yes"
-                                    android:text="No"
+                                    android:text="@string/no"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1817,7 +1817,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentLeft="true"
                                     android:layout_marginLeft="@dimen/_10sdp"
-                                    android:text="Yes"
+                                    android:text="@string/yes"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -1827,7 +1827,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerHorizontal="true"
                                     android:layout_toRightOf="@+id/property_tax_yes"
-                                    android:text="No"
+                                    android:text="@string/no"
                                     android:textColor="@color/grey2"
                                     android:textSize="14sp"></RadioButton>
 
@@ -2105,7 +2105,7 @@
                             android:clickable="true"
                             android:foreground="?attr/selectableItemBackground"
                             android:onClick="@{()-> activity.ValidationThird()}"
-                            android:text="Submit"
+                            android:text="@string/submit"
                             android:visibility="gone"
                             android:textAllCaps="false"
                             android:textColor="@android:color/black"
@@ -2116,7 +2116,6 @@
                 </LinearLayout>
             </ScrollView>
             <RelativeLayout
-                android:layout_marginBottom="40dp"
                 android:id="@+id/bottom_layout"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -2222,7 +2221,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:text="0"
-                android:layout_marginBottom="50dp"
                 android:textAlignment="center"
                 android:textColor="@color/grey2"
                 android:textSize="13sp"

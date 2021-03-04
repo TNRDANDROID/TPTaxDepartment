@@ -31,6 +31,8 @@
     <color name="white">#FFFFFF</color>
     <color name="lightgray">#ededed</color>
     <color name="deeppurple">#7c4dff</color>
+    <color name="lite_purple">#B481FC</color>
+    <color name="light_purple">#f7f4fd</color>
     <color name="yello">#ffb300</color>
     <color name="green">#00bfa5</color>
 
@@ -102,6 +104,7 @@
         <item>@color/colorPrimary</item>
     </integer-array>
     <color name="full_transparent">#00FF0000</color>
+<!--    <color name="transparent_black_hex_1">#f4f9fd</color>-->
     <color name="transparent_black_hex_1">#f3f3f3</color>
     <color name="transparent_black_hex_2">#e9e9e9</color>
     <color name="transparent_black_hex_3">#33000000</color>

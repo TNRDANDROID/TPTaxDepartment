@@ -17,6 +17,6 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text="Header"
-        android:textColor="@color/grey2"
+        android:textColor="@color/border_line"
         android:textSize="13sp" />
 </RelativeLayout>

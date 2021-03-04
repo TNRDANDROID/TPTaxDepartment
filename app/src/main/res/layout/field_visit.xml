@@ -350,7 +350,7 @@
                             android:layout_marginLeft="@dimen/margin_left_20dp"
                             android:layout_marginTop="@dimen/padding"
                             android:layout_marginRight="@dimen/margin_left_20dp"
-                            android:text="Assessment Id"
+                            android:text="@string/assessment_Id"
                             android:textColor="@android:color/black"
                             android:textSize="@dimen/_15sdp"
                             android:visibility="visible" />
@@ -711,45 +711,54 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
+            android:layout_marginBottom="30dp"
             android:id="@+id/historyLayout">
             <RelativeLayout
-                android:id="@+id/header_layout2"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/gradiant_bg">
-
-                <ImageView
-                    android:id="@+id/refresh2"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="start"
-                    android:layout_centerVertical="true"
-                    android:onClick="@{()-> activity.onBackPressed()}"
-                    android:layout_marginLeft="@dimen/_10sdp"
-                    android:background="@drawable/back"
-                    android:backgroundTint="@android:color/white" />
-
-
-                <TextView
-                    android:id="@+id/title_tv2"
-                    android:layout_width="wrap_content"
+                android:layout_height="@dimen/_100sdp"
+                android:id="@+id/header_layout2"
+                android:background="@drawable/header_login">
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:text="Field Visit List"
-                    android:textAlignment="center"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/_15sdp"
-                    android:textStyle="bold" />
+                    android:layout_marginTop="10dp"
+                   >
 
+                    <ImageView
+                        android:id="@+id/refresh2"
+                        android:layout_width="@dimen/_30sdp"
+                        android:layout_height="@dimen/_30sdp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="start"
+                        android:layout_centerVertical="true"
+                        android:onClick="@{()-> activity.onBackPressed()}"
+                        android:layout_marginLeft="@dimen/_10sdp"
+                        android:background="@drawable/back"
+                        android:backgroundTint="@android:color/white" />
+
+
+                    <TextView
+                        android:id="@+id/title_tv2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:text="@string/field_visit_list"
+                        android:textAlignment="center"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/_15sdp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
             </RelativeLayout>
+
 
             <RelativeLayout
                 android:id = "@+id/swipeRefresh"
                 android:layout_below="@+id/header_layout2"
                 android:layout_width = "match_parent"
+                android:layout_marginTop="-20dp"
                 android:layout_height = "match_parent">
                 <se.emilsjolander.stickylistheaders.StickyListHeadersListView
                     android:id="@+id/stickyList"

@@ -389,6 +389,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
     @Override
     public void OnError(VolleyError volleyError) {
+        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
 
