@@ -416,15 +416,15 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
 
                     String tradersdetails_id= Utils.NotNullString(jsonobject.getString("tradersdetails_id"));
-                    String lb_sno= Utils.NotNullString(jsonobject.getString("lb_sno"));
+                    //String lb_sno= Utils.NotNullString(jsonobject.getString("lb_sno"));
 //                    String lb_tradecode= Utils.NotNullString(jsonobject.getString("lb_tradecode"));
                     String lb_traderscode= Utils.NotNullString(jsonobject.getString("lb_traderscode"));
                     String tradedetails_id= Utils.NotNullString(jsonobject.getString("tradedetails_id"));
 //                    String traderate= Utils.NotNullString(jsonobject.getString("traderate"));
                     String traders_rate= Utils.NotNullString(jsonobject.getString("traders_rate"));
-                    String traders_type= Utils.NotNullString(jsonobject.getString("traders_type"));
-                    String tradersperiod= Utils.NotNullString(jsonobject.getString("tradersperiod"));
-                    String traderstypee= Utils.NotNullString(jsonobject.getString("traderstypee"));
+                    //String traders_type= Utils.NotNullString(jsonobject.getString("traders_type"));
+//                    String tradersperiod= Utils.NotNullString(jsonobject.getString("tradersperiod"));
+                    //String traderstypee= Utils.NotNullString(jsonobject.getString("traderstypee"));
 
                     String apname_ta= Utils.NotNullString(jsonobject.getString("apname_ta"));
                     String apname_en= Utils.NotNullString(jsonobject.getString("apname_en"));
@@ -497,7 +497,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
 //                                 Detail.setTraderCode(lb_tradecode);
-                                 Detail.setTraders_typ(traders_type);
+                                 //Detail.setTraders_typ(traders_type);
                                  Detail.setTraderCode(lb_traderscode);
                                  Detail.setDoorno(doorno);
                                  Detail.setApfathername_ta(apfathername_ta);
@@ -505,15 +505,15 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setTraders_license_type_name(traders_license_type_name);
                                  Detail.setMobileno(mobileno);
                                  Detail.setTradersdetails_id(tradersdetails_id);
-                                 Detail.setLb_sno(lb_sno);
+                                // Detail.setLb_sno(lb_sno);
                                  Detail.setTradedetails_id(tradedetails_id);
                                  Detail.setDescription_en(description_en);
                                  Detail.setDescription_ta(description_ta);
 //                                 Detail.setTraderate(traderate);
                                  Detail.setTraders_rate(traders_rate);
                                  Detail.setTrade_date(date);
-                                 Detail.setTradersperiod(tradersperiod);
-                                 Detail.setTraderstypee(traderstypee);
+                                 //Detail.setTradersperiod(tradersperiod);
+                                // Detail.setTraderstypee(traderstypee);
                                  Detail.setEmail(email);
                                  Detail.setLicencetypeid(licencetypeid);
                                  Detail.setApgenderId(apgender);
@@ -564,7 +564,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  TPtaxModel Detail = new TPtaxModel();
                                  Detail.setTraderName(apname_en);
 //                                 Detail.setTraderCode(lb_tradecode);
-                                 Detail.setTraders_typ(traders_type);
+                                 //Detail.setTraders_typ(traders_type);
                                  Detail.setTraderCode(lb_traderscode);
                                  Detail.setDoorno(doorno);
                                  Detail.setApfathername_ta(apfathername_ta);
@@ -572,15 +572,15 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                  Detail.setTraders_license_type_name(traders_license_type_name);
                                  Detail.setMobileno(mobileno);
                                  Detail.setTradersdetails_id(tradersdetails_id);
-                                 Detail.setLb_sno(lb_sno);
+                                 //Detail.setLb_sno(lb_sno);
                                  Detail.setTradedetails_id(tradedetails_id);
                                  Detail.setDescription_en(description_en);
                                  Detail.setDescription_ta(description_ta);
 //                                 Detail.setTraderate(traderate);
                                  Detail.setTraders_rate(traders_rate);
                                  Detail.setTrade_date(date);
-                                 Detail.setTradersperiod(tradersperiod);
-                                 Detail.setTraderstypee(traderstypee);
+                                 //Detail.setTradersperiod(tradersperiod);
+                                 //Detail.setTraderstypee(traderstypee);
                                  Detail.setEmail(email);
                                  Detail.setLicencetypeid(licencetypeid);
                                  Detail.setApgenderId(apgender);
@@ -627,7 +627,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 TPtaxModel Detail = new TPtaxModel();
                                 Detail.setTraderName(apname_en);
 //                                Detail.setTraderCode(lb_tradecode);
-                                Detail.setTraders_typ(traders_type);
+                                //Detail.setTraders_typ(traders_type);
                                 Detail.setTraderCode(lb_traderscode);
                                 Detail.setDoorno(doorno);
                                 Detail.setApfathername_ta(apfathername_ta);
@@ -635,15 +635,15 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                                 Detail.setTraders_license_type_name(traders_license_type_name);
                                 Detail.setMobileno(mobileno);
                                 Detail.setTradersdetails_id(tradersdetails_id);
-                                Detail.setLb_sno(lb_sno);
+                                //Detail.setLb_sno(lb_sno);
                                 Detail.setTradedetails_id(tradedetails_id);
                                 Detail.setDescription_en(description_en);
                                 Detail.setDescription_ta(description_ta);
 //                                Detail.setTraderate(traderate);
                                 Detail.setTraders_rate(traders_rate);
                                 Detail.setTrade_date(date);
-                                Detail.setTradersperiod(tradersperiod);
-                                Detail.setTraderstypee(traderstypee);
+                                //Detail.setTradersperiod(tradersperiod);
+                                //Detail.setTraderstypee(traderstypee);
                                 Detail.setEmail(email);
                                 Detail.setLicencetypeid(licencetypeid);
                                 Detail.setApgenderId(apgender);
@@ -794,6 +794,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     }
     @Override
     public void OnError(VolleyError volleyError) {
+        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
     public Bitmap StringToBitMap(String encodedString){

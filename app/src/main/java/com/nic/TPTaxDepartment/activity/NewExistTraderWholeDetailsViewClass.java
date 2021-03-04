@@ -7,25 +7,37 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.android.volley.VolleyError;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.nic.TPTaxDepartment.Api.Api;
+import com.nic.TPTaxDepartment.Api.ApiService;
+import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
+import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.ExistTraderDetailsWholeViewBinding;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
+import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
+public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity implements Api.ServerResponseListener {
 
     ExistTraderDetailsWholeViewBinding existTraderDetailsWholeViewBinding;
     Context context;
@@ -36,6 +48,8 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
     int tradersImagePosition;
     Boolean flag = false;
     int pageNumber=0;
+    String DocumentString="";
+    String TraderImageString="";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,8 +111,26 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
     }
 
     public void shoewDetails() {
+        LinearLayout layout = findViewById(R.id.details_ll);
+        int count = layout.getChildCount();
+        View v = null;
+        int visibleCount=0;
+        TextView edittext;
+        for(int i=0; i<count; i++) {
+            v =  layout.getChildAt(i);
+            if(v instanceof TextView) {
+                 edittext = (TextView) v;
 
-        
+                    if (i % 2 == 0) {
+                        edittext.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.text_color_grey2));
+                    } else {
+                        edittext.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.text_color_grey1));
+                    }
+
+            }
+            //do something with your child element
+
+        }
         String tradersdetails_id= changeTextColor(getApplicationContext().getResources().getString(R.string.tradersDetailsID))+traders.get(position).getTradersdetails_id() + "\n"+ "\n";
         String lb_sno= changeTextColor(getApplicationContext().getResources().getString(R.string.lb_sno))+traders.get(position).getLb_sno() + "\n"+ "\n";
         String lb_traderscode= changeTextColor(getApplicationContext().getResources().getString(R.string.lb_trader_code))+traders.get(position).getTraderCode() + "\n"+ "\n";
@@ -163,13 +195,13 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
         String ward_name_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.ward_name_ta))+traders.get(position).getWard_name_ta() + "\n"+ "\n";
 
         existTraderDetailsWholeViewBinding.t1.setText(Html.fromHtml(tradersdetails_id));
-        existTraderDetailsWholeViewBinding.t2.setText(Html.fromHtml(lb_sno));
+        //existTraderDetailsWholeViewBinding.t2.setText(Html.fromHtml(lb_sno));
         existTraderDetailsWholeViewBinding.t3.setText(Html.fromHtml(lb_traderscode));
         existTraderDetailsWholeViewBinding.t4.setText(Html.fromHtml(tradedetails_id));
         existTraderDetailsWholeViewBinding.t5.setText(Html.fromHtml(traders_rate));
-        existTraderDetailsWholeViewBinding.t6.setText(Html.fromHtml(traders_type));
-        existTraderDetailsWholeViewBinding.t7.setText(Html.fromHtml(tradersperiod));
-        existTraderDetailsWholeViewBinding.t8.setText(Html.fromHtml(traderstypee));
+       // existTraderDetailsWholeViewBinding.t6.setText(Html.fromHtml(traders_type));
+        //existTraderDetailsWholeViewBinding.t7.setText(Html.fromHtml(tradersperiod));
+        //existTraderDetailsWholeViewBinding.t8.setText(Html.fromHtml(traderstypee));
         existTraderDetailsWholeViewBinding.t9.setText(Html.fromHtml(apname_ta));
         existTraderDetailsWholeViewBinding.t10.setText(Html.fromHtml(apname_en));
         existTraderDetailsWholeViewBinding.t11.setText(Html.fromHtml(apfathername_ta));
@@ -239,10 +271,15 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void viewDocument() {
         byte[] decodedString = new byte[0];
+        byte[] actualByte = new byte[0];
         try {
             //byte[] name = java.util.Base64.getEncoder().encode(fileString.getBytes());
-            decodedString = Base64.decode(/*DocumentString*/traders.get(position).getDocument().toString(), Base64.DEFAULT);
-            System.out.println(new String(decodedString));
+             //actualByte = java.util.Base64.getDecoder().decode(DocumentString);
+
+            decodedString = Base64.decode(DocumentString/*traders.get(position).getDocument().toString()*/, Base64.DEFAULT);
+            //actualByte = Base64.decode(new String(decodedString)/*traders.get(position).getDocument().toString()*/, Base64.DEFAULT);
+
+           // System.out.println(new String(decodedString));
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -264,19 +301,19 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
     public void viewImageScreen() {
 
 
-            if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {
-                String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
+            /*if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {*/
+               // String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
                 Intent intent = new Intent(this, FullImageActivity.class);
                 intent.putExtra(AppConstant.TRADE_CODE, "");
                 intent.putExtra(AppConstant.MOBILE, "");
                 intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
-                intent.putExtra(AppConstant.TRADE_IMAGE,/*TraderImageString*/ value);
+                intent.putExtra(AppConstant.TRADE_IMAGE,TraderImageString /*value*/);
                 intent.putExtra("key", "ExistTradeViewClass");
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            } else {
+          /*  } else {
                 Utils.showAlert(NewExistTraderWholeDetailsViewClass.this, getApplicationContext().getResources().getString(R.string.no_image_found));
-            }
+            }*/
 
     }
 
@@ -288,4 +325,127 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity {
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
+    public void getTradeImage() {
+        try {
+            new ApiService(NewExistTraderWholeDetailsViewClass.this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
+                    traderImageJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void getFieldDocument() {
+        try {
+            new ApiService(NewExistTraderWholeDetailsViewClass.this).makeJSONObjectRequest("TraderDocument", Api.Method.POST, UrlGenerator.TradersUrl(),
+                    traderDocumentJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+    public JSONObject traderDocumentJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
+                traderDocumentParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TraderDocument", "" + dataSet);
+        return dataSet;
+    }
+
+    public JSONObject traderDocumentParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersRentLeaseAgrement");
+        dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
+        return dataSet;
+    }
+    public JSONObject traderImageJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
+                traderImageParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TraderImage", "" + dataSet);
+        return dataSet;
+    }
+
+    public JSONObject traderImageParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersShopImage");
+        dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
+        return dataSet;
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void OnMyResponse(ServerResponse serverResponse) {
+        try {
+            JSONObject responseObj = serverResponse.getJsonResponse();
+            String urlType = serverResponse.getApi();
+            String status ;
+
+
+            if ("TraderDocument".equals(urlType) && responseObj != null) {
+                try{
+                    String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                    String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("TraderDocumentDatadecry", "" + userDataDecrypt);
+                    JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                    status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status.equalsIgnoreCase("SUCCESS") ) {
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1=jsonObject.getJSONObject("DATA");
+                            DocumentString = jsonObject1.getString("rentleaseagrement");
+                            Log.d("TraderDocument", "" + jsonObject);
+
+                            viewDocument();
+
+
+                    }
+                    else if(status.equalsIgnoreCase("FAILD") ) {
+                        Utils.showAlert(this,jsonObject.getString("MESSAGE"));
+                    }
+                }catch (Exception e){}
+                 }
+            if ("TraderImage".equals(urlType) && responseObj != null) {
+
+                try{
+                String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("TraderImageDatadecry", "" + userDataDecrypt);
+                JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+               // status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status.equalsIgnoreCase("SUCCESS") ) {
+                        JSONObject jsonObject1 = new JSONObject();
+                        jsonObject1=jsonObject.getJSONObject("DATA");
+                        TraderImageString = jsonObject1.getString("tradersshopimage");
+                        Log.d("TraderImage", "" + jsonObject);
+
+                        viewImageScreen();
+
+
+                    }
+                    else if(status.equalsIgnoreCase("FAILD") ) {
+                        Utils.showAlert(this,jsonObject.getString("MESSAGE"));
+                    }            }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void OnError(VolleyError volleyError) {
+        Utils.showAlert(NewExistTraderWholeDetailsViewClass.this,getApplicationContext().getResources().getString(R.string.something_wrong));
+    }
 }

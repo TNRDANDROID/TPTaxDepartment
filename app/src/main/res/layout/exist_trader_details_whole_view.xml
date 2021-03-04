@@ -13,12 +13,12 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginBottom="40dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/document_layout"
-        android:layout_marginBottom="40dp"
         android:visibility="gone">
         <RelativeLayout
             android:id="@+id/header2_layout"
@@ -297,7 +297,7 @@
                         android:textSize="16sp"
                         android:layout_alignParentStart="true"
                         android:id="@+id/viewDocument"
-                        android:onClick="@{()-> activity.viewDocument()}"
+                        android:onClick="@{()-> activity.getFieldDocument()}"
                         android:layout_marginRight="10dp"
                         android:drawablePadding="6dp"
                         android:drawableLeft="@drawable/ic_document"
@@ -314,7 +314,7 @@
                         android:id="@+id/viewImage"
                         android:gravity="end"
                         android:layout_alignParentEnd="true"
-                        android:onClick="@{()-> activity.viewImageScreen()}"
+                        android:onClick="@{()-> activity.getTradeImage()}"
                         android:layout_marginRight="0dp"
                         android:drawablePadding="6dp"
                         android:drawableLeft="@drawable/ic_gallery"
@@ -324,6 +324,11 @@
                         customfontdemo:fontName="@string/font_circular_medium" />
                 </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:id="@+id/details_ll">
                 <TextView
                     android:background="@color/bg1"
                     android:padding="8dp"
@@ -334,6 +339,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+<!--
                 <TextView
                     android:background="@color/bg2"
                     android:padding="8dp"
@@ -344,6 +350,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+-->
                 <TextView
                     android:background="@color/bg1"
                     android:padding="8dp"
@@ -374,6 +381,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+<!--
                 <TextView
                     android:background="@color/bg2"
                     android:padding="8dp"
@@ -404,6 +412,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+-->
                 <TextView
                     android:background="@color/bg1"
                     android:padding="8dp"
@@ -724,7 +733,6 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
-
                 <TextView
                     android:background="@color/bg1"
                     android:padding="8dp"
@@ -795,6 +803,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+            </LinearLayout>
 
 
             </LinearLayout>
