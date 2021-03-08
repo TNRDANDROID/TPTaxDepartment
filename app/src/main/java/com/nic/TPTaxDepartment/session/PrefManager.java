@@ -76,6 +76,7 @@ public class PrefManager {
     private static final String USER_FNAME = "user_first_name";
     private static final String USER_LNAME = "user_last_name";
     private static final String TRADER_IMAGE_LIST = "trader_image_list";
+    private static final String FIELD_VISIT_HISTORY_LIST = "FieldVisitHistory_list";
 
 
 
@@ -235,6 +236,14 @@ public class PrefManager {
 
     public String getTradersList() {
         return pref.getString(TRADERS_LIST, null);
+    }
+    public void setFieldVisitHistoryList(String fieldVisitHistoryList) {
+        editor.putString(FIELD_VISIT_HISTORY_LIST, fieldVisitHistoryList);
+        editor.commit();
+    }
+
+    public String getFieldVisitHistoryList() {
+        return pref.getString(FIELD_VISIT_HISTORY_LIST, null);
     }
 
 

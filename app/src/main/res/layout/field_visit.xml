@@ -82,7 +82,7 @@
                         android:padding="2dp"
                         android:tint="@color/white"
                         android:src="@drawable/ic_history"
-                        android:onClick="@{()-> activity.loadHistory()}"
+                        android:onClick="@{()-> activity.getHistory()}"
                         android:scaleType="centerInside" />
 
 

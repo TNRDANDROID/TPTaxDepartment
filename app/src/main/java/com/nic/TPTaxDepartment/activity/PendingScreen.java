@@ -250,7 +250,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             }
         }
 
-        Collections.sort(fieldVisitList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
+        Collections.sort(fieldVisitList, (lhs, rhs) -> lhs.getTraderName().toLowerCase().compareTo(rhs.getTraderName().toLowerCase()));
         if (fieldVisitList != null && fieldVisitList.size() > 0) {
             no_data_fond_layout.setVisibility(View.GONE);
             FieldVisitListAdapter adapter = new FieldVisitListAdapter(PendingScreen.this, fieldVisitPendingList);
@@ -286,7 +286,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 } while (cursor.moveToNext());
             }
         }
-        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().compareTo(rhs.getOwnername()));
+        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().toLowerCase().compareTo(rhs.getOwnername().toLowerCase()));
         filterList();
       /*  if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {
             no_data_fond_layout.setVisibility(View.GONE);
@@ -392,7 +392,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 } while (cursor.moveToNext());
             }
         }
-        Collections.sort(newTraderList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
+        Collections.sort(newTraderList, (lhs, rhs) -> lhs.getTraderName().toLowerCase().compareTo(rhs.getTraderName().toLowerCase()));
         if (newTraderList != null && newTraderList.size() > 0) {
             no_data_fond_layout.setVisibility(View.GONE);
             newTraderRecycler.setVisibility(View.VISIBLE);

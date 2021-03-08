@@ -44,7 +44,8 @@ android {
             signingConfig signingConfigs.debug
             //resValue "string", "LOGIN_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_stag/project/webservices/login_service/login_services.php"
             //resValue "string", "LOGIN_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_prod/project/webservices/login_service/login_services.php"
-            resValue "string", "LOGIN_URL", "https://tnrd.gov.in/tndtp_service/webservices/login_service/login_services.php"
+//            resValue "string", "LOGIN_URL", "https://tnrd.gov.in/tndtp_service/webservices/login_service/login_services.php"
+            resValue "string", "LOGIN_URL", "http://10.163.19.140/tndtp_stag/project/webservices/login_service/login_services.php"
             //resValue "string", "LOGIN_URL", "http://10.163.19.140/tndtp_stag/project/webservices/login_service/login_services.php"
             resValue "string", "SAVE_TRADERS_URL", "http://landadmin.tn.gov.in/tnrd/tndtp_stag/project/webservices/tndtp/tndtp_dept_services.php"
            // resValue "string", "PROD_OPEN_URL", "https://tnrd.gov.in/tndtp_service/webservices/tndtp/tndtp_open_services.php"
@@ -134,4 +135,6 @@ dependencies {
     /*implementation 'com.android.support:multidex:2.0.0'
     compile (group: 'com.aspose', name: 'aspose-words', version: '20.6', classifier: 'android.via.java')*/
     api 'se.emilsjolander:stickylistheaders:2.7.0'
+//FromToDate Picker
+    implementation 'com.leavjenn.smoothdaterangepicker:library:0.2.0'
 }

@@ -130,7 +130,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypedesc_en().compareTo(rhs.getTaxtypedesc_en()));
+        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypedesc_en().toLowerCase().compareTo(rhs.getTaxtypedesc_en().toLowerCase()));
 
         if(taxType != null && taxType.size() >0) {
 
@@ -225,7 +225,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                                 professionalTax.add(commonModel);
 
                             }
-                        Collections.sort(professionalTax, (lhs, rhs) -> lhs.getAssessmentnameeng().compareTo(rhs.getAssessmentnameeng()));
+                        Collections.sort(professionalTax, (lhs, rhs) -> lhs.getAssessmentnameeng().toLowerCase().compareTo(rhs.getAssessmentnameeng().toLowerCase()));
                         if (professionalTax != null && professionalTax.size() > 0) {
                             AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, professionalTax,selectedTaxTypeName,selectedTaxTypeId);
                             assessmentAdapter.notifyDataSetChanged();
@@ -254,7 +254,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                                 propertyTax.add(commonModel);
 
                             }
-                        Collections.sort(propertyTax, (lhs, rhs) -> lhs.getOwner_name().compareTo(rhs.getOwner_name()));
+                        Collections.sort(propertyTax, (lhs, rhs) -> lhs.getOwner_name().toLowerCase().compareTo(rhs.getOwner_name().toLowerCase()));
                         if (propertyTax != null && propertyTax.size() > 0) {
                             AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, propertyTax,selectedTaxTypeName,selectedTaxTypeId);
                             assessmentAdapter.notifyDataSetChanged();
@@ -289,7 +289,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                                 tradeLicense.add(commonModel);
 
                             }
-                        Collections.sort(tradeLicense, (lhs, rhs) -> lhs.getApfathername_en().compareTo(rhs.getApfathername_en()));
+                        Collections.sort(tradeLicense, (lhs, rhs) -> lhs.getApfathername_en().toLowerCase().compareTo(rhs.getApfathername_en().toLowerCase()));
                         if (tradeLicense != null && tradeLicense.size() > 0) {
                             AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, tradeLicense,selectedTaxTypeName,selectedTaxTypeId);
                             assessmentAdapter.notifyDataSetChanged();
@@ -314,7 +314,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                                 waterTax.add(commonModel);
 
                             }
-                        Collections.sort(waterTax, (lhs, rhs) -> lhs.getConnectionname().compareTo(rhs.getConnectionname()));
+                        Collections.sort(waterTax, (lhs, rhs) -> lhs.getConnectionname().toLowerCase().compareTo(rhs.getConnectionname().toLowerCase()));
                         if (waterTax != null && waterTax.size() > 0) {
                             AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, waterTax,selectedTaxTypeName,selectedTaxTypeId);
                             assessmentAdapter.notifyDataSetChanged();
@@ -348,7 +348,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                                 nonTax.add(commonModel);
 
                             }
-                        Collections.sort(nonTax, (lhs, rhs) -> lhs.getLeasee_name_en().compareTo(rhs.getLeasee_name_en()));
+                        Collections.sort(nonTax, (lhs, rhs) -> lhs.getLeasee_name_en().toLowerCase().compareTo(rhs.getLeasee_name_en().toLowerCase()));
                         if (nonTax != null && nonTax.size() > 0) {
                             AssessmentAdapter  assessmentAdapter = new AssessmentAdapter(AssessmentStatus.this, nonTax,selectedTaxTypeName,selectedTaxTypeId);
                             assessmentAdapter.notifyDataSetChanged();

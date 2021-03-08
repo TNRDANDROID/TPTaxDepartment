@@ -305,7 +305,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(streets, (lhs, rhs) -> lhs.getStreet_name_ta().compareTo(rhs.getStreet_name_ta()));
+        Collections.sort(streets, (lhs, rhs) -> lhs.getStreet_name_ta().toLowerCase().compareTo(rhs.getStreet_name_ta().toLowerCase()));
 
         selectedStreets = new ArrayList<CommonModel>();
         for (int i = 0; i < streets.size(); i++) {
@@ -687,7 +687,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                         }
                     }
                 }
-                Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderName().compareTo(rhs.getTraderName()));
+//                Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderName().toLowerCase().compareTo(rhs.getTraderName().toLowerCase()));
+                Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderCode().compareTo(rhs.getTraderCode()));
             }
         } catch (JSONException e) {
             e.printStackTrace();

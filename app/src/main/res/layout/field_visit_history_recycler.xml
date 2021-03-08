@@ -101,6 +101,49 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="5dp"
+                    android:id="@+id/rel2">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.1"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        android:textSize="15sp"
+                        android:textColor="@color/grey1"
+                        android:id="@+id/name"
+                        android:text="@string/request_id"
+                        android:fontFamily="sans-serif" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="0.1"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        android:textColor="@color/grey1"
+                        android:textSize="15sp"
+                        android:text=":"
+                        android:fontFamily="sans-serif" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight="1.8"
+                        android:layout_height="match_parent"
+                        android:gravity="start"
+                        android:textColor="@color/border_line"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="5dp"
+                        android:id="@+id/requestId"
+                        android:text="Request ID"
+                        android:fontFamily="sans-serif" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3"
+                    android:paddingTop="0dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="5dp"
+                    android:layout_below="@+id/rel2"
                     android:id="@+id/rel1">
                     <TextView
                         android:layout_width="0dp"
@@ -150,48 +193,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_below="@+id/rel1"
-                    android:weightSum="3"
-                    android:paddingTop="0dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="5dp"
-                    android:id="@+id/rel2">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.1"
-                        android:layout_height="match_parent"
-                        android:gravity="start"
-                        android:textSize="15sp"
-                        android:textColor="@color/grey1"
-                        android:id="@+id/name"
-                        android:text="@string/request_id"
-                        android:fontFamily="sans-serif" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="0.1"
-                        android:layout_height="match_parent"
-                        android:gravity="start"
-                        android:textColor="@color/grey1"
-                        android:textSize="15sp"
-                        android:text=":"
-                        android:fontFamily="sans-serif" />
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_weight="1.8"
-                        android:layout_height="match_parent"
-                        android:gravity="start"
-                        android:textColor="@color/border_line"
-                        android:textSize="15sp"
-                        android:layout_marginLeft="5dp"
-                        android:id="@+id/requestId"
-                        android:text="Request ID"
-                        android:fontFamily="sans-serif" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_below="@+id/rel2"
                     android:weightSum="3"
                     android:paddingTop="0dp"
                     android:paddingLeft="10dp"

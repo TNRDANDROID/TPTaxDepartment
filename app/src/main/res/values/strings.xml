@@ -79,6 +79,7 @@
     <string name="are_you_sure_you_want_to_exit">Are you sure you want to exit ?</string>
     <string name="are_you_sure_you_want_to_submit">Are you sure you want to submit ?</string>
     <string name="are_you_sure_you_want_to_delete">Are you sure you want to delete ?</string>
+    <string name="would_you_like_to_change_image">Would you like to change the Image ?</string>
     <string name="logging_out_while_offline_may_leads_to_loss_of_data">Logging out while offline may leads to loss of data!</string>
     <string name="sync_all_the_data_before_logout">Sync all the data before logout!</string>
     <string name="select_Ward">Select Ward</string>
@@ -91,9 +92,10 @@
     <string name="n">N</string>
     <string name="yes">Yes</string>
     <string name="y">Y</string>
+    <string name="save_submit">No </string>
     <string name="paid">Paid</string>
     <string name="unPaid">UnPaid</string>
-    <string name="amount_to_pay">Amount to pay </string>
+    <string name="amount_to_pay">License Amount </string>
     <string name="select_Licence_Type">Select Licence Type</string>
     <string name="industrial">Industrial</string>
     <string name="production">Production</string>
