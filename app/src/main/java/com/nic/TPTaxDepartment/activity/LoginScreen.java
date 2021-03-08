@@ -179,7 +179,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
        /* loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200297");*/
         loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
-        loginScreenBinding.password.setText("tpbc1.200279");
+        loginScreenBinding.password.setText("test123#$");
         /*loginScreenBinding.username.setText("tpeo200279@gmail.com");
         loginScreenBinding.password.setText("tpeo200279");*/
     }
@@ -340,7 +340,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         if (response.equals("LOGIN_FAILED")) {
                             //loginScreenBinding.progressBar.setVisibility(View.GONE);
                             //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
-                            Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.invalid_username_or_password));
+                            Utils.showAlert(this,loginResponse.getString("MESSAGE") );
                         }
                     }
                 }

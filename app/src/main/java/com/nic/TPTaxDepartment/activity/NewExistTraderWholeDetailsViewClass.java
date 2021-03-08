@@ -356,7 +356,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
     public JSONObject traderDocumentParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersRentLeaseAgrement");
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersRentLeaseAgrement");
         dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
         return dataSet;
     }
@@ -372,7 +372,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
     public JSONObject traderImageParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersShopImage");
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersShopImage");
         dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
         return dataSet;
     }
@@ -398,10 +398,15 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                     if (status.equalsIgnoreCase("SUCCESS") ) {
                         JSONObject jsonObject1 = new JSONObject();
                         jsonObject1=jsonObject.getJSONObject("DATA");
+                        if(jsonObject1.getString("rentleaseagrement_available").equals("Y")) {
                             DocumentString = jsonObject1.getString("rentleaseagrement");
                             Log.d("TraderDocument", "" + jsonObject);
 
                             viewDocument();
+                        }
+                        else {
+                            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_RECORD_FOUND));
+                        }
 
 
                     }

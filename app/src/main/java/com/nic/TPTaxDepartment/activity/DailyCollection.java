@@ -53,8 +53,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     private DailyCollectionBinding dailyCollectionBinding;
     private PrefManager prefManager;
-    private static TextView date;
+    //private static TextView date;
     ArrayList<TPtaxModel> collectionList;
+    ArrayList<TPtaxModel> yearcollectionList;
     ArrayList<CommonModel> finYear;
     HashMap<String,String> spinnerMapFinYear;
     ArrayAdapter<String> finYearArray;
@@ -73,7 +74,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
 
         prefManager = new PrefManager(this);
-        date = dailyCollectionBinding.date;
+        //date = dailyCollectionBinding.date;
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),1);
         dailyCollectionBinding.dailyCollectionRecycler.setLayoutManager(mLayoutManager);
         dailyCollectionBinding.dailyCollectionRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -86,11 +87,12 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
-        date.setText(context.getResources().getString(R.string.select_Date));
+        dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_Date));
 
         dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
         dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
         dailyCollectionBinding.yearVice.setChecked(true);
+        flag=true;
         dailyCollectionBinding.daily.setChecked(false);
         dailyCollectionBinding.daily.setOnClickListener(this::onClick);
         dailyCollectionBinding.yearVice.setOnClickListener(this::onClick);
@@ -105,6 +107,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
      private void LoadDailyCollectionList() throws JSONException {
          collectionList = new ArrayList<TPtaxModel>();
+/*
         for (int i = 0; i < 6; i++) {
             if(i==0){
                 TPtaxModel Detail = new TPtaxModel();
@@ -141,7 +144,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
             }
-            /*else if(i==5){
+            */
+/*else if(i==5){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("4");
                 Detail.setTaxTypeName("Professional Tax");
@@ -155,7 +159,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
             }
-*/
+*//*
+
             else {
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("6");
@@ -164,7 +169,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 collectionList.add(Detail);
             }
         }
-       /* JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
+*/
+
+         JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
         if(jsonarray != null && jsonarray.length() >0) {
             for (int i = 0; i < jsonarray.length(); i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -178,9 +185,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection(collectionreceived);
                 collectionList.add(Detail);
             }
-        }*/
+        }
 
-         Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeName().compareTo(rhs.getTaxTypeName()));
+         Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeName().toLowerCase().compareTo(rhs.getTaxTypeName().toLowerCase()));
          if(collectionList != null && collectionList.size() >0) {
              DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,collectionList);
              adapter.notifyDataSetChanged();
@@ -194,6 +201,104 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
 
     }
+
+    private void LoadYearCollectionList() throws JSONException {
+        yearcollectionList = new ArrayList<TPtaxModel>();
+/*
+        for (int i = 0; i < 6; i++) {
+            if(i==0){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("1");
+                Detail.setTaxTypeName("Property Tax");
+                Detail.setTaxCollection("10050.00");
+                collectionList.add(Detail);
+            }
+            else if(i==1){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("2");
+                Detail.setTaxTypeName("Water Tax");
+                Detail.setTaxCollection("");
+                collectionList.add(Detail);
+            }
+            else if(i==2){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("3");
+                Detail.setTaxTypeName("SWM Tax");
+                Detail.setTaxCollection("70050.00");
+                collectionList.add(Detail);
+            }
+            else if(i==3){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("4");
+                Detail.setTaxTypeName("Professional Tax");
+                Detail.setTaxCollection("780050.00");
+                collectionList.add(Detail);
+            }
+            else if(i==4){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("5");
+                Detail.setTaxTypeName("Non Tax");
+                Detail.setTaxCollection("10050.00");
+                collectionList.add(Detail);
+            }
+            */
+/*else if(i==5){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("4");
+                Detail.setTaxTypeName("Professional Tax");
+                Detail.setTaxCollection("780050.00");
+                collectionList.add(Detail);
+            }
+            else if(i==6){
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("5");
+                Detail.setTaxTypeName("Non Tax");
+                Detail.setTaxCollection("10050.00");
+                collectionList.add(Detail);
+            }
+*//*
+
+            else {
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId("6");
+                Detail.setTaxTypeName("Trade License Tax");
+                Detail.setTaxCollection("36050.00");
+                collectionList.add(Detail);
+            }
+        }
+*/
+
+        JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
+        if(jsonarray != null && jsonarray.length() >0) {
+            for (int i = 0; i < jsonarray.length(); i++) {
+                JSONObject jsonobject = jsonarray.getJSONObject(i);
+                String taxtypeid = Utils.NotNullString(jsonobject.getString("taxtypeid"));
+                String taxtypedesc_en =Utils.NotNullString(jsonobject.getString("taxtypedesc_en"));
+                String collectionreceived = Utils.NotNullString(jsonobject.getString("collectionreceived"));
+
+                TPtaxModel Detail = new TPtaxModel();
+                Detail.setTaxTypeId(taxtypeid);
+                Detail.setTaxTypeName(taxtypedesc_en);
+                Detail.setTaxCollection(collectionreceived);
+                yearcollectionList.add(Detail);
+            }
+        }
+
+        Collections.sort(yearcollectionList, (lhs, rhs) -> lhs.getTaxTypeName().compareTo(rhs.getTaxTypeName()));
+        if(yearcollectionList != null && yearcollectionList.size() >0) {
+            DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,yearcollectionList);
+            adapter.notifyDataSetChanged();
+            dailyCollectionBinding.dailyCollectionRecycler.setAdapter(adapter);
+            dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.VISIBLE);
+            dailyCollectionBinding.noDataFound.setVisibility(View.GONE);
+        }else {
+            dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
+            dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
+        }
+
+
+    }
+
 
 
     public void showDatePickerDialog() {
@@ -209,19 +314,22 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 myCalendar.set(Calendar.MONTH, monthOfYear);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
                 updateLabel();
-                /*if(Utils.isOnline()){
+                if(Utils.isOnline()){
                 getDailyCollection();
             }
             else {
-                Utils.showAlert(getActivity(),"No Network Connection");
-            }*/
+                Utils.showAlert(DailyCollection.this,"No Network Connection");
+            }
             }
 
         };
 
-        new DatePickerDialog(DailyCollection.this, date, myCalendar
+        DatePickerDialog datePickerDialog=new DatePickerDialog(this, date, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                myCalendar.get(Calendar.DAY_OF_MONTH));
+        //following line to restrict future date selection
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show();
 
     }
 
@@ -244,7 +352,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                     break;
                 }
             }
-/*
             if(selectedFinId!=null&&!selectedFinName.equals("Select Financial Year")){
                 if(Utils.isOnline()) {
                     getYearCollection();
@@ -253,7 +360,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                     Utils.showAlert(DailyCollection.this,"No Network Connection");
                 }
             }
-*/
         }
 
     }
@@ -317,7 +423,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         }
         sdf.applyPattern(NEW_FORMAT);
         newDateString = sdf.format(d);
-        date.setText(newDateString);
+        //date.setText(newDateString);
         return  newDateString;
     }
 
@@ -350,13 +456,13 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         JSONObject data = new JSONObject();
         if(flag) {
-            data.put(AppConstant.KEY_SERVICE_ID, "TaxYearCollection");
-            data.put(AppConstant.COLLECTION_YEAR, selectedFinId);
+            data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollectionYear");
+            data.put(AppConstant.COLLECTION_YEAR, selectedFinName);
             Log.d("YearCollectionRequest", "" + data);
         }
         else {
             data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollection");
-            data.put(AppConstant.COLLECTION_DATE, date.getText().toString());
+            data.put(AppConstant.COLLECTION_DATE, dailyCollectionBinding.date.getText().toString());
             Log.d("DailyCollectionRequest", "" + data);
         }
         return data;

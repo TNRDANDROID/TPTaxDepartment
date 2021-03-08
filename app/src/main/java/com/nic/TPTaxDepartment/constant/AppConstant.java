@@ -91,7 +91,7 @@ public class AppConstant {
     public static String PAYMENT_STATUS="payment_status";
     public static String ATTACHMENT_FILES="attachment_files";
 
-    public static String COLLECTION_DATE = "collection_date";
+    public static String COLLECTION_DATE = "collectiondate";
     public static String COLLECTION_YEAR = "collection_year";
     public static String TAX_TYPE_ID = "taxtypeid";
     public static String TAX_TYPE_DESC_EN = "taxtypedesc_en";
