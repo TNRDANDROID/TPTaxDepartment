@@ -51,7 +51,7 @@ public class SplashScreen extends AppCompatActivity implements
 //                showSignInScreen();
 
             }
-        } else {checkAppVersion();
+        } else {
 //            showSignInScreen();
         }
 
