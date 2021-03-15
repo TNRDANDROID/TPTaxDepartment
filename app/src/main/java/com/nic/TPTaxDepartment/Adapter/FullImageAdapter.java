@@ -94,7 +94,8 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
             @Override
             public void onClick(View view) {
                 if(key.equals("FieldVisit")){
-                    Dashboard.db.delete(DBHelper.CAPTURED_PHOTO, "id" + "=?", new String[]{imagePreviewlistvalues.get(position).getField_visit_img_id()});
+                    Dashboard.db.delete(DBHelper.CAPTURED_PHOTO, "id" + "=?"+" and data_ref_id" + "=?",
+                            new String[]{imagePreviewlistvalues.get(position).getField_visit_img_id(),imagePreviewlistvalues.get(position).getData_ref_id()});
                     imagePreviewlistvalues.remove(position);
                     notifyDataSetChanged();
                 }else if(key.equals("NewTradeLicence")){

@@ -60,6 +60,8 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
         context=this;
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         prefManager = new PrefManager(this);
 
         assessmentStatusBinding.recycler.setHasFixedSize(true);
@@ -361,18 +363,11 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                     }
                     }
 
-                } else {
+                } else if(status.equalsIgnoreCase("FAILD")){
+                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                }else {
                     Utils.showAlert(this,context.getResources().getString(R.string.no_RECORD_FOUND));
                 }
-//                String authKey = responseDecryptedSchemeKey.toString();
-//                int maxLogSize = 4000;
-//                for(int i = 0; i <= authKey.length() / maxLogSize; i++) {
-//                    int start = i * maxLogSize;
-//                    int end = (i+1) * maxLogSize;
-//                    end = end > authKey.length() ? authKey.length() : end;
-//                    Log.v("to_send", authKey.substring(start, end));
-//                }
-//                Log.d("WorkListResp", "" + responseDecryptedSchemeKey);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -389,7 +384,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
 

@@ -101,6 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "loc_lat TEXT," +
                 "loc_long TEXT," +
                 "request_id TEXT," +
+                "data_ref_id TEXT," +
                 "field_image blob,"+
                 "pending_flag INTEGER,"+
                 "description TEXT)");

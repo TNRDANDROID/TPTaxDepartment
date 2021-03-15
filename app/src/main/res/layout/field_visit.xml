@@ -10,14 +10,14 @@
             type="com.nic.TPTaxDepartment.activity.FieldVisit" />
     </data>
 
-   <androidx.coordinatorlayout.widget.CoordinatorLayout
+   <RelativeLayout
        android:layout_width="match_parent"
        android:layout_height="match_parent">
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical">
 
 
@@ -710,7 +710,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginBottom="30dp"
             android:id="@+id/historyLayout">
             <RelativeLayout
@@ -758,7 +758,7 @@
                 android:id = "@+id/swipeRefresh"
                 android:layout_below="@+id/header_layout2"
                 android:layout_width = "match_parent"
-                android:layout_marginTop="-20dp"
+                android:layout_marginTop="-10dp"
                 android:layout_height = "match_parent">
                 <se.emilsjolander.stickylistheaders.StickyListHeadersListView
                     android:id="@+id/stickyList"
@@ -790,5 +790,5 @@
             </RelativeLayout>
 
         </RelativeLayout>
-   </androidx.coordinatorlayout.widget.CoordinatorLayout>
+   </RelativeLayout>
 </layout>

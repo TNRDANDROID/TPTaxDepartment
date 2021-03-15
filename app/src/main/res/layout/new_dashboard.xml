@@ -56,7 +56,7 @@
                             android:layout_marginLeft="@dimen/_10sdp"
                             android:background="@drawable/back"
                             android:backgroundTint="@android:color/white"
-                            android:onClick="@{()-> activity.onBackPressed()}" />
+                            android:onClick="@{()-> activity.OnBackPressed()}" />
 
 
 

@@ -73,6 +73,12 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
             holder.hide_details_icon = (ImageView) convertView.findViewById(R.id.hide_details_icon);
             holder.details_view_layout = (RelativeLayout) convertView.findViewById(R.id.details_view_layout);
             holder.content2 = (RelativeLayout) convertView.findViewById(R.id.content2);
+            holder.plot_area = (TextView) convertView.findViewById(R.id.plot_area);
+            holder.buildage = (TextView) convertView.findViewById(R.id.buildage);
+            holder.buildusage = (TextView) convertView.findViewById(R.id.buildusage);
+            holder.buildstructure = (TextView) convertView.findViewById(R.id.buildstructure);
+            holder.location = (TextView) convertView.findViewById(R.id.location);
+            holder.door_no = (TextView) convertView.findViewById(R.id.door_no);
             convertView.setTag(holder);
         } else {
             holder = (FieldVisitHistoryAdapter.ViewHolder) convertView.getTag();
@@ -89,12 +95,27 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
             holder.ward_name_value.setText(historyList.get(position).getWardname());
             holder.remarks_value.setText(historyList.get(position).getRemark());
             holder.street_name_value.setText(historyList.get(position).getStreetname());
+            holder.plot_area.setText(historyList.get(position).getPlotarea());
+            holder.buildage.setText(historyList.get(position).getBuildage());
+            holder.buildusage.setText(historyList.get(position).getBuildusage());
+            holder.buildstructure.setText(historyList.get(position).getBuildstructure());
+            holder.location.setText(historyList.get(position).getTaxlocation());
+            holder.door_no.setText(historyList.get(position).getDoorno());
+
+            if(historyList.get(position).getField_visit_image_status().equals("Y")){
+                holder.image_list.setVisibility(View.VISIBLE);
+            }else {
+                holder.image_list.setVisibility(View.GONE);
+            }
+
 
             holder.image_list.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((FieldVisit)activity).viewImageScreen(AppConstant.SAMPLE_IMAGE);
-//                    ((FieldVisit)activity).getFieldVisitImage();
+//                    ((FieldVisit)activity).viewImageScreen(AppConstant.SAMPLE_IMAGE);
+                    ((FieldVisit)activity).getFieldVisitImage(historyList.get(position).getServiceid()
+                            ,historyList.get(position).getTaxTypeId()
+                            ,historyList.get(position).getData_ref_id());
                 }
             });
             holder.content2.setOnClickListener(new View.OnClickListener() {
@@ -153,7 +174,8 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
         TextView text;
     }
     class ViewHolder {
-        TextView requestId, taxtypeValue, status_filed,ward_name_value,street_name_value,remarks_value,nameValue;
+        TextView requestId, taxtypeValue, status_filed,ward_name_value,street_name_value,remarks_value,nameValue,
+                plot_area,buildage,buildusage,buildstructure,location,door_no;
         ImageView image_list,extend_view_icon,hide_details_icon;
         RelativeLayout details_view_layout,content2;
     }

@@ -194,6 +194,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         date = newTradeLicenceScreenBinding.date;
         newTradeLicenceScreenBinding.date.setText(getApplicationContext().getResources().getString(R.string.select_Date));
         animation   =    AnimationUtils.loadAnimation(this, R.anim.slide_in);
@@ -1117,21 +1119,22 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     private void LoadLicenceTypeSpinner() throws JSONException {
         traderLicenseTypeList = new ArrayList<CommonModel>();
-        JSONArray jsonarray=new JSONArray(prefManager.getTraderLicenseTypeList());
-        if(jsonarray != null && jsonarray.length() >0) {
-            for (int i = 0; i < jsonarray.length(); i++) {
-                JSONObject jsonobject = jsonarray.getJSONObject(i);
-                String traders_license_type_id = jsonobject.getString("traders_license_type_id");
-                String traders_license_type_name = jsonobject.getString("traders_license_type_name");
-                CommonModel Detail = new CommonModel();
-                Detail.setTraders_license_type_id(traders_license_type_id);
-                Detail.setTraders_license_type_name(traders_license_type_name);
-                traderLicenseTypeList.add(Detail);
+        if(prefManager.getTraderLicenseTypeList() != null && prefManager.getTraderLicenseTypeList().length() >0) {
+            JSONArray jsonarray = new JSONArray(prefManager.getTraderLicenseTypeList());
+            if (jsonarray != null && jsonarray.length() > 0) {
+                for (int i = 0; i < jsonarray.length(); i++) {
+                    JSONObject jsonobject = jsonarray.getJSONObject(i);
+                    String traders_license_type_id = jsonobject.getString("traders_license_type_id");
+                    String traders_license_type_name = jsonobject.getString("traders_license_type_name");
+                    CommonModel Detail = new CommonModel();
+                    Detail.setTraders_license_type_id(traders_license_type_id);
+                    Detail.setTraders_license_type_name(traders_license_type_name);
+                    traderLicenseTypeList.add(Detail);
+                }
+                Collections.sort(traderLicenseTypeList, (lhs, rhs) -> lhs.getTraders_license_type_name().toLowerCase().compareTo(rhs.getTraders_license_type_name().toLowerCase()));
             }
-            Collections.sort(traderLicenseTypeList, (lhs, rhs) -> lhs.getTraders_license_type_name().toLowerCase().compareTo(rhs.getTraders_license_type_name().toLowerCase()));
+
         }
-
-
         if(traderLicenseTypeList != null && traderLicenseTypeList.size() >0) {
 
             spinnerMapLicenceType = new HashMap<String, String>();
@@ -1408,7 +1411,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
     }
 
     public void getNewTraderDetails() {
@@ -2538,6 +2541,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void openFile() {
+        pageNumber = 0;
         byte[] decodedString = new byte[0];
         try {
             //byte[] name = java.util.Base64.getEncoder().encode(fileString.getBytes());

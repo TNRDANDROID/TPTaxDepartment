@@ -99,6 +99,7 @@ public class TPtaxModel  implements Serializable {
     public String paymentdate;
     public String paymentStatus;
     public String request_id;
+    public String data_ref_id;
     public String field_visit_img_id;
     public Bitmap tradeBitmapImage;
     public byte[] imageByte;
@@ -115,6 +116,8 @@ public class TPtaxModel  implements Serializable {
     public String remark;
     public String status;
     public String fieldVisitImage;
+    public String field_visit_image_status;
+    public String serviceid;
     public String fieldVisitDate;
 
     /////////////
@@ -128,6 +131,85 @@ public class TPtaxModel  implements Serializable {
     public String street_name_ta;
     public String ward_name_en;
     public String ward_name_ta;
+
+    public String plotarea;
+    public String buildage;
+    public String buildusage;
+    public String buildstructure;
+    public String taxlocation;
+
+
+    public String getPlotarea() {
+        return plotarea;
+    }
+
+    public TPtaxModel setPlotarea(String plotarea) {
+        this.plotarea = plotarea;
+        return this;
+    }
+
+    public String getBuildage() {
+        return buildage;
+    }
+
+    public TPtaxModel setBuildage(String buildage) {
+        this.buildage = buildage;
+        return this;
+    }
+
+    public String getBuildusage() {
+        return buildusage;
+    }
+
+    public TPtaxModel setBuildusage(String buildusage) {
+        this.buildusage = buildusage;
+        return this;
+    }
+
+    public String getBuildstructure() {
+        return buildstructure;
+    }
+
+    public TPtaxModel setBuildstructure(String buildstructure) {
+        this.buildstructure = buildstructure;
+        return this;
+    }
+
+    public String getTaxlocation() {
+        return taxlocation;
+    }
+
+    public TPtaxModel setTaxlocation(String taxlocation) {
+        this.taxlocation = taxlocation;
+        return this;
+    }
+
+    public String getServiceid() {
+        return serviceid;
+    }
+
+    public TPtaxModel setServiceid(String serviceid) {
+        this.serviceid = serviceid;
+        return this;
+    }
+
+    public String getField_visit_image_status() {
+        return field_visit_image_status;
+    }
+
+    public TPtaxModel setField_visit_image_status(String field_visit_image_status) {
+        this.field_visit_image_status = field_visit_image_status;
+        return this;
+    }
+
+    public String getData_ref_id() {
+        return data_ref_id;
+    }
+
+    public TPtaxModel setData_ref_id(String data_ref_id) {
+        this.data_ref_id = data_ref_id;
+        return this;
+    }
 
     public String getAnnual_sale_production_amount() {
         return annual_sale_production_amount;

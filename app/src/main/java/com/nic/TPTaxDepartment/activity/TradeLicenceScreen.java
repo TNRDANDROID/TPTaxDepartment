@@ -30,6 +30,7 @@ public class TradeLicenceScreen extends AppCompatActivity {
         tradeLicenceScreenBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         tradeLicenceScreenBinding.newcard.setTranslationX(800);
         tradeLicenceScreenBinding.existCard.setTranslationX(800);

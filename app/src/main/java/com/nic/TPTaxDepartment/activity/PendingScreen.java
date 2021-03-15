@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,6 +53,7 @@ import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.Support.ProgressHUD;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
+import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -100,6 +102,9 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         setContentView(R.layout.pending_screen);
         mContext = this;
         activity = this;
+        WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
+        windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
         dataset = new JSONObject();
         intializeUI();
     }
@@ -286,7 +291,8 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 } while (cursor.moveToNext());
             }
         }
-        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().toLowerCase().compareTo(rhs.getOwnername().toLowerCase()));
+        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getRequest_id().compareTo(rhs.getRequest_id()));
+//        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().toLowerCase().compareTo(rhs.getOwnername().toLowerCase()));
         filterList();
       /*  if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {
             no_data_fond_layout.setVisibility(View.GONE);
@@ -510,7 +516,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.try_after_some_time));
 
     }
 
@@ -622,15 +628,16 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
     public JSONObject pendingFieldJsonParams() throws JSONException {
         String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), dataset.toString());
+        Log.d("saving", "" + dataset.toString());
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("saving", "" + authKey);
+
         Log.d("dataSet", "" + dataSet);
         return dataSet;
     }
 
-    public void jsonDatasetValues(String request_id, int pos1) {
+    public void jsonDatasetValues(String request_id, String data_ref_id, int pos1) {
         pos = pos1;
         no_data_fond_layout.setVisibility(View.GONE);
         newTraderRecycler.setVisibility(View.GONE);
@@ -639,12 +646,12 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         dbData.open();
 
 //        commonModels.addAll(dbData.selectPendingImage(request_id));
-        commonModels = new ArrayList<>(dbData.selectFieldVisitImage(request_id));
+        commonModels = new ArrayList<>(dbData.selectFieldVisitImage(request_id,data_ref_id));
 
         for (int i = 0; i < commonModels.size(); i++) {
             JSONObject imageArray = new JSONObject();
             try {
-                if (request_id.equals(commonModels.get(i).getRequest_id())) {
+                if (request_id.equals(commonModels.get(i).getRequest_id()) && data_ref_id.equals(commonModels.get(i).getData_ref_id())) {
                     //imageArray.put(i);
                     imageArray.put("lat", commonModels.get(i).getLatitude());
                     imageArray.put("long", commonModels.get(i).getLongitude());
@@ -690,9 +697,10 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
         return image_str;
     }
 
-    public void showImageList(String requestid) {
+    public void showImageList(String requestid,String data_ref_id) {
         Intent intent = new Intent(PendingScreen.this, FullImageActivity.class);
         intent.putExtra("request_id", requestid);
+        intent.putExtra("data_ref_id", data_ref_id);
         intent.putExtra("key", "FieldVisit");
         startActivityForResult(intent, 1);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
@@ -716,16 +724,16 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             right.setBackground(activity.getResources().getDrawable(R.drawable.right_bg));
             newTrader.setTextColor(activity.getResources().getColor(R.color.white));
             fieldVisit.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
-            fieldVisitRecycler.setVisibility(View.GONE);
-            newTraderRecycler.setVisibility(View.VISIBLE);
+          /*  fieldVisitRecycler.setVisibility(View.GONE);
+            newTraderRecycler.setVisibility(View.VISIBLE);*/
         } else {
             loadFieldVisitListPending();
             left.setBackground(activity.getResources().getDrawable(R.drawable.left_bg));
             right.setBackground(activity.getResources().getDrawable(R.drawable.right_selected_bg));
             newTrader.setTextColor(activity.getResources().getColor(R.color.colorPrimary));
             fieldVisit.setTextColor(activity.getResources().getColor(R.color.white));
-            newTraderRecycler.setVisibility(View.GONE);
-            fieldVisitRecycler.setVisibility(View.VISIBLE);
+          /*  newTraderRecycler.setVisibility(View.GONE);
+            fieldVisitRecycler.setVisibility(View.VISIBLE);*/
 
         }
     }
@@ -958,5 +966,13 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
             return null;
         }
     }
+/*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(PendingScreen.this, "onResume invoked", Toast.LENGTH_SHORT).show();
+        setAdapterField("Satisfied");
+    }
+*/
 
 }

@@ -32,6 +32,7 @@ import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
+import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 
 public class FullImageActivity extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener {
     private FullImageRecyclerBinding fullImageRecyclerBinding;
-    public String tradecode="",status="",mobileNo="",request_id="",key="",tradeImage="";
+    public String tradecode="",status="",mobileNo="",request_id="",data_ref_id="",key="",tradeImage="";
     private FullImageAdapter fullImageAdapter;
     private PrefManager prefManager;
     private static  ArrayList<TPtaxModel> activityImage = new ArrayList<>();
@@ -53,7 +54,9 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
         fullImageRecyclerBinding = DataBindingUtil.setContentView(this, R.layout.full_image_recycler);
         fullImageRecyclerBinding.setActivity(this);
         prefManager = new PrefManager(this);
-
+        WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
+        windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
         key = getIntent().getStringExtra("key");
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),2);
@@ -67,6 +70,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
 
         if(key.equals("FieldVisit")){
             request_id = getIntent().getStringExtra("request_id");
+            data_ref_id = getIntent().getStringExtra("data_ref_id");
             new fetchFieldVisitImagetask().execute();
         }else  if(key.equals("ExistTradeViewClass")){
             tradeImage = getIntent().getStringExtra(AppConstant.TRADE_IMAGE);
@@ -188,7 +192,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
 
             dbData.open();
             activityImage = new ArrayList<>();
-            activityImage = dbData.selectFieldVisitImage(request_id);
+            activityImage = dbData.selectFieldVisitImage(request_id,data_ref_id);
             Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
             return activityImage;
         }
@@ -355,7 +359,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
     }
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.try_after_some_time));
 
     }
 }

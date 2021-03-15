@@ -72,6 +72,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         context=this;
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         prefManager = new PrefManager(this);
         //date = dailyCollectionBinding.date;
@@ -98,9 +99,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         dailyCollectionBinding.yearVice.setOnClickListener(this::onClick);
 
         try {
-            LoadDailyCollectionList();
+//            LoadDailyCollectionList();
             LoadFinYearSpinner();
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -354,7 +355,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             }
             if(selectedFinId!=null&&!selectedFinName.equals("Select Financial Year")){
                 if(Utils.isOnline()) {
-                    getYearCollection();
+                    getYearlyCollection();
                 }
                 else {
                     Utils.showAlert(DailyCollection.this,"No Network Connection");
@@ -434,7 +435,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             e.printStackTrace();
         }
     }
-    public  void getYearCollection() {
+    public  void getYearlyCollection() {
         try {
             new ApiService(this).makeJSONObjectRequest("YearCollection", Api.Method.POST, UrlGenerator.TradersUrl(), dailyCollectionJsonParams(), "not cache", this);
         } catch (JSONException e) {
@@ -448,7 +449,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("DailyCollectionReq", "" + authKey);
+        Log.d("DailyCollectionReq", "" + dataSet);
         return dataSet;
     }
 
@@ -476,9 +477,10 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
             if ("DailyCollection".equals(urlType) && responseObj != null) {
                 String key =Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
+                Log.d("DailyCollection", "" + responseObj);
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
-                Log.d("AssessmentStatus", "" + jsonObject);
+                Log.d("DailyCollection", "" + jsonObject);
                 String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
@@ -487,7 +489,9 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                         LoadDailyCollectionList();
                     }
 
-                } else {
+                } else if(status.equalsIgnoreCase("FAILD")){
+                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                }else {
                     dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
                     dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
                 }
@@ -497,7 +501,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 String key =Utils.NotNullString( responseObj.getString(AppConstant.ENCODE_DATA));
                 String responseDecryptedSchemeKey = Utils.decrypt(prefManager.getUserPassKey(), key);
                 JSONObject jsonObject = new JSONObject(responseDecryptedSchemeKey);
-                Log.d("AssessmentStatus", "" + jsonObject);
+                Log.d("DailyCollection", "" + responseObj);
+                Log.d("DailyCollection", "" + jsonObject);
                 String status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
@@ -506,6 +511,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                         LoadDailyCollectionList();
                     }
 
+                }else if(status.equalsIgnoreCase("FAILD")){
+                    Utils.showAlert(this, jsonObject.getString("MESSAGE"));
                 } else {
                     dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.GONE);
                     dailyCollectionBinding.noDataFound.setVisibility(View.VISIBLE);
@@ -520,7 +527,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
 
@@ -546,6 +553,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 dailyCollectionBinding.daily.setChecked(false);
                 dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
                 dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
+                dailyCollectionBinding.finYear.setSelection(0);
+                dailyCollectionBinding.dailyCollectionRecycler.setAdapter(null);
                 flag=true;
                 break;
 
@@ -554,6 +563,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 dailyCollectionBinding.daily.setChecked(true);
                 dailyCollectionBinding.dateLayout.setVisibility(View.VISIBLE);
                 dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
+                dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_Date));
+                dailyCollectionBinding.dailyCollectionRecycler.setAdapter(null);
                 flag=false;
                 break;
         }

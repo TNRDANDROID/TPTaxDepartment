@@ -76,6 +76,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         context=this;
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         prefManager = new PrefManager(this);
         getTradersList();
         LoadWardSpinner();
@@ -252,6 +254,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                     tradeCodeSpArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
                     tradeCodeSpArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeLicenceBinding.tradeCodeSpinner.setAdapter(tradeCodeSpArray);
+                    existingTradeLicenceBinding.tradeCodeSpinner.setPaddingRelative(10,5,10,5);
                     existingTradeLicenceBinding.tradeCodeSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
                     selectedTrdeCodeDetailsID = "0";
                     selectedTradeCode = "";
@@ -281,6 +284,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     public JSONObject tradersJsonParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersList");
+        Log.d("TradeLicenseTradersList", "" + dataSet);
         return dataSet;
     }
     private void LoadStreetSpinner(String selectedWardId)  {
@@ -795,7 +799,7 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
     }
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
     public Bitmap StringToBitMap(String encodedString){

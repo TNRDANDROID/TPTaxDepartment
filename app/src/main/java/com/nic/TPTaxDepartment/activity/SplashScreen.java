@@ -41,6 +41,8 @@ public class SplashScreen extends AppCompatActivity implements
         splashScreenBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         prefManager = new PrefManager(this);
         if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("production")) {
             if (Utils.isOnline()) {
@@ -49,7 +51,7 @@ public class SplashScreen extends AppCompatActivity implements
 //                showSignInScreen();
 
             }
-        } else {
+        } else {checkAppVersion();
 //            showSignInScreen();
         }
 
@@ -88,23 +90,22 @@ public class SplashScreen extends AppCompatActivity implements
             }
         });
 */
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showSignInScreen();
-            }
-        }, 2000);
-
+        showSignInScreen();
 
     }
 
 
     private void showSignInScreen() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(SplashScreen.this, LoginScreen.class);
+                startActivity(i);
+                finish();
+                overridePendingTransition(R.anim.fleft, R.anim.fhelper);
+            }
+        }, 2000);
 
-        Intent i = new Intent(SplashScreen.this, LoginScreen.class);
-        startActivity(i);
-        finish();
-        overridePendingTransition(R.anim.fleft, R.anim.fhelper);
     }
 
     private void checkAppVersion() {

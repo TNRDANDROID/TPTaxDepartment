@@ -68,7 +68,7 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             holder.code.setText(traders.get(position).getRequest_id());
             holder.taxType.setText(traders.get(position).getTaxtypedesc_en());
             holder.current_status.setText(traders.get(position).getFIELD_VISIT_STATUS());
-            holder.image_list_icon.setImageBitmap(getImage(traders.get(position).getRequest_id()));
+            holder.image_list_icon.setImageBitmap(getImage(traders.get(position).getRequest_id(),traders.get(position).getData_ref_id()));
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -94,14 +94,14 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
             holder.upload.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((PendingScreen)activity).jsonDatasetValues(traders.get(position).getRequest_id(),position);
+                    ((PendingScreen)activity).jsonDatasetValues(traders.get(position).getRequest_id(),traders.get(position).getData_ref_id(),position);
                 }
             });
 
             holder.image_list_icon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    ((PendingScreen)activity).showImageList(traders.get(position).getRequest_id());
+                    ((PendingScreen)activity).showImageList(traders.get(position).getRequest_id(),traders.get(position).getData_ref_id());
                 }
             });
 
@@ -142,7 +142,7 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
 
     public void deleteRow(int position){
         db.delete(DBHelper.SAVE_FIELD_VISIT, "request_id" + "=?", new String[]{traders.get(position).getRequest_id()});
-        db.delete(DBHelper.CAPTURED_PHOTO, "request_id" + "=?", new String[]{traders.get(position).getRequest_id()});
+        db.delete(DBHelper.CAPTURED_PHOTO, "request_id" + "=?"+ " and  data_ref_id" + "=?", new String[]{traders.get(position).getData_ref_id()});
         traders.remove(position);
         notifyDataSetChanged();
         if(traders.size()>0){
@@ -153,12 +153,12 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
     }
 
 
-    public Bitmap getImage(String request_id) {
+    public Bitmap getImage(String request_id,String data_ref_id) {
         Bitmap decodedByte = null;
         db.isOpen();
         ArrayList<TPtaxModel> cards = new ArrayList<>();
         Cursor cursor = null;
-        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id;
+        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id+ " AND data_ref_id ="+data_ref_id ;
 
         try {
             cursor=db.rawQuery(sql,null,null);

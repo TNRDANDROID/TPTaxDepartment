@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/document_layout"
-            android:layout_marginBottom="40dp"
             android:visibility="gone">
             <RelativeLayout
                 android:id="@+id/header2_layout"
@@ -75,6 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/header2_layout"
+                android:layout_above="@+id/pageNum"
                 android:id="@+id/documentViewer"/>
             <TextView
                 android:id="@+id/pageNum"
@@ -83,7 +83,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:text="0"
-                android:layout_marginBottom="40dp"
+                android:padding="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/grey2"
                 android:textSize="13sp"
@@ -1118,7 +1118,7 @@
                                 android:layout_marginTop="10dp"
                                 android:textSize="16sp"
                                 android:id="@+id/viewDoc"
-                                android:onClick="@{()-> activity.viewDocument()}"
+                                android:onClick="@{()-> activity.getFieldDocument()}"
                                 android:layout_marginRight="20dp"
                                 android:drawablePadding="10dp"
                                 android:drawableLeft="@drawable/ic_document"
@@ -2360,7 +2360,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="40dp"
                 android:background="@drawable/background">
 
 

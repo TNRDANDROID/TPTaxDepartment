@@ -36,6 +36,8 @@ public class ExistingTradeSubmit extends AppCompatActivity {
         existTradeSubmitBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         prefManager = new PrefManager(this);
         tradersList = new ArrayList<TPtaxModel>();
         position = getIntent().getIntExtra("position",0);

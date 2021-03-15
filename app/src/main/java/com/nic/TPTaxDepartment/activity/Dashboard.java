@@ -33,7 +33,6 @@ import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
-import com.nic.TPTaxDepartment.databinding.DashboardBinding;
 import com.nic.TPTaxDepartment.databinding.NewDashboardBinding;
 import com.nic.TPTaxDepartment.dialog.MyDialog;
 import com.nic.TPTaxDepartment.model.CommonModel;
@@ -56,7 +55,6 @@ import java.util.Map;
 public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickListener, Api.ServerResponseListener {
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     private BottomAppBar bar;
-    private DashboardBinding dashboardBinding;
     private NewDashboardBinding newDashboardBinding;
     ArrayList<TPtaxModel> pendingList = new ArrayList<>();
     final Handler handler = new Handler();
@@ -72,6 +70,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     Animation animZoomin;
     Animation animZoomout;
     Context context;
+    String urlType;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +81,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         prefManager = new PrefManager(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         try {
             dbHelper = new DBHelper(this);
             db = dbHelper.getWritableDatabase();
@@ -246,6 +248,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
+    public void OnBackPressed() {
+        new MyDialog(this).exitDialog(this, context.getResources().getString(R.string.are_you_sure_you_want_to_exit), "Exit");
+
+    }
+
 
     public void closeApplication() {
         new MyDialog(this).exitDialog(this, context.getResources().getString(R.string.are_you_sure_you_want_to_Logout), "Logout");
@@ -397,18 +404,16 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("TraderLicenseTypeList", "" + authKey);
+        Log.d("TraderLicenseTypeList", "" + dataSet);
         return dataSet;
     }
 
     public JSONObject licencelistJsonParams() throws JSONException{
-
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseTypeList");
         return dataSet;
     }
     public JSONObject licenceValidityListJsonParams() throws JSONException{
-
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "OS_Finyear");
         return dataSet;
@@ -444,13 +449,14 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("MotorRange", "" + authKey);
+        Log.d("MotorRange", "" + dataSet);
         return dataSet;
     }
 
     public JSONObject motorRangeJsonParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseMotorRange");
+        Log.d("MotorRange", "" + dataSet);
         return dataSet;
     }
 
@@ -459,13 +465,14 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("GeneratorRange", "" + authKey);
+        Log.d("GeneratorRange", "" + dataSet);
         return dataSet;
     }
     public JSONObject generatorRangeJsonParams() throws JSONException{
 
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseGeneratorRange");
+        Log.d("GeneratorRange", "" + dataSet);
         return dataSet;
     }
 
@@ -474,13 +481,14 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("AnnualSaleList", "" + authKey);
+        Log.d("AnnualSaleList", "" + dataSet);
         return dataSet;
     }
 
     public JSONObject annualSaleJsonParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TraderLicenseAnnualSaleList");
+        Log.d("AnnualSaleList", "" + dataSet);
         return dataSet;
     }
 
@@ -488,7 +496,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
             JSONObject responseObj = serverResponse.getJsonResponse();
-            String urlType = serverResponse.getApi();
+             urlType = serverResponse.getApi();
             String status;
             if ("WardList".equals(urlType) && responseObj != null) {
                 status = responseObj.getString(AppConstant.KEY_STATUS);
@@ -891,17 +899,13 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                 Log.d("GeneratorRange", "" + responseObj);
             }
 
-
-
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time)+" "+urlType);
 
     }
     public int getWardCount() {

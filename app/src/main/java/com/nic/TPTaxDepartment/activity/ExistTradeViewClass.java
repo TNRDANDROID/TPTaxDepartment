@@ -212,6 +212,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         existingTradeDetailsViewNewBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         existingTradeDetailsViewNewBinding.scrollView.setNestedScrollingEnabled(true);
         date = existingTradeDetailsViewNewBinding.date;
         existingTradeDetailsViewNewBinding.date.setText(context.getResources().getString(R.string.select_Date));
@@ -321,8 +323,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         System.out.println("getAmount_range_id" + tt);
         wardFlag = false;
         LoadWardSpinner();
-        getTradeImage();
-        getFieldDocument();
+
+        /*getTradeImage();
+        getFieldDocument();*/
+
         try {
             LoadStreetSpinner(traders.get(position).getWardId(), spinnerMapStreets.get(traders.get(position).getStreetId()));
         } catch (Exception e) {
@@ -487,7 +491,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 //        setEnableToFields();
     }
 
-    private void getTradeImage() {
+    public void getTradeImage() {
         try {
             new ApiService(this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
                     traderImageJsonParams(), "not cache", this);
@@ -497,7 +501,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void getFieldDocument() {
+    public void getFieldDocument() {
         try {
             new ApiService(this).makeJSONObjectRequest("TraderDocument", Api.Method.POST, UrlGenerator.TradersUrl(),
                     traderDocumentJsonParams(), "not cache", this);
@@ -517,13 +521,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         return dataSet;
     }
 
-    public JSONObject traderDocumentParams() throws JSONException {
+    public JSONObject traderDocumentParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersRentLeaseAgrement");
-        dataSet.put("tradersdetails_id", traders.get(position).getTradersdetails_id());
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersRentLeaseAgrement");
+        dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
         return dataSet;
     }
-
     public JSONObject traderImageJsonParams() throws JSONException {
         String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
                 traderImageParams().toString());
@@ -534,10 +537,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         return dataSet;
     }
 
-    public JSONObject traderImageParams() throws JSONException {
+    public JSONObject traderImageParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradeLicenseTradersShopImage");
-        dataSet.put("tradersdetails_id", traders.get(position).getTradersdetails_id());
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersShopImage");
+        dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
         return dataSet;
     }
 
@@ -1142,6 +1145,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 */
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
         try {
@@ -1196,6 +1200,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                         JSONObject jsonObject1 = new JSONObject();
                         jsonObject1 = jsonObject.getJSONObject("DATA");
                         DocumentString = jsonObject1.getString("rentleaseagrement");
+                        viewDocument();
                         Log.d("TraderDocument", "" + jsonObject);
 
                     } else if (status.equalsIgnoreCase("FAILD")) {
@@ -1217,8 +1222,15 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     if (status.equalsIgnoreCase("SUCCESS")) {
                         JSONObject jsonObject1 = new JSONObject();
                         jsonObject1 = jsonObject.getJSONObject("DATA");
-                        TraderImageString = jsonObject1.getString("tradersshopimage");
-                        Log.d("TraderImage", "" + jsonObject);
+                        if(jsonObject1.getString("tradersshopimage_available").equals("Y")) {
+                            TraderImageString = jsonObject1.getString("tradersshopimage");
+                            showImage();
+                            Log.d("TraderImage", "" + jsonObject);
+                        }
+                        else {
+                            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_RECORD_FOUND));
+                        }
+
                     } else if (status.equalsIgnoreCase("FAILD")) {
                         Utils.showAlert(this, jsonObject.getString("MESSAGE"));
                     }
@@ -1549,7 +1561,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
     @Override
     public void OnError(VolleyError volleyError) {
-        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
+//        Utils.showAlert(this, context.getResources().getString(R.string.try_after_some_time));
 
     }
 
@@ -1628,6 +1640,24 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         }
 
 }
+
+     public void showImage(){
+         if (TraderImageString/*tradersImageList.get(tradersImagePosition).getImageByte()*/ != null &&
+                 !TraderImageString.equals("")) {
+             String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
+             Intent intent = new Intent(this, FullImageActivity.class);
+             intent.putExtra(AppConstant.TRADE_CODE, "");
+             intent.putExtra(AppConstant.MOBILE, "");
+             intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
+             intent.putExtra(AppConstant.TRADE_IMAGE,TraderImageString /*value*/);
+             intent.putExtra("key", "ExistTradeViewClass");
+             startActivity(intent);
+             overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+         } else {
+             Utils.showAlert(ExistTradeViewClass.this, context.getResources().getString(R.string.no_image_Found));
+         }
+}
+
         public void viewImageScreen() {
             if (getSaveTradeImageTable()==1) {
                 Intent intent = new Intent(this, FullImageActivity.class);
@@ -1637,18 +1667,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 intent.putExtra("key", "NewTradeLicence");
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-            }else if (TraderImageString/*tradersImageList.get(tradersImagePosition).getImageByte()*/ != null ) {
-                    String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
-                    Intent intent = new Intent(this, FullImageActivity.class);
-                    intent.putExtra(AppConstant.TRADE_CODE, "");
-                    intent.putExtra(AppConstant.MOBILE, "");
-                    intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "");
-                    intent.putExtra(AppConstant.TRADE_IMAGE,TraderImageString /*value*/);
-                    intent.putExtra("key", "ExistTradeViewClass");
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                } else {
-                    Utils.showAlert(ExistTradeViewClass.this, context.getResources().getString(R.string.no_image_Found));
+            }else {
+                getTradeImage();
                 }
     }
 
@@ -1730,7 +1750,12 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             spinnerMapAnnualSale = new HashMap<String, String>();
             spinnerMapAnnualSale.put(null, null);
             final String[] items = new String[filterAnnualSale.size() + 1];
-            items[0] = context.getResources().getString(R.string.select_AnnualSale);
+            if(selectedLicenceTypeName.equals("Industrial")) {
+                items[0] = getApplicationContext().getResources().getString(R.string.select_ProductionSale);
+            }
+            else {
+                items[0] = getApplicationContext().getResources().getString(R.string.select_AnnualSale);
+            }
             for (int i = 0; i < filterAnnualSale.size(); i++) {
                 {
                     spinnerMapAnnualSale.put(filterAnnualSale.get(i).getAnnual_id(), filterAnnualSale.get(i).getAnnual_sale());
@@ -1753,23 +1778,25 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 exp.printStackTrace();
             }
             if(!Annualflag) {
-                try {
-                    int annualPosition = annualSaleArray.getPosition(spinnerMapAnnualSale.get(traders.get(position).getAmount_range_id()));
-                    if(annualPosition >= 0){
-                        Annualflag=true;
-                        existingTradeDetailsViewNewBinding.annualSale.setSelection(annualPosition);
-                    }else {
-                        existingTradeDetailsViewNewBinding.annualSale.setAdapter(null);
+                     try {
+                        int annualPosition = annualSaleArray.getPosition(spinnerMapAnnualSale.get(traders.get(position).getAmount_range_id()));
+                        if(annualPosition >= 0){
+                            Annualflag=true;
+                            existingTradeDetailsViewNewBinding.annualSale.setSelection(annualPosition);
+                        }else {
+                            existingTradeDetailsViewNewBinding.annualSale.setAdapter(null);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
             }else {
                 existingTradeDetailsViewNewBinding.annualSale.setSelection(0);
             }
-
-
+        }else {
+            selectedAnnualId=null;
+            selectedAnnualSale="";
+            existingTradeDetailsViewNewBinding.annualSale.setAdapter(null);
         }
 
     }
@@ -1862,6 +1889,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }else {
                 existingTradeDetailsViewNewBinding.motorRangeSpinner.setSelection(0);
             }
+        }else {
+            selectedMotorId=null;
+            selectedMotorRange="";
+            existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(null);
         }
 
     }
@@ -1956,6 +1987,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }else {
                 existingTradeDetailsViewNewBinding.generatorSpinner.setSelection(0);
             }
+        }else {
+            existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(null);
+            selectedGeneratorId=null;
+            selectedGeneratorRange="";
         }
 
     }
@@ -2260,9 +2295,15 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                 if(fileString!=null && !fileString.isEmpty() && !fileString.equals("")){
                     return true;
                 }else{
-                    Utils.showAlert(this,context.getResources().getString(R.string.upload_Document));
-                    existingTradeDetailsViewNewBinding.areYouOwnerLayout.requestFocus();
-                    return false;}
+                    if(existingTradeDetailsViewNewBinding.viewDoc.getVisibility() == View.VISIBLE){
+                        return true;
+                    }else {
+                        Utils.showAlert(this,context.getResources().getString(R.string.upload_Document));
+                        existingTradeDetailsViewNewBinding.areYouOwnerLayout.requestFocus();
+                        return false;
+                    }
+
+                   }
             }
 
         }

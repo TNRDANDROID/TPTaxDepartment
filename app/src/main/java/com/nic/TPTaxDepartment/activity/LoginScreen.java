@@ -5,9 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,6 +22,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
@@ -72,8 +76,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     public LoginScreenBinding loginScreenBinding;
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
     Animation stb2;
+    String android_id="";
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,13 +95,20 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         //loginScreenBinding.scrollView.setVisibility(View.GONE);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
+
         loginScreenBinding.scrollView.setVerticalScrollBarEnabled(false);
         loginScreenBinding.scrollView.isSmoothScrollingEnabled();
-        Utils.setLanguage(loginScreenBinding.username,"en","USA");
-        Utils.setLanguage(loginScreenBinding.password,"en","USA");
+        if (Build.VERSION.SDK_INT >= 24) {
+            Utils.setLanguage(loginScreenBinding.username, "en", "USA");
+            Utils.setLanguage(loginScreenBinding.password, "en", "USA");
+        }
         intializeUI();
 
+        android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
 
+        System.out.println("android_id >> "+android_id);
 
 
     }
@@ -178,10 +190,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.password.setText("test123#$");*/
        /* loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200297");*/
-        loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
-        loginScreenBinding.password.setText("test123#$");
-        /*loginScreenBinding.username.setText("tpeo200279@gmail.com");
-        loginScreenBinding.password.setText("tpeo200279");*/
+       /* loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
+        loginScreenBinding.password.setText("test123#$");*/
+        loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
+        loginScreenBinding.password.setText("tpbc1.200400");
     }
 
 
@@ -198,8 +210,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         String username = loginScreenBinding.username.getText().toString().trim();
         prefManager.setUserName(username);
         String password = loginScreenBinding.password.getText().toString().trim();
-
-
         if (username.isEmpty()) {
             valid = false;
             Utils.showAlert(this, this.getApplicationContext().getResources().getString(R.string.please_enter_the_username));
@@ -277,10 +287,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         String userPass = encryptUserPass.concat(random);
         Log.d("userpass", "" + userPass);
         String sha256 = Utils.getSHA(userPass);
-        Log.d("sha", "" + sha256);
+        Log.d("sha256", "" + sha256);
 
         params.put(AppConstant.KEY_USER_PASSWORD, sha256);
         params.put(AppConstant.KEY_APP_CODE,"TP");
+//        params.put(AppConstant.KEY_DEVICE_ID,android_id);
 
 
         Log.d("user", "" + loginScreenBinding.username.getText().toString().trim());
@@ -412,4 +423,5 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.no_data_available_for_offline));
         }
     }
+
 }

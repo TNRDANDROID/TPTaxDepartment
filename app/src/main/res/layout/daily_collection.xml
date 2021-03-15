@@ -166,7 +166,6 @@
             android:layout_below="@+id/img_rll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="40dp"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -308,14 +307,17 @@
             android:layout_gravity="center"
             android:layout_marginTop="0dp"
             android:layout_below="@+id/gender_layout"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="0dp"
             android:gravity="center">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/dailyCollection_recycler"
                 android:scrollbarSize="1dp"
-                android:padding="@dimen/margin_left_20dp"
+                android:paddingLeft="@dimen/margin_left_20dp"
+                android:paddingRight="@dimen/margin_left_20dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:visibility="visible"
                 android:scrollbars="vertical"/>
             <ImageView

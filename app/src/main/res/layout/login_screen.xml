@@ -12,6 +12,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     >
     <RelativeLayout
         android:background="@android:color/transparent"
@@ -57,56 +58,62 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
             android:orientation="vertical"
             >
 
-
-            <ImageView
-                android:id="@+id/ivIlls"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+            <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:id="@+id/relative1"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="30dp"
-                android:src="@mipmap/tamilnadu_logo" />
+                android:layout_marginTop="30dp">
+                <ImageView
+                    android:id="@+id/ivIlls"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/tamilnadu_logo" />
 
-            <TextView
-                android:layout_below="@+id/ivIlls"
-                android:id="@+id/rd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:gravity="center_horizontal"
-                android:padding="2dp"
-                android:text="@string/app_name_line"
-                android:textColor="@color/grey2"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                customfontdemo:fontName="@string/font_circular_medium" />
+                <TextView
+                    android:layout_below="@+id/ivIlls"
+                    android:id="@+id/rd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:gravity="center_horizontal"
+                    android:padding="2dp"
+                    android:text="@string/app_name_line"
+                    android:textColor="@color/grey2"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-            <TextView
-                android:id="@+id/and"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rural"
-                android:layout_centerInParent="true"
-                android:padding="3dp"
-                android:visibility="gone"
-                android:text=" &amp;"
-                android:textColor="@android:color/black"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                customfontdemo:fontName="@string/font_circular_medium" />
+                <TextView
+                    android:id="@+id/and"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rural"
+                    android:layout_centerInParent="true"
+                    android:padding="3dp"
+                    android:visibility="gone"
+                    android:text=" &amp;"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp"
+                    android:textStyle="bold"
+                    customfontdemo:fontName="@string/font_circular_medium" />
 
-            <TextView
-                android:id="@+id/dpt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rd"
-                android:layout_centerHorizontal="true"
-                android:text="@string/for_official_use"
-                android:textColor="@color/grey2"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                customfontdemo:fontName="@string/font_circular_medium" />
+                <TextView
+                    android:id="@+id/dpt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rd"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/for_official_use"
+                    android:textColor="@color/grey2"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    customfontdemo:fontName="@string/font_circular_medium" />
+         </RelativeLayout>
+
 
 
 
@@ -264,6 +271,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:layout_below="@+id/relative1"
                 android:orientation="vertical">
 
                 <RelativeLayout

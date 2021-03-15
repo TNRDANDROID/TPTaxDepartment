@@ -262,7 +262,7 @@ public class dbData {
         }
         return cards;
     }
-    public ArrayList<TPtaxModel> selectFieldVisitImage(String request_id) {
+    public ArrayList<TPtaxModel> selectFieldVisitImage(String request_id,String data_ref_id) {
         db.isOpen();
         ArrayList<TPtaxModel> cards = new ArrayList<>();
         Cursor cursor = null;
@@ -274,7 +274,7 @@ public class dbData {
                 ")\n" +
                 "ORDER BY id ASC;";
         String  quy="SELECT * FROM captured_photo";
-        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id;
+        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id+ " AND data_ref_id ="+data_ref_id;
 
 //        if (status.equalsIgnoreCase("new")) {
 //            selection = "tradecode = ? and screen_status = ?";
@@ -304,6 +304,8 @@ public class dbData {
                                 .getColumnIndexOrThrow("id")));
                         card.setRequest_id(cursor.getString(cursor
                                 .getColumnIndexOrThrow("request_id")));
+                        card.setData_ref_id(cursor.getString(cursor
+                                .getColumnIndexOrThrow("data_ref_id")));
                         card.setLatitude(cursor.getString(cursor
                                 .getColumnIndexOrThrow(AppConstant.LATITUDE)));
                         card.setLongitude(cursor.getString(cursor
@@ -328,7 +330,7 @@ public class dbData {
     }
 
 
-    public ArrayList<CommonModel> selectPendingImage(String request_id) {
+    public ArrayList<CommonModel> selectPendingImage(String request_id,String data_ref_id) {
         db.isOpen();
         ArrayList<CommonModel> cards = new ArrayList<>();
         Cursor cursor = null;
@@ -340,7 +342,7 @@ public class dbData {
                 ")\n" +
                 "ORDER BY id ASC;";
         String  quy="SELECT * FROM captured_photo";
-        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id;
+        String sql = "SELECT * FROM " + DBHelper.CAPTURED_PHOTO + " WHERE request_id ="+request_id+ " AND data_ref_id ="+data_ref_id;
 
 //        if (status.equalsIgnoreCase("new")) {
 //            selection = "tradecode = ? and screen_status = ?";
@@ -368,6 +370,8 @@ public class dbData {
                         CommonModel card = new CommonModel();
                         card.setRequest_id(cursor.getString(cursor
                                 .getColumnIndexOrThrow("request_id")));
+                        card.setData_ref_id(cursor.getString(cursor
+                                .getColumnIndexOrThrow("data_ref_id")));
                         card.setLatitude(cursor.getString(cursor
                                 .getColumnIndexOrThrow(AppConstant.LATITUDE)));
                         card.setLongitude(cursor.getString(cursor

@@ -142,7 +142,7 @@
     <string name="submit">Submit</string>
     <string name="take_Photo">Take Photo</string>
     <string name="save_IMAGE">SAVE IMAGE</string>
-    <string name="daily_Collection">Daily Collection</string>
+    <string name="daily_Collection">Tax Collection</string>
     <string name="year">Year</string>
     <string name="date">Date</string>
     <string name="dashboard">Dashboard</string>
@@ -171,6 +171,11 @@
     <string name="description_In_English">Description In English</string>
     <string name="description_In_Tamil">Description In Tamil</string>
     <string name="door_No">Door No</string>
+    <string name="plot_area">Plot Area</string>
+    <string name="buildage">Building Age</string>
+    <string name="buildusage">Building Usage</string>
+    <string name="buildstructure">Building Structure</string>
+    <string name="location">Location</string>
     <string name="licence_Validity">Licence Validity</string>
     <string name="are_you_the_Owner">Are you the Owner</string>
     <string name="rental_Lease_agreement">Rental Lease Agreement</string>
@@ -196,7 +201,7 @@
     <string name="image_added">Image Added!</string>
     <string name="something_wrong">Something wrong</string>
     <string name="no_image_Saved_in_Local">No image Saved in Local</string>
-    <string name="select_TaxType_To_Get_Request_Id">Select TaxType To Get Request Id</string>
+    <string name="select_TaxType_To_Get_Request_Id">Select TaxType and Request Id</string>
     <string name="select_Tax_Type_first">Select Tax Type first!</string>
 
  <string name="View_Image">	View Image	</string>
@@ -233,7 +238,7 @@
  <string name="age_c">	Age : 	</string>
  <string name="date_c">	Date : 	</string>
  <string name="district_code">	District Code : 	</string>
- <string name="door_no">	Door NO : 	</string>
+ <string name="door_no">	Door No : 	</string>
  <string name="email">	Email : 	</string>
  <string name="establishment_name_en">	Establishment Name EN : 	</string>
  <string name="establishment_name_ta">	Establishment Name TA : 	</string>
@@ -276,14 +281,14 @@
  <string name="synchronized_to_server">	Your Activity is Synchronized to the server!	</string>
 
 
- <string name="new_Trade_Licence"> New Trade Licence	</string>
+ <string name="new_Trade_Licence">Add New Trader Details	</string>
  <string name="trade_licence_title">	Trade Licence	</string>
- <string name="new_trade">	New	</string>
- <string name="existing_trade">	Existing	</string>
+ <string name="new_trade">	Add New	Trader</string>
+ <string name="existing_trade">	Existing Traders	</string>
 
 
  <string name="field_visit_title">	Field Visit	</string>
- <string name="field_visit_list">	Field Visit List	</string>
+ <string name="field_visit_list">	Field Visit History	</string>
  <string name="tax_type">	Tax Type	</string>
  <string name="service_list_field_type">	ServiceListField Type	</string>
  <string name="request_id">	Request ID	</string>

@@ -12,13 +12,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/main"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
@@ -2158,7 +2157,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/document_layout"
-            android:visibility="gone">
+            android:visibility="visible">
             <RelativeLayout
                 android:id="@+id/header2_layout"
                 android:layout_width="match_parent"
@@ -2213,6 +2212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/header2_layout"
+                android:layout_above="@+id/pageNum"
                 android:id="@+id/pdfView"/>
             <TextView
                 android:id="@+id/pageNum"
@@ -2221,6 +2221,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentBottom="true"
                 android:text="0"
+                android:padding="10dp"
                 android:textAlignment="center"
                 android:textColor="@color/grey2"
                 android:textSize="13sp"

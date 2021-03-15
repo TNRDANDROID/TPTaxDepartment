@@ -229,7 +229,7 @@ public class Utils {
 
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
 /*
@@ -632,7 +632,10 @@ public class Utils {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static  void setLanguage(EditText view, String lang, String country){
-        view.setImeHintLocales(new LocaleList(new Locale(lang, country)));
+        if (Build.VERSION.SDK_INT >= 24) {
+            view.setImeHintLocales(new LocaleList(new Locale(lang, country)));
+
+        }
     }
 
 

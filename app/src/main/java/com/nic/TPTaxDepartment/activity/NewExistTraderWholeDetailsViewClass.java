@@ -19,6 +19,7 @@ import androidx.databinding.DataBindingUtil;
 
 import com.android.volley.VolleyError;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.github.barteksc.pdfviewer.listener.OnRenderListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -62,6 +63,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         existTraderDetailsWholeViewBinding.licenceValidity.setAdapter(adapter);*/
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         //getIntent Data
         traders = new ArrayList<TPtaxModel>();
@@ -81,11 +83,12 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         }
         existTraderDetailsWholeViewBinding.fullDetails.setVisibility(View.VISIBLE);
         existTraderDetailsWholeViewBinding.documentLayout.setVisibility(View.GONE);
+        existTraderDetailsWholeViewBinding.editDetails.setVisibility(View.GONE);
         existTraderDetailsWholeViewBinding.editDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NewExistTraderWholeDetailsViewClass.this, ExistTradeViewClass.class);
-                intent.putExtra("position", 0);
+                intent.putExtra("position", position);
                 intent.putExtra("tradersList", traders);
                 intent.putExtra("tradersImageList", tradersImageList);
                 intent.putExtra("tradersImagePosition", 0);
@@ -122,9 +125,9 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                  edittext = (TextView) v;
 
                     if (i % 2 == 0) {
-                        edittext.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.text_color_grey2));
-                    } else {
                         edittext.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.text_color_grey1));
+                    } else {
+                        edittext.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.text_color_grey2));
                     }
 
             }
@@ -154,8 +157,8 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         String email= changeTextColor(getApplicationContext().getResources().getString(R.string.email))+traders.get(position).getEmail() + "\n"+ "\n";
 
 
-        String description_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.establishment_name_ta))+traders.get(position).getEstablishment_name_ta() + "\n"+ "\n";
-        String description_en= changeTextColor(getApplicationContext().getResources().getString(R.string.establishment_name_en))+traders.get(position).getEstablishment_name_en() + "\n"+ "\n";
+        String description_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.establishment_name_ta))+traders.get(position).getDescription_ta() + "\n"+ "\n";
+        String description_en= changeTextColor(getApplicationContext().getResources().getString(R.string.establishment_name_en))+traders.get(position).getDescription_en() + "\n"+ "\n";
 
         String statecode=changeTextColor(getApplicationContext().getResources().getString(R.string.state_code))+traders.get(position).getStatecode() + "\n"+ "\n";
         String wardid= changeTextColor(getApplicationContext().getResources().getString(R.string.ward_id))+traders.get(position).getWardId() + "\n"+ "\n";
@@ -164,7 +167,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
         String mobileno= changeTextColor(getApplicationContext().getResources().getString(R.string.mobile_no))+traders.get(position).getMobileno() + "\n"+ "\n";
         String licencetypeid= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_type_id))+traders.get(position).getLicencetypeid() + "\n"+ "\n";
-        String licence_validity= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_validity))+traders.get(position).getLicence_validity() + "\n"+ "\n";
+        String licence_validity= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_validity))+traders.get(position).getLicenceValidity() + "\n"+ "\n";
         String traders_license_type_name= changeTextColor(getApplicationContext().getResources().getString(R.string.licence_type))+traders.get(position).getTraders_license_type_name() + "\n"+ "\n";
 
 
@@ -270,6 +273,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void viewDocument() {
+        pageNumber = 0;
         byte[] decodedString = new byte[0];
         byte[] actualByte = new byte[0];
         try {
@@ -295,7 +299,12 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                         setTitle(String.format("%s %s / %s", "PDF", page + 1, pageCount));
                         existTraderDetailsWholeViewBinding.pageNum.setText(pageNumber+1 +"/"+pageCount);
                     }
-                }).defaultPage(pageNumber).swipeHorizontal(true).enableDoubletap(true).load();
+                }).defaultPage(pageNumber).swipeHorizontal(true).enableDoubletap(true).onRender(new OnRenderListener() {
+            @Override
+            public void onInitiallyRendered(int nbPages, float pageWidth, float pageHeight) {
+                existTraderDetailsWholeViewBinding.documentViewer.fitToWidth(pageNumber);
+            }
+        }).load();
 
     }
     public void viewImageScreen() {
@@ -358,6 +367,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersRentLeaseAgrement");
         dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
+        Log.d("TraderDocument", "" + dataSet);
         return dataSet;
     }
     public JSONObject traderImageJsonParams() throws JSONException {
@@ -374,6 +384,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersShopImage");
         dataSet.put("tradersdetails_id",traders.get(position).getTradersdetails_id());
+        Log.d("TraderImage", "" + dataSet);
         return dataSet;
     }
 
@@ -391,6 +402,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                 try{
                     String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                     String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("TraderDocumentuser_data", "" + user_data);
                     Log.d("TraderDocumentDatadecry", "" + userDataDecrypt);
                     JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
@@ -420,6 +432,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                 try{
                 String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                 String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                Log.d("TraderImageuser_data", "" + user_data);
                 Log.d("TraderImageDatadecry", "" + userDataDecrypt);
                 JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
@@ -428,11 +441,16 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                     if (status.equalsIgnoreCase("SUCCESS") ) {
                         JSONObject jsonObject1 = new JSONObject();
                         jsonObject1=jsonObject.getJSONObject("DATA");
-                        TraderImageString = jsonObject1.getString("tradersshopimage");
-                        Log.d("TraderImage", "" + jsonObject);
 
-                        viewImageScreen();
+                        if(jsonObject1.getString("tradersshopimage_available").equals("Y")) {
+                            TraderImageString = jsonObject1.getString("tradersshopimage");
+                            Log.d("TraderImage", "" + jsonObject);
 
+                            viewImageScreen();
+                        }
+                        else {
+                            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_RECORD_FOUND));
+                        }
 
                     }
                     else if(status.equalsIgnoreCase("FAILD") ) {

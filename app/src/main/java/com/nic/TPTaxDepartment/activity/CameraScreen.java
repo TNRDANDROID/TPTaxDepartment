@@ -82,6 +82,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         cameraScreenBinding.setActivity(this);
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
+        this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         intializeUI();
     }
