@@ -139,4 +139,9 @@ dependencies {
     api 'se.emilsjolander:stickylistheaders:2.7.0'
 //FromToDate Picker
     implementation 'com.leavjenn.smoothdaterangepicker:library:0.2.0'
+
+    //Qrcode Reader
+    implementation ('com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3@aar'){
+        transitive = true
+    }
 }

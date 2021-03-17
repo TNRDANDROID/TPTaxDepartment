@@ -150,6 +150,7 @@
         <activity android:name=".activity.NewExistTraderWholeDetailsViewClass"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".activity.QRCodeReaderActivity" />
 
 
         <provider

@@ -75,6 +75,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                 android:textSize="@dimen/_13sdp" />
 
             <TextView
+                android:layout_marginBottom="2dp"
                 android:layout_below="@+id/tv_version_number"
                 android:id="@+id/nic_name"
                 style="@style/font_poppins_semibold"
