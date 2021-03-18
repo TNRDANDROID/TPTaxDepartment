@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.VolleyError;
+import com.leavjenn.smoothdaterangepicker.date.SmoothDateRangePickerFragment;
 import com.nic.TPTaxDepartment.Adapter.DailyCollectionAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
@@ -64,6 +65,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     boolean flag;
     final Calendar myCalendar = Calendar.getInstance();
     Context context;
+    String fromDate,toDate;
+    DailyCollectionAdapter collectionAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +91,10 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         int day = cldr.get(Calendar.DAY_OF_MONTH);
         int month = cldr.get(Calendar.MONTH);
         int year = cldr.get(Calendar.YEAR);
-        dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_Date));
+        dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_from_and_to_Date));
 
-        dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
-        dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
+        dailyCollectionBinding.dateLayout.setVisibility(View.VISIBLE);
+        dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
         dailyCollectionBinding.yearVice.setChecked(true);
         flag=true;
         dailyCollectionBinding.daily.setChecked(false);
@@ -146,7 +149,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 collectionList.add(Detail);
             }
             */
-/*else if(i==5){
+/*
+else if(i==5){
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId("4");
                 Detail.setTaxTypeName("Professional Tax");
@@ -160,7 +164,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
                 Detail.setTaxCollection("10050.00");
                 collectionList.add(Detail);
             }
-*//*
+*/
+/*
 
             else {
                 TPtaxModel Detail = new TPtaxModel();
@@ -174,25 +179,43 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
          JSONArray jsonarray=new JSONArray(prefManager.getDailyCollectionList());
         if(jsonarray != null && jsonarray.length() >0) {
+            String demand="";
+            String balance="";
             for (int i = 0; i < jsonarray.length(); i++) {
                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                 String taxtypeid = Utils.NotNullString(jsonobject.getString("taxtypeid"));
                 String taxtypedesc_en =Utils.NotNullString(jsonobject.getString("taxtypedesc_en"));
                 String collectionreceived = Utils.NotNullString(jsonobject.getString("collectionreceived"));
 
+              /*  if(flag) {
+                     demand = Utils.NotNullString(jsonobject.getString("collectionreceived"));
+                     balance = Utils.NotNullString(jsonobject.getString("collectionreceived"));
+                }*/
+
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId(taxtypeid);
                 Detail.setTaxTypeName(taxtypedesc_en);
                 Detail.setTaxCollection(collectionreceived);
+                Detail.setDemand(demand);
+                Detail.setBalance(balance);
                 collectionList.add(Detail);
             }
         }
 
          Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeName().toLowerCase().compareTo(rhs.getTaxTypeName().toLowerCase()));
          if(collectionList != null && collectionList.size() >0) {
-             DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,collectionList);
-             adapter.notifyDataSetChanged();
-             dailyCollectionBinding.dailyCollectionRecycler.setAdapter(adapter);
+             if(flag){
+                 collectionAdapter = new DailyCollectionAdapter(DailyCollection.this,collectionList,"TownPanchayat");
+                 collectionAdapter.notifyDataSetChanged();
+             }
+             else {
+                 collectionAdapter = new DailyCollectionAdapter(DailyCollection.this,collectionList,"Individual");
+                 collectionAdapter.notifyDataSetChanged();
+
+             }
+
+
+             dailyCollectionBinding.dailyCollectionRecycler.setAdapter(collectionAdapter);
              dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.VISIBLE);
              dailyCollectionBinding.noDataFound.setVisibility(View.GONE);
          }else {
@@ -287,7 +310,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         Collections.sort(yearcollectionList, (lhs, rhs) -> lhs.getTaxTypeName().compareTo(rhs.getTaxTypeName()));
         if(yearcollectionList != null && yearcollectionList.size() >0) {
-            DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,yearcollectionList);
+            DailyCollectionAdapter adapter = new DailyCollectionAdapter(DailyCollection.this,yearcollectionList,"");
             adapter.notifyDataSetChanged();
             dailyCollectionBinding.dailyCollectionRecycler.setAdapter(adapter);
             dailyCollectionBinding.dailyCollectionRecycler.setVisibility(View.VISIBLE);
@@ -301,11 +324,18 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     }
 
 
+/*
 
     public void showDatePickerDialog() {
-      /*  DialogFragment newFragment = new datePickerFragment();
+
+    */
+/*DialogFragment newFragment = new datePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
-*/        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+    */
+/*
+
+
+        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
 
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -339,6 +369,50 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
 
         dailyCollectionBinding.date.setText(sdf.format(myCalendar.getTime()));
+    }
+
+*/
+
+
+
+
+    public void showDatePickerDialog() {
+        SmoothDateRangePickerFragment smoothDateRangePickerFragment = SmoothDateRangePickerFragment.newInstance(
+                new SmoothDateRangePickerFragment.OnDateRangeSetListener() {
+                    @Override
+                    public void onDateRangeSet(SmoothDateRangePickerFragment view,
+                                               int yearStart, int monthStart,
+                                               int dayStart, int yearEnd,
+                                               int monthEnd, int dayEnd) {
+                        fromDate=dayStart+"-"+(monthStart+1)+"-"+yearStart;
+                        toDate=dayEnd+"-"+(monthEnd+1)+"-"+yearEnd;
+                        String fromToDate=updateLabel(fromDate)+" to "+updateLabel(toDate);
+//                        String fromToDate=fromDate+" to "+toDate;
+                        dailyCollectionBinding.date.setText(fromToDate);
+                        System.out.println("date>>>"+fromDate);
+                        getDailyCollection();
+                        // grab the date range, do what you want
+                    }
+                });
+        smoothDateRangePickerFragment.setMaxDate(Calendar.getInstance());
+        smoothDateRangePickerFragment.setAccentColor(getApplicationContext().getResources().getColor(R.color.blue));
+        smoothDateRangePickerFragment.setThemeDark(true);
+        smoothDateRangePickerFragment.show(getFragmentManager(), "smoothDateRangePicker");
+
+    }
+    private String updateLabel(String dateStr) {
+        String myFormat="";
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date1 = format.parse(dateStr);
+            System.out.println(date1);
+            String dateTime = format.format(date1);
+            System.out.println("Current Date Time : " + dateTime);
+            myFormat = dateTime; //In which you need put here
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return myFormat;
     }
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -398,7 +472,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             cldr.set(Calendar.MONTH, (monthOfYear));
             cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-            updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+            //updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
             /*if(Utils.isOnline()){
                 getDailyCollection();
             }
@@ -411,7 +485,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    public static String updateLabel(String olddate){
+  /*
+  public static String updateLabel(String olddate){
         final String OLD_FORMAT = "dd-MM-yyyy";
         final String NEW_FORMAT = "yyyy-MM-dd";
         String newDateString;
@@ -427,7 +502,7 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         //date.setText(newDateString);
         return  newDateString;
     }
-
+*/
     public  void getDailyCollection() {
         try {
             new ApiService(this).makeJSONObjectRequest("DailyCollection", Api.Method.POST, UrlGenerator.TradersUrl(), dailyCollectionJsonParams(), "not cache", this);
@@ -457,15 +532,19 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
 
         JSONObject data = new JSONObject();
         if(flag) {
-            data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollectionYear");
-            data.put(AppConstant.COLLECTION_YEAR, selectedFinName);
+            //data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollectionYear");
+            data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollectionTown");
+            //data.put(AppConstant.COLLECTION_YEAR, selectedFinName);
             Log.d("YearCollectionRequest", "" + data);
         }
         else {
-            data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollection");
-            data.put(AppConstant.COLLECTION_DATE, dailyCollectionBinding.date.getText().toString());
+            //data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollection");
+            data.put(AppConstant.KEY_SERVICE_ID, "TaxDailyCollectionUser");
+            //data.put(AppConstant.COLLECTION_DATE, dailyCollectionBinding.date.getText().toString());
             Log.d("DailyCollectionRequest", "" + data);
         }
+        data.put("fromdate", updateLabel(fromDate));
+        data.put("todate", updateLabel(toDate));
         return data;
     }
 
@@ -551,8 +630,8 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
             case R.id.year_vice:
                 dailyCollectionBinding.yearVice.setChecked(true);
                 dailyCollectionBinding.daily.setChecked(false);
-                dailyCollectionBinding.dateLayout.setVisibility(View.GONE);
-                dailyCollectionBinding.finYearLayout.setVisibility(View.VISIBLE);
+                dailyCollectionBinding.dateLayout.setVisibility(View.VISIBLE);
+                dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
                 dailyCollectionBinding.finYear.setSelection(0);
                 dailyCollectionBinding.dailyCollectionRecycler.setAdapter(null);
                 flag=true;

@@ -8,18 +8,47 @@
     <LinearLayout
         android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:weightSum="2"
         android:orientation="horizontal">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1.2"
+            android:orientation="vertical"
             android:gravity="center_vertical"
+            android:layout_margin="10dp"
             android:layout_height="wrap_content">
             <TextView
-                android:layout_marginLeft="@dimen/_10sdp"
                 android:id="@+id/taxName"
+                android:gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:singleLine="true"
+                android:minWidth="100dp"
+                android:minLines="1"
+                android:text="@string/trade_licence_title"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary" />
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:id="@+id/demand_text"
+                android:gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxWidth="200dp"
+                android:singleLine="true"
+                android:minWidth="100dp"
+                android:minLines="1"
+                android:text="@string/trade_licence_title"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimary" />
+            <TextView
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:id="@+id/balance_text"
                 android:gravity="start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,18 +61,47 @@
                 android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
-
-        <TextView
-            android:background="@drawable/back_rect_drawable"
-            android:id="@+id/taxAmount"
-            android:gravity="center"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="0.8"
             android:layout_height="match_parent"
-            android:text="00.00"
-            android:minLines="1"
-            android:textSize="18sp"
-            android:textColor="@color/white" />
+            android:orientation="vertical"
+            android:background="@drawable/back_rect_drawable"
+            >
+            <TextView
+                android:id="@+id/taxAmount"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00.00"
+                android:layout_marginTop="10dp"
+                android:minLines="1"
+                android:textSize="18sp"
+                android:textColor="@color/white" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/demand_amount"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00.00"
+                android:layout_marginTop="10dp"
+                android:minLines="1"
+                android:textSize="18sp"
+                android:textColor="@color/white" />
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/balance_amount"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00.00"
+                android:minLines="1"
+                android:layout_marginTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

@@ -138,6 +138,23 @@ public class TPtaxModel  implements Serializable {
     public String buildstructure;
     public String taxlocation;
 
+    public String demand,balance;
+
+    public String getDemand() {
+        return demand;
+    }
+
+    public void setDemand(String demand) {
+        this.demand = demand;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
 
     public String getPlotarea() {
         return plotarea;
