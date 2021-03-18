@@ -24,6 +24,7 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.AssessmentStatusNewBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
+import com.nic.TPTaxDepartment.model.SpinnerAdapter;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
@@ -149,10 +150,13 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
 
             try {
                 if (items != null && items.length > 0) {
-                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /* ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     assessmentStatusBinding.taxType.setAdapter(RuralUrbanArray);
                     assessmentStatusBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                  */
+                   assessmentStatusBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedTaxTypeId="0";
                     selectedTaxTypeName="";
                 }

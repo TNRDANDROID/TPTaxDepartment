@@ -140,8 +140,9 @@ dependencies {
 //FromToDate Picker
     implementation 'com.leavjenn.smoothdaterangepicker:library:0.2.0'
 
-    //Qrcode Reader
+  /*  //Qrcode Reader
     implementation ('com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.3@aar'){
         transitive = true
-    }
+    }*/
+    implementation 'com.journeyapps:zxing-android-embedded:3.4.0'
 }

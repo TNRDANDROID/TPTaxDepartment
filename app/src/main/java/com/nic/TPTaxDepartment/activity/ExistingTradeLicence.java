@@ -30,6 +30,7 @@ import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.ExistingTradeLicenceBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.Gender;
+import com.nic.TPTaxDepartment.model.SpinnerAdapter;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
@@ -252,10 +253,14 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
             try {
                 if (items != null && items.length > 0) {
                     tradeCodeSpArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /*
                     tradeCodeSpArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeLicenceBinding.tradeCodeSpinner.setAdapter(tradeCodeSpArray);
                     existingTradeLicenceBinding.tradeCodeSpinner.setPaddingRelative(10,5,10,5);
                     existingTradeLicenceBinding.tradeCodeSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeLicenceBinding.tradeCodeSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedTrdeCodeDetailsID = "0";
                     selectedTradeCode = "";
                 }
@@ -333,10 +338,13 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
             try {
                 if (items != null && items.length > 0) {
-                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    /*ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeLicenceBinding.streetsName.setAdapter(RuralUrbanArray);
                     existingTradeLicenceBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    */
+                    existingTradeLicenceBinding.streetsName.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedStreetId="0";
                     selectedStreetName="";
                 }
@@ -384,10 +392,13 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
 
             try {
                 if (items != null && items.length > 0) {
-                    ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /* ArrayAdapter<String> RuralUrbanArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
                     RuralUrbanArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeLicenceBinding.wardNo.setAdapter(RuralUrbanArray);
                     existingTradeLicenceBinding.wardNo.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeLicenceBinding.wardNo.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedWardId="0";
                     selectedWardName="";
                 }

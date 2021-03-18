@@ -100,11 +100,11 @@
     </style>
     <!-- Theme.AppCompat.Light is not a dialog theme -->
     <style name="spinnerItemStyle" parent="android:Widget.TextView.SpinnerItem">
-
+        <item name="android:paddingLeft">10dp</item>
     </style>
 
     <style name="spinnerDropDownItemStyle" parent="android:TextAppearance.Widget.TextView.SpinnerItem">
-
+        <item name="android:paddingLeft">10dp</item>
     </style>
 
 

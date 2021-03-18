@@ -83,16 +83,25 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         }
         existTraderDetailsWholeViewBinding.fullDetails.setVisibility(View.VISIBLE);
         existTraderDetailsWholeViewBinding.documentLayout.setVisibility(View.GONE);
-        existTraderDetailsWholeViewBinding.editDetails.setVisibility(View.GONE);
+        existTraderDetailsWholeViewBinding.editDetails.setVisibility(View.VISIBLE);
         existTraderDetailsWholeViewBinding.editDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NewExistTraderWholeDetailsViewClass.this, ExistTradeViewClass.class);
+                /*Intent intent = new Intent(NewExistTraderWholeDetailsViewClass.this, ExistTradeViewClass.class);
                 intent.putExtra("position", position);
                 intent.putExtra("tradersList", traders);
                 intent.putExtra("tradersImageList", tradersImageList);
                 intent.putExtra("tradersImagePosition", 0);
                 intent.putExtra("flag",true);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);*/
+
+
+                //Edit Trader Image
+                Intent intent = new Intent(NewExistTraderWholeDetailsViewClass.this, CameraScreen.class);
+                intent.putExtra(AppConstant.TRADE_CODE, traders.get(position).getTradersdetails_id());
+                intent.putExtra(AppConstant.MOBILE, traders.get(position).getMobileno());
+                intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "EditTraderImage");
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }

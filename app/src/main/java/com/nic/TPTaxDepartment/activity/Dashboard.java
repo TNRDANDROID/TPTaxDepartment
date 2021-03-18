@@ -1,10 +1,12 @@
 package com.nic.TPTaxDepartment.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.MediaRouteButton;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,6 +28,11 @@ import androidx.databinding.DataBindingUtil;
 
 import com.android.volley.VolleyError;
 import com.google.android.material.bottomappbar.BottomAppBar;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -39,6 +46,7 @@ import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.Gender;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
+import com.nic.TPTaxDepartment.utils.CameraUtils;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
@@ -50,7 +58,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import static com.nic.TPTaxDepartment.utils.CameraUtils.MEDIA_TYPE_IMAGE;
 
 public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickListener, Api.ServerResponseListener {
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
@@ -173,9 +184,44 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
        if(getStreetCount()<= 0){
            getStreetList();
         }*/
+//        requestCameraPermission(MEDIA_TYPE_IMAGE);
 
 
+    }
+    private void requestCameraPermission(final int type) {
+        Dexter.withActivity(this)
+                .withPermissions(Manifest.permission.CAMERA,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                        } else if (report.isAnyPermissionPermanentlyDenied()) {
+                            showPermissionsAlert();
+                        }
+                    }
 
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                }).check();
+    }
+
+    private void showPermissionsAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getApplicationContext().getResources().getString(R.string.permissions_required))
+                .setMessage(getApplicationContext().getResources().getString(R.string.camera_needs_few_permissions))
+                .setPositiveButton(getApplicationContext().getResources().getString(R.string.goto_SETTINGS), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        CameraUtils.openSettings(Dashboard.this);
+                    }
+                })
+                .setNegativeButton(getApplicationContext().getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
     }
     public void getGenderList() {
         try {
@@ -238,6 +284,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
     public void pendingScreen(){
         Intent intent = new Intent( this, PendingScreen.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+    public void qrScannerScreen(){
+        Intent intent = new Intent( Dashboard.this, QRCodeReaderActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }

@@ -60,6 +60,7 @@ import com.nic.TPTaxDepartment.databinding.ExistingTradeDetailsViewBinding;
 import com.nic.TPTaxDepartment.databinding.ExistingTradeDetailsViewNewBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.Gender;
+import com.nic.TPTaxDepartment.model.SpinnerAdapter;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.UrlGenerator;
@@ -200,6 +201,8 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     String DocumentString = "";
     String TraderImageString = "";
     final Calendar myCalendar = Calendar.getInstance();
+    String[] motorRangeItems,generatorItems;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -759,7 +762,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     generator_available_status_text = context.getResources().getString(R.string.y);
                     existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(false);
                     existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
-                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
+//                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
+                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, generatorItems));
+
                 } else {
                     generator_available_status_text = context.getResources().getString(R.string.n);
                     existingTradeDetailsViewNewBinding.generatorAvilableStatusNo.setChecked(true);
@@ -784,7 +789,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     generator_available_status_text = context.getResources().getString(R.string.y);
                     existingTradeDetailsViewNewBinding.geneartorAvilableStatusYes.setChecked(true);
                     existingTradeDetailsViewNewBinding.generatorSpinnerLayout.setVisibility(View.VISIBLE);
-                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
+//                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
+                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, generatorItems));
+
                 }
                 break;
 
@@ -793,7 +800,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     motor_available_status_text = context.getResources().getString(R.string.y);
                     existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(false);
                     existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
-                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
+//                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
+                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, motorRangeItems));
+
                 } else {
                     motor_available_status_text = context.getResources().getString(R.string.n);
                     existingTradeDetailsViewNewBinding.motorAvilableStatusNo.setChecked(true);
@@ -818,7 +827,9 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                     motor_available_status_text = context.getResources().getString(R.string.y);
                     existingTradeDetailsViewNewBinding.motorAvilableStatusYes.setChecked(true);
                     existingTradeDetailsViewNewBinding.motorSpinnerLayout.setVisibility(View.VISIBLE);
-                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
+//                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
+                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, motorRangeItems));
+
                 }
                 break;
 
@@ -1189,25 +1200,33 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             }
 
             if ("TraderDocument".equals(urlType) && responseObj != null) {
-                try {
+                try{
                     String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                     String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("TraderDocumentuser_data", "" + user_data);
                     Log.d("TraderDocumentDatadecry", "" + userDataDecrypt);
                     JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
                     status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
-                    if (status.equalsIgnoreCase("SUCCESS")) {
+                    if (status.equalsIgnoreCase("SUCCESS") ) {
                         JSONObject jsonObject1 = new JSONObject();
-                        jsonObject1 = jsonObject.getJSONObject("DATA");
-                        DocumentString = jsonObject1.getString("rentleaseagrement");
-                        viewDocument();
-                        Log.d("TraderDocument", "" + jsonObject);
+                        jsonObject1=jsonObject.getJSONObject("DATA");
+                        if(jsonObject1.getString("rentleaseagrement_available").equals("Y")) {
+                            DocumentString = jsonObject1.getString("rentleaseagrement");
+                            Log.d("TraderDocument", "" + jsonObject);
 
-                    } else if (status.equalsIgnoreCase("FAILD")) {
-                        Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                            viewDocument();
+                        }
+                        else {
+                            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_RECORD_FOUND));
+                        }
+
+
                     }
-                } catch (Exception e) {
-                }
+                    else if(status.equalsIgnoreCase("FAILD") ) {
+                        Utils.showAlert(this,jsonObject.getString("MESSAGE"));
+                    }
+                }catch (Exception e){}
             }
             if ("TraderImage".equals(urlType) && responseObj != null) {
 
@@ -1278,9 +1297,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     genderArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    /*
                     genderArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.gender.setAdapter(genderArray);
                     existingTradeDetailsViewNewBinding.gender.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.gender.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedGenderId = "0";
                     selectedGender = "";
                 }
@@ -1339,9 +1362,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     streetArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /*
                     streetArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.streetsName.setAdapter(streetArray);
                     existingTradeDetailsViewNewBinding.streetsName.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.streetsName.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedStreetId = "0";
                     selectedStreetName = streetName;
                     existingTradeDetailsViewNewBinding.streetsName.setSelection(streetArray.getPosition(selectedStreetName));
@@ -1393,9 +1420,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     wardArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    /*
                     wardArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.wardNo.setAdapter(wardArray);
                     existingTradeDetailsViewNewBinding.wardNo.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.wardNo.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedWardId = "0";
                     selectedWardName = "";
                 }
@@ -1444,9 +1475,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     licenceValidityArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /*
                     licenceValidityArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.licenceValidity.setAdapter(licenceValidityArray);
                     existingTradeDetailsViewNewBinding.licenceValidity.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.licenceValidity.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedFinId = "0";
                     selectedFinName = "";
                 }
@@ -1491,9 +1526,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     licenceTypeArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /*
                     licenceTypeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.licenceType.setAdapter(licenceTypeArray);
                     existingTradeDetailsViewNewBinding.licenceType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.licenceType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedLicenceTpeId = "0";
                     selectedLicenceTypeName = "";
                 }
@@ -1547,9 +1586,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     tradeCodeSpArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                    /*
                     tradeCodeSpArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.tradeCodeSpinner.setAdapter(tradeCodeSpArray);
                     existingTradeDetailsViewNewBinding.tradeCodeSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.tradeCodeSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedTrdeCodeDetailsID = "0";
                     selectedTradeCode = "";
                 }
@@ -1768,9 +1811,13 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
             try {
                 if (items != null && items.length > 0) {
                     annualSaleArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                   /*
                     annualSaleArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.annualSale.setAdapter(annualSaleArray);
                     existingTradeDetailsViewNewBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.annualSale.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedAnnualId=null;
                     selectedAnnualSale="";
                 }
@@ -1830,23 +1877,27 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             spinnerMapMotorRange = new HashMap<String, String>();
             spinnerMapMotorRange.put(null, null);
-            final String[] items = new String[filtermotorRangeList.size() + 1];
-            items[0] = context.getResources().getString(R.string.select_Motor_Range);
+            motorRangeItems = new String[filtermotorRangeList.size() + 1];
+            motorRangeItems[0] = context.getResources().getString(R.string.select_Motor_Range);
             for (int i = 0; i < filtermotorRangeList.size(); i++) {
                 {
                     spinnerMapMotorRange.put(filtermotorRangeList.get(i).getMotor_id(), filtermotorRangeList.get(i).getMotor_range());
                     String Class = filtermotorRangeList.get(i).getMotor_range();
-                    items[i + 1] = Class;
+                    motorRangeItems[i + 1] = Class;
                 }
             }
-            System.out.println("items" + items.toString());
+            System.out.println("items" + motorRangeItems.toString());
 
             try {
-                if (items != null && items.length > 0) {
-                    motorRangeArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                if (motorRangeItems != null && motorRangeItems.length > 0) {
+                    motorRangeArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, motorRangeItems);
+                    /*
                     motorRangeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(motorRangeArray);
-                    existingTradeDetailsViewNewBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.motorRangeSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, motorRangeItems));
+
                     selectedMotorId=null;
                     selectedMotorRange="";
                 }
@@ -1927,24 +1978,28 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
             spinnerMapGeneratorRange = new HashMap<String, String>();
             spinnerMapGeneratorRange.put(null, null);
-            final String[] items = new String[filterGeneratorList.size() + 1];
-            items[0] = context.getResources().getString(R.string.select_Generator_Range);
+            generatorItems = new String[filterGeneratorList.size() + 1];
+            generatorItems[0] = context.getResources().getString(R.string.select_Generator_Range);
             for (int i = 0; i < filterGeneratorList.size(); i++) {
                 {
                     spinnerMapGeneratorRange.put(filterGeneratorList.get(i).getGenerator_id(), filterGeneratorList.get(i).getGenerator_range());
                     String Class = filterGeneratorList.get(i).getGenerator_range();
-                    items[i + 1] = Class;
+                    generatorItems[i + 1] = Class;
                 }
             }
 
-            System.out.println("items" + items.toString());
+            System.out.println("items" + generatorItems.toString());
 
             try {
-                if (items != null && items.length > 0) {
-                    generatorRangeArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, items);
+                if (generatorItems != null && generatorItems.length > 0) {
+                    generatorRangeArray = new ArrayAdapter<String>(this,android. R.layout.simple_spinner_item, generatorItems);
+                   /*
                     generatorRangeArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(generatorRangeArray);
-                    existingTradeDetailsViewNewBinding.annualSale.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+                    existingTradeDetailsViewNewBinding.generatorSpinner.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    existingTradeDetailsViewNewBinding.generatorSpinner.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, generatorItems));
+
                     selectedGeneratorId=null;
                     selectedGeneratorRange="";
                 }

@@ -95,6 +95,7 @@ public class AppConstant {
     public static String COLLECTION_DATE = "collectiondate";
     public static String COLLECTION_YEAR = "collection_year";
     public static String TAX_TYPE_ID = "taxtypeid";
+    public static String QR_CODE_VALUE = "qr_code_value";
     public static String TAX_TYPE_DESC_EN = "taxtypedesc_en";
     public static String TAX_TYPE_DESC_TA = "taxtypedesc_ta";
     public static String TAX_COLLECTION_METHODLOGY = "taxcollection_methodlogy";

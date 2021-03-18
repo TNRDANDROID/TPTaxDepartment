@@ -95,6 +95,7 @@
     <item name="darkblue" type="color">#A90099CC</item>
     <item name="darkpurple" type="color">#A99933CC</item>
     <item name="darkgreen" type="color">#DA4CAF50</item>
+    <item name="blue" type="color">#33b5e5</item>
 
 
     <integer-array name="androidcolors">

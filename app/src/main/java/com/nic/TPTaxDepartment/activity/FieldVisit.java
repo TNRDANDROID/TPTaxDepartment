@@ -75,6 +75,7 @@ import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.databinding.FieldVisitBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
+import com.nic.TPTaxDepartment.model.SpinnerAdapter;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
@@ -237,6 +238,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 selectedTaxTypeName = TaxTypeName;
                 if(selectedTaxTypeId!=null&&position>0) {
                     getServiceListFieldVisitTypes(1,selectedTaxTypeId);
+                }else {
+                    fieldVisitBinding.serviceFiledType.setAdapter(null);
+                    fieldVisitBinding.requestIdTextField.setText("");
+                    fieldVisitBinding.applicantName.setText("");
                 }
             }
             public void onNothingSelected(AdapterView<?> parent)
@@ -1256,7 +1261,20 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 submit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        getFieldVisitHistory();
+                        if(tax.getSelectedItem().toString()!=null && !tax.getSelectedItem().toString().equals("")
+                                && !tax.getSelectedItem().toString().equals(context.getResources().getString(R.string.select_TaxType)) &&
+                                serviceType.getSelectedItem().toString()!=null && !serviceType.getSelectedItem().toString().equals("")
+                                && !tax.getSelectedItem().toString().equals(context.getResources().getString(R.string.select_ServiceListFieldVisit))){
+                            if(!date.getText().toString().equals("") && !date.getText().toString().equals("Select Date")){
+                                getFieldVisitHistory();
+                            }else {
+                                Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_Date));
+                            }
+                        }else {
+                            Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_TaxType));
+
+                        }
+
                     }
                 });
                 tax.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
@@ -1272,6 +1290,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                         }
                         if(TaxTypeIdHistory!=null&&position>0) {
                             getServiceListFieldVisitTypes(2,TaxTypeIdHistory);
+                        }else {
+                            serviceType.setAdapter(null);
                         }
                     }
                     public void onNothingSelected(AdapterView<?> parent)
@@ -1582,9 +1602,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             try {
                 if (items != null && items.length > 0) {
                     taxTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /*
                     taxTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     fieldVisitBinding.taxType.setAdapter(taxTypeAdapter);
                     fieldVisitBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    fieldVisitBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedTaxTypeId="0";
                     selectedTaxTypeName="";
                 }
@@ -1629,9 +1653,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             try {
                 if (items != null && items.length > 0) {
                     fieldCurrentStatusArray = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                   /*
                     fieldCurrentStatusArray.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     fieldVisitBinding.currentStatus.setAdapter(fieldCurrentStatusArray);
                     fieldVisitBinding.currentStatus.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                    fieldVisitBinding.currentStatus.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                     selectedFieldVisitStatusId="0";
                     selectedFieldVisitStatusName="";
                 }
@@ -1684,16 +1712,23 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 if (items != null && items.length > 0) {
                     if (check == 1) {
                         serviceFieldVisitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                        /*
                         serviceFieldVisitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         fieldVisitBinding.serviceFiledType.setAdapter(serviceFieldVisitAdapter);
                         fieldVisitBinding.serviceFiledType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
+*/
+                        fieldVisitBinding.serviceFiledType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+
                         selectedServiceFieldVisitTypesId="0";
                         selectedServiceFieldVisitTypesName="";
                         fieldVisitBinding.serviceFiledType.setSelection(1);
                     }else if(check == 2){
                         serviceFieldVisitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                       /*
                         serviceFieldVisitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         serviceType.setAdapter(serviceFieldVisitAdapter);
+*/
+                        serviceType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
                         serviceType.setSelection(1);
                     }
 

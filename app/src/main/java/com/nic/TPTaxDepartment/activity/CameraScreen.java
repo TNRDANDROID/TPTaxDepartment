@@ -35,6 +35,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
@@ -45,8 +46,13 @@ import com.nic.TPTaxDepartment.databinding .CameraScreenBinding;
 import com.nic.TPTaxDepartment.session.PrefManager;
 import com.nic.TPTaxDepartment.Support.MyLocationListener;
 import com.nic.TPTaxDepartment.utils.CameraUtils;
+import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -70,9 +76,12 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
     private PrefManager prefManager;
     private CameraScreenBinding cameraScreenBinding;
     private com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
-    String trader_code;
-    String MOBILE;
-    String screen_status;
+    String trader_code ="";
+    String MOBILE="";
+    String screen_status="";
+    String LATITUDE = "";
+    String LONGITUDE = "";
+    String TraderImage = "";
 
 
     @Override
@@ -107,7 +116,12 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case  R.id.btn_save :
-                saveImage();
+                if(screen_status.equals("EditTraderImage")){
+                    editTraderImage();
+                }else {
+                    saveImage();
+                }
+
                 break;
         }
     }
@@ -149,8 +163,54 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
             //e.printStackTrace();
         }
     }
+    public void editTraderImage() {
+        ImageView imageView = (ImageView) findViewById(R.id.image_view);
+        byte[] imageInByte = new byte[0];
+        String image_str = "";
+        try {
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            imageInByte = baos.toByteArray();
+            image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+            TraderImage=image_str;
+            LATITUDE=offlatTextValue.toString();
+            LONGITUDE=offlongTextValue.toString();
+            uploadTraderImage();
+        } catch (Exception e) {
+            Utils.showAlert(CameraScreen.this, getApplicationContext().getResources().getString(R.string.atleast_Capture_one_Photo));
+            //e.printStackTrace();
+        }
+    }
 
+    public void uploadTraderImage() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
+                    traderImageJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public JSONObject traderImageJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),
+                traderImageParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("TraderImage", "" + dataSet);
+        return dataSet;
+    }
 
+    public JSONObject traderImageParams() throws JSONException{
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersShopImage");
+        dataSet.put("tradersdetails_id",trader_code);
+        dataSet.put(AppConstant.LATITUDE,LATITUDE);
+        dataSet.put(AppConstant.LONGITUDE,LONGITUDE);
+        dataSet.put(AppConstant.TRADE_IMAGE,TraderImage);
+        Log.d("TraderImage", "" + dataSet);
+        return dataSet;
+    }
     private void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -361,8 +421,38 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void OnMyResponse(ServerResponse serverResponse) {
+        try {
+            JSONObject responseObj = serverResponse.getJsonResponse();
+            String urlType = serverResponse.getApi();
+            String status;
+            if ("TraderImage".equals(urlType) && responseObj != null) {
 
+                try {
+                    String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                    String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("TraderImageDatadecry", "" + userDataDecrypt);
+                    JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                    // status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status.equalsIgnoreCase("SUCCESS")) {
+                        Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                        Log.d("TraderImage", "" + jsonObject);
+
+                    } else if (status.equalsIgnoreCase("FAILD")) {
+                        Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
+
 
     @Override
     public void OnError(VolleyError volleyError) {
@@ -381,5 +471,13 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
     }
 
+    public void dashboard() {
+        Intent intent = new Intent(this, Dashboard.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("Home", "Home");
+        startActivity(intent);
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+    }
 
 }
