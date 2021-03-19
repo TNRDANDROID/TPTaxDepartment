@@ -1,18 +1,23 @@
 package com.nic.TPTaxDepartment.activity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
+import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.RadioButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +32,7 @@ import com.nic.TPTaxDepartment.Adapter.DailyCollectionAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
+import com.nic.TPTaxDepartment.Interface.DateInterface;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
@@ -50,11 +56,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener, Spinner.OnItemSelectedListener {
+public class DailyCollection extends AppCompatActivity implements View.OnClickListener,Api.ServerResponseListener,
+        Spinner.OnItemSelectedListener ,DateInterface{
 
     private DailyCollectionBinding dailyCollectionBinding;
     private PrefManager prefManager;
-    //private static TextView date;
     ArrayList<TPtaxModel> collectionList;
     ArrayList<TPtaxModel> yearcollectionList;
     ArrayList<CommonModel> finYear;
@@ -63,7 +69,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
     String selectedFinId;
     String selectedFinName="";
     boolean flag;
-    final Calendar myCalendar = Calendar.getInstance();
     Context context;
     String fromDate,toDate;
     DailyCollectionAdapter collectionAdapter;
@@ -78,7 +83,6 @@ public class DailyCollection extends AppCompatActivity implements View.OnClickLi
         this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         prefManager = new PrefManager(this);
-        //date = dailyCollectionBinding.date;
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(),1);
         dailyCollectionBinding.dailyCollectionRecycler.setLayoutManager(mLayoutManager);
         dailyCollectionBinding.dailyCollectionRecycler.setItemAnimator(new DefaultItemAnimator());
@@ -187,10 +191,10 @@ else if(i==5){
                 String taxtypedesc_en =Utils.NotNullString(jsonobject.getString("taxtypedesc_en"));
                 String collectionreceived = Utils.NotNullString(jsonobject.getString("collectionreceived"));
 
-              /*  if(flag) {
-                     demand = Utils.NotNullString(jsonobject.getString("collectionreceived"));
-                     balance = Utils.NotNullString(jsonobject.getString("collectionreceived"));
-                }*/
+                if(flag) {
+                    demand = Utils.NotNullString(jsonobject.getString("totaldemand"));
+                    balance = Utils.NotNullString(jsonobject.getString("collectionpending"));
+                }
 
                 TPtaxModel Detail = new TPtaxModel();
                 Detail.setTaxTypeId(taxtypeid);
@@ -323,61 +327,13 @@ else if(i==5){
 
     }
 
-
-/*
-
-    public void showDatePickerDialog() {
-
-    */
-/*DialogFragment newFragment = new datePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
-    */
-/*
-
-
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                // TODO Auto-generated method stub
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-                if(Utils.isOnline()){
-                getDailyCollection();
-            }
-            else {
-                Utils.showAlert(DailyCollection.this,"No Network Connection");
-            }
-            }
-
-        };
-
-        DatePickerDialog datePickerDialog=new DatePickerDialog(this, date, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH));
-        //following line to restrict future date selection
-        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-        datePickerDialog.show();
+    public void showDatePickerDialog(){
+        Utils.showDatePickerDialog(context);
 
     }
 
-    private void updateLabel() {
-        String myFormat = "dd-MM-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-
-        dailyCollectionBinding.date.setText(sdf.format(myCalendar.getTime()));
-    }
-
-*/
-
-
-
-
-    public void showDatePickerDialog() {
-        SmoothDateRangePickerFragment smoothDateRangePickerFragment = SmoothDateRangePickerFragment.newInstance(
+    /* public void showDatePickerDialog(){
+    SmoothDateRangePickerFragment smoothDateRangePickerFragment = SmoothDateRangePickerFragment.newInstance(
                 new SmoothDateRangePickerFragment.OnDateRangeSetListener() {
                     @Override
                     public void onDateRangeSet(SmoothDateRangePickerFragment view,
@@ -394,12 +350,16 @@ else if(i==5){
                         // grab the date range, do what you want
                     }
                 });
+
         smoothDateRangePickerFragment.setMaxDate(Calendar.getInstance());
         smoothDateRangePickerFragment.setAccentColor(getApplicationContext().getResources().getColor(R.color.blue));
         smoothDateRangePickerFragment.setThemeDark(true);
         smoothDateRangePickerFragment.show(getFragmentManager(), "smoothDateRangePicker");
 
-    }
+    }*/
+
+
+
     private String updateLabel(String dateStr) {
         String myFormat="";
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -445,64 +405,7 @@ else if(i==5){
     }
 
 
-      public static class datePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-        Calendar cldr = Calendar.getInstance();
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-
-            int day = cldr.get(Calendar.DAY_OF_MONTH);
-            int month = cldr.get(Calendar.MONTH);
-            int year = cldr.get(Calendar.YEAR);
-            DatePickerDialog datePickerDialog;
-            datePickerDialog = new DatePickerDialog(getActivity(), this, year,
-                    month, day);
-            cldr.set(year, month, day);
-            datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-            return datePickerDialog;
-        }
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            // Do something with the date chosen by the user
-//            date.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-            datePickerFragment d = new datePickerFragment();
-            String start_date = year + "-" + (monthOfYear + 1) + "-" + dayOfMonth;
-            cldr.set(Calendar.YEAR, year);
-            cldr.set(Calendar.MONTH, (monthOfYear));
-            cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            Log.d("startdate", "" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
-            //updateLabel(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-            /*if(Utils.isOnline()){
-                getDailyCollection();
-            }
-            else {
-                Utils.showAlert(getActivity(),"No Network Connection");
-            }*/
-
-        }
-
-
-    }
-
-  /*
-  public static String updateLabel(String olddate){
-        final String OLD_FORMAT = "dd-MM-yyyy";
-        final String NEW_FORMAT = "yyyy-MM-dd";
-        String newDateString;
-        SimpleDateFormat sdf = new SimpleDateFormat(OLD_FORMAT);
-        Date d = null;
-        try {
-            d = sdf.parse(olddate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        sdf.applyPattern(NEW_FORMAT);
-        newDateString = sdf.format(d);
-        //date.setText(newDateString);
-        return  newDateString;
-    }
-*/
     public  void getDailyCollection() {
         try {
             new ApiService(this).makeJSONObjectRequest("DailyCollection", Api.Method.POST, UrlGenerator.TradersUrl(), dailyCollectionJsonParams(), "not cache", this);
@@ -545,6 +448,7 @@ else if(i==5){
         }
         data.put("fromdate", updateLabel(fromDate));
         data.put("todate", updateLabel(toDate));
+        Log.d("taxCollectionRequest", "" + data);
         return data;
     }
 
@@ -633,6 +537,7 @@ else if(i==5){
                 dailyCollectionBinding.dateLayout.setVisibility(View.VISIBLE);
                 dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
                 dailyCollectionBinding.finYear.setSelection(0);
+                dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_from_and_to_Date));
                 dailyCollectionBinding.dailyCollectionRecycler.setAdapter(null);
                 flag=true;
                 break;
@@ -642,7 +547,7 @@ else if(i==5){
                 dailyCollectionBinding.daily.setChecked(true);
                 dailyCollectionBinding.dateLayout.setVisibility(View.VISIBLE);
                 dailyCollectionBinding.finYearLayout.setVisibility(View.GONE);
-                dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_Date));
+                dailyCollectionBinding.date.setText(context.getResources().getString(R.string.select_from_and_to_Date));
                 dailyCollectionBinding.dailyCollectionRecycler.setAdapter(null);
                 flag=false;
                 break;
@@ -700,4 +605,12 @@ else if(i==5){
 
     }
 
+    @Override
+    public void getDate(String date) {
+        String[] separated = date.split(":");
+        fromDate = separated[0]; // this will contain "Fruit"
+        toDate = separated[1];
+        dailyCollectionBinding.date.setText(fromDate+" to "+toDate);
+        getDailyCollection();
+    }
 }

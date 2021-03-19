@@ -68,6 +68,7 @@ import com.nic.TPTaxDepartment.Adapter.FieldVisitRquestListAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
+import com.nic.TPTaxDepartment.Interface.DateInterface;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.Support.MyLocationListener;
@@ -112,7 +113,7 @@ import static android.view.View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS;
 
 public class FieldVisit extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener,AdapterView.OnItemClickListener, StickyListHeadersListView.OnHeaderClickListener,
         StickyListHeadersListView.OnStickyHeaderOffsetChangedListener,
-        StickyListHeadersListView.OnStickyHeaderChangedListener, AdapterView.OnItemSelectedListener  {
+        StickyListHeadersListView.OnStickyHeaderChangedListener, AdapterView.OnItemSelectedListener , DateInterface {
 
     private FieldVisitBinding fieldVisitBinding;
     private ArrayList<String> Current_Status = new ArrayList<>();
@@ -176,6 +177,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     Spinner tax,serviceType;
     TextView date;
     String fromDate,toDate,TaxTypeIdHistory,serviceListFieldTaxTypeIdHistory;
+    String[] taxItems;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -1247,7 +1249,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 close = (ImageView) view.findViewById(R.id.close);
                 tax = (Spinner) view.findViewById(R.id.tax_type_history);
                 serviceType = (Spinner) view.findViewById(R.id.service_filed_type_history);
-                tax.setAdapter(taxTypeAdapter);
+//                tax.setAdapter(taxTypeAdapter);
+                tax.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, taxItems));
                 serviceType.setEnabled(false);
                 header.setText(context.getResources().getString(R.string.field_Visit));
                 close.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_close));
@@ -1265,10 +1268,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 && !tax.getSelectedItem().toString().equals(context.getResources().getString(R.string.select_TaxType)) &&
                                 serviceType.getSelectedItem().toString()!=null && !serviceType.getSelectedItem().toString().equals("")
                                 && !tax.getSelectedItem().toString().equals(context.getResources().getString(R.string.select_ServiceListFieldVisit))){
-                            if(!date.getText().toString().equals("") && !date.getText().toString().equals("Select Date")){
+                            if(!date.getText().toString().equals("") && !date.getText().toString().equals(context.getResources().getString(R.string.select_from_and_to_Date))){
                                 getFieldVisitHistory();
                             }else {
-                                Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_Date));
+                                Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_from_and_to_Date));
                             }
                         }else {
                             Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.select_TaxType));
@@ -1517,8 +1520,9 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             fieldVisitBinding.historyLayout.setVisibility(View.GONE);
             fieldVisitBinding.activityMain.setVisibility(View.VISIBLE);
         }else  if(request_id.equals("") &&fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE){
-            fieldVisitBinding.taxType.setAdapter(taxTypeAdapter);
-            fieldVisitBinding.serviceFiledType.setAdapter(serviceFieldVisitAdapter);
+//            fieldVisitBinding.taxType.setAdapter(taxTypeAdapter);
+             fieldVisitBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, taxItems));
+             fieldVisitBinding.serviceFiledType.setAdapter(serviceFieldVisitAdapter);
             fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
             fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
         }
@@ -1590,24 +1594,24 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
             spinnerMapTaxType = new HashMap<String, String>();
             spinnerMapTaxType.put(null, null);
-            final String[] items = new String[taxType.size() + 1];
-            items[0] = context.getResources().getString(R.string.select_TaxType);
+            taxItems = new String[taxType.size() + 1];
+            taxItems[0] = context.getResources().getString(R.string.select_TaxType);
             for (int i = 0; i < taxType.size(); i++) {
                 spinnerMapTaxType.put( taxType.get(i).getTaxtypeid(), taxType.get(i).getTaxtypedesc_en());
                 String Class = taxType.get(i).getTaxtypedesc_en();
-                items[i + 1] = Class;
+                taxItems[i + 1] = Class;
             }
-            System.out.println("items" + items.toString());
+            System.out.println("items" + taxItems.toString());
 
             try {
-                if (items != null && items.length > 0) {
-                    taxTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+                if (taxItems != null && taxItems.length > 0) {
+                    taxTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, taxItems);
                    /*
                     taxTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     fieldVisitBinding.taxType.setAdapter(taxTypeAdapter);
                     fieldVisitBinding.taxType.setPopupBackgroundResource(R.drawable.cornered_border_bg_strong);
 */
-                    fieldVisitBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, items));
+                    fieldVisitBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, taxItems));
 
                     selectedTaxTypeId="0";
                     selectedTaxTypeName="";
@@ -1960,6 +1964,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         }
         return false;
     }
+
+    public void showDatePickerDialog(){
+        Utils.showDatePickerDialog(context);
+
+    }
+
+    /*
     public void showDatePickerDialog() {
         SmoothDateRangePickerFragment smoothDateRangePickerFragment = SmoothDateRangePickerFragment.newInstance(
                 new SmoothDateRangePickerFragment.OnDateRangeSetListener() {
@@ -1982,6 +1993,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         smoothDateRangePickerFragment.show(getFragmentManager(), "smoothDateRangePicker");
 
     }
+*/
     private String updateLabel(String dateStr) {
         String myFormat="";
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
@@ -1997,4 +2009,11 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
      return myFormat;
     }
 
+    @Override
+    public void getDate(String dateText) {
+        String[] separated = dateText.split(":");
+        fromDate = separated[0]; // this will contain "Fruit"
+        toDate = separated[1];
+        date.setText(fromDate+" to "+toDate);
+    }
 }

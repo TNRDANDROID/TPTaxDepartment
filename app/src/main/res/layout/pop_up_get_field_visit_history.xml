@@ -194,9 +194,9 @@
                     android:ellipsize="marquee"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
-                    android:hint="@string/select_Date"
+                    android:hint="@string/select_from_and_to_Date"
                     android:textAlignment="viewStart"
-                    android:textSize="@dimen/_15sdp"
+                    android:textSize="@dimen/_13sdp"
                     customfontdemo:fontName="@string/font_circular_book" />
 
                 <TextView

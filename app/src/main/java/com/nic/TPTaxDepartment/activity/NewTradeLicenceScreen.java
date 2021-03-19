@@ -1967,7 +1967,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
             if (visible_count == 0) {
-                if (!ValidationFirst()){
+                if (ValidationFirst()){
                     newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 1;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -1981,7 +1981,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             }
 
         else if(visible_count==1){
-            if (!ValidationSecond()) {
+            if (ValidationSecond()) {
                 newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 2;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);

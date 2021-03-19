@@ -330,6 +330,8 @@
 
 
  <string name="mobile">	Mobile	</string>
+ <string name="from">	From	</string>
+ <string name="to">	To	</string>
  <string name="_trader_email">	Email	</string>
 
 
