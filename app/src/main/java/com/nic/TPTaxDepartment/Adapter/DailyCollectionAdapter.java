@@ -63,13 +63,26 @@ public class DailyCollectionAdapter extends RecyclerView.Adapter<DailyCollection
             holder.taxName.setText(taxCollection.get(position).getTaxTypeName());
 
             if(!taxCollection.get(position).getTaxCollection() .equals("") && taxCollection.get(position).getTaxCollection() != null){
-                holder.taxAmount.setText("\u20b9"+" "+taxCollection.get(position).getTaxCollection());
-               // holder.taxAmount.setText(indianCurrency(Double.parseDouble(taxCollection.get(position).getTaxCollection())));
-            }else {
+                //holder.taxAmount.setText("\u20b9"+" "+taxCollection.get(position).getTaxCollection());
+                holder.taxAmount.setText(indianCurrency(Double.parseDouble(taxCollection.get(position).getTaxCollection())));
+            }
+            else {
                 holder.taxAmount.setText("\u20b9"+" "+"00.00");
+            }
+            if(!taxCollection.get(position).getDemand() .equals("") && taxCollection.get(position).getDemand() != null){
+               // holder.demandAmount.setText("\u20b9"+" "+taxCollection.get(position).getDemand());
+                holder.demandAmount.setText(indianCurrency(Double.parseDouble(taxCollection.get(position).getDemand())));
+            }
+            else {
                 holder.demandAmount.setText("\u20b9"+" "+"00.00");
+            }
+            if(!taxCollection.get(position).getBalance() .equals("") && taxCollection.get(position).getBalance() != null){
+                //holder.balanceAmount.setText("\u20b9"+" "+taxCollection.get(position).getBalance());
+                holder.balanceAmount.setText(indianCurrency(Double.parseDouble(taxCollection.get(position).getBalance())));
+            }else {
                 holder.balanceAmount.setText("\u20b9"+" "+"00.00");
             }
+
 
         } catch (Exception exp){
             exp.printStackTrace();
