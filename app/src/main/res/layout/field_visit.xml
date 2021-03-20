@@ -215,8 +215,6 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
@@ -270,8 +268,6 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
@@ -326,8 +322,6 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
@@ -515,11 +509,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="@dimen/margin_left_20dp"
-                                android:layout_marginRight="@dimen/margin_left_20dp"
-                                android:text=""
-
-                                android:textColor="@android:color/black"
                                 android:textSize="@dimen/_15sdp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_book" />

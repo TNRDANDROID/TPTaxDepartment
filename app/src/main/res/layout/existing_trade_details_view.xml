@@ -317,9 +317,7 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textColor="@android:color/black"
+                               android:textColor="@android:color/black"
 
                                 android:overlapAnchor="false"
                                 android:gravity="center" />
@@ -724,8 +722,6 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@android:color/black"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
@@ -781,8 +777,6 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:textColor="@android:color/black"
 
                                 android:gravity="center" />
@@ -945,10 +939,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@android:color/black"
-
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+  android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -1221,8 +1212,6 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@android:color/black"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:gravity="center" />
 
                         </RelativeLayout>
@@ -1279,10 +1268,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@android:color/black"
-
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+ android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -1338,11 +1324,8 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:textColor="@android:color/black"
-
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                                 android:textColor="@android:color/black"
+ android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -1640,11 +1623,8 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
                                 android:textColor="@android:color/black"
-
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+  android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -1752,11 +1732,8 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:textColor="@android:color/black"
-
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                                 android:textColor="@android:color/black"
+android:gravity="center" />
 
                         </RelativeLayout>
 

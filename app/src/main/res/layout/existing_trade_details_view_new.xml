@@ -347,8 +347,6 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
                                     android:textColor="@color/grey2"
                                     android:overlapAnchor="false"
                                     android:gravity="center" />
@@ -791,9 +789,7 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
-                                    android:gravity="center" />
+                                     android:gravity="center" />
 
                             </RelativeLayout>
 
@@ -847,8 +843,6 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
                                     android:textColor="@color/grey2"
                                     android:gravity="center" />
 
@@ -1017,8 +1011,6 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
                             </RelativeLayout>
@@ -1326,8 +1318,6 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
                             </RelativeLayout>
@@ -1383,8 +1373,6 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
                             </RelativeLayout>
@@ -1440,9 +1428,7 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginLeft="10dp"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginRight="10dp"
                                     android:gravity="center" />
 
                             </RelativeLayout>
@@ -1780,10 +1766,8 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginLeft="10dp"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginRight="10dp"
-                                    android:gravity="center" />
+                                     android:gravity="center" />
 
                             </RelativeLayout>
 
@@ -1918,10 +1902,8 @@
                                     android:layout_alignParentStart="true"
                                     android:layout_alignParentEnd="true"
                                     android:layout_centerInParent="true"
-                                    android:layout_marginLeft="10dp"
                                     android:textColor="@color/grey2"
-                                    android:layout_marginRight="10dp"
-                                    android:gravity="center" />
+                                     android:gravity="center" />
 
                             </RelativeLayout>
 
@@ -3365,9 +3347,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:textColor="@color/grey2"
+                               android:textColor="@color/grey2"
 
                                 android:overlapAnchor="false"
                                 android:gravity="center" />
@@ -3772,9 +3752,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@color/grey2"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                                 android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -3829,8 +3807,6 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
                                 android:textColor="@color/grey2"
 
                                 android:gravity="center" />
@@ -3993,10 +3969,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@color/grey2"
-
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+ android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -4271,9 +4244,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@color/grey2"
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                                 android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -4329,10 +4300,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
                                 android:textColor="@color/grey2"
-
-                                android:layout_marginLeft="10dp"
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+ android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -4388,11 +4356,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:textColor="@color/grey2"
-
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                                 android:textColor="@color/grey2"
+  android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -4692,11 +4657,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
-                                android:textColor="@color/grey2"
-
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+                                 android:textColor="@color/grey2"
+ android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -4806,11 +4768,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                 android:layout_alignParentStart="true"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerInParent="true"
-                                android:layout_marginLeft="10dp"
                                 android:textColor="@color/grey2"
-
-                                android:layout_marginRight="10dp"
-                                android:gravity="center" />
+  android:gravity="center" />
 
                         </RelativeLayout>
 
@@ -5577,9 +5536,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:id="@+id/gender"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                         android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:textAlignment="textEnd"
+                                          android:textAlignment="textEnd"
                                         android:textColor="@color/black_grey"
                                         android:overlapAnchor="false"
                                         android:backgroundTint="@color/full_transparent"
@@ -6038,8 +5995,6 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
                                         android:textColor="@color/black_grey"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
                                         android:gravity="center" />
 
                                 </RelativeLayout>
@@ -6095,9 +6050,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentStart="true"
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:textColor="@color/black_grey"
+                                          android:textColor="@color/black_grey"
 
                                         android:gravity="center" />
 
@@ -6259,10 +6212,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
                                         android:textColor="@color/black_grey"
-
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:gravity="center" />
+   android:gravity="center" />
 
                                 </RelativeLayout>
 
@@ -6535,9 +6485,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
                                         android:textColor="@color/black_grey"
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:gravity="center" />
+                                         android:gravity="center" />
 
                                 </RelativeLayout>
 
@@ -6593,10 +6541,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
                                         android:textColor="@color/black_grey"
-
-                                        android:layout_marginLeft="10dp"
-                                        android:layout_marginRight="10dp"
-                                        android:gravity="center" />
+ android:gravity="center" />
 
                                 </RelativeLayout>
 
@@ -6652,11 +6597,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentStart="true"
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
-                                        android:layout_marginLeft="10dp"
-                                        android:textColor="@color/black_grey"
-
-                                        android:layout_marginRight="10dp"
-                                        android:gravity="center" />
+                                       android:textColor="@color/black_grey"
+ android:gravity="center" />
 
                                 </RelativeLayout>
 
@@ -6954,10 +6896,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentStart="true"
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
-                                        android:layout_marginLeft="10dp"
                                         android:textColor="@color/black_grey"
 
-                                        android:layout_marginRight="10dp"
                                         android:gravity="center" />
 
                                 </RelativeLayout>
@@ -7066,11 +7006,8 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                         android:layout_alignParentStart="true"
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerInParent="true"
-                                        android:layout_marginLeft="10dp"
-                                        android:textColor="@color/black_grey"
-
-                                        android:layout_marginRight="10dp"
-                                        android:gravity="center" />
+                                         android:textColor="@color/black_grey"
+  android:gravity="center" />
 
                                 </RelativeLayout>
 

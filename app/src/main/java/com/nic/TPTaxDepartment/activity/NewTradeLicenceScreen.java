@@ -13,15 +13,19 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.LocaleList;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.TextWatcher;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
@@ -30,6 +34,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -71,6 +76,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,6 +85,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener, CompoundButton.OnCheckedChangeListener,AdapterView.OnItemSelectedListener
@@ -182,6 +189,8 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     Integer pageNumber = 0;
     final Calendar myCalendar = Calendar.getInstance();
     String[] motorRangeItems,generatorItems;
+    String translated = "";
+
     //PDFView pdfView;
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -219,6 +228,10 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
+
+        newTradeLicenceScreenBinding.applicantNameTamil.setImeHintLocales(new LocaleList(new Locale("ta", "IND")));
+       /* InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
+        imeManager.setInputMethod(null,"jp.co.omronsoft.openwnn/.OpenWnnJAJP");*/
 
         try {
             LoadFinYearSpinner();
@@ -308,6 +321,25 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         newTradeLicenceScreenBinding.annualSale.setEnabled(false);
         newTradeLicenceScreenBinding.motorRangeSpinner.setEnabled(false);
         newTradeLicenceScreenBinding.generatorSpinner.setEnabled(false);
+
+        newTradeLicenceScreenBinding.applicantNameTamil.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                //String tx=translate(newTradeLicenceScreenBinding.applicantNameTamil.getText().toString());
+                //System.out.println("applicantNameTamil"+tx );
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
 
 
@@ -2873,6 +2905,28 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
     }
 
+/*
+    public String translate(String text) {
+         Locale srcLanguage = Locale.ENGLISH;
+        Locale dstLanguage = new Locale("TA");
+        String translated = null;
+        try {
+            String query = URLEncoder.encode(text, "UTF-8");
+            String langpair = URLEncoder.encode(srcLanguage.getLanguage()+"|"+dstLanguage.getLanguage(), "UTF-8");
+            String url = "http://mymemory.translated.net/api/get?q="+query+"&langpair="+langpair;
+            HttpClient hc = new DefaultHttpClient();
+            HttpGet hg = new HttpGet(url);
+            HttpResponse hr = hc.execute(hg);
+            if(hr.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                JSONObject response = new JSONObject(EntityUtils.toString(hr.getEntity()));
+                translated = response.getJSONObject("responseData").getString("translatedText");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return translated;
+    }
+*/
 }
 
 
