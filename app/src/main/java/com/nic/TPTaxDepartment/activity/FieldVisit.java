@@ -61,7 +61,6 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.leavjenn.smoothdaterangepicker.date.SmoothDateRangePickerFragment;
 import com.nic.TPTaxDepartment.Adapter.CommonAdapter;
 import com.nic.TPTaxDepartment.Adapter.FieldVisitHistoryAdapter;
 import com.nic.TPTaxDepartment.Adapter.FieldVisitRquestListAdapter;
@@ -1340,7 +1339,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 lp.windowAnimations = R.style.DialogAnimation;
                 alert.getWindow().setAttributes(lp);
                 alert.show();
-                alert.setCanceledOnTouchOutside(true);
+                alert.setCanceledOnTouchOutside(false);
                 alert.setCancelable(true);
                 alert.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 

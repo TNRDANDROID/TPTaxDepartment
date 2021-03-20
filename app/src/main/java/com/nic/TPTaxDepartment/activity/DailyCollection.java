@@ -27,7 +27,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.VolleyError;
-import com.leavjenn.smoothdaterangepicker.date.SmoothDateRangePickerFragment;
 import com.nic.TPTaxDepartment.Adapter.DailyCollectionAdapter;
 import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
