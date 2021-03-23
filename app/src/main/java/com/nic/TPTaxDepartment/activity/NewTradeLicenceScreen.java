@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
+import android.icu.lang.UCharacter;
 import android.inputmethodservice.Keyboard;
 import android.net.Uri;
 import android.os.Build;
@@ -223,15 +224,12 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusName,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.emailId,"en","USA");
-        Utils.setLanguage(newTradeLicenceScreenBinding.remarksField,"en","IND");
+        Utils.setLanguage(newTradeLicenceScreenBinding.remarksField,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.doorNo,"en","USA");
         Utils.setLanguage(newTradeLicenceScreenBinding.descriptionTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.applicantNameTamil,"ta","IND");
         Utils.setLanguage(newTradeLicenceScreenBinding.fatherHusNameTamil,"ta","IND");
 
-        newTradeLicenceScreenBinding.applicantNameTamil.setImeHintLocales(new LocaleList(new Locale("ta", "IND")));
-       /* InputMethodManager imeManager = (InputMethodManager) getApplicationContext().getSystemService(INPUT_METHOD_SERVICE);
-        imeManager.setInputMethod(null,"jp.co.omronsoft.openwnn/.OpenWnnJAJP");*/
 
         try {
             LoadFinYearSpinner();
@@ -404,7 +402,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             e.printStackTrace();
         }
 
-        newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
+        //newTradeLicenceScreenBinding.date.setText(traders.get(position).getTrade_date());
         newTradeLicenceScreenBinding.applicantName.setText(traders.get(position).getTraderName());
         newTradeLicenceScreenBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
         newTradeLicenceScreenBinding.age.setText(traders.get(position).getApage());
@@ -1764,7 +1762,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             values.put(AppConstant.MODE, "NEW");
             values.put(AppConstant.TRADE_CODE,selectedTradeCode);
             values.put(AppConstant.TRADE_CODE_ID,selectedTrdeCodeDetailsID);
-            values.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
+            //values.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
             values.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
             values.put(AppConstant.LICENCE_TYPE,selectedLicenceTypeName);
             values.put(AppConstant.APPLICANT_NAME_EN, newTradeLicenceScreenBinding.applicantName.getText().toString());
@@ -1910,7 +1908,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
         dataSet.put(AppConstant.MODE, "NEW");
         dataSet.put("tradedetails_id",selectedTrdeCodeDetailsID);
-        dataSet.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
+        //dataSet.put(AppConstant.DATE,newTradeLicenceScreenBinding.date.getText().toString());
         dataSet.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
         dataSet.put(AppConstant.APPLICANT_NAME_EN, newTradeLicenceScreenBinding.applicantName.getText().toString());
         dataSet.put(AppConstant.APPLICANT_NAME_TA, newTradeLicenceScreenBinding.applicantNameTamil.getText().toString());
@@ -1995,6 +1993,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         return dataSet;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public  void next() {
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
@@ -2083,6 +2082,19 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes);
         // start activiy
         startActivityForResult(intent, PICK_PDF_FILE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public boolean isTamil(String text){
+        boolean result = true;
+        UCharacter.UnicodeBlock tamilBlock = UCharacter.UnicodeBlock.forName("TAMIL");
+        for(int i=0; i<text.length(); i++){
+            UCharacter.UnicodeBlock charBlock = UCharacter.UnicodeBlock.of(text.charAt(i));
+            if(!tamilBlock.equals(charBlock)){
+                result = false;
+            }
+        }
+        return result;
     }
 
 /*
@@ -2270,19 +2282,20 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean ValidationFirst(){
         if(!newTradeLicenceScreenBinding.applicantName.getText().toString().isEmpty()){
-            if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()){
+            if(!newTradeLicenceScreenBinding.applicantNameTamil.getText().toString().isEmpty()&&isTamil(newTradeLicenceScreenBinding.applicantNameTamil.getText().toString())){
                 if (!getApplicationContext().getResources().getString(R.string.select_Gender).equalsIgnoreCase(selectedGender) && !newTradeLicenceScreenBinding.gender.getSelectedItem().toString().isEmpty()) {
                     if(!newTradeLicenceScreenBinding.age.getText().toString().isEmpty()&& Integer.parseInt(newTradeLicenceScreenBinding.age.getText().toString())>18){
                         if(!newTradeLicenceScreenBinding.fatherHusName.getText().toString().isEmpty()){
-                            if(!newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString().isEmpty()){
+                            if(!newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString().isEmpty()&&isTamil(newTradeLicenceScreenBinding.fatherHusNameTamil.getText().toString())){
                                 if(!newTradeLicenceScreenBinding.mobileNo.getText().toString().isEmpty()){
                                     if (Utils.isValidMobile(newTradeLicenceScreenBinding.mobileNo.getText().toString())) {
                                     if(!newTradeLicenceScreenBinding.emailId.getText().toString().isEmpty()){
                                         if (Utils.isEmailValid(newTradeLicenceScreenBinding.emailId.getText().toString())) {
                                         if(!newTradeLicenceScreenBinding.descriptionEnglish.getText().toString().isEmpty()){
-                                            if(!newTradeLicenceScreenBinding.descriptionTamil.getText().toString().isEmpty()){
+                                            if(!newTradeLicenceScreenBinding.descriptionTamil.getText().toString().isEmpty()&&isTamil(newTradeLicenceScreenBinding.descriptionTamil.getText().toString())){
                                                 return true;
                                             }
                                             else {
@@ -2353,7 +2366,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
                     if (!newTradeLicenceScreenBinding.licenceValidity.getSelectedItem().toString().isEmpty() && !getApplicationContext().getResources().getString(R.string.select_Licence_Validity).equalsIgnoreCase(selectedFinName)) {
                         if(ownerDetailsCondition()){
-                            if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty() && !newTradeLicenceScreenBinding.date.getText().toString().equals(getApplicationContext().getResources().getString(R.string.select_Date))) {
+                            /*if (!newTradeLicenceScreenBinding.date.getText().toString().isEmpty() && !newTradeLicenceScreenBinding.date.getText().toString().equals(getApplicationContext().getResources().getString(R.string.select_Date))) {*/
                                 if (newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem() != null && selectedTradeCode != null && !newTradeLicenceScreenBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !"Select TradeCode".equalsIgnoreCase(selectedTradeCode)) {
 
                                     if (!newTradeLicenceScreenBinding.licenceType.getSelectedItem().toString().isEmpty() && !getApplicationContext().getResources().getString(R.string.select_Licence_Type).equalsIgnoreCase(selectedLicenceTypeName)) {
@@ -2378,11 +2391,11 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                     Utils.showAlert(this, getApplicationContext().getResources().getString(R.string.select_TradeCode));
                                     newTradeLicenceScreenBinding.tradersCodeLayout.requestLayout();
                                 }
-                            }
+                            /*}
                             else {
                                 Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.select_Date));
                                 newTradeLicenceScreenBinding.dateLayout.requestFocus();
-                            }
+                            }*/
                         }
                     }
                     else {

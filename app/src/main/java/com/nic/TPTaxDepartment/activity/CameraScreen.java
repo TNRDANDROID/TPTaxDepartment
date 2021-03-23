@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationListener;
@@ -50,6 +51,7 @@ import com.nic.TPTaxDepartment.utils.UrlGenerator;
 import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -76,7 +78,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
     private PrefManager prefManager;
     private CameraScreenBinding cameraScreenBinding;
     private com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
-    String trader_code ="";
+    String trader_details_id ="";
     String MOBILE="";
     String screen_status="";
     String LATITUDE = "";
@@ -107,7 +109,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         cameraScreenBinding.btnSave.setOnClickListener(this);
 
 
-       trader_code =  getIntent().getStringExtra(AppConstant.TRADE_CODE);
+       trader_details_id =  getIntent().getStringExtra(AppConstant.TRADE_CODE);
         MOBILE =  getIntent().getStringExtra(AppConstant.MOBILE);
        screen_status =  getIntent().getStringExtra("screen_status");
     }
@@ -142,11 +144,17 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
             imageInByte = baos.toByteArray();
             image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
 
+            byte [] encodeByte = Base64.decode(image_str.trim(),Base64.DEFAULT);
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap converetdImage = Utils.getResizedBitmap(bitmap1, 500);
+            image_str=Utils.bitmapToString(converetdImage);
+
+
             ContentValues values = new ContentValues();
             values.put(AppConstant.TRADE_IMAGE,image_str.trim());
             values.put(AppConstant.LATITUDE, offlatTextValue.toString());
             values.put(AppConstant.LONGITUDE, offlongTextValue.toString());
-            values.put(AppConstant.TRADE_CODE,trader_code);
+            values.put(AppConstant.TRADE_CODE,trader_details_id);
             values.put(AppConstant.MOBILE,MOBILE);
             values.put("screen_status",screen_status);
             id = Dashboard.db.insert(DBHelper.SAVE_TRADE_IMAGE, null, values);
@@ -173,10 +181,20 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
             imageInByte = baos.toByteArray();
             image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+            byte [] encodeByte = Base64.decode(image_str.trim(),Base64.DEFAULT);
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap converetdImage = Utils.getResizedBitmap(bitmap1, 500);
+            image_str=Utils.bitmapToString(converetdImage);
+
             TraderImage=image_str;
             LATITUDE=offlatTextValue.toString();
             LONGITUDE=offlongTextValue.toString();
-            uploadTraderImage();
+            if(Utils.isOnline()) {
+                uploadTraderImage();
+            }
+            else {
+                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+            }
         } catch (Exception e) {
             Utils.showAlert(CameraScreen.this, getApplicationContext().getResources().getString(R.string.atleast_Capture_one_Photo));
             //e.printStackTrace();
@@ -203,13 +221,18 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
 
     public JSONObject traderImageParams() throws JSONException{
         JSONObject dataSet = new JSONObject();
-        dataSet.put(AppConstant.KEY_SERVICE_ID, "TradersShopImage");
-        dataSet.put("tradersdetails_id",trader_code);
+        JSONObject dataSet1 = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         dataSet.put(AppConstant.LATITUDE,LATITUDE);
         dataSet.put(AppConstant.LONGITUDE,LONGITUDE);
         dataSet.put(AppConstant.TRADE_IMAGE,TraderImage);
+        jsonArray.put(dataSet);
+        dataSet1.put(AppConstant.KEY_SERVICE_ID, "UpdateLicenseTraders");
+        dataSet1.put("edit_id",trader_details_id);
+        dataSet1.put("del_id","0");
+        dataSet1.put(AppConstant.ATTACHMENT_FILES,jsonArray);
         Log.d("TraderImage", "" + dataSet);
-        return dataSet;
+        return dataSet1;
     }
     private void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
