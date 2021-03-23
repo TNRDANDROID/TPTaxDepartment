@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.PorterDuff;
@@ -398,7 +399,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         }
 */
 
-        existingTradeDetailsViewNewBinding.date.setText(traders.get(position).getTrade_date());
+//        existingTradeDetailsViewNewBinding.date.setText(traders.get(position).getTrade_date());
         existingTradeDetailsViewNewBinding.tradeDescription.setText(traders.get(position).getTradedesce());
         existingTradeDetailsViewNewBinding.applicantName.setText(traders.get(position).getTraderName());
         existingTradeDetailsViewNewBinding.applicantNameTamil.setText(traders.get(position).getApname_ta());
@@ -1687,6 +1688,10 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
      public void showImage(){
          if (TraderImageString/*tradersImageList.get(tradersImagePosition).getImageByte()*/ != null &&
                  !TraderImageString.equals("")) {
+             byte [] encodeByte = Base64.decode(TraderImageString,Base64.DEFAULT);
+             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+             Bitmap converetdImage = Utils.getResizedBitmap(bitmap, 500);
+             TraderImageString=Utils.bitmapToString(converetdImage);
              String value = new String(tradersImageList.get(tradersImagePosition).getImageByte());
              Intent intent = new Intent(this, FullImageActivity.class);
              intent.putExtra(AppConstant.TRADE_CODE, "");
@@ -2247,7 +2252,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
 
                     if (!existingTradeDetailsViewNewBinding.licenceValidity.getSelectedItem().toString().isEmpty() && !context.getResources().getString(R.string.select_Licence_Validity).equalsIgnoreCase(selectedFinName)) {
                         if(ownerDetailsCondition()){
-                            if (!existingTradeDetailsViewNewBinding.date.getText().toString().isEmpty() && !existingTradeDetailsViewNewBinding.date.getText().toString().equals(context.getResources().getString(R.string.select_Date))) {
+//                            if (!existingTradeDetailsViewNewBinding.date.getText().toString().isEmpty() && !existingTradeDetailsViewNewBinding.date.getText().toString().equals(context.getResources().getString(R.string.select_Date))) {
                                 if (existingTradeDetailsViewNewBinding.tradeCodeSpinner.getSelectedItem() != null && selectedTradeCode != null && !existingTradeDetailsViewNewBinding.tradeCodeSpinner.getSelectedItem().toString().isEmpty() && !context.getResources().getString(R.string.select_TradeCode).equalsIgnoreCase(selectedTradeCode)) {
 
                                     if (!existingTradeDetailsViewNewBinding.licenceType.getSelectedItem().toString().isEmpty() && !context.getResources().getString(R.string.select_Licence_Type).equalsIgnoreCase(selectedLicenceTypeName)) {
@@ -2269,11 +2274,11 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                                     Utils.showAlert(this, context.getResources().getString(R.string.select_TradeCode));
                                     existingTradeDetailsViewNewBinding.tradersCodeLayout.requestLayout();
                                 }
-                            }
+                            /*}
                             else {
                                 Utils.showAlert(this,context.getResources().getString(R.string.select_Date));
                                 existingTradeDetailsViewNewBinding.dateLayout.requestFocus();
-                            }
+                            }*/
                         }
                     }
                     else {
@@ -2565,7 +2570,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
         dataSet.put(AppConstant.KEY_SERVICE_ID, "SaveLicenseTraders");
         dataSet.put(AppConstant.MODE, "NEW");
         dataSet.put("tradedetails_id",selectedTrdeCodeDetailsID);
-        dataSet.put(AppConstant.DATE,existingTradeDetailsViewNewBinding.date.getText().toString());
+//        dataSet.put(AppConstant.DATE,existingTradeDetailsViewNewBinding.date.getText().toString());
         dataSet.put(AppConstant.LICENCE_TYPE_ID,selectedLicenceTpeId);
         dataSet.put(AppConstant.APPLICANT_NAME_EN, existingTradeDetailsViewNewBinding.applicantName.getText().toString());
         dataSet.put(AppConstant.APPLICANT_NAME_TA, existingTradeDetailsViewNewBinding.applicantNameTamil.getText().toString());

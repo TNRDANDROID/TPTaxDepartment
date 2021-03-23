@@ -142,7 +142,8 @@ public class FieldVisitListAdapter extends RecyclerView.Adapter<FieldVisitListAd
 
     public void deleteRow(int position){
         db.delete(DBHelper.SAVE_FIELD_VISIT, "request_id" + "=?", new String[]{traders.get(position).getRequest_id()});
-        db.delete(DBHelper.CAPTURED_PHOTO, "request_id" + "=?"+ " and  data_ref_id" + "=?", new String[]{traders.get(position).getData_ref_id()});
+        db.delete(DBHelper.CAPTURED_PHOTO, "request_id" + "=?"+ " and  data_ref_id" + "=?",
+                new String[]{traders.get(position).getRequest_id(),traders.get(position).getData_ref_id()});
         traders.remove(position);
         notifyDataSetChanged();
         if(traders.size()>0){

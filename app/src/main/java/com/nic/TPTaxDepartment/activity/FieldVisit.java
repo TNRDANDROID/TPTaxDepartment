@@ -13,6 +13,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -73,6 +74,7 @@ import com.nic.TPTaxDepartment.Support.MyCustomTextView;
 import com.nic.TPTaxDepartment.Support.MyLocationListener;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
+import com.nic.TPTaxDepartment.dataBase.dbData;
 import com.nic.TPTaxDepartment.databinding.FieldVisitBinding;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.SpinnerAdapter;
@@ -109,6 +111,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.view.View.IMPORTANT_FOR_AUTOFILL_NO_EXCLUDE_DESCENDANTS;
+import static com.nic.TPTaxDepartment.activity.Dashboard.db;
 
 public class FieldVisit extends AppCompatActivity implements View.OnClickListener, Api.ServerResponseListener,AdapterView.OnItemClickListener, StickyListHeadersListView.OnHeaderClickListener,
         StickyListHeadersListView.OnStickyHeaderOffsetChangedListener,
@@ -177,6 +180,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     TextView date;
     String fromDate,toDate,TaxTypeIdHistory,serviceListFieldTaxTypeIdHistory;
     String[] taxItems;
+    public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -189,7 +193,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         WindowPreferencesManager windowPreferencesManager = new WindowPreferencesManager(this);
         windowPreferencesManager.applyEdgeToEdgePreference(getWindow());
         this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
-
+        dataset = new JSONObject();
         //loadCurrentStatus();
         try {
             dbHelper = new DBHelper(this);
@@ -460,6 +464,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     public void viewImageScreen(String fieldVisitImg) {
         if (fieldVisitImg != null ) {
+            byte [] encodeByte = Base64.decode(fieldVisitImg,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap converetdImage = Utils.getResizedBitmap(bitmap, 500);
+            fieldVisitImg=Utils.bitmapToString(converetdImage);
             Intent intent = new Intent(this, FullImageActivity.class);
             intent.putExtra(AppConstant.TRADE_CODE, "");
             intent.putExtra(AppConstant.MOBILE, "");
@@ -518,8 +526,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         }
     }
     public void imageWithDescription(TextView action_tv, final String type) {
-
-        dataset = new JSONObject();
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -613,11 +619,16 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
                         ContentValues imageValue = new ContentValues();
 
+                        byte [] encodeByte = Base64.decode(image_str.trim(),Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+                        Bitmap converetdImage = Utils.getResizedBitmap(bitmap, 500);
+                        image_str=Utils.bitmapToString(converetdImage);
+
                         imageValue.put("request_id", request_id);
                         imageValue.put("data_ref_id", data_ref_id);
                         imageValue.put(AppConstant.LATITUDE, offlatTextValue);
                         imageValue.put(AppConstant.LONGITUDE, offlanTextValue);
-                        imageValue.put(AppConstant.FIELD_IMAGE, image_str.trim());
+                        imageValue.put(AppConstant.FIELD_IMAGE, image_str);
                         imageValue.put(AppConstant.DESCRIPTION, myEditTextView.getText().toString());
                         imageValue.put("pending_flag", 1);
 
@@ -642,6 +653,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                     Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
                                 }
                             }
+                           /*
                         if (Utils.isOnline())  {
                             try {
                                 //imageArray.put(i);
@@ -672,6 +684,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             }
 
                         }
+*/
 
 
                     }
@@ -775,8 +788,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 if(fieldVisitBinding.currentStatus.getSelectedItem()!=null&&!fieldVisitBinding.currentStatus.getSelectedItem().equals(context.getResources().getString(R.string.select_Status))){
                     if(!fieldVisitBinding.remarksText.getText().toString().isEmpty()){
                         if (getSaveTradeImageTable() > 0) {
-                            submit();
-//                            showConfirmationAlert(this,context.getResources().getString(R.string.would_you_like_to_change_image));
+//                            submit();
+                            showConfirmationAlert(this,context.getResources().getString(R.string.would_you_like_to_change_image));
                         }
                         else {
                             Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.take_Photo));
@@ -846,7 +859,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String current_status = selectedFieldVisitStatusId;
         String remarks = fieldVisitBinding.remarksText.getText().toString();
 
-        if(Utils.isOnline()) {
+        if(!Utils.isOnline()) {
             ContentValues fieldValue = new ContentValues();
             fieldValue.put("taxtypeid", tax_type_id);
             fieldValue.put("tax_type_name", selectedTaxTypeName);
@@ -896,8 +909,32 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         }
 
         else {
+            ArrayList<TPtaxModel> commonModels = new ArrayList<>();
+            JSONArray jsonArray = new JSONArray();
+            dbData.open();
 
+//        commonModels.addAll(dbData.selectPendingImage(request_id));
+            commonModels = new ArrayList<>(dbData.selectFieldVisitImage(request_id,data_ref_id));
+
+            for (int i = 0; i < commonModels.size(); i++) {
+                JSONObject imageArray = new JSONObject();
+                try {
+                    if (request_id.equals(commonModels.get(i).getRequest_id()) && data_ref_id.equals(commonModels.get(i).getData_ref_id())) {
+                        //imageArray.put(i);
+                        imageArray.put("lat", commonModels.get(i).getLatitude());
+                        imageArray.put("long", commonModels.get(i).getLongitude());
+                        imageArray.put("photo", bitmapToString(commonModels.get(i).getImage()));
+                        //imageArray.put(description);
+                        jsonArray.put(imageArray);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("jsonArray" + jsonArray.toString());
             try {
+                dataset.put("image_details", jsonArray);
                 dataset.put(AppConstant.KEY_SERVICE_ID,"FieldVisitStatusUpdate");
                 dataset.put("taxtypeid", tax_type_id);
                 dataset.put("serviceid", selectedServiceFieldVisitTypesId);
@@ -937,6 +974,16 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     }
 
+    public String bitmapToString(Bitmap bitmap1) {
+        byte[] imageInByte = new byte[0];
+        String image_str = "";
+        Bitmap bitmap = bitmap1;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        imageInByte = baos.toByteArray();
+        image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+        return image_str;
+    }
 
     private final void focusOnView(final ScrollView your_scrollview, TextView your_EditBox) {
         your_scrollview.post(new Runnable() {
@@ -1353,6 +1400,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
 
     public void loadHistory() {
+        String door_no= "" , plotarea="", buildage="", buildusage="", buildstructure="", taxlocation="" ;
         historyList = new ArrayList<TPtaxModel>();
         JSONArray jsonarray= null;
         try {
@@ -1362,9 +1410,17 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 fieldVisitBinding.historyLayout.setVisibility(View.VISIBLE);
                 for (int i = 0; i < jsonarray.length(); i++) {
                     JSONObject jsonobject = jsonarray.getJSONObject(i);
+                    String taxtypeid = Utils.NotNullString(jsonobject.getString("taxtypeid"));
+                    if (taxtypeid.equals("1")){
+                        door_no = Utils.NotNullString(jsonobject.getString("door_no"));
+                         plotarea = Utils.NotNullString(jsonobject.getString("plotarea"));
+                         buildage = Utils.NotNullString(jsonobject.getString("buildage"));
+                         buildusage = Utils.NotNullString(jsonobject.getString("buildusage"));
+                         buildstructure = Utils.NotNullString(jsonobject.getString("buildstructure"));
+                         taxlocation = Utils.NotNullString(jsonobject.getString("taxlocation"));
+                    }
                     String Request_id = Utils.NotNullString(jsonobject.getString("request_id"));
                     String serviceid = Utils.NotNullString(jsonobject.getString("serviceid"));
-                    String taxtypeid = Utils.NotNullString(jsonobject.getString("taxtypeid"));
                     String Data_ref_id = Utils.NotNullString(jsonobject.getString("data_ref_id"));
                     String TraderName = Utils.NotNullString(jsonobject.getString("ownername"));
                     String FieldVisitDate = Utils.NotNullString(jsonobject.getString("field_visit_upd_date"));
@@ -1374,12 +1430,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     String Streetname = Utils.NotNullString(jsonobject.getString("street_name_en"));
                     String field_visit_image_status = Utils.NotNullString(jsonobject.getString("field_visit_photo_available"));
                     String Remark = Utils.NotNullString(jsonobject.getString("field_visit_remark"));
-                    String door_no = Utils.NotNullString(jsonobject.getString("door_no"));
-                    String plotarea = Utils.NotNullString(jsonobject.getString("plotarea"));
-                    String buildage = Utils.NotNullString(jsonobject.getString("buildage"));
-                    String buildusage = Utils.NotNullString(jsonobject.getString("buildusage"));
-                    String buildstructure = Utils.NotNullString(jsonobject.getString("buildstructure"));
-                    String taxlocation = Utils.NotNullString(jsonobject.getString("taxlocation"));
+
 
                     FieldVisitDate=changeDateFormat(FieldVisitDate);
 
@@ -1396,12 +1447,15 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     Detail.setField_visit_image_status(field_visit_image_status);
                     Detail.setServiceid(serviceid);
                     Detail.setTaxTypeId(taxtypeid);
-                    Detail.setDoorno(door_no);
-                    Detail.setPlotarea(plotarea);
-                    Detail.setBuildage(buildage);
-                    Detail.setBuildusage(buildusage);
-                    Detail.setBuildstructure(buildstructure);
-                    Detail.setTaxlocation(taxlocation);
+                    if (taxtypeid.equals("1")){
+                        Detail.setDoorno(door_no);
+                        Detail.setPlotarea(plotarea);
+                        Detail.setBuildage(buildage);
+                        Detail.setBuildusage(buildusage);
+                        Detail.setBuildstructure(buildstructure);
+                        Detail.setTaxlocation(taxlocation);
+                    }
+
                     historyList.add(Detail);
                 }
             }else {
@@ -1752,8 +1806,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             JSONObject responseObj = serverResponse.getJsonResponse();
             String urlType = serverResponse.getApi();
             String status;
-            String request_id;
-            String data_ref_id;
+            String request_Id;
+            String data_ref_Id;
             String ward_code;
             String ward_name_en;
             String ward_name_ta;
@@ -1782,8 +1836,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             for (int i = 0; i < jsonarray.length(); i++) {
                                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                                 CommonModel commonModel = new CommonModel();
-                                request_id = Utils.NotNullString(jsonobject.getString("request_id"));
-                                data_ref_id = Utils.NotNullString(jsonobject.getString("data_ref_id"));
+                                request_Id = Utils.NotNullString(jsonobject.getString("request_id"));
+                                data_ref_Id = Utils.NotNullString(jsonobject.getString("data_ref_id"));
                                 ward_code = Utils.NotNullString(jsonobject.getString("ward_code"));
                                 ward_name_en = Utils.NotNullString(jsonobject.getString("ward_name_en"));
                                 ward_name_ta = Utils.NotNullString(jsonobject.getString("ward_name_ta"));
@@ -1807,8 +1861,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                     commonModel.setTaxlocation(taxlocation);
                             }
 
-                                commonModel.setRequest_id(request_id);
-                                commonModel.setData_ref_id(data_ref_id);
+                                commonModel.setRequest_id(request_Id);
+                                commonModel.setData_ref_id(data_ref_Id);
                                 commonModel.setWard_code(ward_code);
                                 commonModel.setWard_name_en(ward_name_en);
                                 commonModel.setWard_name_ta(ward_name_ta);
@@ -1856,7 +1910,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                     JSONObject jsonObject = new JSONObject(userDataDecrypt);
                     status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                     if (status.equalsIgnoreCase("SUCCESS") ){
-                        Utils.showAlert(FieldVisit.this, jsonObject.getString("MESSAGE"));
+                        db.delete(DBHelper.CAPTURED_PHOTO, "request_id" + "=?"+ " and  data_ref_id" + "=?", new String[]{request_id,data_ref_id});
+                        Utils.showToast(FieldVisit.this, jsonObject.getString("MESSAGE"));
                         onBackPressed();
                     }
                     else if(status.equalsIgnoreCase("FAILD")){
@@ -1875,7 +1930,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
                 status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                 if (status.equalsIgnoreCase("SUCCESS") ) {
-                    FieldVisitImageString = jsonObject.getString(AppConstant.TRADE_DOCUMENT);
+                    JSONObject jsonObject1=jsonObject.getJSONObject(AppConstant.DATA);
+                    FieldVisitImageString = jsonObject1.getString(AppConstant.FIELD_VISIT_IMAGE);
                     Log.d("FieldVisitImage", "" + jsonObject);
                     viewImageScreen(FieldVisitImageString);
 

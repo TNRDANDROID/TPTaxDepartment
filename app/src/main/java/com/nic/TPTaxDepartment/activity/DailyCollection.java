@@ -391,7 +391,7 @@ else if(i==5){
                     getYearlyCollection();
                 }
                 else {
-                    Utils.showAlert(DailyCollection.this,"No Network Connection");
+                    Utils.showAlert(DailyCollection.this,context.getResources().getString(R.string.no_internet_connection));
                 }
             }
         }

@@ -130,17 +130,8 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             setAdapter();
         }
     }
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }
-        catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    }
+
+
     public class fetchTradeImagetask extends AsyncTask<Void, Void,
             ArrayList<TPtaxModel>> {
         @Override
@@ -149,7 +140,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             activityImage = new ArrayList<>();
            if(tradeImage != null){
                TPtaxModel card = new TPtaxModel();
-               card.setImage(StringToBitMap(tradeImage));
+               card.setImage(Utils.StringToBitMap(tradeImage));
                activityImage.add(card);
            }
 
@@ -171,7 +162,7 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             activityImage = new ArrayList<>();
            if(tradeImage != null){
                TPtaxModel card = new TPtaxModel();
-               card.setImage(StringToBitMap(tradeImage));
+               card.setImage(Utils.StringToBitMap(tradeImage));
                activityImage.add(card);
            }
 

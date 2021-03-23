@@ -187,7 +187,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/first"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:layout_marginBottom="@dimen/padding"
                         android:orientation="vertical">
                         //Applicant Name
@@ -738,7 +738,7 @@
                         android:layout_below="@+id/appBarLayout"
                         android:id="@+id/second"
                         android:layout_marginBottom="@dimen/padding"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:orientation="vertical">
                         //Ward No
                         <LinearLayout
@@ -1174,6 +1174,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:visibility="gone"
                             android:orientation="vertical">
 
                             <TextView

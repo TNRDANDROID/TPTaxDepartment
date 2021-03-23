@@ -3,6 +3,8 @@ package com.nic.TPTaxDepartment.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
@@ -36,6 +38,7 @@ import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity implements Api.ServerResponseListener {
@@ -96,14 +99,19 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in, R.anim.slide_out);*/
 
+               if(Utils.isOnline()){
+                   //Edit Trader Image
+                   Intent intent = new Intent(NewExistTraderWholeDetailsViewClass.this, CameraScreen.class);
+                   intent.putExtra(AppConstant.TRADE_CODE, traders.get(position).getTradersdetails_id());
+                   intent.putExtra(AppConstant.MOBILE, traders.get(position).getMobileno());
+                   intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "EditTraderImage");
+                   startActivity(intent);
+                   overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                 }else {
+                   Utils.showAlert(NewExistTraderWholeDetailsViewClass.this,
+                           context.getResources().getString(R.string.no_internet_connection));
+               }
 
-                //Edit Trader Image
-                Intent intent = new Intent(NewExistTraderWholeDetailsViewClass.this, CameraScreen.class);
-                intent.putExtra(AppConstant.TRADE_CODE, traders.get(position).getTradersdetails_id());
-                intent.putExtra(AppConstant.MOBILE, traders.get(position).getMobileno());
-                intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "EditTraderImage");
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
             }
         });
     }
@@ -160,7 +168,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
 
         String apage= changeTextColor(getApplicationContext().getResources().getString(R.string.age_c))+traders.get(position).getApage() + "\n"+ "\n";
-        String date= changeTextColor(getApplicationContext().getResources().getString(R.string.date_c))+traders.get(position).getTrade_date() + "\n"+ "\n";
+//        String date= changeTextColor(getApplicationContext().getResources().getString(R.string.date_c))+traders.get(position).getTrade_date() + "\n"+ "\n";
         String dcode= changeTextColor(getApplicationContext().getResources().getString(R.string.district_code))+traders.get(position).getDcode() + "\n"+ "\n";
         String doorno= changeTextColor(getApplicationContext().getResources().getString(R.string.door_no))+traders.get(position).getDoorno() + "\n"+ "\n";
         String email= changeTextColor(getApplicationContext().getResources().getString(R.string.email))+traders.get(position).getEmail() + "\n"+ "\n";
@@ -220,7 +228,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         existTraderDetailsWholeViewBinding.t12.setText(Html.fromHtml(apfathername_en));
         existTraderDetailsWholeViewBinding.t13.setText(Html.fromHtml(apgender));
         existTraderDetailsWholeViewBinding.t14.setText(Html.fromHtml(apage));
-        existTraderDetailsWholeViewBinding.t15.setText(Html.fromHtml(date));
+//        existTraderDetailsWholeViewBinding.t15.setText(Html.fromHtml(date));
         existTraderDetailsWholeViewBinding.t16.setText(Html.fromHtml(dcode));
         existTraderDetailsWholeViewBinding.t17.setText(Html.fromHtml(doorno));
         existTraderDetailsWholeViewBinding.t18.setText(Html.fromHtml(email));
@@ -266,7 +274,7 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
         existTraderDetailsWholeViewBinding.trderDetailsValue.setText(Html.fromHtml(tradersdetails_id	+"<br/>"+"<br/>"+ lb_sno +"<br/>"+"<br/>"+	lb_traderscode+	"<br/>"+"<br/>"+tradedetails_id	+"<br/>"+"<br/>"+ traders_rate	+"<br/>"+"<br/>"+ traders_type
                 +"<br/>"+"<br/>"+ tradersperiod+ "<br/>"+"<br/>"+ traderstypee+"<br/>"+"<br/>"+ apname_ta +"<br/>"+"<br/>"+ apname_en +"<br/>"+"<br/>"+ apfathername_ta
-                +"<br/>"+"<br/>"+ apfathername_en+"<br/>"+"<br/>"+ 	apgender+"<br/>"+"<br/>"+  apage+"<br/>"+"<br/>"+	date	+ "<br/>"+"<br/>"+ dcode+"<br/>"+"<br/>"+	doorno+"<br/>"+"<br/>"+	email
+                +"<br/>"+"<br/>"+ apfathername_en+"<br/>"+"<br/>"+ 	apgender+"<br/>"+"<br/>"+  apage+"<br/>"+"<br/>"+	/*date	+ "<br/>"+"<br/>"+*/ dcode+"<br/>"+"<br/>"+	doorno+"<br/>"+"<br/>"+	email
                 +"<br/>"+"<br/>"+ description_ta+"<br/>"+"<br/>"+	description_en+"<br/>"+"<br/>"+	statecode+"<br/>"+"<br/>"+ wardid+"<br/>"+"<br/>"+	streetid+"<br/>"+"<br/>"+	mobileno	+"<br/>"+"<br/>"+licence_validity+"<br/>"+"<br/>"+	licencetypeid
                 +"<br/>"+"<br/>"+traders_license_type_name+	"<br/>"+"<br/>"+ ownerStatus	+ "<br/>"+"<br/>"+ motorStatus + "<br/>"+"<br/>"+ generatorStatus +"<br/>"+"<br/>"+ propertyStatus+"<br/>"+"<br/>"+	professtionlStatus	+"<br/>"+"<br/>"+ motor_type_id+"<br/>"+"<br/>"+	amount_range_id
                 +"<br/>"+"<br/>"+generator_range_id	+"<br/>"+"<br/>"+propertyTaxAssessmentNumber +"<br/>"+"<br/>"+remark+"<br/>"+"<br/>"+annual_sale_production_amount+"<br/>"+"<br/>"+annual_sale_production_range+"<br/>"+"<br/>"+generator_range+"<br/>"+"<br/>"+generator_range_amount
@@ -317,6 +325,11 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
     }
     public void viewImageScreen() {
+
+        byte [] encodeByte = Base64.decode(TraderImageString,Base64.DEFAULT);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        Bitmap converetdImage = Utils.getResizedBitmap(bitmap, 500);
+        TraderImageString=Utils.bitmapToString(converetdImage);
 
 
             /*if (tradersImageList.get(tradersImagePosition).getImageByte() != null ) {*/

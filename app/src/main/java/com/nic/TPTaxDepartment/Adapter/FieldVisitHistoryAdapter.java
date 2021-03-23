@@ -12,6 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -79,6 +80,13 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
             holder.buildstructure = (TextView) convertView.findViewById(R.id.buildstructure);
             holder.location = (TextView) convertView.findViewById(R.id.location);
             holder.door_no = (TextView) convertView.findViewById(R.id.door_no);
+            holder.plot_no_layout = (LinearLayout) convertView.findViewById(R.id.plot_no_layout);
+            holder.buildage_no_layout = (LinearLayout) convertView.findViewById(R.id.buildage_no_layout);
+            holder.buildusage_no_layout = (LinearLayout) convertView.findViewById(R.id.buildusage_no_layout);
+            holder.buildstructure_no_layout = (LinearLayout) convertView.findViewById(R.id.buildstructure_no_layout);
+            holder.location_no_layout = (LinearLayout) convertView.findViewById(R.id.location_no_layout);
+            holder.door_no_layout = (LinearLayout) convertView.findViewById(R.id.door_no_layout);
+
             convertView.setTag(holder);
         } else {
             holder = (FieldVisitHistoryAdapter.ViewHolder) convertView.getTag();
@@ -95,12 +103,31 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
             holder.ward_name_value.setText(historyList.get(position).getWardname());
             holder.remarks_value.setText(historyList.get(position).getRemark());
             holder.street_name_value.setText(historyList.get(position).getStreetname());
-            holder.plot_area.setText(historyList.get(position).getPlotarea());
-            holder.buildage.setText(historyList.get(position).getBuildage());
-            holder.buildusage.setText(historyList.get(position).getBuildusage());
-            holder.buildstructure.setText(historyList.get(position).getBuildstructure());
-            holder.location.setText(historyList.get(position).getTaxlocation());
-            holder.door_no.setText(historyList.get(position).getDoorno());
+
+            if (historyList.get(position).getTaxTypeId().equals("1")){
+
+                holder.plot_no_layout.setVisibility(View.VISIBLE);
+                holder.buildage_no_layout.setVisibility(View.VISIBLE);
+                holder.buildusage_no_layout.setVisibility(View.VISIBLE);
+                holder.buildstructure_no_layout.setVisibility(View.VISIBLE);
+                holder.location_no_layout.setVisibility(View.VISIBLE);
+                holder.door_no_layout.setVisibility(View.VISIBLE);
+
+                holder.plot_area.setText(historyList.get(position).getPlotarea());
+                holder.buildage.setText(historyList.get(position).getBuildage());
+                holder.buildusage.setText(historyList.get(position).getBuildusage());
+                holder.buildstructure.setText(historyList.get(position).getBuildstructure());
+                holder.location.setText(historyList.get(position).getTaxlocation());
+                holder.door_no.setText(historyList.get(position).getDoorno());
+            }else {
+                holder.plot_no_layout.setVisibility(View.GONE);
+                holder.buildage_no_layout.setVisibility(View.GONE);
+                holder.buildusage_no_layout.setVisibility(View.GONE);
+                holder.buildstructure_no_layout.setVisibility(View.GONE);
+                holder.location_no_layout.setVisibility(View.GONE);
+                holder.door_no_layout.setVisibility(View.GONE);
+            }
+
 
             if(historyList.get(position).getField_visit_image_status().equals("Y")){
                 holder.image_list.setVisibility(View.VISIBLE);
@@ -178,5 +205,7 @@ public class FieldVisitHistoryAdapter extends BaseAdapter implements StickyListH
                 plot_area,buildage,buildusage,buildstructure,location,door_no;
         ImageView image_list,extend_view_icon,hide_details_icon;
         RelativeLayout details_view_layout,content2;
+        LinearLayout plot_no_layout,buildage_no_layout,buildusage_no_layout
+        , buildstructure_no_layout,location_no_layout,door_no_layout ;
     }
 }

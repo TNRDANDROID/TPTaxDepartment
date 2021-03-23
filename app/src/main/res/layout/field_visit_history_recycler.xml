@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:customfontdemo="http://schemas.android.com/tools"
     android:elevation="0sp">
 
     <androidx.cardview.widget.CardView
@@ -715,7 +714,7 @@
                         android:id="@+id/hide_details_icon"
                         android:src="@drawable/ic_left_arrow"
                         android:tint="@color/grey2"
-                        android:rotation="90"></ImageView>
+                        android:rotation="90"/>
 
                 </LinearLayout>
 
@@ -723,7 +722,7 @@
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
-    </androidx.cardview.widget.CardView>>
+    </androidx.cardview.widget.CardView>
 </RelativeLayout>
 
 

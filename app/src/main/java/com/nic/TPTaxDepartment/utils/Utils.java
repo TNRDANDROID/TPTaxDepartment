@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -18,6 +19,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.LocaleList;
+import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -45,6 +47,7 @@ import com.nic.TPTaxDepartment.Application.NICApplication;
 import com.nic.TPTaxDepartment.Interface.DateInterface;
 import com.nic.TPTaxDepartment.R;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
@@ -883,6 +886,43 @@ public class Utils {
             e.printStackTrace();
         }
         return myFormat;
+    }
+    public static Bitmap getResizedBitmap(Bitmap image, int maxSize) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        float bitmapRatio = (float)width / (float) height;
+        if (bitmapRatio > 1) {
+            width = maxSize;
+            height = (int) (width / bitmapRatio);
+        } else {
+            height = maxSize;
+            width = (int) (height * bitmapRatio);
+        }
+        return Bitmap.createScaledBitmap(image, width, height, true);
+    }
+
+    public static String bitmapToString(Bitmap bitmap1) {
+        byte[] imageInByte = new byte[0];
+        String image_str = "";
+        Bitmap bitmap = bitmap1;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+        imageInByte = baos.toByteArray();
+        image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+        return image_str;
+    }
+    public static Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap converetdImage = Utils.getResizedBitmap(bitmap, 500);
+            return converetdImage;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
     }
 
 }

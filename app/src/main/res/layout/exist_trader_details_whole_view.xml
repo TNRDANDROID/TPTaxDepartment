@@ -471,6 +471,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+<!--
                 <TextView
                     android:background="@color/bg1"
                     android:padding="8dp"
@@ -481,6 +482,7 @@
                     android:scrollbars = "vertical"
                     android:textColor="@color/grey2"
                     ></TextView>
+-->
                 <TextView
                     android:background="@color/bg2"
                     android:padding="8dp"
