@@ -241,7 +241,7 @@ public class QRCodeReaderActivity extends AppCompatActivity implements Api.Serve
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypedesc_en().toLowerCase().compareTo(rhs.getTaxtypedesc_en().toLowerCase()));
+        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypeid().compareTo(rhs.getTaxtypeid()));
 
         if(taxType != null && taxType.size() >0) {
 

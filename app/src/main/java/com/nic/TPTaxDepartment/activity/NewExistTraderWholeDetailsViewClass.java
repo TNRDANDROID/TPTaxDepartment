@@ -39,7 +39,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity implements Api.ServerResponseListener {
 
@@ -155,7 +157,10 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         String lb_sno= changeTextColor(getApplicationContext().getResources().getString(R.string.lb_sno))+traders.get(position).getLb_sno() + "\n"+ "\n";
         String lb_traderscode= changeTextColor(getApplicationContext().getResources().getString(R.string.lb_trader_code))+traders.get(position).getTraderCode() + "\n"+ "\n";
         String tradedetails_id= changeTextColor(getApplicationContext().getResources().getString(R.string.trade_details_id))+traders.get(position).getTradedetails_id() + "\n"+ "\n";
-        String traders_rate= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_rate))+traders.get(position).getTraders_rate() + "\n"+ "\n";
+        if(traders.get(position).getTraders_rate().equals("")){
+            traders.get(position).setTraders_rate("0");
+        }
+        String traders_rate= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_rate))+indianCurrency(Integer.parseInt(traders.get(position).getTraders_rate())) + "\n"+ "\n";
         String traders_type= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_type))+traders.get(position).getTraders_typ() + "\n"+ "\n";
         String tradersperiod= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_period))+traders.get(position).getTradersperiod() + "\n"+ "\n";
         String traderstypee= changeTextColor(getApplicationContext().getResources().getString(R.string.trader_type_en))+traders.get(position).getTraders_typ() + "\n"+ "\n";
@@ -202,13 +207,20 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
         String document= changeTextColor(getApplicationContext().getResources().getString(R.string.document_c))+traders.get(position).getDocument() + "\n"+ "\n";
         String remark= changeTextColor(getApplicationContext().getResources().getString(R.string.remark_c))+traders.get(position).getRemark() + "\n"+ "\n";
 
+        if(traders.get(position).getAnnual_sale_production_amount().equals("")){
+            traders.get(position).setAnnual_sale_production_amount("0");
+        }if(traders.get(position).getGenerator_range_amount().equals("")){
+            traders.get(position).setGenerator_range_amount("0");
+        }if(traders.get(position).getMotor_range_amount().equals("")){
+            traders.get(position).setMotor_range_amount("0");
+        }
 
-        String annual_sale_production_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.annual_sale_production_amount))+traders.get(position).getAnnual_sale_production_amount() + "\n"+ "\n";
+        String annual_sale_production_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.annual_sale_production_amount))+indianCurrency(Integer.parseInt(traders.get(position).getAnnual_sale_production_amount())) + "\n"+ "\n";
         String annual_sale_production_range= changeTextColor(getApplicationContext().getResources().getString(R.string.annual_sale_production_range))+traders.get(position).getAnnual_sale_production_range() + "\n"+ "\n";
         String generator_range= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range))+traders.get(position).getGenerator_range() + "\n"+ "\n";
-        String generator_range_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range_amount))+traders.get(position).getGenerator_range_amount() + "\n"+ "\n";
+        String generator_range_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.generator_range_amount))+indianCurrency(Integer.parseInt(traders.get(position).getGenerator_range_amount())) + "\n"+ "\n";
         String motor_range= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_range))+traders.get(position).getMotor_range() + "\n"+ "\n";
-        String motor_range_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_range_amount))+traders.get(position).getMotor_range_amount() + "\n"+ "\n";
+        String motor_range_amount= changeTextColor(getApplicationContext().getResources().getString(R.string.motor_range_amount))+indianCurrency(Integer.parseInt(traders.get(position).getMotor_range_amount())) + "\n"+ "\n";
         String street_name_ta= changeTextColor(getApplicationContext().getResources().getString(R.string.street_name_ta))+traders.get(position).getStreet_name_ta() + "\n"+ "\n";
         String street_name_en= changeTextColor(getApplicationContext().getResources().getString(R.string.street_name_en))+traders.get(position).getStreet_name_en() + "\n"+ "\n";
         String ward_name_en= changeTextColor(getApplicationContext().getResources().getString(R.string.ward_name_en))+traders.get(position).getWard_name_en() + "\n"+ "\n";
@@ -282,7 +294,11 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
 
         //existTraderDetailsWholeViewBinding.trderDetailsValue.setText(Html.fromHtml(tradersdetails_id +"<br/>"+"<br/>"+  lb_sno));
     }
-
+    public String indianCurrency(int money){
+        String format = NumberFormat.getCurrencyInstance(new Locale("en", "in")).format(money);
+        System.out.println(format);
+        return format;
+    }
     public String changeTextColor(String text){
         String input="<font color=" + "#878787" + ">" + text  + "</font> ";
         return input;

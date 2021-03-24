@@ -58,7 +58,9 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name="com.nic.TPTaxDepartment.activity.SplashScreen">
+        <activity android:name="com.nic.TPTaxDepartment.activity.SplashScreen"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -459,7 +459,8 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
                     // status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                     status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
                     if (status.equalsIgnoreCase("SUCCESS")) {
-                        Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                        Utils.showToast(this, jsonObject.getString("MESSAGE"));
+                        onBackPressed();
                         Log.d("TraderImage", "" + jsonObject);
 
                     } else if (status.equalsIgnoreCase("FAILD")) {

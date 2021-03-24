@@ -11,7 +11,9 @@ import com.nic.TPTaxDepartment.Interface.AdapterInterface;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.model.CommonModel;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.SummaryViewHolder>{
@@ -78,7 +80,13 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.apfathername_en.setText(commonModelArrayList.get(position).getApfathername_en());
                 holder.apfathername_ta.setText(commonModelArrayList.get(position).getApfathername_ta());
                 holder.doorno.setText(commonModelArrayList.get(position).getDoorno());
-                holder.traders_rate.setText(commonModelArrayList.get(position).getTraders_rate());
+                if(!commonModelArrayList.get(position).getTraders_rate().equals("")){
+                    holder.traders_rate.setText(indianCurrency(Double.parseDouble(commonModelArrayList.get(position).getTraders_rate())));
+                }
+                else {
+                    holder.traders_rate.setText(indianCurrency(Double.parseDouble("0.00")));
+                }
+
                 holder.trade_description_en.setText(commonModelArrayList.get(position).getTrade_description_en());
                 holder.fin_year.setText(commonModelArrayList.get(position).getFrom_fin_year());
             }else if(selectedTaxTypeName.equals("Water Charges") || selectedTaxTypeId.equals("2")) {
@@ -89,7 +97,14 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.nonTax.setVisibility(View.GONE);
                 holder.lb_connectionno.setText(commonModelArrayList.get(position).getLb_connectionno());
                 holder.connectionname.setText(commonModelArrayList.get(position).getConnectionname());
-                holder.water_charges.setText("\u20b9"+" "+commonModelArrayList.get(position).getWater_charges());
+                if(!commonModelArrayList.get(position).getWater_charges().equals("")){
+                    //holder.water_charges.setText("\u20b9"+" "+commonModelArrayList.get(position).getWater_charges());
+                    holder.water_charges.setText(indianCurrency(Double.parseDouble(commonModelArrayList.get(position).getWater_charges())));
+                }
+                else {
+                    holder.water_charges.setText(indianCurrency(Double.parseDouble("0.00")));
+                }
+
             }else if(selectedTaxTypeName.equals("Non Tax") || selectedTaxTypeId.equals("5")) {
                 holder.professionalTax.setVisibility(View.GONE);
                 holder.propertyTax.setVisibility(View.GONE);
@@ -102,7 +117,13 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
                 holder.lease_type_code.setText(commonModelArrayList.get(position).getLease_type_code());
                 holder.lease_type_description_en.setText(commonModelArrayList.get(position).getLease_type_description_en());
                 holder.lease_payment_due_type.setText(commonModelArrayList.get(position).getLease_payment_due_type());
-                holder.annuallease_amount.setText("\u20b9"+" "+commonModelArrayList.get(position).getAnnuallease_amount());
+                if(!commonModelArrayList.get(position).getAnnuallease_amount().equals("")){
+                //holder.annuallease_amount.setText("\u20b9"+" "+commonModelArrayList.get(position).getAnnuallease_amount());
+                holder.annuallease_amount.setText(indianCurrency(Double.parseDouble(commonModelArrayList.get(position).getAnnuallease_amount())));
+                }
+                else {
+                    holder.annuallease_amount.setText(indianCurrency(Double.parseDouble("0.00")));
+                }
             }else {
                 holder.professionalTax.setVisibility(View.GONE);
                 holder.propertyTax.setVisibility(View.GONE);
@@ -175,6 +196,11 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
         }
     }
 
+    public String indianCurrency(double money){
+        String format = NumberFormat.getCurrencyInstance(new Locale("en", "in")).format(money);
+        System.out.println(format);
+        return format;
+    }
 
 
 }
