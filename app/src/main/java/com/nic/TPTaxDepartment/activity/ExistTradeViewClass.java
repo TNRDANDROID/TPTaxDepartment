@@ -2717,6 +2717,7 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
                                         context.getResources().getColor(R.color.colorPrimary) ,
                                         context.getResources().getColor(R.color.colorPrimaryDark) , Shader.TileMode.REPEAT);
                                 existingTradeDetailsViewNewBinding.fileLocation.getPaint().setShader(shader);
+                                existingTradeDetailsViewNewBinding.fileSize.getPaint().setShader(shader);
                                 ConvertToString(uri);
                                 Log.d("fileString>>", fileString);
                             }

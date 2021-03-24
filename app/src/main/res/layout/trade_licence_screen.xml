@@ -146,7 +146,7 @@
                                 android:gravity="center"
                                 android:padding="2dp"
                                 android:text="@string/new_trade"
-                                android:textSize="23sp"
+                                android:textSize="@dimen/_15sdp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white" />
 
@@ -220,7 +220,7 @@
                                 android:gravity="center"
                                 android:padding="2dp"
                                 android:text="@string/existing_trade"
-                                android:textSize="23sp"
+                                android:textSize="@dimen/_15sdp"
                                 android:textStyle="bold"
                                 android:textColor="@color/white" />
 

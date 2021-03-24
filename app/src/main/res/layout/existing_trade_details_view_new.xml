@@ -1135,7 +1135,7 @@
                                     android:onClick="@{()-> activity.getDocument()}"
                                     android:layout_centerVertical="true"
                                     android:id="@+id/choose_file"
-                                    android:padding="@dimen/_5sdp"
+                                    android:padding="4dp"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentStart="true"
@@ -1146,24 +1146,37 @@
                                     android:ellipsize="marquee"
                                     android:text="@string/choose_File"
                                     android:textColor="@color/black_grey"
-                                    android:textSize="@dimen/_15sdp"
+                                    android:textSize="@dimen/_13sdp"
                                     customfontdemo:fontName="@string/font_circular_book" />
 
                                 <TextView
                                     android:layout_marginLeft="@dimen/_10sdp"
                                     android:layout_toRightOf="@+id/choose_file"
-                                    android:textColor="@color/black_grey"
-                                    android:textSize="@dimen/_15sdp"
-                                    android:text="sample.doc"
+                                    android:textColor="@color/grey2"
+                                    android:textSize="@dimen/_13sdp"
+                                    android:text="No File Selected"
                                     android:layout_centerVertical="true"
                                     android:id="@+id/file_location"
+                                    android:singleLine="true"
+                                    android:layout_width="100dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginRight="5dp"
+                                    customfontdemo:fontName="@string/font_circular_book"
+                                    android:onClick="@{()-> activity.openFile()}"
+                                    />
+
+                                <TextView
+                                    android:layout_toRightOf="@+id/file_location"
+                                    android:textColor="@color/grey2"
+                                    android:textSize="@dimen/_13sdp"
+                                    android:layout_centerVertical="true"
+                                    android:id="@+id/file_size"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_centerHorizontal="true"
-                                    android:onClick="@{()-> activity.openFile()}"
-                                    android:layout_marginRight="@dimen/_6sdp"
-                                    customfontdemo:fontName="@string/font_circular_book"/>
-
+                                    android:scrollbars = "vertical"
+                                    android:layout_alignParentRight="true"
+                                    customfontdemo:fontName="@string/font_circular_book"
+                                    />
 
 
                             </RelativeLayout>

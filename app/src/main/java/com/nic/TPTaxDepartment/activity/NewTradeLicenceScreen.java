@@ -263,7 +263,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 
         radioBtnFun();
 
-        newTradeLicenceScreenBinding.fileLocation.setMovementMethod(new ScrollingMovementMethod());
+//        newTradeLicenceScreenBinding.fileLocation.setMovementMethod(new ScrollingMovementMethod());
         String colored = "*";
         String mobileView= "கைபேசி எண் / Mobile No";
         SpannableStringBuilder builder = new SpannableStringBuilder();
@@ -1998,7 +1998,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
 
             if (visible_count == 0) {
-                if (ValidationFirst()){
+                if (!ValidationFirst()){
                     newTradeLicenceScreenBinding.scrollView.scrollTo(0, 0);
                 visible_count = 1;
                 newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
@@ -2030,8 +2030,9 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
     }
     public  void previous() {
 //        newTradeLicenceScreenBinding.scrollView.scrollTo(0,0);
-
-        if(visible_count==2) {
+        if(newTradeLicenceScreenBinding.documentLayout.getVisibility()==View.VISIBLE) {
+            closeDoc();
+        }else if(visible_count==2) {
             visible_count=1;
             newTradeLicenceScreenBinding.first.setVisibility(View.GONE);
             newTradeLicenceScreenBinding.second.setVisibility(View.VISIBLE);
@@ -2177,11 +2178,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
                                 displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
                                 int sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE);
                                 long fileSizeInBytes = cursor.getLong(sizeIndex);
-                                newTradeLicenceScreenBinding.fileLocation.setText(displayName+" "+getSize(fileSizeInBytes));
+                                newTradeLicenceScreenBinding.fileLocation.setText(displayName);
+                                newTradeLicenceScreenBinding.fileSize.setText(getSize(fileSizeInBytes));
+                                Log.d("fileLocation >>", displayName+" "+getSize(fileSizeInBytes));
                                 Shader shader = new LinearGradient(0,0,0,newTradeLicenceScreenBinding.fileLocation.getLineHeight(),
                                         context.getResources().getColor(R.color.colorPrimary) ,
                                         context.getResources().getColor(R.color.colorPrimaryDark) , Shader.TileMode.REPEAT);
                                 newTradeLicenceScreenBinding.fileLocation.getPaint().setShader(shader);
+                                newTradeLicenceScreenBinding.fileSize.getPaint().setShader(shader);
                                 ConvertToString(uri);
                                 Log.d("fileString>>", fileString);
                             }
@@ -2247,7 +2251,7 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             System.out.println("Base64>>"+Base64.encodeToString(bytes,Base64.DEFAULT));
             System.out.println("Base64fileString>>"+fileString);
             fileSize=cnt_size;
-            newTradeLicenceScreenBinding.fileSize.setText(cnt_size);
+//            newTradeLicenceScreenBinding.fileSize.setText(cnt_size);
 
         } catch (Exception e) {
             // TODO: handle exception
