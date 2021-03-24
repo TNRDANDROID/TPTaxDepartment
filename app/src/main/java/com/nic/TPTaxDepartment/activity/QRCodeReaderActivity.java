@@ -354,6 +354,7 @@ public class QRCodeReaderActivity extends AppCompatActivity implements Api.Serve
             JSONObject responseObj = serverResponse.getJsonResponse();
             urlType = serverResponse.getApi();
             String status;
+            String RECEIPT_FOUND;
             if ("QrCodeReport".equals(urlType) && responseObj != null) {
                 try {
                     String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
@@ -362,23 +363,31 @@ public class QRCodeReaderActivity extends AppCompatActivity implements Api.Serve
                     JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
                     status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
-                    if (status.equalsIgnoreCase("SUCCESS")) {
-                        JSONObject jsonObject1 = new JSONObject();
-                        jsonObject1 = jsonObject.getJSONObject("DATA");
-                        DocumentString = jsonObject1.getString("rentleaseagrement");
+                    RECEIPT_FOUND = Utils.NotNullString(jsonObject.getString("RECEIPT_FOUND"));
+                    if (status.equalsIgnoreCase("SUCCESS")&&RECEIPT_FOUND.equals("YES")) {
+                        tax_type_spinner.setSelection(0);
+                        JSONObject attachment_files=(responseObj.getJSONObject(AppConstant.ATTACHMENT_FILES));
+                        DocumentString = attachment_files.getString("receipt");
                         viewDocument();
                         Log.d("QrCodeReport", "" + jsonObject);
 
-                    } else if (status.equalsIgnoreCase("FAILD")) {
-                        Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                    } else if (status.equalsIgnoreCase("SUCCESS")&&RECEIPT_FOUND.equals("NO")) {
+                        Utils.showAlert(this, context.getResources().getString(R.string.no_RECEIPT_FOUND));
+                        tax_type_spinner.setSelection(0);
                     }
                 } catch (Exception e) {
+                    e.printStackTrace();
+                    Utils.showAlert(this, context.getResources().getString(R.string.something_wrong));
+                    tax_type_spinner.setSelection(0);
                 }
             }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
+            Utils.showAlert(this, context.getResources().getString(R.string.scan_again));
+            tax_type_spinner.setSelection(0);
+
         }
     }
     @Override
@@ -436,9 +445,9 @@ public class QRCodeReaderActivity extends AppCompatActivity implements Api.Serve
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null) {
             if(result.getContents() == null) {
-                Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 qr_code_value=result.getContents();
                 getQrCodeReport();
             }

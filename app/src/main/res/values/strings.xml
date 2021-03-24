@@ -58,6 +58,7 @@
     <string name="enter_Assessment_ID">Enter Assessment ID</string>
     <string name="enter_Tax_Type_Id">Enter Tax Type Id</string>
     <string name="no_RECORD_FOUND">NO RECORD FOUND!</string>
+    <string name="no_RECEIPT_FOUND">RECEIPT NOT FOUND!</string>
     <string name="success">Success!</string>
     <string name="atleast_Capture_one_Photo">Atleast Capture one Photo</string>
     <string name="satellite_communication_msg">Satellite communication not available to get GPS Co-ordination Please Capture Photo in Open Area..</string>

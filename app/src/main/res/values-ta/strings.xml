@@ -59,6 +59,7 @@
     <string name="enter_Assessment_ID">மதிப்பீட்டு ஐடியை உள்ளிடவும்</string>
     <string name="enter_Tax_Type_Id">வரி வகை ஐடியை உள்ளிடவும்</string>
     <string name="no_RECORD_FOUND">பதிவு எதுவும் இல்லை!</string>
+    <string name="no_RECEIPT_FOUND">ரசீது கிடைக்கவில்லை!</string>
     <string name="success">வெற்றி!</string>
     <string name="atleast_Capture_one_Photo">குறைந்தபட்சம் ஒரு புகைப்படத்தைப் பிடிக்கவும்</string>
     <string name="satellite_communication_msg">ஜி.பி.எஸ் ஒருங்கிணைப்பைப் பெற செயற்கைக்கோள் தொடர்பு கிடைக்கவில்லை தயவுசெய்து திறந்த பகுதியில் புகைப்படத்தைப் பிடிக்கவும் ..</string>
