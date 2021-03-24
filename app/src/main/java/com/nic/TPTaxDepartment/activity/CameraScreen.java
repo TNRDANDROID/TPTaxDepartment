@@ -215,7 +215,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         JSONObject dataSet = new JSONObject();
         dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
         dataSet.put(AppConstant.DATA_CONTENT, authKey);
-        Log.d("TraderImage", "" + dataSet);
+        Log.d("EditTraderImage", "" + dataSet);
         return dataSet;
     }
 
@@ -231,7 +231,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         dataSet1.put("edit_id",trader_details_id);
         dataSet1.put("del_id","0");
         dataSet1.put(AppConstant.ATTACHMENT_FILES,jsonArray);
-        Log.d("TraderImage", "" + dataSet);
+        Log.d("EditTraderImage", "" + dataSet);
         return dataSet1;
     }
     private void captureImage() {
@@ -453,7 +453,7 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
                 try {
                     String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
                     String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
-                    Log.d("TraderImageDatadecry", "" + userDataDecrypt);
+                    Log.d("EditTraderImage", "" + userDataDecrypt);
                     JSONObject jsonObject = new JSONObject(userDataDecrypt);
 
                     // status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));

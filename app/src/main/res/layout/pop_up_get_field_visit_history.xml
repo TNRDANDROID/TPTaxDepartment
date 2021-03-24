@@ -52,10 +52,10 @@
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="500dp"
+            android:layout_height="wrap_content"
             android:id="@+id/content_layout"
             android:paddingTop="10dp"
-            android:paddingBottom="5dp"
+            android:paddingBottom="20dp"
             android:background="@drawable/background_with_bottom_corners">
             <LinearLayout
                 android:id="@+id/tax_type_layout"

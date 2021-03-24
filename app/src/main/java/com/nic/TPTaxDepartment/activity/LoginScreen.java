@@ -190,9 +190,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.password.setText("test123#$");*/
        /* loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200297");*/
-        loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
-        loginScreenBinding.password.setText("test123#$");
-        /*loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
+       /* loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
+        loginScreenBinding.password.setText("test123#$");*/
+       /* loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200400");*/
     }
 
@@ -369,6 +369,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void OnError(VolleyError volleyError) {
+       /* Utils.showAlert(this, volleyError.getLocalizedMessage());
+        System.out.println("volleyError>>"+volleyError.getLocalizedMessage());*/
         //loginScreenBinding.progressBar.setVisibility(View.GONE);
         //loginScreenBinding.scrollView.setVisibility(View.VISIBLE);
        /* if(Utils.isOnline()){
@@ -379,14 +381,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }*/
         String message = null;
         if (volleyError instanceof NetworkError) {
-            message = getApplicationContext().getResources().getString(R.string.please_check_your_connection);
+            message = "NetworkError";
             Utils.showAlert(this, message);
 
         } else if (volleyError instanceof ServerError) {
             message = getApplicationContext().getResources().getString(R.string.server_could_not_be_found);
             Utils.showAlert(this, message);
         } else if (volleyError instanceof AuthFailureError) {
-            message = getApplicationContext().getResources().getString(R.string.please_check_your_connection);
+            message = "AuthFailureError";
             Utils.showAlert(this, message);
         } else if (volleyError instanceof ParseError) {
             message = getApplicationContext().getResources().getString(R.string.parsing_error);
@@ -395,7 +397,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             message = getApplicationContext().getResources().getString(R.string.please_check_your_connection);
             Utils.showAlert(this, message);
         } else if (volleyError instanceof TimeoutError) {
-            message = getApplicationContext().getResources().getString(R.string.connection_timeout);
+            message ="TimeoutError";
             Utils.showAlert(this, message);
         }
     }

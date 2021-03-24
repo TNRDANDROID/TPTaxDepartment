@@ -112,6 +112,7 @@ public class ExistingTradeList extends AppCompatActivity {
         }
 */
         if(tradersList != null && tradersList.size() >0) {
+            Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderCode().compareTo(rhs.getTraderCode()));
             existingTradeList.tradeRecycler.setVisibility(View.VISIBLE);
             existingTradeList.noDataFoundLayout.setVisibility(View.GONE);
             TraderListAdapter adapter = new TraderListAdapter(ExistingTradeList.this,tradersList);
