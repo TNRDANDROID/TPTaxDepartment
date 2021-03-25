@@ -291,7 +291,9 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                 } while (cursor.moveToNext());
             }
         }
-        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getRequest_id().compareTo(rhs.getRequest_id()));
+       /* Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getRequest_id().compareTo(rhs.getRequest_id()));*/
+        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> Integer.valueOf((lhs.getRequest_id())).compareTo(Integer.valueOf((rhs.getRequest_id()))));
+
 //        Collections.sort(fieldVisitPendingList, (lhs, rhs) -> lhs.getOwnername().toLowerCase().compareTo(rhs.getOwnername().toLowerCase()));
         filterList();
       /*  if(fieldVisitPendingList != null && fieldVisitPendingList.size() >0) {

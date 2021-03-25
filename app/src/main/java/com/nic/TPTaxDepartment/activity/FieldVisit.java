@@ -1511,7 +1511,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             }
         }*/
 
-        Collections.sort(historyList, (lhs, rhs) -> lhs.getRequest_id().compareTo(rhs.getRequest_id()));
+       /* Collections.sort(historyList, (lhs, rhs) -> lhs.getRequest_id().compareTo(rhs.getRequest_id()));*/
+        Collections.sort(historyList, (lhs, rhs) -> Integer.valueOf((lhs.getRequest_id())).compareTo(Integer.valueOf((rhs.getRequest_id()))));
         SortAndReverseList(historyList);
         if(historyList != null && historyList.size() > 0){
             fieldVisitBinding.noDataFoundLayout.setVisibility(View.GONE);

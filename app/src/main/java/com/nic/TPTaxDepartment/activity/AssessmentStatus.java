@@ -133,7 +133,7 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
                 }while (cursor.moveToNext());
             }
         }
-        Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypeid().compareTo(rhs.getTaxtypeid()));
+        Collections.sort(taxType, (lhs, rhs) -> Integer.valueOf((lhs.getTaxtypeid())).compareTo(Integer.valueOf((rhs.getTaxtypeid()))));
 
         if(taxType != null && taxType.size() >0) {
 

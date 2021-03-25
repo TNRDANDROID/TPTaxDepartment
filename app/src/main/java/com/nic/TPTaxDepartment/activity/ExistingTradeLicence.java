@@ -702,8 +702,8 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
                         }
                     }
                 }
+                  Collections.sort(tradersList, (lhs, rhs) -> Integer.valueOf((lhs.getTraderCode())).compareTo(Integer.valueOf((rhs.getTraderCode()))));
 //                Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderName().toLowerCase().compareTo(rhs.getTraderName().toLowerCase()));
-                Collections.sort(tradersList, (lhs, rhs) -> lhs.getTraderCode().compareTo(rhs.getTraderCode()));
             }
         } catch (JSONException e) {
             e.printStackTrace();

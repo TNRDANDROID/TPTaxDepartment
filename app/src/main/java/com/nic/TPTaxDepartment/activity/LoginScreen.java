@@ -82,7 +82,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         loginScreenBinding = DataBindingUtil.setContentView(this, R.layout.login_screen);
         loginScreenBinding.setActivity(this);
         try {
@@ -192,8 +192,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.password.setText("tpbc1.200297");*/
        /* loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
         loginScreenBinding.password.setText("test123#$");*/
-       /* loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
-        loginScreenBinding.password.setText("tpbc1.200400");*/
+        loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
+        loginScreenBinding.password.setText("tpbc1.200400");
     }
 
 

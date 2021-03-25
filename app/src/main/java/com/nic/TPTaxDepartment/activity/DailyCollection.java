@@ -205,7 +205,8 @@ else if(i==5){
             }
         }
 
-         Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeId().compareTo(rhs.getTaxTypeId()));
+         /*Collections.sort(collectionList, (lhs, rhs) -> lhs.getTaxTypeId().compareTo(rhs.getTaxTypeId()));*/
+         Collections.sort(collectionList, (lhs, rhs) -> Integer.valueOf((lhs.getTaxTypeId())).compareTo(Integer.valueOf((rhs.getTaxTypeId()))));
          if(collectionList != null && collectionList.size() >0) {
              if(flag){
                  collectionAdapter = new DailyCollectionAdapter(DailyCollection.this,collectionList,"TownPanchayat");
