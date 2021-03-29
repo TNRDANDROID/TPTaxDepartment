@@ -373,23 +373,29 @@ public class NewExistTraderWholeDetailsViewClass extends AppCompatActivity imple
     }
 
     public void getTradeImage() {
-        try {
-            new ApiService(NewExistTraderWholeDetailsViewClass.this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
-                    traderImageJsonParams(), "not cache", this);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(Utils.isOnline()) {
+            try {
+                new ApiService(NewExistTraderWholeDetailsViewClass.this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
+                        traderImageJsonParams(), "not cache", this);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
         }
-
     }
 
     public void getFieldDocument() {
+        if(Utils.isOnline()) {
         try {
             new ApiService(NewExistTraderWholeDetailsViewClass.this).makeJSONObjectRequest("TraderDocument", Api.Method.POST, UrlGenerator.TradersUrl(),
                     traderDocumentJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        } else {
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+        }
     }
     public JSONObject traderDocumentJsonParams() throws JSONException {
         String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector),

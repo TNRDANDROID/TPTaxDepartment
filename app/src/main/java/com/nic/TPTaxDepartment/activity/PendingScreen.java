@@ -416,9 +416,10 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
 
     public void onBackPress() {
-        super.onBackPressed();
-        setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+//        super.onBackPressed();
+        dashboard();
+        /*setResult(Activity.RESULT_CANCELED);
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
     }
 
     public void dashboard() {
@@ -433,9 +434,10 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+//        super.onBackPressed();
+        dashboard();
+        /*setResult(Activity.RESULT_CANCELED);
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
     }
 
 

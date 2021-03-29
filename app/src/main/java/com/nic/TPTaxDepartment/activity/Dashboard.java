@@ -188,8 +188,35 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 //        requestCameraPermission(MEDIA_TYPE_IMAGE);
         //newDashboardBinding.activityMain.setOnTouchListener(new RelativeLayoutTouchListener(this));
 
+        sync_data_visivility();
+
 
     }
+
+    public void sync_data_visivility() {
+        int count=0;
+        int count1=0;
+        dbData.open();
+        ArrayList<TPtaxModel> activityCount = dbData.getPendingActivity();
+        String select_query= "SELECT * FROM " + DBHelper.SAVE_NEW_TRADER_DETAILS;
+        String select_query1= "SELECT * FROM " + DBHelper.SAVE_FIELD_VISIT;
+        Cursor cursor = Dashboard.db.rawQuery(select_query, null);
+        Cursor cursor1 = Dashboard.db.rawQuery(select_query1, null);
+        if(cursor.getCount()>0) {
+            count=cursor.getCount();
+        }
+        if(cursor1.getCount()>0){
+            count1=cursor1.getCount();
+        }
+
+            if (count1>0 ||count>0) {
+                newDashboardBinding.pendingScreen.setVisibility(View.VISIBLE);
+            }else{
+                newDashboardBinding.pendingScreen.setVisibility(View.GONE);
+            }
+    }
+
+
     private void requestCameraPermission(final int type) {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA,

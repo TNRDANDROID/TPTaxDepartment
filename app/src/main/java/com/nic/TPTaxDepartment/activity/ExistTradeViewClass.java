@@ -496,23 +496,29 @@ public class ExistTradeViewClass extends AppCompatActivity implements View.OnCli
     }
 
     public void getTradeImage() {
+        if(Utils.isOnline()) {
         try {
             new ApiService(this).makeJSONObjectRequest("TraderImage", Api.Method.POST, UrlGenerator.TradersUrl(),
                     traderImageJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+        } else {
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+        }
     }
 
     public void getFieldDocument() {
+        if(Utils.isOnline()) {
         try {
             new ApiService(this).makeJSONObjectRequest("TraderDocument", Api.Method.POST, UrlGenerator.TradersUrl(),
                     traderDocumentJsonParams(), "not cache", this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
+    } else {
+        Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+    }
     }
 
     public JSONObject traderDocumentJsonParams() throws JSONException {
