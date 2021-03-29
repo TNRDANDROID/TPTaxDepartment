@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.library.baseAdapters.BuildConfig;
 
+import com.nic.TPTaxDepartment.BuildConfig;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.databinding.SplashScreenBinding;
 import com.nic.TPTaxDepartment.helper.AppVersionHelper;
@@ -44,7 +44,7 @@ public class SplashScreen extends AppCompatActivity implements
         this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         prefManager = new PrefManager(this);
-        if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("production")) {
+        if (BuildConfig.BUILD_TYPE.equalsIgnoreCase("production"))  {
             if (Utils.isOnline()) {
                 checkAppVersion();
             } else {
@@ -52,7 +52,7 @@ public class SplashScreen extends AppCompatActivity implements
 
             }
         } else {
-//            showSignInScreen();
+            showSignInScreen();
         }
 
         smalltobig = AnimationUtils.loadAnimation(this, R.anim.smalltobig);
@@ -90,7 +90,7 @@ public class SplashScreen extends AppCompatActivity implements
             }
         });
 */
-        showSignInScreen();
+       // showSignInScreen();
 
     }
 

@@ -447,6 +447,7 @@ xmlns:customfontdemo="http://schemas.android.com/tools">
                                                 android:layout_height="40dp"
                                                 android:background="@color/full_transparent"
                                                android:padding="0dp"
+                                                android:longClickable="false"
                                                 android:hint="Password"
                                                 android:inputType="textPassword"/>
 

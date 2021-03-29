@@ -80,7 +80,14 @@ public class ExistingTradeLicence extends AppCompatActivity implements Api.Serve
         this.getWindow().setStatusBarColor(getApplicationContext().getResources().getColor(R.color.colorPrimary));
 
         prefManager = new PrefManager(this);
-        getTradersList();
+        if(Utils.isOnline()){
+            getTradersList();
+        }
+        else {
+            Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+            onBackPressed();
+        }
+
         LoadWardSpinner();
         LoadTradeCodeListSpinner();
 

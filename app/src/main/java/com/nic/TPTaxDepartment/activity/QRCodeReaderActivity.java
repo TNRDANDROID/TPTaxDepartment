@@ -450,7 +450,12 @@ public class QRCodeReaderActivity extends AppCompatActivity implements Api.Serve
             } else {
                 //Toast.makeText(this, "Scanned: " + result.getContents(), Toast.LENGTH_LONG).show();
                 qr_code_value=result.getContents();
-                getQrCodeReport();
+                if(Utils.isOnline()) {
+                    getQrCodeReport();
+                }
+                else {
+                    Utils.showAlert(QRCodeReaderActivity.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+                }
             }
         } else {
             super.onActivityResult(requestCode, resultCode, data);

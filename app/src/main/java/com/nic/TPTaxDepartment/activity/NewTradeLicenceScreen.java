@@ -2902,8 +2902,14 @@ public class NewTradeLicenceScreen extends AppCompatActivity implements View.OnC
             dialogButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SaveLicenseTraders();
-                    dialog.dismiss();
+                    if(Utils.isOnline()) {
+                        SaveLicenseTraders();
+                        dialog.dismiss();
+                    }
+                    else {
+                        Utils.showAlert(NewTradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+                        dialog.dismiss();
+                    }
 
                 }
             });

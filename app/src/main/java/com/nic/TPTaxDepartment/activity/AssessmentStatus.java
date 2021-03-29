@@ -103,8 +103,13 @@ public class  AssessmentStatus extends AppCompatActivity implements View.OnClick
     public void showDetails() {
         if (!selectedTaxTypeName.isEmpty() && !selectedTaxTypeName.equals(context.getResources().getString(R.string.select_TaxType))  ) {
             if(!assessmentStatusBinding.assessmentId.getText().toString().isEmpty()){
+                if(Utils.isOnline()){
+                    getAssessmentStatus();
+                }
+                else {
+                    Utils.showAlert(AssessmentStatus.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+                }
 
-                getAssessmentStatus();
             }else { Utils.showAlert(this, context.getResources().getString(R.string.enter_Assessment_ID)); }
 
         }else { Utils.showAlert(this, context.getResources().getString(R.string.select_TaxType)); }

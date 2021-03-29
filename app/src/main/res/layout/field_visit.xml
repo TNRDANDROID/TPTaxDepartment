@@ -17,7 +17,7 @@
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical">
 
 
@@ -46,8 +46,8 @@
 
                     <ImageView
                         android:id="@+id/refresh"
-                        android:layout_width="@dimen/_30sdp"
-                        android:layout_height="@dimen/_30sdp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
                         android:layout_alignParentStart="true"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="start"
@@ -197,15 +197,14 @@
                             android:visibility="visible">
 
                             <TextView
-
+                                android:layout_marginLeft="10dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:layout_centerInParent="true"
-
-
-                                android:textColor="@android:color/black"
-                                android:textSize="@dimen/_15sdp"
+                                android:id="@+id/selectedTaxName"
+                                android:textColor="@color/grey2"
+                                android:textSize="@dimen/_13sdp"
                                 android:visibility="visible"
                                 customfontdemo:fontName="@string/font_circular_book" />
                             <Spinner
@@ -699,7 +698,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:layout_marginBottom="20dp"
             android:id="@+id/historyLayout">
             <RelativeLayout

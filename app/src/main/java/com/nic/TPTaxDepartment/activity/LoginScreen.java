@@ -13,7 +13,10 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.text.InputType;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -190,10 +193,10 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.password.setText("test123#$");*/
        /* loginScreenBinding.username.setText("tpbc1.200297@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200297");*/
-       /* loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
-        loginScreenBinding.password.setText("test123#$");*/
-        loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
-        loginScreenBinding.password.setText("tpbc1.200400");
+        loginScreenBinding.username.setText("tpbc1.200279@gmail.com");
+        loginScreenBinding.password.setText("test123#$");
+        /*loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
+        loginScreenBinding.password.setText("tpbc1.200400");*/
     }
 
 

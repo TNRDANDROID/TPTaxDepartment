@@ -611,6 +611,11 @@ else if(i==5){
         fromDate = separated[0]; // this will contain "Fruit"
         toDate = separated[1];
         dailyCollectionBinding.date.setText(fromDate+" to "+toDate);
-        getDailyCollection();
+        if(Utils.isOnline()) {
+            getDailyCollection();
+        }
+        else {
+            Utils.showAlert(DailyCollection.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+        }
     }
 }

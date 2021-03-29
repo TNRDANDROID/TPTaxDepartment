@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil;
 import com.nic.TPTaxDepartment.R;
 import com.nic.TPTaxDepartment.databinding.TradeLicenceScreenBinding;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
+import com.nic.TPTaxDepartment.utils.Utils;
 import com.nic.TPTaxDepartment.windowpreferences.WindowPreferencesManager;
 
 import java.io.Serializable;
@@ -86,9 +87,14 @@ public class TradeLicenceScreen extends AppCompatActivity {
     }
 
     public void existTradeSilenceScreen(){
-        Intent intent = new Intent( this, ExistingTradeLicence.class);
-        startActivity(intent);
-        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        if(Utils.isOnline()) {
+            Intent intent = new Intent(this, ExistingTradeLicence.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+        }
+        else {
+            Utils.showAlert(TradeLicenceScreen.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+        }
     }
 
     @Override

@@ -145,6 +145,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     HashMap<String,String> spinnerMapTaxType;
     String selectedTaxTypeId;
     String selectedTaxTypeName="";
+    String selectedTaxTypedInRecyler;
 
     //FieldVisitStatus;
     ArrayList<CommonModel> fieldVisitStatus ;
@@ -181,6 +182,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     String fromDate,toDate,TaxTypeIdHistory,serviceListFieldTaxTypeIdHistory;
     String[] taxItems;
     public com.nic.TPTaxDepartment.dataBase.dbData dbData = new dbData(this);
+    boolean spinner_text_color=false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -226,7 +228,13 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String TaxTypeName = parent.getSelectedItem().toString();
-                ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+                if(spinner_text_color) {
+                    ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.full_transparent));
+                }
+                else {
+                    ((TextView) parent.getChildAt(0)).setTextColor(context.getResources().getColor(R.color.grey2));
+                    spinner_text_color=false;
+                }
 
 //                String TaxTypeId = spinnerMapTaxType.get(parent.getSelectedItemPosition());
                 String TaxTypeId = "";
@@ -243,10 +251,16 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 selectedTaxTypeName = TaxTypeName;
                 if(selectedTaxTypeId!=null&&position>0) {
                     getServiceListFieldVisitTypes(1,selectedTaxTypeId);
-                }else {
-                    fieldVisitBinding.serviceFiledType.setAdapter(null);
-                    fieldVisitBinding.requestIdTextField.setText("");
-                    fieldVisitBinding.applicantName.setText("");
+                }
+                else {
+                    if(spinner_text_color) {
+
+                    }
+                    else {
+                        fieldVisitBinding.serviceFiledType.setAdapter(null);
+                        fieldVisitBinding.requestIdTextField.setText("");
+                        fieldVisitBinding.applicantName.setText("");
+                    }
                 }
             }
             public void onNothingSelected(AdapterView<?> parent)
@@ -275,7 +289,12 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                 selectedServiceFieldVisitTypesName=serviceListFieldDesc;
                 if(selectedServiceFieldVisitTypesId!=null&&position>0){
                     if (!flag) {
-                        getServiceRequestList();
+                        if(Utils.isOnline()) {
+                            getServiceRequestList();
+                        }
+                        else {
+                            Utils.showAlert(FieldVisit.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+                        }
                     }else {
                         flag=false;
                     }
@@ -398,20 +417,30 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     }
     public void getFieldVisitImage(String service_id,String taxtypeid,String data_ref_id) {
-        try {
-            new ApiService(this).makeJSONObjectRequest("FieldVisitedImage", Api.Method.POST, UrlGenerator.TradersUrl(),
-                    FieldVisitImageJsonParams(service_id,taxtypeid,data_ref_id), "not cache", this);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(Utils.isOnline()) {
+            try {
+                new ApiService(this).makeJSONObjectRequest("FieldVisitedImage", Api.Method.POST, UrlGenerator.TradersUrl(),
+                        FieldVisitImageJsonParams(service_id, taxtypeid, data_ref_id), "not cache", this);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Utils.showAlert(FieldVisit.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
         }
 
     }
     public void getFieldVisitHistory() {
-        try {
-            new ApiService(this).makeJSONObjectRequest("TradersFieldVisitHistoryService", Api.Method.POST, UrlGenerator.TradersUrl(),
-                    fieldVisitJsonParams(), "not cache", this);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(Utils.isOnline()) {
+            try {
+                new ApiService(this).makeJSONObjectRequest("TradersFieldVisitHistoryService", Api.Method.POST, UrlGenerator.TradersUrl(),
+                        fieldVisitJsonParams(), "not cache", this);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            Utils.showAlert(FieldVisit.this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
         }
 
     }
@@ -518,7 +547,10 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public void image() {
-        if(!fieldVisitBinding.requestIdTextField.getText().toString().isEmpty() && !selectedTaxTypeName.equals(context.getResources().getString(R.string.select_TaxType))) {
+        if(!fieldVisitBinding.requestIdTextField.getText().toString().isEmpty() &&
+        fieldVisitBinding.selectedTaxName.getText().toString()!=null
+                &&!fieldVisitBinding.selectedTaxName.getText().toString().equals("")){
+
             imageWithDescription(fieldVisitBinding.takePhotoTv, "mobile");
         }
         else {
@@ -783,7 +815,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public void validation() {
-        if(!fieldVisitBinding.taxType.getSelectedItem().equals(null)){
+        if(fieldVisitBinding.selectedTaxName.getText().toString()!=null&&!fieldVisitBinding.selectedTaxName.getText().toString().equals("")){
             if(!fieldVisitBinding.assessmentId.getText().equals(null)){
                 if(fieldVisitBinding.currentStatus.getSelectedItem()!=null&&!fieldVisitBinding.currentStatus.getSelectedItem().equals(context.getResources().getString(R.string.select_Status))){
                     if(!fieldVisitBinding.remarksText.getText().toString().isEmpty()){
@@ -852,7 +884,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     }
 
     public  void  submit() {
-        String tax_type_id = selectedTaxTypeId;
+        //String tax_type_id = selectedTaxTypeId;
+        String tax_type_id = selectedTaxTypedInRecyler;
         //String assessment_id = fieldVisitBinding.assessmentId.getText().toString();
         String applicant_name = fieldVisitBinding.applicantName.getText().toString();
         //String build_type = fieldVisitBinding.buildType.getText().toString();
@@ -1573,21 +1606,29 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
             fieldVisitBinding.historyLayout.setVisibility(View.GONE);
             fieldVisitBinding.activityMain.setVisibility(View.VISIBLE);
-        }else  if(request_id.equals("") &&fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE){
+        }else  if(/*request_id.equals("") &&*/fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE){
 //            fieldVisitBinding.taxType.setAdapter(taxTypeAdapter);
-             fieldVisitBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, taxItems));
-             fieldVisitBinding.serviceFiledType.setAdapter(serviceFieldVisitAdapter);
+             /*fieldVisitBinding.taxType.setAdapter(new SpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, taxItems));
+             fieldVisitBinding.serviceFiledType.setAdapter(serviceFieldVisitAdapter);*/
+             fieldVisitBinding.taxType.setSelection(0);
+             fieldVisitBinding.serviceFiledType.setSelection(0);
+             fieldVisitBinding.requestIdTextField.setText("");
+             fieldVisitBinding.selectedTaxName.setText("");
+             selectedTaxTypedInRecyler="";
+             spinner_text_color=false;
             fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
             fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
         }
-        else if(fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE  &&!request_id.equals("")){
+        /*else if(fieldVisitBinding.fieldVisitLists.getVisibility() == View.VISIBLE  &&!request_id.equals("")){
 
             fieldVisitBinding.fieldVisitLists.setVisibility(View.GONE);
             fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
-        }else {
-            super.onBackPressed();
+        }*/
+        else {
+            /*super.onBackPressed();
             setResult(RESULT_OK);
-            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
+            dashboard();
         }
     }
 
@@ -1822,6 +1863,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             String buildusage;
             String buildstructure;
             String taxlocation;
+            String tax_type_name;
+            String tax_type_id_;
 
             if ("ServiceRequestList".equals(urlType)) {
                 try{
@@ -1837,6 +1880,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             for (int i = 0; i < jsonarray.length(); i++) {
                                 JSONObject jsonobject = jsonarray.getJSONObject(i);
                                 CommonModel commonModel = new CommonModel();
+                                tax_type_name=Utils.NotNullString(jsonobject.getString("tax_type_name"));
+                                tax_type_id_=Utils.NotNullString(jsonobject.getString("tax_type_id"));
                                 request_Id = Utils.NotNullString(jsonobject.getString("request_id"));
                                 data_ref_Id = Utils.NotNullString(jsonobject.getString("data_ref_id"));
                                 ward_code = Utils.NotNullString(jsonobject.getString("ward_code"));
@@ -1871,6 +1916,8 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                 commonModel.setStreet_name_en(street_name_en);
                                 commonModel.setStreet_name_ta(street_name_ta);
                                 commonModel.setOwnername(ownername);
+                                commonModel.setTaxtypeid(tax_type_id_);
+                                commonModel.setTaxtypedesc_en(tax_type_name);
 
 
                                 searchRequestList.add(commonModel);
@@ -1893,10 +1940,14 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                             }
                         }else {
                             Utils.showAlert(FieldVisit.this,context.getResources().getString(R.string.no_RECORD_FOUND));
+                            fieldVisitBinding.requestIdTextField.setText("");
+                            fieldVisitBinding.applicantName.setText("");
                         }
 
                     }else if(status.equalsIgnoreCase("FAILD")){
                         Utils.showAlert(FieldVisit.this, jsonObject.getString("MESSAGE"));
+                        fieldVisitBinding.requestIdTextField.setText("");
+                        fieldVisitBinding.applicantName.setText("");
                     }
                 }catch (Exception e){
 
@@ -1976,6 +2027,11 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
         fieldVisitBinding.applicantName.setText(searchRequestList.get(pos).getOwnername());
         fieldVisitBinding.requestIdTextField.setText(searchRequestList.get(pos).getRequest_id());
+        fieldVisitBinding.selectedTaxName.setText(searchRequestList.get(pos).getTaxtypedesc_en());
+        selectedTaxTypedInRecyler=searchRequestList.get(pos).getTaxtypeid();
+        fieldVisitBinding.taxType.setSelection(0);
+        spinner_text_color=true;
+
 
     }
 
