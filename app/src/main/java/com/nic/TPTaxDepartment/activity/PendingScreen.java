@@ -95,7 +95,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
     View v_1, v_2, v_3;
     String screen_enable = "";
     Paint p = new Paint();
-
+    boolean backPressflag=false;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -416,10 +416,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
 
     public void onBackPress() {
-//        super.onBackPressed();
-        dashboard();
-        /*setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
+        if(backPressflag){
+            setResult(RESULT_OK);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            super.onBackPressed();
+        }else {
+            setResult(RESULT_CANCELED);
+            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            super.onBackPressed();
+        }
     }
 
     public void dashboard() {
@@ -434,10 +439,15 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
-        dashboard();
-        /*setResult(Activity.RESULT_CANCELED);
-        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
+        if(backPressflag){
+        setResult(RESULT_OK);
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+            super.onBackPressed();
+    }else {
+        setResult(RESULT_CANCELED);
+        overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+        super.onBackPressed();
+    }
     }
 
 
@@ -502,6 +512,7 @@ public class PendingScreen extends AppCompatActivity implements Api.ServerRespon
                     if (status1.equalsIgnoreCase("SUCCESS")) {
                         Utils.showAlert(PendingScreen.this, jsonObject.getString("MESSAGE"));
                         adapter.deleteRow(pos);
+                        backPressflag=true;
                     } else if (status1.equalsIgnoreCase("FAILD")) {
                         Utils.showAlert(PendingScreen.this, jsonObject.getString("MESSAGE"));
                     }

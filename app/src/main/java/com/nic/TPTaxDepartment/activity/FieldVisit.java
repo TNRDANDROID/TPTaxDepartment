@@ -176,6 +176,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
     ArrayList<TPtaxModel> historyList;
     String FieldVisitImageString="";
     boolean flag=false;
+    boolean backPressflag=false;
     int selectedPosition;
     final Calendar myCalendar = Calendar.getInstance();
     private androidx.appcompat.app.AlertDialog alert;
@@ -365,6 +366,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             int taxTypePosition = taxTypeAdapter.getPosition(spinnerMapTaxType.get(fieldVisits.get(selectedPosition).getTaxtypeid()));
             if(taxTypePosition >= 0){
                 fieldVisitBinding.taxType.setSelection(taxTypePosition);
+                taxSpinnerClickedMethod(1,fieldVisits.get(selectedPosition).getTaxtypeid(),spinnerMapTaxType.get(fieldVisits.get(selectedPosition).getTaxtypeid()));
             }else {
                 fieldVisitBinding.taxType.setAdapter(null);
             }
@@ -699,16 +701,21 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
                                }
                            }
                            else {
-                                long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
-                                //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                                if (rowInserted != -1) {
-                                     Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.image_added), Toast.LENGTH_SHORT).show();
+                               try{
+                                   long rowInserted = LoginScreen.db.insert(DBHelper.CAPTURED_PHOTO,null,imageValue);
+                                   //Toast.makeText(FieldVisit.this, "Something wrong", Toast.LENGTH_SHORT).show();
+                                   if (rowInserted != -1) {
+                                       Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.image_added), Toast.LENGTH_SHORT).show();
 //                                    Utils.showAlert(FieldVisit.this, " Capture-Photo added in Local");
 
-                                }
-                                else {
-                                    Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
-                                }
+                                   }
+                                   else {
+                                       Toast.makeText(FieldVisit.this, context.getResources().getString(R.string.something_wrong), Toast.LENGTH_SHORT).show();
+                                   }
+                               }catch (Exception e){
+                                   e.printStackTrace();
+                               }
+
                             }
                            /*
                         if (Utils.isOnline())  {
@@ -917,7 +924,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String current_status = selectedFieldVisitStatusId;
         String remarks = fieldVisitBinding.remarksText.getText().toString();
 
-        if(!Utils.isOnline()) {
+        if(Utils.isOnline()) {
             ContentValues fieldValue = new ContentValues();
             fieldValue.put("taxtypeid", tax_type_id);
             fieldValue.put("tax_type_name", selectedTaxTypeName);
@@ -942,7 +949,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //                 Toast.makeText(FieldVisit.this, "Field-Visit updated", Toast.LENGTH_SHORT).show();
 //                Utils.showAlert(FieldVisit.this, " Field-Visit updated");
                 Utils.showToast(this,context.getResources().getString(R.string.field_Visit_updated));
-
+                backPressflag=true;
                 onBackPressed();
                 //Dashboard.syncvisiblity();
                 //finish();
@@ -956,6 +963,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 //                     Toast.makeText(FieldVisit.this, "Field-Visit added", Toast.LENGTH_SHORT).show();
 //                    Utils.showAlert(FieldVisit.this, " Field-Visit added");
                     Utils.showToast(this,context.getResources().getString(R.string.field_Visit_added));
+                    backPressflag=true;
                     onBackPressed();
                     //Dashboard.syncvisiblity();
                     //finish();
@@ -1651,10 +1659,16 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             fieldVisitBinding.detailsView.setVisibility(View.VISIBLE);
         }*/
         else {
-            /*super.onBackPressed();
-            setResult(RESULT_OK);
-            overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);*/
-            dashboard();
+            if(backPressflag){
+                setResult(RESULT_OK);
+                overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+                super.onBackPressed();
+            }else {
+                setResult(RESULT_CANCELED);
+                overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+                super.onBackPressed();
+            }
+
         }
     }
 
@@ -1693,14 +1707,6 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
 
     public void getTaxTypeFieldVisitList() {
         taxType = new ArrayList<CommonModel>();
-        ArrayList<CommonModel> hashSpinnerTaxItems=new ArrayList<>();
-        CommonModel commonModel1=new CommonModel();
-        commonModel1.setTaxtypeid("0");
-        commonModel1.setTaxtypedesc_en("Select Tax Type");
-        commonModel1.setTaxtypedesc_ta("");
-        commonModel1.setTaxcollection_methodlogy("");
-        commonModel1.setInstallmenttypeid("");
-        taxType.add(commonModel1);
         String select_query= "SELECT *FROM " + DBHelper.TAX_TYPE_FIELD_VISIT_LIST;
         Cursor cursor = Dashboard.db.rawQuery(select_query, null);
         if(cursor.getCount()>0){
@@ -1720,19 +1726,17 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         Collections.sort(taxType, (lhs, rhs) -> lhs.getTaxtypeid().compareTo(rhs.getTaxtypeid()));
 
         if(taxType != null && taxType.size() >0) {
-            hashSpinnerTaxItems.addAll(taxType);
-            hashSpinnerTaxItems.remove(0);
             spinnerMapTaxType = new HashMap<String, String>();
             spinnerMapTaxType.put(null, null);
-            taxItems = new String[hashSpinnerTaxItems.size() + 1];
+            taxItems = new String[taxType.size() + 1];
             taxItems[0] = context.getResources().getString(R.string.select_TaxType);
-            for (int i = 0; i < hashSpinnerTaxItems.size(); i++) {
-                spinnerMapTaxType.put( hashSpinnerTaxItems.get(i).getTaxtypeid(), hashSpinnerTaxItems.get(i).getTaxtypedesc_en());
-                String Class = hashSpinnerTaxItems.get(i).getTaxtypedesc_en();
+            for (int i = 0; i < taxType.size(); i++) {
+                spinnerMapTaxType.put( taxType.get(i).getTaxtypeid(), taxType.get(i).getTaxtypedesc_en());
+                String Class = taxType.get(i).getTaxtypedesc_en();
                 taxItems[i + 1] = Class;
             }
             System.out.println("items" + taxItems.toString());
-
+            taxTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, taxItems);
           /*  try {
                 if (taxItems != null && taxItems.length > 0) {
                     taxTypeAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, taxItems);
@@ -1747,9 +1751,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
             } catch (Exception exp) {
                 exp.printStackTrace();
             }*/
-            FieldVistTaxSpinnerAdapter fieldVistTaxSpinnerAdapter=new FieldVistTaxSpinnerAdapter(this,taxType);
-            fieldVisitBinding.taxType.setAdapter(fieldVistTaxSpinnerAdapter);
-
+            fieldVisitBinding.taxType.setAdapter(new FieldVistTaxSpinnerAdapter(this, R.layout.simple_spinner_dropdown_item, taxItems,spinnerMapTaxType));
         }
 
 

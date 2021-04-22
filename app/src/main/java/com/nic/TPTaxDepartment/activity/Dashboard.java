@@ -295,7 +295,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
     public void fieldVisitScreen(){
         Intent intent = new Intent( this, FieldVisit.class);
-        startActivity(intent);
+        startActivityForResult(intent,1);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
 
@@ -313,7 +313,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
     public void pendingScreen(){
         Intent intent = new Intent( this, PendingScreen.class);
-        startActivity(intent);
+        startActivityForResult(intent,2);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
     public void qrScannerScreen(){
@@ -1131,6 +1131,16 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
             return false;
         }
 
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode== Activity.RESULT_OK) {
+            sync_data_visivility();
+        } else if (requestCode == 2 && resultCode== RESULT_OK) {
+            sync_data_visivility();
+        }else  {
+        }
     }
 
 
