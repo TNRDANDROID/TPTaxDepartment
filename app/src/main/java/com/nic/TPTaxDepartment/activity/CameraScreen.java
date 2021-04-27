@@ -84,6 +84,9 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
     String LATITUDE = "";
     String LONGITUDE = "";
     String TraderImage = "";
+    String PropertyImage = "";
+    String selectedTaxTypeId="";
+    String assessmentNumber="";
 
 
     @Override
@@ -112,6 +115,9 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
        trader_details_id =  getIntent().getStringExtra(AppConstant.TRADE_CODE);
         MOBILE =  getIntent().getStringExtra(AppConstant.MOBILE);
        screen_status =  getIntent().getStringExtra("screen_status");
+       if(screen_status.equals("PropertyExist")){
+
+       }
     }
 
     @Override
@@ -120,6 +126,9 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
             case  R.id.btn_save :
                 if(screen_status.equals("EditTraderImage")){
                     editTraderImage();
+                }
+                else if(screen_status.equals("PropertyExistImage")){
+                    uploadPropertyExistImage();
                 }else {
                     saveImage();
                 }
@@ -471,6 +480,30 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
                 }
 
             }
+            if ("SavePropertyImage".equals(urlType) && responseObj != null) {
+
+                try {
+                    String user_data = Utils.NotNullString(responseObj.getString(AppConstant.ENCODE_DATA));
+                    String userDataDecrypt = Utils.decrypt(prefManager.getUserPassKey(), user_data);
+                    Log.d("SavePropertyImage", "" + userDataDecrypt);
+                    JSONObject jsonObject = new JSONObject(userDataDecrypt);
+
+                    // status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    status = Utils.NotNullString(jsonObject.getString(AppConstant.KEY_STATUS));
+                    if (status.equalsIgnoreCase("SUCCESS")) {
+                        Utils.showToast(this, jsonObject.getString("MESSAGE"));
+                        onBackPressed();
+                        Log.d("SavePropertyImage", "" + jsonObject);
+
+                    } else if (status.equalsIgnoreCase("FAILD")) {
+                        Utils.showAlert(this, jsonObject.getString("MESSAGE"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -502,6 +535,66 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
         startActivity(intent);
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_enter, R.anim.slide_exit);
+    }
+
+    public void uploadPropertyExistImage(){
+        ImageView imageView = (ImageView) findViewById(R.id.image_view);
+        byte[] imageInByte = new byte[0];
+        String image_str = "";
+        try {
+            Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            imageInByte = baos.toByteArray();
+            image_str = Base64.encodeToString(imageInByte, Base64.DEFAULT);
+            byte [] encodeByte = Base64.decode(image_str.trim(),Base64.DEFAULT);
+            Bitmap bitmap1 = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            Bitmap converetdImage = Utils.getResizedBitmap(bitmap1, 500);
+            image_str=Utils.bitmapToString(converetdImage);
+
+            PropertyImage=image_str;
+            LATITUDE=offlatTextValue.toString();
+            LONGITUDE=offlongTextValue.toString();
+            if(Utils.isOnline()) {
+                propertyCaptureImageSave();
+            }
+            else {
+                Utils.showAlert(this,getApplicationContext().getResources().getString(R.string.no_internet_connection));
+            }
+        } catch (Exception e) {
+            Utils.showAlert(CameraScreen.this, getApplicationContext().getResources().getString(R.string.atleast_Capture_one_Photo));
+            //e.printStackTrace();
+        }
+    }
+    public void propertyCaptureImageSave() {
+        try {
+            new ApiService(this).makeJSONObjectRequest("SavePropertyImage", Api.Method.POST, UrlGenerator.TradersUrl(), propertyEncryptedJsonParams(), "not cache", this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject propertyEncryptedJsonParams() throws JSONException {
+        String authKey = Utils.encrypt(prefManager.getUserPassKey(), getResources().getString(R.string.init_vector), propertyCaptureJsonParams().toString());
+        JSONObject dataSet = new JSONObject();
+        dataSet.put(AppConstant.KEY_USER_NAME, prefManager.getUserName());
+        dataSet.put(AppConstant.DATA_CONTENT, authKey);
+        Log.d("SavePropertyImage1", "" + authKey);
+
+        return dataSet;
+    }
+
+    public JSONObject propertyCaptureJsonParams() throws JSONException {
+
+        JSONObject data = new JSONObject();
+        data.put(AppConstant.KEY_SERVICE_ID,"SavePropertyImage");
+        data.put(AppConstant.TAX_TYPE_ID,selectedTaxTypeId);
+        data.put(AppConstant.ASSESSMENT_NO,assessmentNumber);
+        data.put(AppConstant.LATITUDE,LATITUDE);
+        data.put(AppConstant.LONGITUDE,LONGITUDE);
+        data.put(AppConstant.TRADE_IMAGE,PropertyImage);
+        Log.d("SavePropertyImage2", "" + data);
+        return data;
     }
 
 }

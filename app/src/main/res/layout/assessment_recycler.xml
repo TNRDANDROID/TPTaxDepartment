@@ -134,8 +134,17 @@
             android:id="@+id/propertyTax"
             android:padding="5dp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
+
+            <ImageView
+                android:padding="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:layout_gravity="end"
+                android:id="@+id/capture_image"
+                android:src="@drawable/camera_icon"></ImageView>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -745,7 +754,7 @@
             android:id="@+id/non_tax"
             android:padding="5dp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:visibility="visible"
+            android:visibility="gone"
             android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -2369,8 +2378,6 @@
 
 
     </RelativeLayout>-->
-
-
     <!--
     <?xml version="1.0" encoding="utf-8"?>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

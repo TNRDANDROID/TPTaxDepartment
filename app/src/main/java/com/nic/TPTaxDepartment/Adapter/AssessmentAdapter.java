@@ -1,14 +1,24 @@
 package com.nic.TPTaxDepartment.Adapter;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import com.nic.TPTaxDepartment.Interface.AdapterInterface;
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.activity.CameraScreen;
+import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.model.CommonModel;
 
 import java.text.NumberFormat;
@@ -135,6 +145,13 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
         } catch (Exception exp){
             exp.printStackTrace();
         }
+
+        holder.capture_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAlert(activity,"If you want to capture this"+ commonModelArrayList.get(position).getOwner_name()+"property Image?",position);
+            }
+        });
     }
 
 
@@ -155,6 +172,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
         TextView lb_leaseassessmentno,leasee_name_en,leasee_name_ta,lease_type_code,lease_type_description_en,
                 lease_payment_due_type,annuallease_amount;
         LinearLayout nonTax;
+        ImageView capture_image;
 
         SummaryViewHolder(View view) {
             super(view);
@@ -192,6 +210,7 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
             lease_type_description_en=(TextView)view.findViewById(R.id.lease_type_description_en);
             lease_payment_due_type=(TextView)view.findViewById(R.id.lease_payment_due_type);
             annuallease_amount=(TextView)view.findViewById(R.id.annuallease_amount);
+            capture_image=(ImageView) view.findViewById(R.id.capture_image);
 
         }
     }
@@ -201,6 +220,37 @@ public class AssessmentAdapter extends RecyclerView.Adapter<AssessmentAdapter.Su
         System.out.println(format);
         return format;
     }
+
+    public void showAlert(Activity context,String msg,int position){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        Intent intent = new Intent(activity, CameraScreen.class);
+                        intent.putExtra(AppConstant.TAX_TYPE_ID, selectedTaxTypeId);
+                        intent.putExtra(AppConstant.ASSESSMENT_NO, commonModelArrayList.get(position).getAssessment_no());
+                        intent.putExtra(AppConstant.KEY_SCREEN_STATUS, "PropertyExistImage");
+                        activity.startActivity(intent);
+                        activity.overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                        dialog.dismiss();
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dialog.dismiss();
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(msg).setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+
+    }
+
 
 
 }
