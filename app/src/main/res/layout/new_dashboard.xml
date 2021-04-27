@@ -45,18 +45,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         >
-
-
-                        <ImageView
+                        <RelativeLayout
+                        android:id="@+id/refresh"
+                        android:layout_width="50dp"
                             android:layout_centerVertical="true"
-                            android:id="@+id/refresh"
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:layout_gravity="start"
-                            android:layout_marginLeft="@dimen/_10sdp"
-                            android:background="@drawable/ic_qr_code"
+                            android:layout_height="wrap_content"
+                        >
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_height="30dp"
+                            android:src="@drawable/ic_qr"
+                            android:tint="@color/white"
                             android:backgroundTint="@android:color/white"
                             android:onClick="@{()-> activity.qrScannerScreen()}" />
+
+                    </RelativeLayout>
+
+
 
 
 
@@ -88,22 +94,26 @@
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/_15sdp"
                             android:textStyle="bold" />
-
+                    <RelativeLayout
+                        android:id="@+id/log_out"
+                        android:layout_width="50dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_height="wrap_content"
+                        >
                         <ImageView
-                            android:id="@+id/log_out"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
+
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:padding="3dp"
                             android:layout_centerHorizontal="true"
-                            android:layout_marginRight="15dp"
-                            android:adjustViewBounds="true"
-                            android:background="@drawable/logout_variant"
+                            android:src="@drawable/ic_logout"
+                            android:tint="@color/white"
                             android:backgroundTint="@android:color/white"
-                            android:onClick="@{()-> activity.logout()}"
-                            android:scaleType="centerInside" />
+                            android:onClick="@{()-> activity.logout()}" />
 
 
+                    </RelativeLayout>
                     </RelativeLayout>
 
                     <View

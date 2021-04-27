@@ -162,6 +162,7 @@
             android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="portrait"
             tools:replace="screenOrientation" />
+        <activity android:name=".activity.AppUpdateDialog" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

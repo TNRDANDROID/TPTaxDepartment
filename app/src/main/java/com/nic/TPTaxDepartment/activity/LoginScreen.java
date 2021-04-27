@@ -1,6 +1,8 @@
 package com.nic.TPTaxDepartment.activity;
 
+import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -11,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.ActionMode;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 
 import com.android.volley.AuthFailureError;
@@ -107,12 +111,40 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             Utils.setLanguage(loginScreenBinding.password, "en", "USA");
         }
         intializeUI();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 
-        android_id = Settings.Secure.getString(getApplicationContext().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
+            android_id = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
+        }
+        else {
+            getMobileDetails();
+        }
+
 
         System.out.println("android_id >> "+android_id);
 
+
+    }
+    private void getMobileDetails() {
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        if (telephonyManager.getDeviceId() != null) {
+            android_id = telephonyManager.getDeviceId();
+        } else {
+            android_id = Settings.Secure.getString(
+                    getContentResolver(),
+                    Settings.Secure.ANDROID_ID);
+        }
+//        imei = telephonyManager.getDeviceId();
+        Log.d("IMEI", "" + android_id);
 
     }
 
@@ -144,7 +176,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         });
 
         loginScreenBinding.password.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Poppins-Regular.ttf"));
-       /* loginScreenBinding.rd.setTranslationY(400);
+        /* loginScreenBinding.rd.setTranslationY(400);
         loginScreenBinding.and.setTranslationY(400);
         loginScreenBinding.dpt.setTranslationY(400);
         loginScreenBinding.tvVersionNumber.setTranslationY(400);
@@ -180,8 +212,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         loginScreenBinding.ivIlls.startAnimation(stb2);*/
         randString = Utils.randomChar();
-
-
         try {
             String versionName = getPackageManager()
                     .getPackageInfo(getPackageName(), 0).versionName;
@@ -197,6 +227,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginScreenBinding.password.setText("test123#$");
         /*loginScreenBinding.username.setText("tpbc1.200400@gmail.com");
         loginScreenBinding.password.setText("tpbc1.200400");*/
+        /*loginScreenBinding.username.setText("tpbc1.200085@gmail.com");
+        loginScreenBinding.password.setText("test123#$");*/
     }
 
 

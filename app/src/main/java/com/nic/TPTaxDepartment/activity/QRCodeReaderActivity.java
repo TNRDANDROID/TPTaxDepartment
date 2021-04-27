@@ -192,7 +192,7 @@ public class QRCodeReaderActivity extends AppCompatActivity implements Api.Serve
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dashboard();
+                onBackPressed();
             }
         });
         log_out.setOnClickListener(new View.OnClickListener() {
