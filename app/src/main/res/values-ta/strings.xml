@@ -87,6 +87,7 @@
     <string name="select_Ward">வார்டைத் தேர்ந்தெடுக்கவும்</string>
     <string name="select_TradeCode">வர்த்தக குறியீட்டைத் தேர்ந்தெடுக்கவும்</string>
     <string name="select_Street">தெருவைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="select_assessment">சொத்து மதிப்பீட்டு எண்ணைத் தேர்ந்தெடுக்கவும்</string>
     <string name="please_Select_Street">தெருவைத் தேர்ந்தெடுக்கவும்!</string>
     <string name="select_Any_One">எதையும் தேர்ந்தெடுக்கவும்!</string>
     <string name="next">அடுத்தது</string>
@@ -146,6 +147,7 @@
     <string name="take_Photo">புகைப்படம் எடுக்கவும்</string>
     <string name="save_IMAGE">படத்தை சேமிக்கவும்</string>
     <string name="daily_Collection">வரி வசூல்</string>
+ <string name="property">சொத்து</string>
     <string name="year">ஆண்டு</string>
     <string name="date">தேதி</string>
     <string name="dashboard">டாஷ்போர்டு</string>

@@ -13,6 +13,7 @@ import android.util.Log;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.model.CommonModel;
 import com.nic.TPTaxDepartment.model.TPtaxModel;
+import com.nic.TPTaxDepartment.utils.Utils;
 
 import java.util.ArrayList;
 
@@ -260,6 +261,14 @@ public class dbData {
                 cursor.close();
             }
         }
+        return cards;
+    }
+    public ArrayList<TPtaxModel> selectPropertyImage(String PropertyImage) {
+        Bitmap bitmap= Utils.StringToBitMap(PropertyImage);
+        ArrayList<TPtaxModel> cards = new ArrayList<>();
+        TPtaxModel card = new TPtaxModel();
+        card.setImage(bitmap);
+        cards.add(card);
         return cards;
     }
     public ArrayList<TPtaxModel> selectFieldVisitImage(String request_id,String data_ref_id) {

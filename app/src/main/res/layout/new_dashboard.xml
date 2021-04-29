@@ -720,6 +720,81 @@
                                     />
                             </RelativeLayout>
                         </RelativeLayout>
+                        <RelativeLayout
+                            android:background="@drawable/dash_board_bg_rect"
+                            android:id="@+id/propertycard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginRight="40dp"
+                            android:layout_marginTop="20dp"
+                            android:clickable="true"
+                            android:foreground="?android:attr/selectableItemBackground"
+                            android:onClick="@{()-> activity.propertyScreen()}"
+                           >
+
+                            <RelativeLayout
+
+                                android:layout_centerVertical="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <ImageView
+
+                                    android:id="@+id/image_property"
+                                    android:layout_width="50dp"
+                                    android:layout_height="50dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/cerclebackgroundyello"
+                                    android:padding="7dp"
+                                    android:src="@drawable/ic_house"
+                                    android:visibility="visible" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <TextView
+                                    android:layout_toRightOf="@+id/image_property"
+                                    android:layout_marginLeft="@dimen/_10sdp"
+                                    android:layout_gravity="center_vertical"
+                                    android:id="@+id/property_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:text="@string/property"
+                                    android:textSize="18dp"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/blue_background" />
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:layout_margin="10dp"
+                                    android:visibility="gone"
+
+                                    android:background="@drawable/background" />
+
+                                <ImageView
+                                    android:layout_margin="8dp"
+                                    android:id="@+id/forward_img_view6"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:layout_centerVertical="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="@dimen/_10sdp"
+                                    android:src="@drawable/back"
+                                    android:rotation="180"
+                                    android:tint="@color/black_grey"
+
+                                    />
+                            </RelativeLayout>
+                        </RelativeLayout>
 
                         <RelativeLayout
                             android:background="@drawable/dash_board_bg_rect"

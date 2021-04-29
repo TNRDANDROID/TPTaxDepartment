@@ -77,6 +77,9 @@ public class PrefManager {
     private static final String USER_LNAME = "user_last_name";
     private static final String TRADER_IMAGE_LIST = "trader_image_list";
     private static final String FIELD_VISIT_HISTORY_LIST = "FieldVisitHistory_list";
+    private static final String PROPERTY_IMAGE = "PROPERTY_IMAGE";
+    private static final String PROPERTY_IMAGE_LAT = "PROPERTY_IMAGE_LAT";
+    private static final String PROPERTY_IMAGE_LONG = "PROPERTY_IMAGE_LONG";
 
 
 
@@ -129,6 +132,31 @@ public class PrefManager {
 
     public String getWardList() {
         return pref.getString(WARD_LIST, null);
+    }
+
+    public void setPropertyImage(String propertyImage) {
+        editor.putString(PROPERTY_IMAGE, propertyImage);
+        editor.commit();
+    }
+
+    public String getPropertyImage() {
+        return pref.getString(PROPERTY_IMAGE, null);
+    }
+    public void setPropertyImageLong(String propertyImageLong) {
+        editor.putString(PROPERTY_IMAGE_LONG, propertyImageLong);
+        editor.commit();
+    }
+
+    public String getPropertyImageLong() {
+        return pref.getString(PROPERTY_IMAGE_LONG, null);
+    }
+    public void setPropertyImageLat(String propertyImageLat) {
+        editor.putString(PROPERTY_IMAGE_LAT, propertyImageLat);
+        editor.commit();
+    }
+
+    public String getPropertyImageLat() {
+        return pref.getString(PROPERTY_IMAGE_LAT, null);
     }
     public void setUserFname(String userFname) {
         editor.putString(USER_FNAME, userFname);

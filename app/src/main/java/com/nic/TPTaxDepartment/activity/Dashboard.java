@@ -38,6 +38,7 @@ import com.nic.TPTaxDepartment.Api.Api;
 import com.nic.TPTaxDepartment.Api.ApiService;
 import com.nic.TPTaxDepartment.Api.ServerResponse;
 import com.nic.TPTaxDepartment.R;
+import com.nic.TPTaxDepartment.Support.ProgressHUD;
 import com.nic.TPTaxDepartment.constant.AppConstant;
 import com.nic.TPTaxDepartment.dataBase.DBHelper;
 import com.nic.TPTaxDepartment.dataBase.dbData;
@@ -83,6 +84,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
     Animation animZoomout;
     Context context;
     String urlType;
+    private ProgressHUD progressHUD;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -307,6 +309,11 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
     public void dailyCollectionScreen(){
         Intent intent = new Intent( this, DailyCollection.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+    }
+    public void propertyScreen(){
+        Intent intent = new Intent( this, PropertyImageCapture.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
     }
@@ -587,6 +594,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     if(jsonarray != null && jsonarray.length() >0) {
                         System.out.println("DAta: "+ Toast.makeText(Dashboard.this,"Deleted",Toast.LENGTH_SHORT));
                         prefManager.setWardList(jsonarray.toString());
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             String statecode = Utils.NotNullString(jsonobject.getString("statecode"));
@@ -606,6 +614,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             fieldValue.put(AppConstant.WARD_NAME_TA, ward_name_ta);
                             db.insert(DBHelper.WARD_LIST, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
 
@@ -619,6 +631,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
                         prefManager.setStreetList(jsonarray.toString());
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             String statecode = Utils.NotNullString(jsonobject.getString("statecode"));
@@ -646,6 +659,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             db.insert(DBHelper.STREET_LIST, null, fieldValue);
 
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
 
                 }
@@ -660,6 +677,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     if(jsonarray != null && jsonarray.length() >0) {
 
                         prefManager.setTaxTypeList(jsonarray.toString());
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             int taxtypeid = jsonobject.getInt("taxtypeid");
@@ -678,6 +697,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             db.insert(DBHelper.TAX_TYPE_LIST, null, fieldValue);
 
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
 
                 }
@@ -692,6 +715,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     if(jsonarray != null && jsonarray.length() >0) {
 
                         prefManager.setTaxTypeList(jsonarray.toString());
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             int taxtypeid = jsonobject.getInt("taxtypeid");
@@ -710,6 +735,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             db.insert(DBHelper.TAX_TYPE_FIELD_VISIT_LIST, null, fieldValue);
 
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
 
                 }
@@ -724,6 +753,8 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     if(jsonarray != null && jsonarray.length() >0) {
 
                         prefManager.setTaxTypeList(jsonarray.toString());
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
+
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
                             int fin_yearid = (jsonobject.getInt("fin_yearid"));
@@ -744,6 +775,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                             db.insert(DBHelper.LICENCE_VALIDITY_LIST, null, fieldValue);
 
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
 
                 }
@@ -774,7 +809,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     Log.d("TraderLicenseTradeList", "" + jsonObject);
                     if(jsonarray != null && jsonarray.length() >0) {
-
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
 
@@ -793,6 +828,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.TRADE_CODE_LIST, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
             }
@@ -802,6 +841,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     db.execSQL("delete from "+ DBHelper.GENDER_LIST);
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
 
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -815,6 +855,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.GENDER_LIST, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
                 Log.d("Gender", "" + responseObj);
@@ -825,6 +869,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     db.execSQL("delete from "+ DBHelper.FIELD_VISIT_STATUS);
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
 
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -838,6 +883,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.FIELD_VISIT_STATUS, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
                 Log.d("Gender", "" + responseObj);
@@ -848,6 +897,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     db.execSQL("delete from "+ DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES);
                     JSONArray jsonarray = responseObj.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
 
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -863,6 +913,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.SERVICE_LIST_FIELD_VISIT_TYPES, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
                 Log.d("ServiceFieldVisitTypes", "" + responseObj);
@@ -877,6 +931,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     db.execSQL("delete from "+ DBHelper.MOTOR_RANG_POWER);
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
 
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -901,6 +956,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.MOTOR_RANG_POWER, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
                 Log.d("MotorRange", "" + responseObj);
@@ -916,6 +975,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     db.execSQL("delete from "+ DBHelper.ANNUAL_SALE_LIST);
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
 
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -936,6 +996,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.ANNUAL_SALE_LIST, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
                 Log.d("AnnualSaleList", "" + responseObj);
@@ -951,6 +1015,7 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
                     db.execSQL("delete from "+ DBHelper.GENERATOR_RANGE_POWER);
                     JSONArray jsonarray = jsonObject.getJSONArray(AppConstant.DATA);
                     if(jsonarray != null && jsonarray.length() >0) {
+                        progressHUD = ProgressHUD.show(this, "Loading", true, false, null);
 
                         for (int i = 0; i < jsonarray.length(); i++) {
                             JSONObject jsonobject = jsonarray.getJSONObject(i);
@@ -974,6 +1039,10 @@ public class Dashboard extends AppCompatActivity implements MyDialog.myOnClickLi
 
                             db.insert(DBHelper.GENERATOR_RANGE_POWER, null, fieldValue);
                         }
+                        if(progressHUD!=null){
+                            progressHUD.cancel();
+                        }
+
                     }
                 }
                 Log.d("GeneratorRange", "" + responseObj);

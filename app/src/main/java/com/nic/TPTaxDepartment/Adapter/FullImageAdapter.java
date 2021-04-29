@@ -88,6 +88,8 @@ public class FullImageAdapter extends RecyclerView.Adapter<FullImageAdapter.MyVi
             holder.galleryThumbnailBinding.closeIcon.setVisibility(View.GONE);
         }else if(key.equals("FieldVisitedImage")){
             holder.galleryThumbnailBinding.closeIcon.setVisibility(View.GONE);
+        }else if(key.equals("PropertyImage")){
+            holder.galleryThumbnailBinding.closeIcon.setVisibility(View.GONE);
         }
 
         holder.galleryThumbnailBinding.closeIcon.setOnClickListener(new View.OnClickListener() {

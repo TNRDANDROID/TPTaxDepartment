@@ -88,6 +88,8 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             mobileNo = getIntent().getStringExtra(AppConstant.MOBILE);
             status = getIntent().getStringExtra(AppConstant.KEY_SCREEN_STATUS);
             new fetchImagetask().execute();
+        }else  if(key.equals("PropertyImage")){
+            new fetchPropertyImagetask().execute();
         }else {
         }
 
@@ -120,6 +122,23 @@ public class FullImageActivity extends AppCompatActivity implements View.OnClick
             }
 
 
+            Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
+            return activityImage;
+        }
+
+        @Override
+        protected void onPostExecute(final ArrayList<TPtaxModel> imageList) {
+            super.onPostExecute(imageList);
+            setAdapter();
+        }
+    }
+    public class fetchPropertyImagetask extends AsyncTask<Void, Void,
+            ArrayList<TPtaxModel>> {
+        @Override
+        protected ArrayList<TPtaxModel> doInBackground(Void... params) {
+            activityImage = new ArrayList<>();
+            String PropertyImage = getIntent().getStringExtra("PropertyImage");
+            activityImage = dbData.selectPropertyImage(PropertyImage);
             Log.d("IMAGE_COUNT", String.valueOf(activityImage.size()));
             return activityImage;
         }

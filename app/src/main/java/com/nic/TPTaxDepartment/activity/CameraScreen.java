@@ -555,6 +555,14 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
             PropertyImage=image_str;
             LATITUDE=offlatTextValue.toString();
             LONGITUDE=offlongTextValue.toString();
+            prefManager.setPropertyImage(PropertyImage);
+            prefManager.setPropertyImageLat(LATITUDE);
+            prefManager.setPropertyImageLong(LONGITUDE);
+            if(PropertyImage != null &&  !PropertyImage.equals("")){
+                Toast.makeText(getApplicationContext(),getApplicationContext().getResources().getString(R.string.success),Toast.LENGTH_LONG).show();
+                // Toasty.success(this, "Success!", Toast.LENGTH_LONG, true).show();
+                onBackPressed();
+            }
             if(Utils.isOnline()) {
                 propertyCaptureImageSave();
             }
@@ -585,7 +593,8 @@ public class CameraScreen extends AppCompatActivity implements View.OnClickListe
     }
 
     public JSONObject propertyCaptureJsonParams() throws JSONException {
-
+        assessmentNumber =  getIntent().getStringExtra(AppConstant.ASSESSMENT_NO);
+        selectedTaxTypeId =  getIntent().getStringExtra(AppConstant.TAX_TYPE_ID);
         JSONObject data = new JSONObject();
         data.put(AppConstant.KEY_SERVICE_ID,"SavePropertyImage");
         data.put(AppConstant.TAX_TYPE_ID,selectedTaxTypeId);
