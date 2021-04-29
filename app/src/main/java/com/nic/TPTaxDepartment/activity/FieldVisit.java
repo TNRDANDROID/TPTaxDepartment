@@ -924,7 +924,7 @@ public class FieldVisit extends AppCompatActivity implements View.OnClickListene
         String current_status = selectedFieldVisitStatusId;
         String remarks = fieldVisitBinding.remarksText.getText().toString();
 
-        if(Utils.isOnline()) {
+        if(!Utils.isOnline()) {
             ContentValues fieldValue = new ContentValues();
             fieldValue.put("taxtypeid", tax_type_id);
             fieldValue.put("tax_type_name", selectedTaxTypeName);
